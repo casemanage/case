@@ -18,24 +18,26 @@
     <result column="CREATORNAME" property="creatorname" jdbcType="VARCHAR" />
     <result column="ORGANNAME" property="organname" jdbcType="VARCHAR" />
     <result column="MACADDRESS" property="macaddress" jdbcType="VARCHAR" />
+    <result column="typeName" property="typeName" jdbcType="VARCHAR" />
+    <result column="levelName" property="levelName" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.security.manage.model.Person" extends="BaseResultMap" >
     <result column="TIMESPAN" property="timespan" jdbcType="BINARY" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, NAME, TYPEID, LEVELID, SEX, BIRTH, PHOTOURL, IDCARD, ADDRESS, SERIALNO, CASECOMMENT, 
-    DESCRIPTION, CREATOR, CREATORNAME, ORGANNAME, MACADDRESS
+    p.ID, p.NAME, p.TYPEID, p.LEVELID, p.SEX, p.BIRTH, p.PHOTOURL, p.IDCARD, p.ADDRESS, p.SERIALNO, p.CASECOMMENT, 
+    p.DESCRIPTION, p.CREATOR, p.CREATORNAME, p.ORGANNAME, p.MACADDRESS
   </sql>
   <sql id="Blob_Column_List" >
-    TIMESPAN
+    p.TIMESPAN
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from MC_PERSON
-    where ID = #{id,jdbcType=INTEGER}
+    from MC_PERSON p
+    where p.ID = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from MC_PERSON
@@ -257,4 +259,76 @@
       MACADDRESS = #{macaddress,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+  <sql id="sql_query">
+  	from MC_PERSON p left join MC_PERSON_TYPE pt on p.TYPEID = pt.id
+  					 left join MC_PERSON_LEVEL pl on p.LEVELID = pl.id
+  	where 1=1
+  	<if test="searchName != null and searchName !=''" >
+	      and ( 
+	      	p.NAME like '%#{searchName}%'
+	      	OR 
+	      	p.ADDRESS like '%#{searchName}%'
+	      	OR 
+	      	p.SERIALNO like '%#{searchName}%'
+	      )
+	 </if>
+    order by p.ID desc 
+  </sql>
+  <select id="getPersonList" parameterType="com.security.manage.model.Person" resultMap="BaseResultMap">
+  	select 
+  	<if test="pageSize != null and pageSize>-1">
+        top ${pageSize,jdbcType=INTEGER}
+    </if>
+  	<include refid="Base_Column_List"/>,
+    <include refid="Blob_Column_List" />,
+    pt.name as typeName,
+    pl.name as levelName
+  	from MC_PERSON p left join MC_PERSON_TYPE pt on p.TYPEID = pt.id
+  					left join MC_PERSON_LEVEL pl on p.LEVELID = pl.id
+  	where 1=1
+  	<if test="searchName != null and searchName !=''" >
+	      and ( 
+	      	p.NAME like '${searchName}%'
+	      	OR 
+	      	p.ADDRESS like '${searchName}%'
+	      	OR 
+	      	p.SERIALNO like '${searchName}%'
+	      )
+	</if>
+  	<if test="pageCount != null and pageCount>-1">
+	        and p.ID >  (
+			          SELECT ISNULL(MAX(AID),0) 
+			          FROM 
+			                (
+			                SELECT TOP ${pageCount,jdbcType=INTEGER} ma.ID AS AID FROM MC_PERSON ma ORDER BY ma.ID DESC
+			                ) A
+			          )
+	 </if>
+	 order by p.ID desc
+  </select>
+  <select id="getTotal" parameterType="com.security.manage.model.Person" resultType="java.lang.Integer">
+  	select count(*)
+  	from MC_PERSON p 
+  	where 1=1
+  	<if test="searchName != null and searchName !=''" >
+	      and ( 
+	      	p.NAME like '${searchName}%'
+	      	OR 
+	      	p.ADDRESS like '${searchName}%'
+	      	OR 
+	      	p.SERIALNO like '${searchName}%'
+	      )
+	</if>
+  </select>
+  <select id="getExistPersonList" parameterType="com.security.manage.model.Person" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from MC_PERSON p
+  	where 1=1 
+  	<if test="idcard != null">
+  		and p.IDCARD = #{idcard,jdbcType=VARCHAR}
+  	</if>
+  	<if test="id != null">
+  		and p.id != #{id,jdbcType=INTEGER}
+  	</if>
+  </select>
 </mapper>

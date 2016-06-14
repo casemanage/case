@@ -1,5 +1,7 @@
 package com.security.manage.dao;
 
+import java.util.List;
+
 import com.security.manage.model.PersonLevel;
 
 public interface PersonLevelMapper {
@@ -14,4 +16,6 @@ public interface PersonLevelMapper {
     int updateByPrimaryKeySelective(PersonLevel record);
 
     int updateByPrimaryKey(PersonLevel record);
+
+	List<PersonLevel> getPersonLevel();
 }

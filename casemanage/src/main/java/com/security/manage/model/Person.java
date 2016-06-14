@@ -36,6 +36,10 @@ public class Person extends Page  {
     private String macaddress;
 
     private byte[] timespan;
+    
+    private String typeName;
+    
+    private String levelName;
 
     public Integer getId() {
         return id;
@@ -45,7 +49,7 @@ public class Person extends Page  {
         this.id = id;
     }
 
-    public String getName() {
+   public String getName() {
         return name;
     }
 
@@ -101,7 +105,7 @@ public class Person extends Page  {
         this.idcard = idcard;
     }
 
-    public String getAddress() {
+  public String getAddress() {
         return address;
     }
 
@@ -172,4 +176,22 @@ public class Person extends Page  {
     public void setTimespan(byte[] timespan) {
         this.timespan = timespan;
     }
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public String getLevelName() {
+		return levelName;
+	}
+
+	public void setLevelName(String levelName) {
+		this.levelName = levelName;
+	}
+
+	
 }
