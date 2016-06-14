@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
- 
+
 import com.security.manage.dao.PersonTypeMapper; 
 import com.security.manage.dao.PersonLevelMapper;
 import com.security.manage.dao.PersonMapper;
@@ -76,9 +76,22 @@ public class PersonServiceImpl implements PersonService {
 	}
 	
 	@Override
+	public List<PersonLevel> getPersonLevelList(PersonLevel personLevel) 
+	{
+		return personTypeMapper.getPersonLevelList(personLevel);
+	}
+
+	
+	@Override
 	public PersonType getPersonTypeById(Integer personTypeId)
 	{
 		return personTypeMapper.selectByPrimaryKey(personTypeId);
+	}
+	
+	@Override
+	public PersonLevel getPersonLevelById(Integer personLevelId) {
+		// TODO Auto-generated method stub
+		return personLevelMapper.selectByPrimaryKey(personLevelId);
 	}
 	
 	@Override
@@ -104,5 +117,30 @@ public class PersonServiceImpl implements PersonService {
 		}
 	}
 
-	
+	@Override
+	public int getPersonLevelTotalCount(PersonLevel personLevel) {
+		// TODO Auto-generated method stub
+		return personLevelMapper.getPersonLevelTotalCount(personLevel);
+	}
+
+	@Override
+	public List<PersonLevel> getExistPersonLevel(PersonLevel personLevel) {
+		// TODO Auto-generated method stub
+		return personTypeMapper.getExistPersonLevel(personLevel);
+	}
+
+	@Override
+	public void saveOrUpdatePersonLevel(PersonLevel personLevel) {
+		// TODO Auto-generated method stub
+		if(personLevel.getId() > 0)
+		{
+			personLevelMapper.insertSelective(personLevel);
+		}
+		else
+		{
+			personLevelMapper.insert(personLevel);
+		}
+		
+	}
+
 }

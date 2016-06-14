@@ -97,6 +97,18 @@
 	 </if>
   </select>
   
+  <select id="getPersonLevelList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonLevel">
+  	select
+  	<include refid="Base_Column_List" />
+  	from MC_PERSON_TYPE
+  	<!--   where 1=1
+  	  <if test="searchName != null" >
+       keyword like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+       or name like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+        or description like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+    </if> -->
+  </select>
+  
   <select id="getPersonTypeTotalCount" resultType="java.lang.Integer" parameterType="com.security.manage.model.PersonType">
   	 select count(*)
   	 	from MC_PERSON_TYPE p
@@ -125,6 +137,18 @@
         and t.id != #{id,jdbcType=INTEGER}
     </if>  	  
     </select> 
+  <select id="getExistPersonLevel" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonLevel">
+  	select
+  	<include refid="Base_Column_List" />
+  	from MC_PERSON_TYPE
+  	where 1=1
+  		<if test="name != null">
+  		and t.name = #{name,jdbcType=VARCHAR}
+  		</if>  	
+  		<if test="id != null">
+  		and t.id != #{id,jdbcType=INTEGER}
+  		</if>
+  </select>
   <select id="getPersonType" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List"/>

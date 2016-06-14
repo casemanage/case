@@ -2,6 +2,7 @@ package com.security.manage.dao;
 
 import java.util.List;
 
+import com.security.manage.model.PersonLevel;
 import com.security.manage.model.PersonType;
 
 public interface PersonTypeMapper {
@@ -23,5 +24,9 @@ public interface PersonTypeMapper {
 
 	List<PersonType> getExistPersonType(PersonType personType);
  
-	List<PersonType> getPersonType(); 
+	List<PersonType> getPersonType();
+
+	List<PersonLevel> getPersonLevelList(PersonLevel personLevel);
+
+	List<PersonLevel> getExistPersonLevel(PersonLevel personLevel);   
 }

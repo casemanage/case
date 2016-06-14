@@ -18,4 +18,6 @@ public interface PersonLevelMapper {
     int updateByPrimaryKey(PersonLevel record);
 
 	List<PersonLevel> getPersonLevel();
+
+	int getPersonLevelTotalCount(PersonLevel personLevel); 
 }
