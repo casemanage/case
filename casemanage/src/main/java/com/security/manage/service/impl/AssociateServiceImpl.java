@@ -74,9 +74,9 @@ public class AssociateServiceImpl implements AssociateService{
 		// TODO Auto-generated method stub
 		if(associateType.getId() > 0 )
 		{
-			associateTypeMapper.insertSelective(associateType);
+			associateTypeMapper.updateByPrimaryKeySelective(associateType);
 		}else
-		{
+		{			
 			associateTypeMapper.insert(associateType);
 		}
 	}

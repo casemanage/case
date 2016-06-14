@@ -5,12 +5,13 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
- 
+
+import com.security.manage.dao.PersonCarMapper;
 import com.security.manage.dao.PersonTypeMapper; 
 import com.security.manage.dao.PersonLevelMapper;
 import com.security.manage.dao.PersonMapper;
-import com.security.manage.dao.PersonTypeMapper;
 import com.security.manage.model.Person;
+import com.security.manage.model.PersonCar;
 import com.security.manage.model.PersonLevel; 
 import com.security.manage.model.PersonType;
 import com.security.manage.service.PersonService;
@@ -20,6 +21,9 @@ public class PersonServiceImpl implements PersonService {
 	
 	@Resource 
 	private PersonTypeMapper personTypeMapper;
+	
+	@Resource 
+	private PersonCarMapper personCarMapper;
 	
 	@Resource 
 	private PersonMapper personMapper;
@@ -77,9 +81,21 @@ public class PersonServiceImpl implements PersonService {
 	}
 	
 	@Override
+	public List<PersonLevel> getPersonLevelList(PersonLevel personLevel) 
+	{
+		return personLevelMapper.getPersonLevelList(personLevel);
+	}
+	
+	@Override
 	public PersonType getPersonTypeById(Integer personTypeId)
 	{
 		return personTypeMapper.selectByPrimaryKey(personTypeId);
+	}
+	
+	@Override
+	public PersonLevel getPersonLevelById(Integer personLevelId) {
+		// TODO Auto-generated method stub
+		return personLevelMapper.selectByPrimaryKey(personLevelId);
 	}
 	
 	@Override
@@ -98,12 +114,73 @@ public class PersonServiceImpl implements PersonService {
 		// TODO Auto-generated method stub
 		if(personType.getId() > 0 )
 		{
-			personTypeMapper.insertSelective(personType);
+			personTypeMapper.updateByPrimaryKeySelective(personType);
 		}else
 		{
 			personTypeMapper.insert(personType);
 		}
 	}
 
-	
+	@Override
+	public int getPersonLevelTotalCount(PersonLevel personLevel) {
+		// TODO Auto-generated method stub
+		return personLevelMapper.getPersonLevelTotalCount(personLevel);
+	}
+
+	@Override
+	public List<PersonLevel> getExistPersonLevel(PersonLevel personLevel) {
+		// TODO Auto-generated method stub
+		return personLevelMapper.getExistPersonLevel(personLevel);
+	}
+
+	@Override
+	public void saveOrUpdatePersonLevel(PersonLevel personLevel) {
+		// TODO Auto-generated method stub
+		if(personLevel.getId() > 0)
+		{
+			personLevelMapper.updateByPrimaryKeySelective(personLevel);
+		}
+		else
+		{
+			personLevelMapper.insert(personLevel);
+		}
+		
+	}
+
+	@Override
+	public PersonCar getPersonCarById(Integer personCarId) {
+		// TODO Auto-generated method stub
+		return personCarMapper.selectByPrimaryKey(personCarId);
+	}
+
+	@Override
+	public List<PersonCar> getExistPersonCar(PersonCar p) {
+		// TODO Auto-generated method stub
+		return personCarMapper.getExistPersonCar(p);
+	}
+
+	@Override
+	public void saveOrUpdatePersonCar(PersonCar personCar) {
+		// TODO Auto-generated method stub
+		if(personCar.getId() > 0 )
+		{
+			personCarMapper.updateByPrimaryKeySelective(personCar);
+		}else
+		{
+			personCarMapper.insert(personCar);
+		}
+	}
+
+	@Override
+	public List<PersonCar> getPersonCarList(PersonCar personCar) {
+		// TODO Auto-generated method stub
+		return personCarMapper.getPersonCarList(personCar);
+	}
+
+	@Override
+	public int getPersonCarTotalCount(PersonCar personCar) {
+		// TODO Auto-generated method stub
+		return personCarMapper.getPersonCarTotalCount(personCar);
+	}
+
 }

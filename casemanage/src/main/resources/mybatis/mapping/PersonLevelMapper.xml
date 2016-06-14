@@ -15,14 +15,33 @@
     from MC_PERSON_LEVEL
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  
+  <select id="getPersonLevelTotalCount" resultType="java.lang.Integer" parameterType="com.security.manage.model.PersonLevel">
+  	select count(*)
+  	from MC_PERSON_LEVEL
+  </select>
+  
+  <select id="getExistPersonLevel" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonLevel">
+  	select
+  	<include refid="Base_Column_List" />
+  	from MC_PERSON_LEVEL t
+  	where 1=1
+  		<if test="name != null">
+  		and t.name = #{name,jdbcType=VARCHAR}
+  		</if>  	
+  		<if test="id != null">
+  		and t.id != #{id,jdbcType=INTEGER}
+  		</if>
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from MC_PERSON_LEVEL
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.security.manage.model.PersonLevel" >
-    insert into MC_PERSON_LEVEL (ID, NAME, DESCRIPTION
+    insert into MC_PERSON_LEVEL (NAME, DESCRIPTION
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+    values (#{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.security.manage.model.PersonLevel" >
@@ -72,4 +91,18 @@
   	select <include refid="Base_Column_List"/>
   	from MC_PERSON_LEVEL
   </select>
+  <select id="getPersonLevelList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonType">
+  	select
+  	<include refid="Base_Column_List" />
+  	from MC_PERSON_LEVEL
+  	<!--   where 1=1
+  	  <if test="searchName != null" >
+       keyword like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+       or name like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+        or description like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+    </if> -->
+  </select>	
+	  
 </mapper>
+
+

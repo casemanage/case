@@ -50,29 +50,13 @@ public class AssociateController extends BaseController{
 					"iso8859-1"), "utf-8");
 			associate.setSearchName(searchName);
 		}
-		//设置页面初始值及页面尺寸
-		//associate.setPageSize(Constants.DEFAULT_PAGE_SIZE); 
-		//int pageNo = associate.getPageSize()*(associate.getPageNo()-1);
-		//associate.setPageCount(pageNo);
+		
 		List<Associate> associatelist = new ArrayList<Associate>();
 		int countTotal = 0;
 		try { 
-			//Associate ax = associateService.getAssociateById(1);
+		
 			associatelist = associateService.getAssociateList(associate); 
-//			for(Associate a :associatelist){
-//				if(a.getTimespan()!= null){
-//					String strDate = new String(a.getTimespan(),"UTF-8");
-//					try{
-//						 int year = Integer.parseInt(strDate.substring(0, 4));
-//					     int month = Integer.parseInt(strDate.substring(4, 6));
-//					     int day = Integer.parseInt(strDate.substring(6, 8));
-//					     String createdate = year+"-"+month+"-"+day;
-//					     a.setCreatedate(createdate);
-//					}catch(Exception ex){
-//					     a.setCreatedate("");
-//					}
-//				}
-//			}
+
 			countTotal = associateService.getTotalCount(associate);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -139,34 +123,19 @@ public class AssociateController extends BaseController{
 					"iso8859-1"), "utf-8");
 			associateType.setSearchName(searchName);
 		}
-		//设置页面初始值及页面尺寸
-		//associate.setPageSize(Constants.DEFAULT_PAGE_SIZE); 
-		//int pageNo = associate.getPageSize()*(associate.getPageNo()-1);
-		//associate.setPageCount(pageNo);
+		
 		List<AssociateType> associateTypelist = new ArrayList<AssociateType>();
 		int countTotal = 0;
 		try { 
-			//Associate ax = associateService.getAssociateById(1);
+			
 			associateTypelist = associateService.getAssociateTypeList(associateType); 
-//			for(Associate a :associatelist){
-//				if(a.getTimespan()!= null){
-//					String strDate = new String(a.getTimespan(),"UTF-8");
-//					try{
-//						 int year = Integer.parseInt(strDate.substring(0, 4));
-//					     int month = Integer.parseInt(strDate.substring(4, 6));
-//					     int day = Integer.parseInt(strDate.substring(6, 8));
-//					     String createdate = year+"-"+month+"-"+day;
-//					     a.setCreatedate(createdate);
-//					}catch(Exception ex){
-//					     a.setCreatedate("");
-//					}
-//				}
-//			}
+
 			countTotal = associateService.getAssociateTypeTotalCount(associateType);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 		//通过request绑定对象传到前台
+		
 		associateType.setTotalCount(countTotal);
 		associateType.setPageSize(Constants.DEFAULT_PAGE_SIZE); 
 		associateType.setPageCount(countTotal/Constants.DEFAULT_PAGE_SIZE+1); 
@@ -214,7 +183,7 @@ public class AssociateController extends BaseController{
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/jsonSaveOrUpdateAssociateType.do", method = RequestMethod.POST)
-	public JsonResult<AssociateType> SaveOrUpdateTask(AssociateType associateType,
+	public JsonResult<AssociateType> SaveOrUpdateAssociateType(AssociateType associateType,
 			HttpServletRequest request, HttpServletResponse response) {
 		JsonResult<AssociateType> js = new JsonResult<AssociateType>();
 		js.setCode(new Integer(1));

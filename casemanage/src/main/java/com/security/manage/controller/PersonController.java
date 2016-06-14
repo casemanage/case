@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.security.manage.common.JsonResult; 
-import com.security.manage.model.Associate;
 import com.security.manage.model.Person;
+import com.security.manage.model.PersonCar;
 import com.security.manage.model.PersonLevel; 
 import com.security.manage.model.PersonType;
-import com.security.manage.model.User;
 import com.security.manage.service.PersonService;
 import com.security.manage.util.Constants;
  
@@ -49,29 +48,12 @@ public class PersonController extends BaseController{
 					"iso8859-1"), "utf-8");
 			personType.setSearchName(searchName);
 		}
-		//设置页面初始值及页面尺寸
-		//associate.setPageSize(Constants.DEFAULT_PAGE_SIZE); 
-		//int pageNo = associate.getPageSize()*(associate.getPageNo()-1);
-		//associate.setPageCount(pageNo);
+		
 		List<PersonType> personTypelist = new ArrayList<PersonType>();
 		int countTotal = 0;
 		try { 
-			//Associate ax = associateService.getAssociateById(1);
-			personTypelist = personService.getPersonTypeList(personType); 
-//			for(Associate a :associatelist){
-//				if(a.getTimespan()!= null){
-//					String strDate = new String(a.getTimespan(),"UTF-8");
-//					try{
-//						 int year = Integer.parseInt(strDate.substring(0, 4));
-//					     int month = Integer.parseInt(strDate.substring(4, 6));
-//					     int day = Integer.parseInt(strDate.substring(6, 8));
-//					     String createdate = year+"-"+month+"-"+day;
-//					     a.setCreatedate(createdate);
-//					}catch(Exception ex){
-//					     a.setCreatedate("");
-//					}
-//				}
-//			}
+		
+			personTypelist = personService.getPersonTypeList(personType); 		
 			countTotal = personService.getPersonTypeTotalCount(personType);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,8 +70,99 @@ public class PersonController extends BaseController{
 	}	
 	
 	/**
+	 * 重点人员车辆管理
+	 * @param personCar
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "/personCarList.do" ,method=RequestMethod.GET)
+	public String personCarList(
+			PersonCar personCar,
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{ 
+		//判断搜索栏是否为空，不为空则转为utf-8编码
+		if(personCar.getSearchName() != null && personCar.getSearchName() != ""){
+			String searchName = new String(personCar.getSearchName().getBytes(
+					"iso8859-1"), "utf-8");
+			personCar.setSearchName(searchName);
+		}
+		
+		List<PersonCar> personCarlist = new ArrayList<PersonCar>();
+		int countTotal = 0;
+		try { 
+		
+			personCarlist = personService.getPersonCarList(personCar); 		
+			countTotal = personService.getPersonCarTotalCount(personCar);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		//通过request绑定对象传到前台
+		personCar.setTotalCount(countTotal);
+		personCar.setPageSize(Constants.DEFAULT_PAGE_SIZE);
+		personCar.setPageCount(countTotal/Constants.DEFAULT_PAGE_SIZE+1);	
+		if (personCar.getPageNo() == null)
+			personCar.setPageNo(1);
+		request.setAttribute("PersonCar", personCar);
+		request.setAttribute("PersonCarlist",personCarlist);
+		return "web/person/personCarList";
+	}	
+	
+	/**
+	 * 重点人员级别管理
+	 * @param personLevel
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "/PersonLevelList.do" ,method=RequestMethod.GET)
+	public String personLevelList(
+			PersonLevel personLevel,
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
+				//判断搜索栏是否为空，不为空则转为utf-8编码
+			if(personLevel.getSearchName() != null && personLevel.getSearchName() != ""){
+				String searchName = new String(personLevel.getSearchName().getBytes(
+						"iso8859-1"), "utf-8");
+				personLevel.setSearchName(searchName);
+			}
+			List<PersonLevel> personLevellist = new ArrayList<PersonLevel>();
+			int countTotal = 0;
+			try { 
+				//Associate ax = associateService.getAssociateById(1);
+				personLevellist = personService.getPersonLevelList(personLevel); 
+//				for(Associate a :associatelist){
+//					if(a.getTimespan()!= null){
+//						String strDate = new String(a.getTimespan(),"UTF-8");
+//						try{
+//							 int year = Integer.parseInt(strDate.substring(0, 4));
+//						     int month = Integer.parseInt(strDate.substring(4, 6));
+//						     int day = Integer.parseInt(strDate.substring(6, 8));
+//						     String createdate = year+"-"+month+"-"+day;
+//						     a.setCreatedate(createdate);
+//						}catch(Exception ex){
+//						     a.setCreatedate("");
+//						}
+//					}
+//				}
+				countTotal = personService.getPersonLevelTotalCount(personLevel);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+			//通过request绑定对象传到前台
+			personLevel.setTotalCount(countTotal);
+			personLevel.setPageSize(Constants.DEFAULT_PAGE_SIZE);
+			personLevel.setPageCount(countTotal/Constants.DEFAULT_PAGE_SIZE+1);
+			if (personLevel.getPageNo() == null)
+				personLevel.setPageNo(1);
+			request.setAttribute("PersonLevel", personLevel);
+			request.setAttribute("PersonLevellist",personLevellist);
+			return "web/person/PersonLevelList";
+	}
+	
+	/**
 	 * 重点人员类型查看编辑
-	 * @param associateTypeId
+	 * @param personTypeId
 	 * @param request
 	 * @param response
 	 * @return 
@@ -109,21 +182,77 @@ public class PersonController extends BaseController{
 			personType.setId(0);
 		}
 		request.setAttribute("PersonType", personType);
-		return "web/person/personTypeInfo";
+		return "web/person/PersonTypeInfo";
 	}	
+	
+	
+	/**
+	 * 重点人员车辆查看编辑
+	 * @param personCarId
+	 * @param request
+	 * @param response
+	 * @return 
+	 */
+	@RequestMapping(value = "/personCarInfo.do")
+	public String personCarInfo(
+			@RequestParam(value="personCarId", required = false)Integer personCarId,
+			HttpServletRequest request, HttpServletResponse response){ 
+		PersonCar  personCar = new PersonCar();
+		if(personCarId != null && personCarId != 0){
+			try{
+				personCar = personService.getPersonCarById(personCarId);
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}			
+		}else{
+			personCar.setId(0);
+		}
+		request.setAttribute("PersonCar", personCar);
+		return "web/person/personCarInfo";
+	}	
+	
+	/**
+	 * 重点人员级别查看编辑
+	 * @param personLevelId
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/PersonLevelInfo.do")
+	public String personLevelInfo(
+			@RequestParam(value="personLevelId", required = false)Integer personLevelId,
+			HttpServletRequest request, HttpServletResponse response){
+		PersonLevel personLevel = new PersonLevel();
+		if(personLevelId != null && personLevelId != 0){
+			try
+			{
+				personLevel = personService.getPersonLevelById(personLevelId);
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		else
+		{
+			personLevel.setId(0);
+		}
+		request.setAttribute("PersonLevel", personLevel);
+		return "web/person/PersonLevelInfo";
+	}
 	
 	
 	/**
 	 * 重点人员类型新建/编辑保存
 	 * 
-	 * @param associateType
+	 * @param personType
 	 * @param request
 	 * @param response
 	 * @return js
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/jsonSaveOrUpdatePersonType.do", method = RequestMethod.POST)
-	public JsonResult<PersonType> SaveOrUpdateTask(PersonType personType,
+	@RequestMapping(value = "/jsonSaveOrUpdatePersonType.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
+	public JsonResult<PersonType> SaveOrUpdatePersonType(PersonType personType,
 			HttpServletRequest request, HttpServletResponse response) {
 		JsonResult<PersonType> js = new JsonResult<PersonType>();
 		js.setCode(new Integer(1));
@@ -147,7 +276,7 @@ public class PersonController extends BaseController{
 					js.setMessage("保存成功!");
 				}else
 				{
-					js.setMessage("重点人员类型已存在!");;
+					js.setMessage("重点人员类型已存在!");
 				}									
 			} else {
 				js.setMessage("重点人员类型名称不能为空!");
@@ -158,7 +287,96 @@ public class PersonController extends BaseController{
 		}
 		return js;
 	}
+	
+	/**
+	 * 重点人员车辆新建/编辑保存
+	 * 
+	 * @param personCar
+	 * @param request
+	 * @param response
+	 * @return js
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/jsonSaveOrUpdatePersonCar.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
+	public JsonResult<PersonCar> SaveOrUpdatePersonCar(PersonCar personCar,
+			HttpServletRequest request, HttpServletResponse response) {
+		JsonResult<PersonCar> js = new JsonResult<PersonCar>();
+		js.setCode(new Integer(1));
+		js.setMessage("保存失败!");
+		try {
+			if (personCar.getId() == null || personCar.getId() == 0)
+			{
+				personCar.setId(0);	
+			}
+			if (personCar.getName() != null) {
+				PersonCar p = new PersonCar();
+				String name = personCar.getName();
+				p.setName(name);
+				if (personCar.getId() > 0) {
+					p.setId(personCar.getId());
+				}				
+				List<PersonCar> lc = personService.getExistPersonCar(p);
+				if (lc.size() == 0) {
+					personService.saveOrUpdatePersonCar(personCar); 
+					js.setCode(new Integer(0));											
+					js.setMessage("保存成功!");
+				}else
+				{
+					js.setMessage("该重点人员车辆已存在!");
+				}									
+			} else {
+				js.setMessage("重点人员姓名不能为空!");
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return js;
+	}
 	 
+	@ResponseBody
+	@RequestMapping(value = "/jsonSaveOrUpdatePersonLevel.do", method = RequestMethod.POST)
+	public JsonResult<PersonLevel> SaveOrUpdatePersonLevel(PersonLevel personLevel,
+			HttpServletRequest request, HttpServletResponse response){
+		JsonResult<PersonLevel> js = new JsonResult<PersonLevel>();
+		js.setCode(new Integer(1));
+		js.setMessage("保存失败!");
+		try
+		{
+			if (personLevel.getId() == null || personLevel.getId() == 0)
+			{
+				personLevel.setId(0);	
+			}
+			if (personLevel.getName() != null){
+				PersonLevel p = new PersonLevel();
+				String name = personLevel.getName();
+				p.setName(name);
+				if (personLevel.getId() > 0) {
+					p.setId(personLevel.getId());
+				}
+				List<PersonLevel> lc = personService.getExistPersonLevel(p);
+				if (lc.size() == 0) {
+					personService.saveOrUpdatePersonLevel(personLevel); 
+					js.setCode(new Integer(0));											
+					js.setMessage("保存成功!");
+				}
+				else
+				{
+					js.setMessage("重点人员类型已存在!");
+				}
+			}
+			else
+			{
+				js.setMessage("重点人员类型名称不能为空!");
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return js;
+	}
+	
 	@RequestMapping(value = "/personList.do")
 	public String personList(
 			Person person,
@@ -257,3 +475,7 @@ public class PersonController extends BaseController{
 		return js;
 	} 
 }
+
+
+
+

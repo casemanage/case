@@ -82,6 +82,12 @@
 	       enableDeleteByExample="false"
 	       enableCountByExample="false"
 	       enableUpdateByExample="false"/>  
+	       
+	       <table tableName="MC_PERSON_CAR" domainObjectName="PersonCar"
+           enableSelectByExample="false"
+	       enableDeleteByExample="false"
+	       enableCountByExample="false"
+	       enableUpdateByExample="false"/>  
 	        
     </context>  
 </generatorConfiguration>  
