@@ -39,11 +39,45 @@ public class AssociateServiceImpl implements AssociateService{
 		// TODO Auto-generated method stub
 		return associateMapper.selectByPrimaryKey(id);
 	}
+	
+	
+	
+	@Override
+	public List<AssociateType> getAssociateTypeList(AssociateType associateType) {
+		// TODO Auto-generated method stub
+		return associateTypeMapper.getAssociateTypeList(associateType);
+	}
 
 	@Override
-	public List<AssociateType> getAssociateType() {
+	public int getAssociateTypeTotalCount(AssociateType associateType) {
 		// TODO Auto-generated method stub
-		return associateTypeMapper.getAssociateType();
+		return associateTypeMapper.getAssociateTypeTotalCount(associateType);
 	}
+	
+	@Override
+	public AssociateType getAssociateTypeById(Integer id) {
+		// TODO Auto-generated method stub
+		return associateTypeMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<AssociateType> getExistAssociateType(AssociateType associateType) {
+		// TODO Auto-generated method stub
+		return associateTypeMapper.getExistAssociateType(associateType);
+	}
+
+	@Override
+	public void saveOrUpdateAssociateType(AssociateType associateType) {
+		// TODO Auto-generated method stub
+		if(associateType.getId() > 0 )
+		{
+			associateTypeMapper.insertSelective(associateType);
+		}else
+		{
+			associateTypeMapper.insert(associateType);
+		}
+	}
+
+	
 
 }

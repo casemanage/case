@@ -429,3 +429,14 @@ function getChildNodeList(jqTree, tree, nodes) {
 	}
 	return childNodeList;
 } 
+
+function showProcess(isShow, title, msg) {
+    if (!isShow) {
+        $.messager.progress('close');
+        return;
+    }
+    $.messager.progress({
+        title: title,
+        msg: msg
+    });
+}

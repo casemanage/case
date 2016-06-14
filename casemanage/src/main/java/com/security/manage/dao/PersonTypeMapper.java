@@ -16,6 +16,12 @@ public interface PersonTypeMapper {
     int updateByPrimaryKeySelective(PersonType record);
 
     int updateByPrimaryKey(PersonType record);
+ 
+	int getPersonTypeTotalCount(PersonType personType);
 
-	List<PersonType> getPersonType();
+	List<PersonType> getPersonTypeList(PersonType personType);
+
+	List<PersonType> getExistPersonType(PersonType personType);
+ 
+	List<PersonType> getPersonType(); 
 }

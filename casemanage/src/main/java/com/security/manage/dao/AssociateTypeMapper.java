@@ -15,7 +15,11 @@ public interface AssociateTypeMapper {
 
     int updateByPrimaryKeySelective(AssociateType record);
 
-    int updateByPrimaryKey(AssociateType record);
+    int updateByPrimaryKey(AssociateType record);	
 
-	List<AssociateType> getAssociateType();
+	List<AssociateType> getAssociateTypeList(AssociateType associateType);
+
+	int getAssociateTypeTotalCount(AssociateType associateType);
+
+	List<AssociateType> getExistAssociateType(AssociateType associateType);
 }
