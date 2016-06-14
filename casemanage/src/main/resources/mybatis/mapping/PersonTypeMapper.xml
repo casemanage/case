@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.security.manage.dao.PersonTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.security.manage.model.PersonType" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="KEYWORD" property="keyword" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, KEYWORD, NAME, DESCRIPTION
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from MC_PERSON_TYPE
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from MC_PERSON_TYPE
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.security.manage.model.PersonType" >
+    insert into MC_PERSON_TYPE (ID, KEYWORD, NAME, 
+      DESCRIPTION)
+    values (#{id,jdbcType=INTEGER}, #{keyword,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.security.manage.model.PersonType" >
+    insert into MC_PERSON_TYPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="keyword != null" >
+        KEYWORD,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="keyword != null" >
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.security.manage.model.PersonType" >
+    update MC_PERSON_TYPE
+    <set >
+      <if test="keyword != null" >
+        KEYWORD = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.security.manage.model.PersonType" >
+    update MC_PERSON_TYPE
+    set KEYWORD = #{keyword,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update> 
+  
+  
+     <select id="getPersonTypeList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonType">
+  	 select 
+  	  <include refid="Base_Column_List" />  
+  	  from MC_PERSON_TYPE   
+  	  	<!--   where 1=1
+  	  <if test="searchName != null" >
+       keyword like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+       or name like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+        or description like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+    </if> -->  	  
+  </select>
+  
+  <select id="getPersonTypeTotalCount" resultType="java.lang.Integer" parameterType="com.security.manage.model.PersonType">
+  	 select count(*)
+  	 from MC_PERSON_TYPE 
+  	  	    
+  </select>
+  
+   <select id="getExistPersonType" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonType">
+  	 select 
+  	  <include refid="Base_Column_List" />  
+  	  from MC_PERSON_TYPE 
+  	  where 1=1
+    	<if test="name != null" >
+        and  t.name = #{name,jdbcType=VARCHAR}
+       </if>  
+        <if test="id != null" >
+        and t.id != #{id,jdbcType=INTEGER}
+    </if>  	  
+    </select> 
+  <select id="getPersonType" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List"/>
+	from  MC_PERSON_TYPE 
+  </select>
+</mapper>
