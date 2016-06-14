@@ -6,10 +6,12 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.security.manage.dao.PersonCarMapper;
 import com.security.manage.dao.PersonTypeMapper; 
 import com.security.manage.dao.PersonLevelMapper;
 import com.security.manage.dao.PersonMapper;
 import com.security.manage.model.Person;
+import com.security.manage.model.PersonCar;
 import com.security.manage.model.PersonLevel; 
 import com.security.manage.model.PersonType;
 import com.security.manage.service.PersonService;
@@ -19,6 +21,9 @@ public class PersonServiceImpl implements PersonService {
 	
 	@Resource 
 	private PersonTypeMapper personTypeMapper;
+	
+	@Resource 
+	private PersonCarMapper personCarMapper;
 	
 	@Resource 
 	private PersonMapper personMapper;
@@ -141,6 +146,42 @@ public class PersonServiceImpl implements PersonService {
 			personLevelMapper.insert(personLevel);
 		}
 		
+	}
+
+	@Override
+	public PersonCar getPersonCarById(Integer personCarId) {
+		// TODO Auto-generated method stub
+		return personCarMapper.selectByPrimaryKey(personCarId);
+	}
+
+	@Override
+	public List<PersonCar> getExistPersonCar(PersonCar p) {
+		// TODO Auto-generated method stub
+		return personCarMapper.getExistPersonCar(p);
+	}
+
+	@Override
+	public void saveOrUpdatePersonCar(PersonCar personCar) {
+		// TODO Auto-generated method stub
+		if(personCar.getId() > 0 )
+		{
+			personCarMapper.updateByPrimaryKeySelective(personCar);
+		}else
+		{
+			personCarMapper.insert(personCar);
+		}
+	}
+
+	@Override
+	public List<PersonCar> getPersonCarList(PersonCar personCar) {
+		// TODO Auto-generated method stub
+		return personCarMapper.getPersonCarList(personCar);
+	}
+
+	@Override
+	public int getPersonCarTotalCount(PersonCar personCar) {
+		// TODO Auto-generated method stub
+		return personCarMapper.getPersonCarTotalCount(personCar);
 	}
 
 }

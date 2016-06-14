@@ -88,38 +88,28 @@
   	 	where 1=1
   	<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '#{searchName}%'
+	      	NAME like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	keyword like '#{searchName}%'
+	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	description like '#{searchName}%'
+	      	description like '%#{searchName,jdbcType=VARCHAR}%'
 	      )
 	 </if>
   </select>
   
-  <select id="getPersonLevelList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonLevel">
-  	select
-  	<include refid="Base_Column_List" />
-  	from MC_PERSON_TYPE
-  	<!--   where 1=1
-  	  <if test="searchName != null" >
-       keyword like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
-       or name like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
-        or description like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
-    </if> -->
-  </select>
+ 
   
   <select id="getPersonTypeTotalCount" resultType="java.lang.Integer" parameterType="com.security.manage.model.PersonType">
   	 select count(*)
-  	 	from MC_PERSON_TYPE p
+  	 	from MC_PERSON_TYPE 
   	 	where 1=1
   	<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	p.NAME like '%#{searchName}%'
+	      	NAME like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	p.keyword like '%#{searchName}%'
+	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	p.description like '%#{searchName}%'
+	      	description like '%#{searchName,jdbcType=VARCHAR}%'
 	      )
 	 </if>
   	  	    
@@ -133,22 +123,9 @@
     	<if test="name != null" >
         and  t.name = #{name,jdbcType=VARCHAR}
        </if>  
-        <if test="id != null" >
-        and t.id != #{id,jdbcType=INTEGER}
-    </if>  	  
+        	  
     </select> 
-  <select id="getExistPersonLevel" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonLevel">
-  	select
-  	<include refid="Base_Column_List" />
-  	from MC_PERSON_TYPE
-  	where 1=1
-  		<if test="name != null">
-  		and t.name = #{name,jdbcType=VARCHAR}
-  		</if>  	
-  		<if test="id != null">
-  		and t.id != #{id,jdbcType=INTEGER}
-  		</if>
-  </select>
+  
   <select id="getPersonType" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List"/>

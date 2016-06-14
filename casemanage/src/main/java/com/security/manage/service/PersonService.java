@@ -3,6 +3,7 @@ package com.security.manage.service;
 import java.util.List;
 
 import com.security.manage.model.Person;
+import com.security.manage.model.PersonCar;
 import com.security.manage.model.PersonLevel; 
 import com.security.manage.model.PersonType;
 
@@ -40,6 +41,16 @@ public interface PersonService {
 
 	void saveOrUpdatePersonLevel(PersonLevel personLevel);
 
-	PersonLevel getPersonLevelById(Integer personLevelId);      
+	PersonLevel getPersonLevelById(Integer personLevelId);
+
+	PersonCar getPersonCarById(Integer personCarId);
+
+	List<PersonCar> getExistPersonCar(PersonCar p);
+
+	void saveOrUpdatePersonCar(PersonCar personCar);
+
+	List<PersonCar> getPersonCarList(PersonCar personCar);
+
+	int getPersonCarTotalCount(PersonCar personCar);      
 
 }
