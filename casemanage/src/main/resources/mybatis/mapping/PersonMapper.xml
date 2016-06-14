@@ -44,18 +44,18 @@
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.security.manage.model.Person" >
-    insert into MC_PERSON (ID, NAME, TYPEID, 
+    insert into MC_PERSON (NAME, TYPEID, 
       LEVELID, SEX, BIRTH, 
       PHOTOURL, IDCARD, ADDRESS, 
       SERIALNO, CASECOMMENT, DESCRIPTION, 
       CREATOR, CREATORNAME, ORGANNAME, 
-      MACADDRESS, TIMESPAN)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, 
+      MACADDRESS)
+    values (#{name,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, 
       #{levelid,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{birth,jdbcType=NVARCHAR}, 
       #{photourl,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{serialno,jdbcType=VARCHAR}, #{casecomment,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{creator,jdbcType=INTEGER}, #{creatorname,jdbcType=VARCHAR}, #{organname,jdbcType=VARCHAR}, 
-      #{macaddress,jdbcType=VARCHAR}, #{timespan,jdbcType=BINARY})
+      #{macaddress,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.security.manage.model.Person" >
     insert into MC_PERSON

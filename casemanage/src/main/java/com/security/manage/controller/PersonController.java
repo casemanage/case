@@ -20,13 +20,14 @@ import com.security.manage.model.Associate;
 import com.security.manage.model.Person;
 import com.security.manage.model.PersonLevel; 
 import com.security.manage.model.PersonType;
+import com.security.manage.model.User;
 import com.security.manage.service.PersonService;
 import com.security.manage.util.Constants;
  
 @Scope("prototype")
 @Controller
 @RequestMapping("/person")
-public class PersonController {
+public class PersonController extends BaseController{
 	@Resource(name = "personService")
 	private PersonService personService; 
 	
@@ -338,25 +339,43 @@ public class PersonController {
 		js.setMessage("保存失败!");
 		try {
 			if (person.getId() == null || person.getId() == 0) {
+				//User u = this.getLoginUser();
+				//person.setCreator(u.getId());
+				//person.setCreatorname(u.getName());
+				person.setCreator(1);
+				person.setCreatorname("张三");
+				person.setSerialno("000000");
+				person.setOrganname("太升路派出所");
+				person.setPhotourl("baidu");
 				person.setId(0);
 			}
-			if (person.getIdcard()!= null) {
+			if(person.getSex() == null){
+				js.setMessage("请选择性别!");
+				return js;
+			}
+			if(person.getLevelid() == null){
+				js.setMessage("请选择人员级别!");
+				return js;
+			}
+			if(person.getTypeid() == null){
+				js.setMessage("请选择人员类型!");
+				return js;
+			}
+			if (person.getIdcard() != null && !"".equals(person.getIdcard())) {
 				Person p = new Person();
 				p.setIdcard(person.getIdcard());
 				if (person.getId() > 0) {
 					p.setId(person.getId());
 				}
 				List<Person> lc = personService.getExistPersonList(p);
-				if (lc.size() == 0) {
-					personService.saveOrUpdatePerson(person);
-					js.setCode(new Integer(0));
-					js.setMessage("保存成功!");
-				} else {
+				if (lc.size() > 0) {
 					js.setMessage("身份证号已存在!");
+					return js;
 				}
-			} else {
-				js.setMessage("身份证号都不能为空!");
-			}
+			} 
+			personService.saveOrUpdatePerson(person);
+			js.setCode(new Integer(0));
+			js.setMessage("保存成功!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

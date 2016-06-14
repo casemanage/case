@@ -1,5 +1,9 @@
 package com.security.manage.controller;
   
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody; 
 
 import com.security.manage.common.JsonResult; 
+import com.security.manage.model.Associate;
 import com.security.manage.model.User;
+import com.security.manage.util.Constants;
 
 @Scope("prototype")
 @Controller
@@ -50,5 +56,18 @@ public class HomeController {
 		}
 		return json;
 	}
-
+	/**
+	 * 信息采集概况
+	 * @param associate
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "/statisticInfo.do",method=RequestMethod.GET)
+	public String statisticInfo( 
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{ 
+		return "web/home/statisticInfo";
+	}	
+	
 }

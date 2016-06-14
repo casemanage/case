@@ -88,12 +88,12 @@ function pagesearch(){
 					<th>人员类型</th>
 					<th>人员级别</th>
 					<th>性别</th>
-					<th>出生年月</th>
-					<th>照片</th>
+					<!-- <th>出生年月</th> -->
+					<!-- <th>照片</th> -->
 					<th>身份证号</th>
 					<th>地址</th>
 					<th>编号</th>
-					<th>是由</th>
+					<th>事由</th>
 					<th>描述</th>
 					<th>采集人</th>
 					<th>mac地址</th>
@@ -112,14 +112,14 @@ function pagesearch(){
 						<c:if test="${item.sex == 0}">
 							<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">女</td>
 						</c:if>
-						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.birth}</td>
-						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.photourl}</td>
+						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.birth}</td> --%>
+						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.photourl}</td> --%>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.idcard}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.address}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.serialno}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.casecomment}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.description}</td>
-						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.organname}</td>
+						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.creatorname}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.macaddress}</td>
 					</tr>
 				</c:forEach>

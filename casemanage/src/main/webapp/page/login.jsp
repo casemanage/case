@@ -45,7 +45,7 @@
 	        success:function(data){
 	        	var item = eval("(" + data + ")");
 	        	if(item.code == 0){ 
-	        		window.location.href ="<%=basePath%>associate/associateList.do";
+	        		window.location.href ="<%=basePath%>Home/statisticInfo.do";
 	        		$("#login-alert").html("");
 	        		$("#login-alert").hide();
 	        	}

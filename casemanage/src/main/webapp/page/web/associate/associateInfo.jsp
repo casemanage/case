@@ -39,52 +39,59 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            	<div class="pannel-header">社会机构信息</div> 
                  <div class="Panel-content">社会机构信息：${Associate.id == 0?"新建社会机构信息":Associate.name}</div>
         </div>
-       
-    <div class="containner-fluid text-center" style="margin-top:120px;">
-		<form id="devicePointForm" name="devicePointForm" action="device/jsonSaveOrUpdatePoint.do" method="post">
-	    	<div style="margin-top:15px;">
-	    		<span class="from-style">名称</span>
-	    		<input type="hidden" id="hid_assoId" value="${Associate.id}" />
-	    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入机构名称" value="${Associate.name}" />
-	    	</div>
-	        <div style="margin-top:15px;">
-	        	<span class="from-style">类型</span>
-				<input id="typeid" type="hidden"  name="typeid"   value="${Associate.typeid}" />
-				<select id="cmb_type" class="easyui-combobox"  data-options="editable:false,required:true,onSelect:function(record){$('#typeid').val(record.value);}"  style="width:254px;height:32px;">  
-					 <option value="">=请选择机构类型=</option>
-					 <c:forEach var="item" items="${assoType }">
-					 	<option value="${item.id}">${item.name }</option> 
-					 </c:forEach>
-				</select>  
-	    	</div>
-	        <div style="margin-top:15px;">
-	        	<span class="from-style">经度</span>
-	    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入经度" value="${Associate.latitude}" />
-	    	</div>
-	        <div style="margin-top:15px;">
-	        	<span class="from-style">维度</span>
-	    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入维度" value="${Associate.longitude}" />
-	    	</div>
-	        <div style="margin-top:15px;">
-	        	<span class="from-style">地址</span>
-	    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入地址" value="${Associate.address}" />
-	    	</div>
-	        <div style="margin-top:15px;">
-	        	<span class="from-style">描述</span>
-	    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入描述信息" value="${Associate.description}" />
-	    	</div> 
-	        <div style="margin-top:15px;">
-	        	<span class="from-style">采集单位</span>
-	    		<input type="text"  disabled="disabled"  class="easyui-validatebox" placeholder="请输入采集单位" value="${Associate.organname}" />
-	    	</div> 
-	        <div style="margin-top:15px;">
-	        	<span class="from-style">采集人</span>
-	    		<input type="text" disabled="disabled" class="easyui-validatebox" placeholder="请输入采集人" value="${Associate.creatorname}" />
-	    	</div> 
-	        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存"></div>
-	        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>
-		</form>
-    </div>
+        <div id="tabInfo" class="easyui-tabs" style="width:99%;height:95%;border:0;">  
+		    <div title="基础信息" >  
+		         <div class="containner-fluid text-center" style="margin-top:120px;">
+					<form id="devicePointForm" name="devicePointForm" action="device/jsonSaveOrUpdatePoint.do" method="post">
+				    	<div style="margin-top:15px;">
+				    		<span class="from-style">名称</span>
+				    		<input type="hidden" id="hid_assoId" value="${Associate.id}" />
+				    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入机构名称" value="${Associate.name}" />
+				    	</div>
+				        <div style="margin-top:15px;">
+				        	<span class="from-style">类型</span>
+							<input id="typeid" type="hidden"  name="typeid"   value="${Associate.typeid}" />
+							<select id="cmb_type" class="easyui-combobox"  data-options="editable:false,required:true,onSelect:function(record){$('#typeid').val(record.value);}"  style="width:254px;height:32px;">  
+								 <option value="">=请选择机构类型=</option>
+								 <c:forEach var="item" items="${assoType }">
+								 	<option value="${item.id}">${item.name }</option> 
+								 </c:forEach>
+							</select>  
+				    	</div>
+				        <div style="margin-top:15px;">
+				        	<span class="from-style">经度</span>
+				    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入经度" value="${Associate.latitude}" />
+				    	</div>
+				        <div style="margin-top:15px;">
+				        	<span class="from-style">维度</span>
+				    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入维度" value="${Associate.longitude}" />
+				    	</div>
+				        <div style="margin-top:15px;">
+				        	<span class="from-style">地址</span>
+				    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入地址" value="${Associate.address}" />
+				    	</div>
+				        <div style="margin-top:15px;">
+				        	<span class="from-style">描述</span>
+				    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入描述信息" value="${Associate.description}" />
+				    	</div> 
+				        <div style="margin-top:15px;">
+				        	<span class="from-style">采集单位</span>
+				    		<input type="text"  disabled="disabled"  class="easyui-validatebox" placeholder="请输入采集单位" value="${Associate.organname}" />
+				    	</div> 
+				        <div style="margin-top:15px;">
+				        	<span class="from-style">采集人</span>
+				    		<input type="text" disabled="disabled" class="easyui-validatebox" placeholder="请输入采集人" value="${Associate.creatorname}" />
+				    	</div> 
+				        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存"></div>
+				        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>
+					</form>
+			    </div>
+		    </div>  
+		    <div title="相关人员" >   
+		    	
+		    </div>  
+		</div> 
+   
 
 </body>
 </html>
