@@ -80,7 +80,6 @@ public class PersonServiceImpl implements PersonService {
 	{
 		return personLevelMapper.getPersonLevelList(personLevel);
 	}
-
 	
 	@Override
 	public PersonType getPersonTypeById(Integer personTypeId)
