@@ -24,11 +24,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->  
 	<script src="${pageContext.request.contextPath}/source/js/fusionChart/FusionCharts.js"></script>
 	<link href="${pageContext.request.contextPath}/source/js/fusionChart/FusionCharts.css" rel="stylesheet" />
+	<script type="text/javascript">
+		$(document).ready(function(){
+			 loadstationStatistic();
+			 loadtypeStatistic();
+			 loadstationTypeStatistic();
+			 loadlastMonthStatistic(); 
+			 loadlastWeekStatistic();
+			 loadlatestStatistic();
+		});
+		function loadstationStatistic(){
+		
+		};
+		function loadtypeStatistic(){
+		
+		};
+		function loadstationTypeStatistic(){
+		
+		};
+		function loadlastMonthStatistic(){
+		
+		};
+		function loadlastWeekStatistic(){
+		
+		};
+		function loadlatestStatistic(){
+		
+		};
+	</script>
   </head>
   
  <body style="background:#fff;">
 	 <div style="width:99%" >
-	 	<div id="stationStatistic" align="center"></div>
+	 	<div id="stationStatistic" align="center">
+	 	</div>
 	 </div>
 	 <div style="width:50%" >
 	 	<div id="typeStatistic" align="center"></div>
