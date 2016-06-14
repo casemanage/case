@@ -19,5 +19,9 @@ public interface PersonLevelMapper {
 
 	List<PersonLevel> getPersonLevel();
 
-	int getPersonLevelTotalCount(PersonLevel personLevel); 
+	int getPersonLevelTotalCount(PersonLevel personLevel);
+
+	List<PersonLevel> getPersonLevelList(PersonLevel personLevel);
+
+	List<PersonLevel> getExistPersonLevel(PersonLevel personLevel); 
 }
