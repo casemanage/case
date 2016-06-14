@@ -64,19 +64,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="containner-fluid text-center" style="margin-top:120px;">
 		<form id="personTypeInfoForm" name="personTypeInfoForm" action="person/jsonSaveOrUpdatePersonType.do" method="post">
 	    	
-	    	
+	    	<div><input name="id" value="${PersonType.id}" type="hidden"</div>
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">关键字</span>
-	    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入关键字" value="${PersonType.keyword}" />
+	    		<input type="text" name="keyword" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入关键字" value="${PersonType.keyword}" />
 	    	</div>
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">类型</span>
-	    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入类型" value="${PersonType.name}" />
+	    		<input type="text" name="name" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入类型" value="${PersonType.name}" />
 	    	</div>
-	        <div style="margin-top:15px;">
+	    	 <div style="margin-top:15px;">
 	        	<span class="from-style">描述</span>
-	    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入描述信息" value="${PersonType.description}" />
-	    	</div> 
+	    		<input type="text" name="description" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入类型" value="${PersonType.description}" />
+	    	</div>
+	      
 	       
 	        
 		</form>
