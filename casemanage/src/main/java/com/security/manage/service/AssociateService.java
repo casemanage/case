@@ -13,6 +13,17 @@ public interface AssociateService {
 
 	Associate getAssociateById(Integer id);
 
-	List<AssociateType> getAssociateType();
+	List<AssociateType> getAssociateTypeList(AssociateType associateType);
+
+	int getAssociateTypeTotalCount(AssociateType associateType);
+
+	AssociateType getAssociateTypeById(Integer associateTypeId);
+
+	List<AssociateType> getExistAssociateType(AssociateType associateType);
+
+	void saveOrUpdateAssociateType(AssociateType associateType);
+
+
+
 
 }

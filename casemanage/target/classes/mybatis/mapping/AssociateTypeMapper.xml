@@ -79,9 +79,32 @@
       DESCRIPTION = #{description,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getAssociateType" resultMap="BaseResultMap">
+  <select id="getAssociateTypeList" resultMap="BaseResultMap" parameterType="com.security.manage.model.AssociateType">
   	 select  
   	  <include refid="Base_Column_List" /> 
   	  from MC_ASSOCIATE_TYPE  
+  	<!--   where 1=1
+  	  <if test="searchName != null" >
+       keyword like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+       or name like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+        or description like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+    </if> -->
+  </select>
+  <select id="getAssociateTypeTotalCount" resultMap="BaseResultMap" parameterType="com.security.manage.model.AssociateType">
+  	 select  
+  	  count(*)
+  	  from MC_ASSOCIATE_TYPE  
+  </select>
+  <select id="getExistAssociateType" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonType">
+  	 select 
+  	  <include refid="Base_Column_List" />  
+  	  from MC_ASSOCIATE_TYPE 
+  	  where 1=1
+    	<if test="name != null" >
+        and  t.name = #{name,jdbcType=VARCHAR}
+       </if>  
+        <if test="id != null" >
+        and t.id != #{id,jdbcType=INTEGER}
+    </if>  	  
   </select>
 </mapper>

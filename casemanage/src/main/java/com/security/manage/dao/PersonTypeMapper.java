@@ -1,5 +1,7 @@
 package com.security.manage.dao;
 
+import java.util.List;
+
 import com.security.manage.model.PersonType;
 
 public interface PersonTypeMapper {
@@ -14,4 +16,12 @@ public interface PersonTypeMapper {
     int updateByPrimaryKeySelective(PersonType record);
 
     int updateByPrimaryKey(PersonType record);
+
+	int getPersonTypeTotalCount(PersonType personType);
+
+	List<PersonType> getPersonTypeList(PersonType personType);
+
+	List<PersonType> getExistPersonType(PersonType personType);
+
+	
 }
