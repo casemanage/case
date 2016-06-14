@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.security.manage.dao.PersonTypeMapper; 
 import com.security.manage.dao.PersonLevelMapper;
 import com.security.manage.dao.PersonMapper;
-import com.security.manage.dao.PersonTypeMapper;
 import com.security.manage.model.Person;
 import com.security.manage.model.PersonLevel; 
 import com.security.manage.model.PersonType;
@@ -98,7 +97,7 @@ public class PersonServiceImpl implements PersonService {
 		// TODO Auto-generated method stub
 		if(personType.getId() > 0 )
 		{
-			personTypeMapper.insertSelective(personType);
+			personTypeMapper.updateByPrimaryKeySelective(personType);
 		}else
 		{
 			personTypeMapper.insert(personType);

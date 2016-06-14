@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.security.manage.common.JsonResult; 
-import com.security.manage.model.Associate;
 import com.security.manage.model.Person;
 import com.security.manage.model.PersonLevel; 
 import com.security.manage.model.PersonType;
@@ -48,29 +47,12 @@ public class PersonController {
 					"iso8859-1"), "utf-8");
 			personType.setSearchName(searchName);
 		}
-		//设置页面初始值及页面尺寸
-		//associate.setPageSize(Constants.DEFAULT_PAGE_SIZE); 
-		//int pageNo = associate.getPageSize()*(associate.getPageNo()-1);
-		//associate.setPageCount(pageNo);
+		
 		List<PersonType> personTypelist = new ArrayList<PersonType>();
 		int countTotal = 0;
 		try { 
-			//Associate ax = associateService.getAssociateById(1);
-			personTypelist = personService.getPersonTypeList(personType); 
-//			for(Associate a :associatelist){
-//				if(a.getTimespan()!= null){
-//					String strDate = new String(a.getTimespan(),"UTF-8");
-//					try{
-//						 int year = Integer.parseInt(strDate.substring(0, 4));
-//					     int month = Integer.parseInt(strDate.substring(4, 6));
-//					     int day = Integer.parseInt(strDate.substring(6, 8));
-//					     String createdate = year+"-"+month+"-"+day;
-//					     a.setCreatedate(createdate);
-//					}catch(Exception ex){
-//					     a.setCreatedate("");
-//					}
-//				}
-//			}
+		
+			personTypelist = personService.getPersonTypeList(personType); 		
 			countTotal = personService.getPersonTypeTotalCount(personType);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,7 +70,7 @@ public class PersonController {
 	
 	/**
 	 * 重点人员类型查看编辑
-	 * @param associateTypeId
+	 * @param personTypeId
 	 * @param request
 	 * @param response
 	 * @return 
@@ -108,20 +90,20 @@ public class PersonController {
 			personType.setId(0);
 		}
 		request.setAttribute("PersonType", personType);
-		return "web/person/personTypeInfo";
+		return "web/person/PersonTypeInfo";
 	}	
 	
 	
 	/**
 	 * 重点人员类型新建/编辑保存
 	 * 
-	 * @param associateType
+	 * @param personType
 	 * @param request
 	 * @param response
 	 * @return js
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/jsonSaveOrUpdatePersonType.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/jsonSaveOrUpdatePersonType.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
 	public JsonResult<PersonType> SaveOrUpdateTask(PersonType personType,
 			HttpServletRequest request, HttpServletResponse response) {
 		JsonResult<PersonType> js = new JsonResult<PersonType>();

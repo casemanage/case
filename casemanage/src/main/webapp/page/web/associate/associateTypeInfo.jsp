@@ -23,13 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	--> 
 	 <script type="text/javascript">
-	$(document).ready(function() {
-		var aId = Number($("#hid_assoId").val());
-		if(aId > 0){
-			var typeid = $("#typeid").val();
-			$("#cmb_type").combobox("setValue",typeid);
-		}
-	});
+	
 	function saveAssociateType(obj){
 	if ($('#associateTypeInfoForm').form('validate')) {
 		 $(obj).attr("onclick", ""); 
@@ -50,7 +44,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  		}
 		  	 });  
 	}
-}     
+}  
+
 	</script> 
   </head>
   
@@ -61,7 +56,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            	<div class="fl">
                  <div class="Panel-content">社会机构类型：${AssociateType.id == 0?"新建社会机构类型信息":AssociateType.name}</div>
                </div>  
-                 <div class="fr">					
+                 <div class="fr">		
+                			
 					<div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存" onclick="saveAssociateType(this);"></div>
 	                <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>
 				</div>
@@ -70,18 +66,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="containner-fluid text-center" style="margin-top:120px;">
 		<form id="associateTypeInfoForm" name="associateTypeInfoForm" action="associate/jsonSaveOrUpdateAssociateType.do" method="post">
 	    	
-	    	
+	    	<div><input name="id" value="${AssociateType.id}" type="hidden"</div>
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">关键字</span>
-	    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入关键字" value="${AssociateType.keyword}" />
+	    		<input type="text" name="keyword" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入关键字" value="${AssociateType.keyword}" />
 	    	</div>
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">类型</span>
-	    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入类型" value="${AssociateType.name}" />
+	    		<input type="text" name="name" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入类型" value="${AssociateType.name}" />
 	    	</div>
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">描述</span>
-	    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入描述信息" value="${AssociateType.description}" />
+	    		<input type="text" name="description" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入描述信息" value="${AssociateType.description}" />
 	    	</div> 
 	       
 	        
