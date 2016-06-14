@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
  
+
 import com.security.manage.dao.PersonTypeMapper; 
 import com.security.manage.dao.PersonLevelMapper;
 import com.security.manage.dao.PersonMapper;
@@ -13,6 +14,7 @@ import com.security.manage.dao.PersonTypeMapper;
 import com.security.manage.model.Person;
 import com.security.manage.model.PersonLevel; 
 import com.security.manage.model.PersonType;
+import com.security.manage.model.TypeStatistic;
 import com.security.manage.service.PersonService;
 
 @Service("personService")
@@ -103,6 +105,18 @@ public class PersonServiceImpl implements PersonService {
 		{
 			personTypeMapper.insert(personType);
 		}
+	}
+
+	@Override
+	public List<TypeStatistic> getPersonTypeCountList() {
+		// TODO Auto-generated method stub
+		return personMapper.getPersonTypeCountList();
+	}
+
+	@Override
+	public List<TypeStatistic> getPersonStationCountList() {
+		// TODO Auto-generated method stub
+		return  personMapper.getPersonStationCountList();
 	}
 
 	

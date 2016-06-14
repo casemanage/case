@@ -2,9 +2,11 @@ package com.security.manage.service;
 
 import java.util.List;
  
+
 import com.security.manage.model.Person;
 import com.security.manage.model.PersonLevel; 
 import com.security.manage.model.PersonType;
+import com.security.manage.model.TypeStatistic;
 
 public interface PersonService {
  
@@ -30,6 +32,10 @@ public interface PersonService {
 
 	List<Person> getExistPersonList(Person p);
 
-	void saveOrUpdatePerson(Person person); 
+	void saveOrUpdatePerson(Person person);
+
+	List<TypeStatistic> getPersonTypeCountList();
+
+	List<TypeStatistic> getPersonStationCountList(); 
 
 }

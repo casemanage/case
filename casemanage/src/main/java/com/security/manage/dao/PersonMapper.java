@@ -3,6 +3,7 @@ package com.security.manage.dao;
 import java.util.List;
 
 import com.security.manage.model.Person;
+import com.security.manage.model.TypeStatistic;
 
 public interface PersonMapper {
     int deleteByPrimaryKey(Integer id);
@@ -24,4 +25,8 @@ public interface PersonMapper {
 	int getTotal(Person person);
 
 	List<Person> getExistPersonList(Person p);
+
+	List<TypeStatistic> getPersonTypeCountList();
+
+	List<TypeStatistic> getPersonStationCountList();
 }

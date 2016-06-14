@@ -14,6 +14,10 @@
     <result column="CREATORNAME" property="creatorname" jdbcType="VARCHAR" />
     <result column="ORGANNAME" property="organname" jdbcType="VARCHAR" />
     <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" /> 
+  </resultMap>  
+  <resultMap id="StatisticResultMap" type="com.security.manage.model.TypeStatistic" >
+    <id column="totalCount" property="totalCount" jdbcType="INTEGER" />
+    <result column="typeName" property="typeName" jdbcType="VARCHAR" /> 
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.security.manage.model.Associate" extends="BaseResultMap" >
     <result column="TIMESPAN" property="timespan" jdbcType="BINARY" />
@@ -241,4 +245,13 @@
 	      )
 	     </if>
   </select>
+  <select id="getAssociateTypeCountList" resultMap="StatisticResultMap" >
+  	select COUNT(*) as totalCount,at.name as typeName from MC_ASSOCIATE a
+		left join MC_ASSOCIATE_TYPE at on a.typeId = at.id
+		group by at.name
+    </select>
+  <select id="getAssociateStationCountList" resultMap="StatisticResultMap" >
+  	select COUNT(*) as totalCount,a.organname as typeName from MC_ASSOCIATE a 
+		group by a.organname
+    </select>
 </mapper>

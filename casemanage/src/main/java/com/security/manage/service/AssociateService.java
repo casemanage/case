@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.security.manage.model.Associate;
 import com.security.manage.model.AssociateType;
+import com.security.manage.model.TypeStatistic;
 
 public interface AssociateService {
 
@@ -22,6 +23,10 @@ public interface AssociateService {
 	List<AssociateType> getExistAssociateType(AssociateType associateType);
 
 	void saveOrUpdateAssociateType(AssociateType associateType);
+
+	List<TypeStatistic> getAssociateTypeCountList();
+
+	List<TypeStatistic> getAssociateStationCountList();
 
 
 
