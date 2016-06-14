@@ -354,4 +354,8 @@
 		</plugins>
 		<finalName>casemanage</finalName>
 	</build> 
+	<!-- <repository>
+		<id>central</id>
+		<url>file://E:\Tool\java\mavenRepository</url>
+	</repository> -->
 </project>
