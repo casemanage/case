@@ -11,7 +11,7 @@
              <li><a  A="frame-3" class="link-primary"><div class="containner-fluid" onclick="window.location.href='${pageContext.request.contextPath}/associate/associateTypeList.do'">社会机构类型管理</div></a></li>
              <li><a  A="frame-4" class="link-primary"><div class="containner-fluid" onclick="window.location.href='${pageContext.request.contextPath}/person/personTypeList.do'">重点人员类型管理</div></a></li>
              <li><a  A="frame-4" class="link-primary"><div class="containner-fluid" onclick="window.location.href='${pageContext.request.contextPath}/person/PersonLevelList.do'">重点人员级别管理</div></a></li>
-             <li><a  A="frame-4" class="link-primary"><div class="containner-fluid" onclick="window.location.href='${pageContext.request.contextPath}/associate/associateList.do'">重点人员车辆管理</div></a></li>
+             <li><a  A="frame-4" class="link-primary"><div class="containner-fluid" onclick="window.location.href='${pageContext.request.contextPath}/associate/personCarList.do'">重点人员车辆管理</div></a></li>
          </ul>
      </div>
  </div>

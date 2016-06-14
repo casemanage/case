@@ -85,30 +85,30 @@
   	  <include refid="Base_Column_List" /> 
   	  from MC_ASSOCIATE_TYPE
   	 	where 1=1
-  	<if test="searchName != null and searchName !=''" >
+  		<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '#{searchName}%'
+	      	NAME like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	keyword like '#{searchName}%'
+	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	description like '#{searchName}%'
+	      	description like '%#{searchName,jdbcType=VARCHAR}%'
 	      )
 	 </if>
   </select>
   <select id="getAssociateTypeTotalCount" resultType="java.lang.Integer" parameterType="com.security.manage.model.AssociateType">
   	 select  
   	  count(*)
-  	   from MC_ASSOCIATE_TYPE  p
+  	   from MC_ASSOCIATE_TYPE 
   	 	where 1=1
   	<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	p.NAME like '%#{searchName}%'
+	      	NAME like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	p.keyword like '%#{searchName}%'
+	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	p.description like '%#{searchName}%'
+	      	description like '%#{searchName,jdbcType=VARCHAR}%'
 	      )
-	 </if> 
+	 </if>
   </select>
   <select id="getExistAssociateType" resultMap="BaseResultMap" parameterType="com.security.manage.model.AssociateType">
   	 select 

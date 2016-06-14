@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.security.manage.common.JsonResult; 
 import com.security.manage.model.Person;
+import com.security.manage.model.PersonCar;
 import com.security.manage.model.PersonLevel; 
 import com.security.manage.model.PersonType;
-import com.security.manage.model.User;
 import com.security.manage.service.PersonService;
 import com.security.manage.util.Constants;
  
@@ -67,6 +67,45 @@ public class PersonController extends BaseController{
 		request.setAttribute("PersonType", personType);
 		request.setAttribute("PersonTypelist",personTypelist);
 		return "web/person/personTypeList";
+	}	
+	
+	/**
+	 * 重点人员车辆管理
+	 * @param personCar
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "/personCarList.do" ,method=RequestMethod.GET)
+	public String personCarList(
+			PersonCar personCar,
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{ 
+		//判断搜索栏是否为空，不为空则转为utf-8编码
+		if(personCar.getSearchName() != null && personCar.getSearchName() != ""){
+			String searchName = new String(personCar.getSearchName().getBytes(
+					"iso8859-1"), "utf-8");
+			personCar.setSearchName(searchName);
+		}
+		
+		List<PersonCar> personCarlist = new ArrayList<PersonCar>();
+		int countTotal = 0;
+		try { 
+		
+			personCarlist = personService.getPersonCarList(personCar); 		
+			countTotal = personService.getPersonCarTotalCount(personCar);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		//通过request绑定对象传到前台
+		personCar.setTotalCount(countTotal);
+		personCar.setPageSize(Constants.DEFAULT_PAGE_SIZE);
+		personCar.setPageCount(countTotal/Constants.DEFAULT_PAGE_SIZE+1);	
+		if (personCar.getPageNo() == null)
+			personCar.setPageNo(1);
+		request.setAttribute("PersonCar", personCar);
+		request.setAttribute("PersonCarlist",personCarlist);
+		return "web/person/personCarList";
 	}	
 	
 	/**
@@ -146,6 +185,32 @@ public class PersonController extends BaseController{
 		return "web/person/PersonTypeInfo";
 	}	
 	
+	
+	/**
+	 * 重点人员车辆查看编辑
+	 * @param personCarId
+	 * @param request
+	 * @param response
+	 * @return 
+	 */
+	@RequestMapping(value = "/personCarInfo.do")
+	public String personCarInfo(
+			@RequestParam(value="personCarId", required = false)Integer personCarId,
+			HttpServletRequest request, HttpServletResponse response){ 
+		PersonCar  personCar = new PersonCar();
+		if(personCarId != null && personCarId != 0){
+			try{
+				personCar = personService.getPersonCarById(personCarId);
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}			
+		}else{
+			personCar.setId(0);
+		}
+		request.setAttribute("PersonCar", personCar);
+		return "web/person/personCarInfo";
+	}	
+	
 	/**
 	 * 重点人员级别查看编辑
 	 * @param personLevelId
@@ -187,7 +252,7 @@ public class PersonController extends BaseController{
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/jsonSaveOrUpdatePersonType.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
-	public JsonResult<PersonType> SaveOrUpdateTask(PersonType personType,
+	public JsonResult<PersonType> SaveOrUpdatePersonType(PersonType personType,
 			HttpServletRequest request, HttpServletResponse response) {
 		JsonResult<PersonType> js = new JsonResult<PersonType>();
 		js.setCode(new Integer(1));
@@ -222,10 +287,56 @@ public class PersonController extends BaseController{
 		}
 		return js;
 	}
+	
+	/**
+	 * 重点人员车辆新建/编辑保存
+	 * 
+	 * @param personCar
+	 * @param request
+	 * @param response
+	 * @return js
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/jsonSaveOrUpdatePersonCar.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
+	public JsonResult<PersonCar> SaveOrUpdatePersonCar(PersonCar personCar,
+			HttpServletRequest request, HttpServletResponse response) {
+		JsonResult<PersonCar> js = new JsonResult<PersonCar>();
+		js.setCode(new Integer(1));
+		js.setMessage("保存失败!");
+		try {
+			if (personCar.getId() == null || personCar.getId() == 0)
+			{
+				personCar.setId(0);	
+			}
+			if (personCar.getName() != null) {
+				PersonCar p = new PersonCar();
+				String name = personCar.getName();
+				p.setName(name);
+				if (personCar.getId() > 0) {
+					p.setId(personCar.getId());
+				}				
+				List<PersonCar> lc = personService.getExistPersonCar(p);
+				if (lc.size() == 0) {
+					personService.saveOrUpdatePersonCar(personCar); 
+					js.setCode(new Integer(0));											
+					js.setMessage("保存成功!");
+				}else
+				{
+					js.setMessage("该重点人员车辆已存在!");
+				}									
+			} else {
+				js.setMessage("重点人员姓名不能为空!");
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return js;
+	}
 	 
 	@ResponseBody
 	@RequestMapping(value = "/jsonSaveOrUpdatePersonLevel.do", method = RequestMethod.POST)
-	public JsonResult<PersonLevel> SaveOrUpdateTask(PersonLevel personLevel,
+	public JsonResult<PersonLevel> SaveOrUpdatePersonLevel(PersonLevel personLevel,
 			HttpServletRequest request, HttpServletResponse response){
 		JsonResult<PersonLevel> js = new JsonResult<PersonLevel>();
 		js.setCode(new Integer(1));
