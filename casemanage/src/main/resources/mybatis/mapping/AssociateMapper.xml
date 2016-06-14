@@ -209,11 +209,11 @@
   	   where 1=1 
   	   <if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	a.NAME like '%#{searchName,jdbcType=VARCHAR}%'
+	      	p.NAME like '${searchName}%'
 	      	OR 
-	      	a.ADDRESS like '%#{searchName,jdbcType=VARCHAR}%'
+	      	p.ADDRESS like '${searchName}%'
 	      	OR 
-	      	a.SERIALNO like '%#{searchName,jdbcType=VARCHAR}%'
+	      	p.SERIALNO like '${searchName}%'
 	      )
 	     </if>
 	  	 <if test="pageCount != null and pageCount>-1">
@@ -233,11 +233,11 @@
   	 from MC_ASSOCIATE where 1=1 
   	   <if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	a.NAME like '%#{searchName,jdbcType=VARCHAR}%'
+	      	p.NAME like '${searchName}%'
 	      	OR 
-	      	a.ADDRESS like '%#{searchName,jdbcType=VARCHAR}%'
+	      	p.ADDRESS like '${searchName}%'
 	      	OR 
-	      	a.SERIALNO like '%#{searchName,jdbcType=VARCHAR}%'
+	      	p.SERIALNO like '${searchName}%'
 	      )
 	     </if>
   </select>

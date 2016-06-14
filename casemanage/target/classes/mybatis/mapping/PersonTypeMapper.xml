@@ -79,4 +79,9 @@
       DESCRIPTION = #{description,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getPersonType" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List"/>
+	from  MC_PERSON_TYPE
+  </select>
 </mapper>

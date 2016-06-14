@@ -1,5 +1,7 @@
 package com.security.manage.dao;
 
+import java.util.List;
+
 import com.security.manage.model.Person;
 
 public interface PersonMapper {
@@ -16,4 +18,10 @@ public interface PersonMapper {
     int updateByPrimaryKeyWithBLOBs(Person record);
 
     int updateByPrimaryKey(Person record);
+
+	List<Person> getPersonList(Person person);
+
+	int getTotal(Person person);
+
+	List<Person> getExistPersonList(Person p);
 }
