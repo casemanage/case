@@ -81,7 +81,7 @@ function pagesearch(){
 						<input type="hidden" id="pageNumber" name="pageNo"
 							value="${PersonType.pageNo}" />
 					</form> 
-	        <div style="margin-top:25px;"><input type="button" class="btn-sm" onclick="window.location.href='person/personTypeInfo.do?oersonTypeId=0'" value="新建重点人员类型"></div>
+	        <div style="margin-top:25px;"><input type="button" class="btn-sm" onclick="window.location.href='person/personTypeInfo.do?personTypeId=0'" value="新建重点人员类型"></div>
                 </div>
             </div>
             <div class="containner-fluid">
