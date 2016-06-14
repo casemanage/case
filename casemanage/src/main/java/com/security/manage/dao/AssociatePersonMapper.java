@@ -1,5 +1,8 @@
 package com.security.manage.dao;
 
+import java.util.List;
+
+import com.security.manage.model.Associate;
 import com.security.manage.model.AssociatePerson;
 
 public interface AssociatePersonMapper {
@@ -16,4 +19,8 @@ public interface AssociatePersonMapper {
     int updateByPrimaryKeyWithBLOBs(AssociatePerson record);
 
     int updateByPrimaryKey(AssociatePerson record);
+
+	List<AssociatePerson> getAssociateListById(Integer associateId);
+
+	List<Associate> getExistAssociate(AssociatePerson a);
 }

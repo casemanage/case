@@ -38,15 +38,15 @@
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.security.manage.model.Associate" >
-    insert into MC_ASSOCIATE (ID, NAME, TYPEID, 
+    insert into MC_ASSOCIATE (NAME, TYPEID, 
       SERIALNO, LATITUDE, LONGITUDE, 
       ADDRESS, CREATOR, CREATORNAME, 
-      ORGANNAME, DESCRIPTION, TIMESPAN
+      ORGANNAME, DESCRIPTION
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, 
+    values (#{name,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, 
       #{serialno,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{creator,jdbcType=INTEGER}, #{creatorname,jdbcType=VARCHAR}, 
-      #{organname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{timespan,jdbcType=BINARY}
+      #{organname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.security.manage.model.Associate" >
@@ -209,11 +209,11 @@
   	   where 1=1 
   	   <if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	p.NAME like '${searchName}%'
+	      	a.NAME like '${searchName}%'
 	      	OR 
-	      	p.ADDRESS like '${searchName}%'
+	      	a.ADDRESS like '${searchName}%'
 	      	OR 
-	      	p.SERIALNO like '${searchName}%'
+	      	a.SERIALNO like '${searchName}%'
 	      )
 	     </if>
 	  	 <if test="pageCount != null and pageCount>-1">
@@ -233,12 +233,23 @@
   	 from MC_ASSOCIATE where 1=1 
   	   <if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	p.NAME like '${searchName}%'
+	      	NAME like '${searchName}%'
 	      	OR 
-	      	p.ADDRESS like '${searchName}%'
+	      	ADDRESS like '${searchName}%'
 	      	OR 
-	      	p.SERIALNO like '${searchName}%'
+	        SERIALNO like '${searchName}%'
 	      )
 	     </if>
+  </select>
+  <select id="getExistAssociate" parameterType="com.security.manage.model.Associate" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	from MC_ASSOCIATE a
+  	where 1=1
+  	<if test="name != null">
+  		and a.name = #{name,jdbcType=VARCHAR}
+  	</if>
+  	<if test="id != null">
+  		and a.id != #{id,jdbcType=INTEGER}
+  	</if>
   </select>
 </mapper>

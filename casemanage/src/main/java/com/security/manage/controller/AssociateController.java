@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.security.manage.model.Associate;
+import com.security.manage.model.AssociatePerson;
 import com.security.manage.model.AssociateType;
+import com.security.manage.model.Person;
+import com.security.manage.model.User;
 import com.security.manage.service.AssociateService;  
 import com.security.manage.util.Constants; 
 import com.security.manage.common.JsonResult;
@@ -25,7 +28,7 @@ import com.security.manage.common.JsonResult;
 @Scope("prototype")
 @Controller
 @RequestMapping("/associate")
-public class AssociateController {
+public class AssociateController extends BaseController{
 	@Resource(name = "associateService")
 	private AssociateService associateService;
 	
@@ -92,18 +95,21 @@ public class AssociateController {
 	 * @param response
 	 * @return 
 	 */
-	@RequestMapping(value = "/associateInfo.do",method=RequestMethod.POST)
+	@RequestMapping(value = "/associateInfo.do")
 	public String associateInfo(
 			@RequestParam(value="associateId", required = false)Integer associateId,
 			HttpServletRequest request, HttpServletResponse response){ 
 		Associate  associate = new Associate();
+		List<AssociatePerson> la = new ArrayList<AssociatePerson>();
 		if(associateId != null && associateId != 0){
 			try{
 				associate = associateService.getAssociateById(associateId);
+				la = associateService.getAssociateListById(associateId);
 			}catch(Exception ex){
 				ex.printStackTrace();
 			}
 			request.setAttribute("Associate", associate);
+			request.setAttribute("associateList",la);
 		}else{
 			associate.setId(associateId);
 		}
@@ -243,4 +249,92 @@ public class AssociateController {
 		}
 		return js;
 	}
+	@ResponseBody
+	@RequestMapping(value = "/jsonSaveOrUpdateAssociate.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
+	public JsonResult<Associate> jsonSaveOrUpdateAssociate(Associate associate,
+			HttpServletRequest request, HttpServletResponse response){
+		JsonResult<Associate> js = new JsonResult<Associate>();
+		js.setCode(1);
+		js.setMessage("保存失败!");
+		try {
+			if(associate.getId() == null ||associate.getId() == 0){
+				//User u = this.getLoginUser();
+				//associate.setCreator(u.getId());
+				//associate.setCreatorname(u.getName());
+				associate.setCreator(1);
+				associate.setCreatorname("张三");
+				associate.setSerialno("000000");
+				associate.setOrganname("太升路派出所");
+				associate.setId(0);
+			}
+			if(associate.getTypeid() == null){
+				js.setMessage("机构类型不能为空!");
+				return js;
+			}
+			if(associate.getName() != null){
+				Associate a = new Associate();
+				a.setName(associate.getName());
+				if(associate.getId() > 0){
+					a.setId(associate.getId());
+				}
+				List<Associate> la = new ArrayList<Associate>();
+				la = associateService.getExistAssociate(a);
+				if(la.size() == 0){
+					associateService.saveOrUpdateAssociate(associate);
+					js.setCode(0);
+					js.setMessage("保存成功!");
+				}else{
+					js.setMessage("机构名已存在!");
+				}
+			}else{
+				js.setMessage("机构名不能为空!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return js;
+	}
+	@RequestMapping(value = "/associateMember.do")
+	public String associateMember(
+			@RequestParam(value="associateId", required = false)Integer associateId,
+			HttpServletRequest request, HttpServletResponse response){
+		Associate associate = new Associate();
+		associate.setId(associateId);
+		associate = associateService.getAssociateById(associateId);
+		request.setAttribute("Associate",associate);
+		return "web/associate/associateMember";
+	}
+	@ResponseBody
+	@RequestMapping(value = "/jsonUpdateMember.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
+	public JsonResult<AssociatePerson> jsonUpdateMember(AssociatePerson associatePerson,
+			HttpServletRequest request, HttpServletResponse response){
+		JsonResult<AssociatePerson> js = new JsonResult<AssociatePerson>();
+		js.setCode(1);
+		js.setMessage("保存失败!");
+		try {
+			
+			associatePerson.setCreator(1);
+			associatePerson.setCreatorname("张三");
+			associatePerson.setOrganname("太升路派出所");
+			if(associatePerson.getName() != null){
+				AssociatePerson a = new AssociatePerson();
+				a.setName(associatePerson.getName());
+				List<Associate> la = new ArrayList<Associate>();
+				la = associateService.getExistAssociate(a);
+				if(la.size() == 0){
+					associateService.updateAssociatePerson(associatePerson);
+					js.setCode(0);
+					js.setMessage("保存成功!");
+				}else{
+					js.setMessage("人员名已存在!");
+				}
+			}else{
+				js.setMessage("人员名不能为空!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return js;
+	}
+	
 }

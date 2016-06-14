@@ -3,6 +3,7 @@ package com.security.manage.service;
 import java.util.List;
 
 import com.security.manage.model.Associate;
+import com.security.manage.model.AssociatePerson;
 import com.security.manage.model.AssociateType;
 
 public interface AssociateService {
@@ -22,6 +23,16 @@ public interface AssociateService {
 	List<AssociateType> getExistAssociateType(AssociateType associateType);
 
 	void saveOrUpdateAssociateType(AssociateType associateType);
+
+	List<Associate> getExistAssociate(Associate a);
+
+	void saveOrUpdateAssociate(Associate associate);
+
+	List<AssociatePerson> getAssociateListById(Integer associateId);
+
+	List<Associate> getExistAssociate(AssociatePerson a);
+
+	void updateAssociatePerson(AssociatePerson associatePerson);
 
 
 

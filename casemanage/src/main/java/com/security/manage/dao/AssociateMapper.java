@@ -22,4 +22,6 @@ public interface AssociateMapper {
 	List<Associate> getAssociateList(Associate associate);
 
 	int getTotalCount(Associate associate);
+
+	List<Associate> getExistAssociate(Associate a);
 }

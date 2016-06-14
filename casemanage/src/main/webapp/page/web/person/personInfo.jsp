@@ -34,7 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var sex = $("#sex").val();
 			if(sex == 1){
 				$("#radio1").attr("checked",'checked');
-			}else if(sex ==0){
+			}else if(sex == 0 && sex != ""){
 				$("#radio2").attr("checked",'checked');
 			}else{
 			}
