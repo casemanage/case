@@ -33,9 +33,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			var sex = $("#sex").val();
 			if(sex == 1){
-				$("input[type=radio][value=1]").attr("checked",'checked');
-			}else if(sex ==0){
-				$("input[type=radio][value=2]").attr("checked",'checked');
+				$("#radio1").attr("checked",'checked');
+			}else if(sex == 0 && sex != ""){
+				$("#radio2").attr("checked",'checked');
 			}else{
 			}
 		});
@@ -54,7 +54,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 															function() {
 																window.location.href = "person/personList.do";
 															});
-											//$("#i_back").click();
 										} else {
 											$.messager.alert('错误信息',
 													data.message, 'error',
@@ -129,18 +128,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	</div> 
 	    	</c:if>
 	    	<div style="margin-top:15px;">
-	        	<span class="from-style">是由</span>
+	        	<span class="from-style">事由</span>
 	    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入是由" value="${person.casecomment}" name="casecomment"/>
 	    	</div> 
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">描述</span>
 	    		<input type="text"  class="easyui-validatebox" placeholder="请输入描述" value="${person.description}" name="description"/>
 	    	</div>
+	    	<div style="margin-top:15px;">
+	        	<span class="from-style">mac地址</span>
+	    		<input type="text" class="easyui-validatebox" placeholder="请输入mac地址" value="${person.macaddress}" name="macaddress"/>
+	    	</div>
 	    	<c:if test="${person.id>0}">
-		    	<div style="margin-top:15px;">
+		    	<%-- <div style="margin-top:15px;">
 		        	<span class="from-style">采集人Id</span>
 		    		<input type="text" disabled="disabled" class="easyui-validatebox" value="${person.creator}" name="creator"/>
-		    	</div>
+		    	</div> --%>
 		    	<div style="margin-top:15px;">
 		        	<span class="from-style">采集人</span>
 		    		<input type="text" disabled="disabled" class="easyui-validatebox" value="${person.creatorname}" name="creatorname"/>
@@ -150,14 +153,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    		<input type="text" disabled="disabled" class="easyui-validatebox" value="${person.organname}" name="organname"/>
 		    	</div>
 	    	</c:if>
-	    	<div style="margin-top:15px;">
-	        	<span class="from-style">mac地址</span>
-	    		<input type="text" class="easyui-validatebox" placeholder="请输入mac地址" value="${person.macaddress}" name="macaddress"/>
-	    	</div>
 	        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存" onclick="savePerson(this);"></div>
 	        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>
 		</form>
     </div>
-
 </body>
 </html>

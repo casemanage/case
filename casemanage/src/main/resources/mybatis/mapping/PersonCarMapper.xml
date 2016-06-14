@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.security.manage.dao.PersonTypeMapper" >
-  <resultMap id="BaseResultMap" type="com.security.manage.model.PersonType" >
+<mapper namespace="com.security.manage.dao.PersonCarMapper" >
+  <resultMap id="BaseResultMap" type="com.security.manage.model.PersonCar" >
     <id column="ID" property="id" jdbcType="INTEGER" />
-    <result column="KEYWORD" property="keyword" jdbcType="VARCHAR" />
+    <result column="NUMBER" property="NUMBER" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, KEYWORD, NAME, DESCRIPTION
+    ID, NUMBER, NAME, DESCRIPTION
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from MC_PERSON_TYPE
+    from MC_PERSON_CAR
     where ID = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from MC_PERSON_TYPE
+    delete from MC_PERSON_CAR
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.security.manage.model.PersonType" >
-    insert into MC_PERSON_TYPE ( KEYWORD, NAME, 
+  <insert id="insert" parameterType="com.security.manage.model.PersonCar" >
+    insert into MC_PERSON_CAR ( NUMBER, NAME, 
       DESCRIPTION)
-    values ( #{keyword,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+    values ( #{number,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{description,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.security.manage.model.PersonType" >
-    insert into MC_PERSON_TYPE
+  <insert id="insertSelective" parameterType="com.security.manage.model.PersonCar" >
+    insert into MC_PERSON_CAR
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         ID,
       </if>
-      <if test="keyword != null" >
-        KEYWORD,
+      <if test="number != null" >
+        NUMBER,
       </if>
       <if test="name != null" >
         NAME,
@@ -47,7 +47,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="keyword != null" >
-        #{keyword,jdbcType=VARCHAR},
+        #{number,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -57,11 +57,11 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.security.manage.model.PersonType" >
-    update MC_PERSON_TYPE
+  <update id="updateByPrimaryKeySelective" parameterType="com.security.manage.model.PersonCar" >
+    update MC_PERSON_CAR
     <set >
-      <if test="keyword != null" >
-        KEYWORD = #{keyword,jdbcType=VARCHAR},
+      <if test="number != null" >
+        NUMBER = #{number,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         NAME = #{name,jdbcType=VARCHAR},
@@ -72,8 +72,8 @@
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.security.manage.model.PersonType" >
-    update MC_PERSON_TYPE
+  <update id="updateByPrimaryKey" parameterType="com.security.manage.model.PersonCar" >
+    update MC_PERSON_CAR
     set KEYWORD = #{keyword,jdbcType=VARCHAR},
       NAME = #{name,jdbcType=VARCHAR},
       DESCRIPTION = #{description,jdbcType=VARCHAR}
@@ -81,16 +81,16 @@
   </update> 
   
   
-     <select id="getPersonTypeList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonType">
+     <select id="getPersonCarList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonCar">
   	 select 
   	  <include refid="Base_Column_List" />  
   		from MC_PERSON_TYPE 
   	 	where 1=1
   	<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '%#{searchName,jdbcType=VARCHAR}%'
+	      	number like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
+	      	name like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
 	      	description like '%#{searchName,jdbcType=VARCHAR}%'
 	      )
@@ -99,15 +99,15 @@
   
  
   
-  <select id="getPersonTypeTotalCount" resultType="java.lang.Integer" parameterType="com.security.manage.model.PersonType">
+  <select id="getPersonCarTotalCount" resultType="java.lang.Integer" parameterType="com.security.manage.model.PersonCar">
   	 select count(*)
-  	 	from MC_PERSON_TYPE 
+  	 	from MC_PERSON_CAR 
   	 	where 1=1
   	<if test="searchName != null and searchName !=''" >
 	      and ( 
 	      	NAME like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
+	      	number like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
 	      	description like '%#{searchName,jdbcType=VARCHAR}%'
 	      )
@@ -115,17 +115,21 @@
   	  	    
   </select>
   
-   <select id="getExistPersonType" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonType">
+   <select id="getExistPersonCar" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonCar">
   	 select 
   	  <include refid="Base_Column_List" />  
   	  from MC_PERSON_TYPE t
   	  where 1=1
-    	<if test="name != null" >
-        and  t.name = #{name,jdbcType=VARCHAR}
+    	<if test="number != null" >
+        and  t.number = #{number,jdbcType=VARCHAR}
        </if>  
+       <if test="name != null" >
+        and  t.name = #{name,jdbcType=VARCHAR}
+       </if> 
         	  
-    </select>  
-  <select id="getPersonType" resultMap="BaseResultMap">
+    </select> 
+  
+  <select id="getPersonCar" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List"/>
 	from  MC_PERSON_TYPE 

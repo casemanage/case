@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    <title>重点人员类型管理</title>
+    <title>重点人员车辆管理</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -25,9 +25,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 		$(document).ready(function(){
 			$("#pager").pager({
-			    pagenumber:'${PersonType.pageNo}',                         /* 表示初始页数 */
-			    pagecount:'${PersonType.pageCount}',                      /* 表示总页数 */
-			    totalCount:'${PersonType.totalCount}',
+			    pagenumber:'${PersonCar.pageNo}',                         /* 表示初始页数 */
+			    pagecount:'${PersonCar.pageCount}',                      /* 表示总页数 */
+			    totalCount:'${PersonCar.totalCount}',
 			    buttonClickCallback:PageClick                     /* 表示点击分页数按钮调用的方法 */                  
 			});  
 			/* $("#deviceList tr").each(function(i){
@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 PageClick = function(pageclickednumber) {
 	$("#pager").pager({
 	    pagenumber:pageclickednumber,                 /* 表示启示页 */
-	    pagecount:'${PersonType.pageCount}',                  /* 表示最大页数pagecount */
+	    pagecount:'${PersonCar.pageCount}',                  /* 表示最大页数pagecount */
 	    buttonClickCallback:PageClick                 /* 表示点击页数时的调用的方法就可实现javascript分页功能 */            
 	});
 	
@@ -58,8 +58,8 @@ function search(){
 }
 
 function pagesearch(){
-	if ($('#PersonTypeForm').form('validate')) {
-		PersonTypeForm.submit();
+	if ($('#PersonCarForm').form('validate')) {
+		PersonCarForm.submit();
 	}  
 }
  
@@ -68,20 +68,20 @@ function pagesearch(){
   
   <body style="background:#fff;">
         	<div class="containner-fluid">
-            	<div class="pannel-header">重点人员类型管理</div>
+            	<div class="pannel-header">重点人员车辆管理</div>
                 <div class="Panel-content">
-					<form id="PersonTypeForm" name="PersonTypeForm"
-						action="person/personTypeList.do" method="get"> 
+					<form id="PersonCarForm" name="PersonCarForm"
+						action="person/personCarList.do" method="get"> 
 							 <div> 
 								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox" 
-									placeholder="搜索" value="${PersonType.searchName}" /> 
+									placeholder="搜索" value="${PersonCar.searchName}" /> 
 								<span onclick="search();">搜索</span>
 							</div>  
 		                    
 						<input type="hidden" id="pageNumber" name="pageNo"
-							value="${PersonType.pageNo}" />
+							value="${PersonCar.pageNo}" />
 					</form> 
-	        <div style="margin-top:25px;"><input type="button" class="btn-sm" onclick="window.location.href='person/personTypeInfo.do?personTypeId=0'" value="新建重点人员类型"></div>
+	        <div style="margin-top:25px;"><input type="button" class="btn-sm" onclick="window.location.href='person/personCarInfo.do?PersonCarId=0'" value="新建重点人员车辆"></div>
                 </div>
             </div>
             <div class="containner-fluid">
@@ -89,18 +89,18 @@ function pagesearch(){
                     <thead>
 						<tr style="background-color:#D6D3D3;font-weight: bold;">
 							<th width="4%" style="display:none">&nbsp;</th>
-							<th>关键字</th>							
-							<th>类型</th>							
+							<th>车牌号</th>							
+							<th>姓名</th>							
 							<th>描述</th> 
 						</tr>
                     </thead>
                     <tbody>
-                       <c:forEach var="item" items="${PersonTypelist}">
+                       <c:forEach var="item" items="${PersonCarlist}">
 						<tr>
 							<td align="center" style="display:none">${item.id}</td>
-							<td align="center" ondblclick="window.location.href='person/personTypeInfo.do?personTypeId=${item.id}'">${item.keyword}</td>
-							<td align="center" ondblclick="window.location.href='person/personTypeInfo.do?personTypeId=${item.id}'">${item.name}</td>
-							<td align="center" ondblclick="window.location.href='person/personTypeInfo.do?personTypeId=${item.id}'">${item.description}</td>
+							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?PersonCarId=${item.id}'">${item.number}</td>
+							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?PersonCarId=${item.id}'">${item.name}</td>
+							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?PersonCarId=${item.id}'">${item.description}</td>
 							
 						</tr>
 					</c:forEach>

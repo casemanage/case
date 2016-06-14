@@ -40,17 +40,17 @@
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.security.manage.model.AssociatePerson" >
-    insert into MC_ASSOCIATE_PERSON (ID, NAME, SEX, 
+    insert into MC_ASSOCIATE_PERSON (NAME, SEX, 
       BIRTH, PHOTOURL, IDCARD, 
       ADDRESS, ASSOCIATEID, CREATOR, 
       CREATORNAME, ORGANNAME, CHARACTER, 
-      DESCRIPTION, ISLEADER, TIMESPAN
+      DESCRIPTION, ISLEADER
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
+    values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
       #{birth,jdbcType=NVARCHAR}, #{photourl,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{associateid,jdbcType=INTEGER}, #{creator,jdbcType=INTEGER}, 
       #{creatorname,jdbcType=VARCHAR}, #{organname,jdbcType=VARCHAR}, #{character,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{isleader,jdbcType=INTEGER}, #{timespan,jdbcType=BINARY}
+      #{description,jdbcType=VARCHAR}, #{isleader,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.security.manage.model.AssociatePerson" >
@@ -233,4 +233,17 @@
       ISLEADER = #{isleader,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getAssociateListById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from MC_ASSOCIATE_PERSON
+  	where ASSOCIATEID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getExistAssociate" parameterType="com.security.manage.model.AssociatePerson" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from MC_ASSOCIATE_PERSON
+  	where 1=1
+  	<if test="name != null">
+  		and name = #{name,jdbcType=VARCHAR}
+  	</if>
+  </select>
 </mapper>
