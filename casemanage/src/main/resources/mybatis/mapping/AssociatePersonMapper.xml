@@ -236,7 +236,7 @@
   <select id="getAssociateListById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List"/>
   	from MC_ASSOCIATE_PERSON
-  	where ASSOCIATEID = #{id,jdbcType=INTEGER}
+  	where ASSOCIATEID = #{associateid,jdbcType=INTEGER}
   </select>
   <select id="getExistAssociate" parameterType="com.security.manage.model.AssociatePerson" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List"/>
@@ -246,4 +246,9 @@
   		and name = #{name,jdbcType=VARCHAR}
   	</if>
   </select>
+  <update id="updateById" parameterType="java.lang.Integer">
+  	update MC_ASSOCIATE_PERSON
+  	set ASSOCIATEID = 0
+  	where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

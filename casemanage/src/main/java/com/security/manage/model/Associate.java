@@ -1,5 +1,7 @@
 package com.security.manage.model;
 
+import java.util.Date;
+
 import com.security.manage.util.Page;
 
 public class Associate extends Page {
@@ -10,14 +12,6 @@ public class Associate extends Page {
     private Integer typeid;
     
     private String typename;
-
-    public String getTypename() {
-		return typename;
-	}
-
-	public void setTypename(String typename) {
-		this.typename = typename;
-	}
 
 	private String serialno;
 
@@ -36,6 +30,14 @@ public class Associate extends Page {
     private String description;
 
     private byte[] timespan;
+    
+    private String timestring;
+    
+    private Date createtime;
+    
+    private String createtimes;
+    
+    private String telephone;
     
     public String getCreatedate() {
 		return createdate;
@@ -142,4 +144,44 @@ public class Associate extends Page {
     public void setTimespan(byte[] timespan) {
         this.timespan = timespan;
     }
+
+	public String getTimestring() {
+		return timestring;
+	}
+
+	public void setTimestring(String timestring) {
+		this.timestring = timestring;
+	}
+	
+	public String getTypename() {
+		return typename;
+	}
+
+	public void setTypename(String typename) {
+		this.typename = typename;
+	}
+
+	public Date getCreatetime() {
+		return createtime;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String getCreatetimes() {
+		return createtimes;
+	}
+
+	public void setCreatetimes(String createtimes) {
+		this.createtimes = createtimes;
+	}
 }

@@ -23,4 +23,6 @@ public interface AssociatePersonMapper {
 	List<AssociatePerson> getAssociateListById(Integer associateId);
 
 	List<Associate> getExistAssociate(AssociatePerson a);
+
+	void updateById(AssociatePerson associatePerson);
 }

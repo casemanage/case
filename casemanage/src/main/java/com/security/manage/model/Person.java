@@ -1,5 +1,7 @@
 package com.security.manage.model;
 
+import java.util.Date;
+
 import com.security.manage.util.Page;
 
 public class Person extends Page  {
@@ -40,6 +42,12 @@ public class Person extends Page  {
     private String typeName;
     
     private String levelName;
+    
+    private Date createtime;
+    
+    private String createtimes;
+    
+    private String telephone;
 
     public Integer getId() {
         return id;
@@ -191,6 +199,30 @@ public class Person extends Page  {
 
 	public void setLevelName(String levelName) {
 		this.levelName = levelName;
+	}
+
+	public Date getCreatetime() {
+		return createtime;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String getCreatetimes() {
+		return createtimes;
+	}
+
+	public void setCreatetimes(String createtimes) {
+		this.createtimes = createtimes;
 	}
 
 	

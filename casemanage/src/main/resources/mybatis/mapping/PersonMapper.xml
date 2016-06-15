@@ -20,6 +20,8 @@
     <result column="MACADDRESS" property="macaddress" jdbcType="VARCHAR" />
     <result column="typeName" property="typeName" jdbcType="VARCHAR" />
     <result column="levelName" property="levelName" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="DATE"/>
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="StatisticResultMap" type="com.security.manage.model.TypeStatistic" >
     <id column="totalCount" property="totalCount" jdbcType="INTEGER" />
@@ -30,7 +32,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     p.ID, p.NAME, p.TYPEID, p.LEVELID, p.SEX, p.BIRTH, p.PHOTOURL, p.IDCARD, p.ADDRESS, p.SERIALNO, p.CASECOMMENT, 
-    p.DESCRIPTION, p.CREATOR, p.CREATORNAME, p.ORGANNAME, p.MACADDRESS
+    p.DESCRIPTION, p.CREATOR, p.CREATORNAME, p.ORGANNAME, p.MACADDRESS,p.createTime,p.telephone
   </sql>
   <sql id="Blob_Column_List" >
     p.TIMESPAN
@@ -53,13 +55,13 @@
       PHOTOURL, IDCARD, ADDRESS, 
       SERIALNO, CASECOMMENT, DESCRIPTION, 
       CREATOR, CREATORNAME, ORGANNAME, 
-      MACADDRESS)
+      MACADDRESS,createTime,telephone)
     values (#{name,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, 
       #{levelid,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{birth,jdbcType=NVARCHAR}, 
       #{photourl,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{serialno,jdbcType=VARCHAR}, #{casecomment,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{creator,jdbcType=INTEGER}, #{creatorname,jdbcType=VARCHAR}, #{organname,jdbcType=VARCHAR}, 
-      #{macaddress,jdbcType=VARCHAR})
+      #{macaddress,jdbcType=VARCHAR},#{createtime,jdbcType=DATE}, #{telephone,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.security.manage.model.Person" >
     insert into MC_PERSON
@@ -220,6 +222,12 @@
       </if>
       <if test="timespan != null" >
         TIMESPAN = #{timespan,jdbcType=BINARY},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=DATE},
+      </if>
+      <if test="description != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}

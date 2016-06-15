@@ -1,7 +1,9 @@
 package com.security.manage.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -390,6 +392,12 @@ public class PersonController extends BaseController{
 		int countTotal = 0;
 		try { 
 			personlist = personService.getPersonList(person);
+			for(Person p:personlist){
+				Date d = p.getCreatetime();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String s = sdf.format(d);
+				p.setCreatetimes(s);
+			}
 			countTotal = personService.getTotal(person);
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -411,6 +419,10 @@ public class PersonController extends BaseController{
 		Person p = new Person();
 		if(personId != 0 && personId != null){
 			p = personService.getPersonById(personId);
+			Date d = p.getCreatetime();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String s = sdf.format(d);
+			p.setCreatetimes(s);
 		}else{
 			p.setId(personId);
 		}
@@ -466,6 +478,17 @@ public class PersonController extends BaseController{
 					return js;
 				}
 			} 
+			if(person.getCreatetimes() != null && !"".equals(person.getCreatetimes())){
+				try {
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String s = person.getCreatetimes();
+					Date d = sdf.parse(s);
+					person.setCreatetime(d);
+				} catch (Exception e) {
+					js.setMessage("日期格式只能为(如：2016-06-15)!");
+					return js;
+				}
+			}
 			personService.saveOrUpdatePerson(person);
 			js.setCode(new Integer(0));
 			js.setMessage("保存成功!");

@@ -52,49 +52,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									}
 								});
 			}
-		}  
-		function getAssociateList(){
-			var groupId = $("#groupId").val();
-			var areaIds = $("#treeList").tree("getChecked");
-			var s = "";
-			for(var i=0;i<areaIds.length;i++){
-				s += areaIds[i].id+",";
-			}
-			var deviceName = $("#deviceName").val();
-			var deviceNumber = $("#deviceNumber").val();
-			var pageNumber = $("#pageNumber").val();
+		}
+		function deleteByAssociateId(associateId,Id){
+			$.messager.confirm("删除确认","确认删除该成员?",function(r){  
+		    if (r){  
 			$.ajax({
-				url : "deviceGroup/jsonLoadDeviceList.do?areaIds="+s+"&&deviceName="+deviceName+"&&deviceNumber="+deviceNumber+"&&pageNumber="+pageNumber,
+				url : "associate/jsonDeleteMember.do?associateId="+associateId+"&&Id="+Id,
 				type : "post",  
 				dataType:"json",
 				success : function(data) { 
-		  			if(data.code == 0){ 
-		  				 $("#pager").pager({
-						    pagenumber:data.obj.pageNo,                         /* 表示初始页数 */
-						    pagecount:data.obj.pageCount,                      /* 表示总页数 */
-						    totalCount:data.obj.totalCount,
-						    buttonClickCallback:PageClick                     /* 表示点击分页数按钮调用的方法 */                  
-						});
-						$("#deviceMemberList").html("");
-						fillDeviceList(data.list);
+		  			if(data.code==0){ 
+		  				$.messager.alert('删除信息',data.message,'info',function(){ 
+		  					$("#MemberList").html("");
+							fillMemberList(data.list);
+		       			});
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error');
 		  			} 
 				}
 			});
-		}
-		function fillDeviceList(lst){
-			var html = "<tbody>";
-			html += "<tr><th width='4%' style='display:none'>&nbsp;</th><th>选择成员</th><th>设备ID</th><th>设备编号</th><th>设备名称</th><th>Naming</th><th>RTSP</th><th>设备类型</th><th>设备地址</th><th>IP地址</th><th>所属区域</th></tr>";
-			for(var i = 0; i<lst.length;i++){
-				html += "<tr>";
-				html += "<td style='display:none'>"+lst[i].id+"</td><td><input id='checkbox' type='checkbox'/>"+"</td><td align='left'>"+(lst[i].pointId == null ? "" : lst[i].pointId)+"</td><td  align='left'>"+(lst[i].pointNumber == null ? "":lst[i].pointNumber)+"</td>";
-				html += "<td>"+(lst[i].pointName == null ? "":lst[i].pointName)+"</td><td>"+(lst[i].pointNaming == null ? "":lst[i].pointNaming)+"</td>"+"<td>"+(lst[i].rtspUrl == null ? "" : lst[i].rtspUrl)+"</td><td>"+(lst[i].type == null ? "" : lst[i].type)+"</td>"+"<td>"+(lst[i].address == null ? "" : lst[i].address)+"</td><td>"+(lst[i].ipAddress == null ? "" : lst[i].ipAddress)+"</td>"+"<td>"+(lst[i].areaName == null ? "" : lst[i].areaName)+"</td>";
-				html += "</tr>";
-			}
-			html += "</tbody>";
-			$("#deviceMemberList").html(html);
-		}
+	    }  
+	});
+} 
+function fillMemberList(lst){
+	var html = "";
+	for(var i = 0; i<lst.length;i++){
+		html += "<tr>";
+		html += "<td align='center' style='display:none'>"+lst[i].id+"</td>"+"<td align='center'>"+(lst[i].name == null ? "":lst[i].name)+"<td align='center'>"+(lst[i].sex == 0 ? "女":"男")+"</td>";
+		html += "<td align='center'>"+(lst[i].birth == null ? "":lst[i].birth)+"</td><td align='center'>"+(lst[i].idcard == null ? "":lst[i].idcard)+"</td>"+"<td align='center'>"+(lst[i].address == null ? "" : lst[i].address)+"</td><td align='center'>"+(lst[i].description == null ? "" : lst[i].description)+"</td>"+"<td align='center'>"+(lst[i].isleader == 0 ?"普通人员":"负责人")+"</td>";
+		html += "<td align='center'>"+(lst[i].creatorname == null ? "":lst[i].creatorname)+"</td><td align='center'>"+(lst[i].organname == null ? "":lst[i].organname)+"</td>"+"<td><input type='button' onclick='deleteByAssociateId("+lst[i].associateid+","+lst[i].id+");' value='X'/>";
+		html += "</tr>";
+	}
+	$("#MemberList").html(html);
+} 
 	</script>
   </head>
   
@@ -135,17 +125,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        	<span class="from-style">地址</span>
 		    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入地址" value="${Associate.address}" name="address"/>
 		    	</div>
+		    	<div style="margin-top:15px;">
+		        	<span class="from-style">联系方式</span>
+		    		<input type="text"  class="easyui-validatebox" placeholder="请输入联系方式" value="${Associate.telephone}" name="telephone"/>
+	    		</div>
 		        <div style="margin-top:15px;">
 		        	<span class="from-style">描述</span>
 		    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入描述信息" value="${Associate.description}" name="description"/>
-		    	</div> 
-		        <div style="margin-top:15px;">
-		        	<span class="from-style">采集单位</span>
-		    		<input type="text"  disabled="disabled"  class="easyui-validatebox" placeholder="请输入采集单位" value="${Associate.organname}" name="organname"/>
-		    	</div> 
-		        <div style="margin-top:15px;">
-		        	<span class="from-style">采集人</span>
-		    		<input type="text" disabled="disabled" class="easyui-validatebox" placeholder="请输入采集人" value="${Associate.creatorname}" name="creatorname"/>
+		    	</div>
+		    	<c:if test="${Associate.id>0}"> 
+			        <div style="margin-top:15px;">
+			        	<span class="from-style">采集单位</span>
+			    		<input type="text"  disabled="disabled"  class="easyui-validatebox" placeholder="请输入采集单位" value="${Associate.organname}" name="organname"/>
+			    	</div> 
+			        <div style="margin-top:15px;">
+			        	<span class="from-style">采集人</span>
+			    		<input type="text" disabled="disabled" class="easyui-validatebox" placeholder="请输入采集人" value="${Associate.creatorname}" name="creatorname"/>
+			    	</div>
+			    </c:if>
+			    <div style="margin-top:15px;">
+		        	<span class="from-style">采集时间</span>
+		    		<input type="text"  class="easyui-validatebox" placeholder="请输入采集时间" value="${Associate.createtimes}" name="createtimes"/>
 		    	</div> 
 		        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存" onclick="saveAssociste(this);"></div>
 		        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>
@@ -180,7 +180,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<th align="center">操作</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="MemberList">
 						<c:forEach var="item" items="${associateList}">
 							<tr>
 								<td align="center" style="display:none">${item.id}</td>
@@ -197,14 +197,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<td>${item.address}</td>
 								<td>${item.description}</td>
 								<c:if test="${item.isleader == 0}">
-									<td>普通员工</td>
+									<td>普通人员</td>
 								</c:if>
 								<c:if test="${item.isleader == 1}">
 									<td>负责人</td>
 								</c:if>
 								<td>${item.creatorname}</td>
 								<td>${item.organname}</td>
-								<td><input type="button" onclick="deleteByAssociateId(${Associate.id});" value="X"/></td>
+								<td><input type="button" onclick="deleteByAssociateId(${Associate.id},${item.id});" value="X"/></td>
 							</tr>
 						</c:forEach>
 					</tbody>
