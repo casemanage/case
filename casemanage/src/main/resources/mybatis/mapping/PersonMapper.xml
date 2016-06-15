@@ -23,6 +23,10 @@
     <result column="createTime" property="createtime" jdbcType="DATE"/>
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="StatisticResultMap" type="com.security.manage.model.TypeStatistic" >
+    <id column="totalCount" property="totalCount" jdbcType="INTEGER" />
+    <result column="typeName" property="typeName" jdbcType="VARCHAR" /> 
+  </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.security.manage.model.Person" extends="BaseResultMap" >
     <result column="TIMESPAN" property="timespan" jdbcType="BINARY" />
   </resultMap>
@@ -339,4 +343,13 @@
   		and p.id != #{id,jdbcType=INTEGER}
   	</if>
   </select>
+  <select id="getPersonTypeCountList" resultMap="StatisticResultMap" >
+  	select COUNT(*) as totalCount,pt.name as typeName from MC_PERSON p
+		left join MC_PERSON_TYPE pt on p.typeId = pt.id
+		group by pt.name
+    </select>
+  <select id="getPersonStationCountList" resultMap="StatisticResultMap" >
+  	select COUNT(*) as totalCount,p.organname as typeName from MC_PERSON p 
+		group by p.organname
+    </select>
 </mapper>

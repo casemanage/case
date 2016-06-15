@@ -4,9 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.springframework.stereotype.Service;
-
-import com.security.manage.dao.PersonCarMapper;
+import org.springframework.stereotype.Service; 
+import com.security.manage.dao.PersonCarMapper; 
 import com.security.manage.dao.PersonTypeMapper; 
 import com.security.manage.dao.PersonLevelMapper;
 import com.security.manage.dao.PersonMapper;
@@ -14,6 +13,7 @@ import com.security.manage.model.Person;
 import com.security.manage.model.PersonCar;
 import com.security.manage.model.PersonLevel; 
 import com.security.manage.model.PersonType;
+import com.security.manage.model.TypeStatistic;
 import com.security.manage.service.PersonService;
 
 @Service("personService")
@@ -121,7 +121,19 @@ public class PersonServiceImpl implements PersonService {
 		}
 	}
 
+	@Override 
+	public List<TypeStatistic> getPersonTypeCountList() {
+		// TODO Auto-generated method stub
+		return personMapper.getPersonTypeCountList();
+	}
+
 	@Override
+	public List<TypeStatistic> getPersonStationCountList() {
+		// TODO Auto-generated method stub
+		return  personMapper.getPersonStationCountList();
+	}
+
+	 
 	public int getPersonLevelTotalCount(PersonLevel personLevel) {
 		// TODO Auto-generated method stub
 		return personLevelMapper.getPersonLevelTotalCount(personLevel);
@@ -181,6 +193,5 @@ public class PersonServiceImpl implements PersonService {
 	public int getPersonCarTotalCount(PersonCar personCar) {
 		// TODO Auto-generated method stub
 		return personCarMapper.getPersonCarTotalCount(personCar);
-	}
-
+	} 
 }

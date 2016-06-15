@@ -12,6 +12,7 @@ import com.security.manage.dao.AssociateTypeMapper;
 import com.security.manage.model.Associate;
 import com.security.manage.model.AssociatePerson;
 import com.security.manage.model.AssociateType;
+import com.security.manage.model.TypeStatistic;
 import com.security.manage.service.AssociateService; 
 
 @Service("associateService")
@@ -81,7 +82,17 @@ public class AssociateServiceImpl implements AssociateService{
 		}
 	}
 
+	@Override 
+	public List<TypeStatistic> getAssociateTypeCountList() {
+		// TODO Auto-generated method stub
+		return associateMapper.getAssociateTypeCountList();
+	}
+
 	@Override
+	public List<TypeStatistic> getAssociateStationCountList() {
+		// TODO Auto-generated method stub
+		return associateMapper.getAssociateStationCountList();
+	}
 	public List<Associate> getExistAssociate(Associate a) {
 		// TODO Auto-generated method stub
 		return associateMapper.getExistAssociate(a);
@@ -112,7 +123,7 @@ public class AssociateServiceImpl implements AssociateService{
 	@Override
 	public void updateAssociatePerson(AssociatePerson associatePerson) {
 		// TODO Auto-generated method stub
-		associatePersonMapper.insert(associatePerson);
+		associatePersonMapper.insert(associatePerson); 
 	}
 
 	@Override

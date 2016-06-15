@@ -3,6 +3,7 @@ package com.security.manage.dao;
 import java.util.List;
 
 import com.security.manage.model.Associate;
+import com.security.manage.model.TypeStatistic;
 
 public interface AssociateMapper {
     int deleteByPrimaryKey(Integer id);
@@ -22,6 +23,10 @@ public interface AssociateMapper {
 	List<Associate> getAssociateList(Associate associate);
 
 	int getTotalCount(Associate associate);
+ 
+	List<TypeStatistic> getAssociateTypeCountList();
 
-	List<Associate> getExistAssociate(Associate a);
+	List<TypeStatistic> getAssociateStationCountList(); 
+	
+	List<Associate> getExistAssociate(Associate a); 
 }
