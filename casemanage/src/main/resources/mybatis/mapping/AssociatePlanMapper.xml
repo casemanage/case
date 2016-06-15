@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.security.manage.dao.AssociatePlanMapper" >
+  <resultMap id="BaseResultMap" type="com.security.manage.model.AssociatePlan" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="ASSOCIATEID" property="associateid" jdbcType="INTEGER" />
+    <result column="PLANURL" property="planurl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ASSOCIATEID, PLANURL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from MC_ASSOCIATE_PLAN
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from MC_ASSOCIATE_PLAN
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.security.manage.model.AssociatePlan" >
+    insert into MC_ASSOCIATE_PLAN (ID, ASSOCIATEID, PLANURL
+      )
+    values (#{id,jdbcType=INTEGER}, #{associateid,jdbcType=INTEGER}, #{planurl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.security.manage.model.AssociatePlan" >
+    insert into MC_ASSOCIATE_PLAN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="associateid != null" >
+        ASSOCIATEID,
+      </if>
+      <if test="planurl != null" >
+        PLANURL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="associateid != null" >
+        #{associateid,jdbcType=INTEGER},
+      </if>
+      <if test="planurl != null" >
+        #{planurl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.security.manage.model.AssociatePlan" >
+    update MC_ASSOCIATE_PLAN
+    <set >
+      <if test="associateid != null" >
+        ASSOCIATEID = #{associateid,jdbcType=INTEGER},
+      </if>
+      <if test="planurl != null" >
+        PLANURL = #{planurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.security.manage.model.AssociatePlan" >
+    update MC_ASSOCIATE_PLAN
+    set ASSOCIATEID = #{associateid,jdbcType=INTEGER},
+      PLANURL = #{planurl,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
