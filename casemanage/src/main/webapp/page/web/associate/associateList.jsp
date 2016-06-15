@@ -112,7 +112,12 @@ function pagesearch(){
 						<td align="center" ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.serialno}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.name}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.typename}</td>
-						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.latitude}，${item.longitude}</td>
+						<c:if test="${item.latitude !='' && item.longitude != ''}">
+							<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.latitude}，${item.longitude}</td>
+						</c:if>
+						<c:if test="${item.latitude =='' && item.longitude == ''}">
+							<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'"></td>
+						</c:if>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.address}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.telephone}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.organname}</td>
