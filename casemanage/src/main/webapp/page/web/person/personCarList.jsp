@@ -98,9 +98,9 @@ function pagesearch(){
                        <c:forEach var="item" items="${PersonCarlist}">
 						<tr>
 							<td align="center" style="display:none">${item.id}</td>
-							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?PersonCarId=${item.id}'">${item.number}</td>
-							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?PersonCarId=${item.id}'">${item.name}</td>
-							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?PersonCarId=${item.id}'">${item.description}</td>
+							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.number}</td>
+							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.name}</td>
+							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.description}</td>
 							
 						</tr>
 					</c:forEach>

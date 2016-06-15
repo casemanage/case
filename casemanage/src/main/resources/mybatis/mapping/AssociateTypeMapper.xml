@@ -87,11 +87,11 @@
   	 	where 1=1
   		<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '%#{searchName,jdbcType=VARCHAR}%'
+	      	NAME like '${searchName,jdbcType=VARCHAR}$'
 	      	OR 
-	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
+	      	keyword like '${searchName,jdbcType=VARCHAR}$'
 	      	OR 
-	      	description like '%#{searchName,jdbcType=VARCHAR}%'
+	      	description like '${searchName,jdbcType=VARCHAR}$'
 	      )
 	 </if>
   </select>
@@ -102,11 +102,11 @@
   	 	where 1=1
   	<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '%#{searchName,jdbcType=VARCHAR}%'
+	      	NAME like '${searchName,jdbcType=VARCHAR}$'
 	      	OR 
-	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
+	      	keyword like '${searchName,jdbcType=VARCHAR}$'
 	      	OR 
-	      	description like '%#{searchName,jdbcType=VARCHAR}%'
+	      	description like '${searchName,jdbcType=VARCHAR}$'
 	      )
 	 </if>
   </select>

@@ -52,15 +52,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  <body style="background:#fff;">
 	
        	<div class="containner-fluid">
-           	<div class="pannel-header">社会机构类型信息</div> 
-           	<div class="fl">
-                 <div class="Panel-content">社会机构类型：${AssociateType.id == 0?"新建社会机构类型信息":AssociateType.name}</div>
-               </div>  
-                 <div class="fr">		
-                			
-					<div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存" onclick="saveAssociateType(this);"></div>
-	                <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>
-				</div>
+           	<div class="pannel-header">社会机构类型信息</div>          
+                 <div class="Panel-content">社会机构类型：${AssociateType.id == 0?"新建社会机构类型信息":AssociateType.name}</div>                       
         </div>
        
     <div class="containner-fluid text-center" style="margin-top:120px;">
@@ -79,7 +72,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        	<span class="from-style">描述</span>
 	    		<input type="text" name="description" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入描述信息" value="${AssociateType.description}" />
 	    	</div> 
-	       
+	       	<div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存" onclick="saveAssociateType(this);"></div>
+	        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>
 	        
 		</form>
     </div>

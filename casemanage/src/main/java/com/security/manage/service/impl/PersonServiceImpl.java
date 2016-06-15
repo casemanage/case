@@ -83,7 +83,7 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public List<PersonLevel> getPersonLevelList(PersonLevel personLevel) 
 	{
-		return personTypeMapper.getPersonLevelList(personLevel);
+		return personLevelMapper.getPersonLevelList(personLevel);
 	}
 
 	
@@ -131,7 +131,7 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public List<PersonLevel> getExistPersonLevel(PersonLevel personLevel) {
 		// TODO Auto-generated method stub
-		return personTypeMapper.getExistPersonLevel(personLevel);
+		return personLevelMapper.getExistPersonLevel(personLevel);
 	}
 
 	@Override

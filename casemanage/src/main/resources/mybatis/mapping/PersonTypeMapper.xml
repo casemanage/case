@@ -80,9 +80,18 @@
     where ID = #{id,jdbcType=INTEGER}
   </update> 
   
+   <select id="getPersonType" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonType">
+  	 select 
+  	  <include refid="Base_Column_List" />  
+  	  from MC_PERSON_TYPE 
+  	 </select>
   
      <select id="getPersonTypeList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonType">
   	 select 
+  	 <!--  <if test="pageSize != null and pageSize>-1">
+        top ${pageSize,jdbcType=INTEGER}
+    </if> -->
+  	    
   	  <include refid="Base_Column_List" />  
   		from MC_PERSON_TYPE 
   	 	where 1=1
@@ -90,11 +99,23 @@
 	      and ( 
 	      	NAME like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
+	      	KEYWORD like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	description like '%#{searchName,jdbcType=VARCHAR}%'
+	      	DESCRIPTION like '%#{searchName,jdbcType=VARCHAR}%'
 	      )
 	 </if>
+	<!--  <if test="pageStart != null and pageStart>-1">
+	 and  ID >
+	  (
+	     SELECT ISNULL(MAX(AID),0) 
+          FROM 
+	     (
+     SELECT TOP ${pageStart,jdbcType=INTEGER} ma.ID AS AID FROM MC_PERSON_TYPE ma ORDER BY ma.ID DESC
+		    ) A
+	  )
+	 (SELECT TOP ${pageStart,jdbcType=INTEGER} ID FROM MC_PERSON_TYPE ORDER BY ID DESC) 
+	 ORDER BY ID DESC
+	 </if> -->
   </select>
   
  
@@ -105,11 +126,11 @@
   	 	where 1=1
   	<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '%#{searchName,jdbcType=VARCHAR}%'
+	      	NAME like '${searchName,jdbcType=VARCHAR}$'
 	      	OR 
-	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
+	      	keyword like '${searchName,jdbcType=VARCHAR}$'
 	      	OR 
-	      	description like '%#{searchName,jdbcType=VARCHAR}%'
+	      	description like '${searchName,jdbcType=VARCHAR}$'
 	      )
 	 </if>
   	  	    
@@ -126,9 +147,5 @@
         	  
     </select> 
   
-  <select id="getPersonType" resultMap="BaseResultMap">
-	select
-	<include refid="Base_Column_List"/>
-	from  MC_PERSON_TYPE 
-  </select>
+  
 </mapper>

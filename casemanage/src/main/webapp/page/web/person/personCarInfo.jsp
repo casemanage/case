@@ -48,26 +48,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script> 
   </head>
   
- <body style="background:#fff;">
-	
+ <body style="background:#fff;">	
        	<div class="containner-fluid">
-           	<div class="pannel-header">重点人员车辆信息</div> 
-           	<div class="fl">
-                 <div class="Panel-content">重点人员车辆：${PersonCar.id == 0?"新建重点人员车辆信息":PersonCar.name}</div>
-               </div>  
-                 <div class="fr">					
-					<div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存" onclick="savePersonCar(this);"></div>
-	                <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>
-				</div>
-        </div>
-       
+           	<div class="pannel-header">重点人员车辆信息</div>         
+                 <div class="Panel-content">重点人员车辆：${PersonCar.id == 0?"新建重点人员车辆信息":PersonCar.name}</div>              											
+        </div>       
     <div class="containner-fluid text-center" style="margin-top:120px;">
 		<form id="personCarInfoForm" name="personCarInfoForm" action="person/jsonSaveOrUpdatePersonCar.do" method="post">
 	    	
 	    	<div><input name="id" value="${PersonCar.id}" type="hidden"</div>
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">车牌号</span>
-	    		<input type="text" name="keyword" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入车牌号" value="${PersonCar.number}" />
+	    		<input type="text" name="number" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入车牌号" value="${PersonCar.number}" />
 	    	</div>
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">姓名</span>
@@ -76,10 +68,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	 <div style="margin-top:15px;">
 	        	<span class="from-style">描述</span>
 	    		<input type="text" name="description" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入详细描述" value="${PersonCar.description}" />
-	    	</div>
-	      
-	       
-	        
+	    	</div>	      
+	       <div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存" onclick="savePersonCar(this);"></div>
+	        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>	        
 		</form>
     </div>
 

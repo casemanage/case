@@ -48,19 +48,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script> 
   </head>
   
- <body style="background:#fff;">
-	
+ <body style="background:#fff;">	
        	<div class="containner-fluid">
-           	<div class="pannel-header">重点人员类型信息</div> 
-           	<div class="fl">
-                 <div class="Panel-content">重点人员类型：${PersonType.id == 0?"新建重点人员类型信息":PersonType.name}</div>
-               </div>  
-                 <div class="fr">					
-					<div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存" onclick="savePersonType(this);"></div>
-	                <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>
-				</div>
-        </div>
-       
+           	<div class="pannel-header">重点人员类型信息</div>       
+                 <div class="Panel-content">重点人员类型：${PersonType.id == 0?"新建重点人员类型信息":PersonType.name}</div>				
+        </div>       
     <div class="containner-fluid text-center" style="margin-top:120px;">
 		<form id="personTypeInfoForm" name="personTypeInfoForm" action="person/jsonSaveOrUpdatePersonType.do" method="post">
 	    	
@@ -77,9 +69,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        	<span class="from-style">描述</span>
 	    		<input type="text" name="description" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入类型" value="${PersonType.description}" />
 	    	</div>
-	      
-	       
-	        
+	      	<div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存" onclick="savePersonType(this);"></div>
+	        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>	        
 		</form>
     </div>
 

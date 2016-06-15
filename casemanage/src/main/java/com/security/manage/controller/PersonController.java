@@ -48,7 +48,9 @@ public class PersonController extends BaseController{
 					"iso8859-1"), "utf-8");
 			personType.setSearchName(searchName);
 		}
-		
+		if (personType.getPageNo() == null)
+			personType.setPageNo(1);
+		personType.setPageSize(Constants.DEFAULT_PAGE_SIZE);
 		List<PersonType> personTypelist = new ArrayList<PersonType>();
 		int countTotal = 0;
 		try { 
@@ -60,10 +62,8 @@ public class PersonController extends BaseController{
 		} 
 		//通过request绑定对象传到前台
 		personType.setTotalCount(countTotal);
-		personType.setPageSize(Constants.DEFAULT_PAGE_SIZE);
-		personType.setPageCount(countTotal/Constants.DEFAULT_PAGE_SIZE+1);	
-		if (personType.getPageNo() == null)
-			personType.setPageNo(1);
+		
+		personType.setPageCount(countTotal/Constants.DEFAULT_PAGE_SIZE+1);		
 		request.setAttribute("PersonType", personType);
 		request.setAttribute("PersonTypelist",personTypelist);
 		return "web/person/personTypeList";
