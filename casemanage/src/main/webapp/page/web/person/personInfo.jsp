@@ -120,7 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">地址</span>
 	    		<input type="text"  class="easyui-validatebox" placeholder="请输入地址" value="${person.address}" name="address"/>
-	    	</div> 
+	    	</div>
 	    	<c:if test="${person.id>0}">
 		        <div style="margin-top:15px;">
 		        	<span class="from-style">编号</span>
@@ -129,7 +129,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	</c:if>
 	    	<div style="margin-top:15px;">
 	        	<span class="from-style">事由</span>
-	    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入是由" value="${person.casecomment}" name="casecomment"/>
+	    		<input type="text" style="width:300px"  validType="SpecialWord" class="easyui-validatebox" placeholder="请输入是由" value="${person.casecomment}" name="casecomment"/>
 	    	</div> 
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">描述</span>
@@ -138,6 +138,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div style="margin-top:15px;">
 	        	<span class="from-style">mac地址</span>
 	    		<input type="text" class="easyui-validatebox" placeholder="请输入mac地址" value="${person.macaddress}" name="macaddress"/>
+	    	</div>
+	    	 <div style="margin-top:15px;">
+	        	<span class="from-style">联系方式</span>
+	    		<input type="text"  class="easyui-validatebox" placeholder="请输入联系方式" value="${person.telephone}" name="telephone"/>
 	    	</div>
 	    	<c:if test="${person.id>0}">
 		    	<%-- <div style="margin-top:15px;">
@@ -153,6 +157,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    		<input type="text" disabled="disabled" class="easyui-validatebox" value="${person.organname}" name="organname"/>
 		    	</div>
 	    	</c:if>
+	    	<div style="margin-top:15px;">
+	        	<span class="from-style">采集日期</span>
+	    		<input type="text" class="easyui-validatebox" placeholder="请输入采集日期" value="${person.createtimes}" name="createtimes"/>
+	    	</div>
 	        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存" onclick="savePerson(this);"></div>
 	        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>
 		</form>

@@ -34,6 +34,8 @@ public interface AssociateService {
 
 	void updateAssociatePerson(AssociatePerson associatePerson);
 
+	void deleteMemberById(AssociatePerson ap);
+
 
 
 

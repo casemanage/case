@@ -115,6 +115,12 @@ public class AssociateServiceImpl implements AssociateService{
 		associatePersonMapper.insert(associatePerson);
 	}
 
+	@Override
+	public void deleteMemberById(AssociatePerson AssociatePerson) {
+		// TODO Auto-generated method stub
+		associatePersonMapper.updateById(AssociatePerson);
+	}
+
 	
 
 }

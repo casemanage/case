@@ -1,7 +1,9 @@
 package com.security.manage.controller;
 
 import java.io.UnsupportedEncodingException;  
+import java.text.SimpleDateFormat;
 import java.util.ArrayList; 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -56,7 +58,18 @@ public class AssociateController extends BaseController{
 		try { 
 		
 			associatelist = associateService.getAssociateList(associate); 
-
+			/*for(Associate a:associatelist){
+				String s = "";
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				s = sdf.format(sdf.parse(a.getTimespan().toString()));
+				a.setCreatedate(s);
+			}*/
+			for(Associate a:associatelist){
+				Date d = a.getCreatetime();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String s = sdf.format(d);
+				a.setCreatetimes(s);
+			}
 			countTotal = associateService.getTotalCount(associate);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,6 +101,10 @@ public class AssociateController extends BaseController{
 		if(associateId != null && associateId != 0){
 			try{
 				associate = associateService.getAssociateById(associateId);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Date d = associate.getCreatetime();
+				String s = sdf.format(d);
+				associate.setCreatetimes(s);
 				la = associateService.getAssociateListById(associateId);
 			}catch(Exception ex){
 				ex.printStackTrace();
@@ -240,7 +257,18 @@ public class AssociateController extends BaseController{
 				js.setMessage("机构类型不能为空!");
 				return js;
 			}
-			if(associate.getName() != null){
+			if(associate.getCreatetimes() != null && !"".equals(associate.getCreatetimes())){
+				try {
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String s = associate.getCreatetimes();
+					Date d = sdf.parse(s);
+					associate.setCreatetime(d);
+				} catch (Exception e) {
+					js.setMessage("日期格式只能为(如：2016-06-15)!");
+					return js;
+				}
+			}
+			if(associate.getName() != null && !"".equals(associate.getName())){
 				Associate a = new Associate();
 				a.setName(associate.getName());
 				if(associate.getId() > 0){
@@ -281,10 +309,14 @@ public class AssociateController extends BaseController{
 		js.setCode(1);
 		js.setMessage("保存失败!");
 		try {
-			
+			associatePerson.setPhotourl("photoUrl");
 			associatePerson.setCreator(1);
 			associatePerson.setCreatorname("张三");
 			associatePerson.setOrganname("太升路派出所");
+			if(associatePerson.getIsleader() == null){
+				js.setMessage("负责人不能为空!");
+				return js;
+			}
 			if(associatePerson.getName() != null){
 				AssociatePerson a = new AssociatePerson();
 				a.setName(associatePerson.getName());
@@ -305,5 +337,31 @@ public class AssociateController extends BaseController{
 		}
 		return js;
 	}
-	
+		@ResponseBody
+		@RequestMapping(value = "/jsonDeleteMember.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
+		public JsonResult<AssociatePerson> jsonDeleteMember(
+				@RequestParam(value="associateId", required = false)Integer associateId,
+				@RequestParam(value="Id", required = false)Integer Id,
+				HttpServletRequest request, HttpServletResponse response){
+			JsonResult<AssociatePerson> js = new JsonResult<AssociatePerson>();
+			js.setCode(1);
+			js.setMessage("删除失败!");
+			List<AssociatePerson> la = new ArrayList<AssociatePerson>();
+			AssociatePerson ap = new AssociatePerson();
+			ap.setId(Id);
+			ap.setAssociateid(associateId);
+			try {
+				associateService.deleteMemberById(ap);
+				la = associateService.getAssociateListById(associateId);
+				if(la.size() > 0){
+					js.setList(la);
+				}
+				js.setCode(0);
+				js.setMessage("删除成功!");
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			return js;
+		}
 }

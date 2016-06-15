@@ -94,8 +94,10 @@ function pagesearch(){
 					<th>地址</th>
 					<th>编号</th>
 					<th>事由</th>
+					<th>联系方式</th>
 					<th>描述</th>
 					<th>采集人</th>
+					<th>采集时间</th>
 					<th>mac地址</th>
 				</tr>
 			</thead>
@@ -103,7 +105,7 @@ function pagesearch(){
 				<c:forEach var="item" items="${personList}">
 					<tr>
 						<td align="center" style="display:none">${item.id}</td>
-						<td	align="left" ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.name}</td>
+						<td	align="center" ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.name}</td>
 						<td ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.typeName}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.levelName}</td>
 						<c:if test="${item.sex == 1}">
@@ -118,8 +120,10 @@ function pagesearch(){
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.address}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.serialno}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.casecomment}</td>
+						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.telephone}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.description}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.creatorname}</td>
+						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.createtimes}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.macaddress}</td>
 					</tr>
 				</c:forEach>

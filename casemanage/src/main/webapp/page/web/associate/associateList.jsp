@@ -98,6 +98,7 @@ function pagesearch(){
 					<th>类型</th>
 					<th>经纬度</th>
 					<th>地址</th>
+					<th>联系方式</th>
 					<th>采集单位</th>
 					<th>采集人</th>
 					<th>采集时间</th>
@@ -108,14 +109,15 @@ function pagesearch(){
 				<c:forEach var="item" items="${associatelist}">
 					<tr>
 						<td align="center" style="display:none">${item.id}</td>
-						<td align="left" ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.serialno}</td>
+						<td align="center" ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.serialno}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.name}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.typename}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.latitude}，${item.longitude}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.address}</td>
+						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.telephone}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.organname}</td>
-						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.organname}</td>
-						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.createdate}</td>
+						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.creatorname}</td>
+						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.createtimes}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.description}</td>
 					</tr>
 				</c:forEach>
