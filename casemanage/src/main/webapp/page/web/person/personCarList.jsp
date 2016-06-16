@@ -67,21 +67,20 @@ function pagesearch(){
   </head>
   
   <body style="background:#fff;">
+  
+  <div id="contentRight" style="width:83%;height:99%;float:right;background:#fff;"	>
         	<div class="containner-fluid">
             	<div class="pannel-header">重点人员车辆管理</div>
                 <div class="Panel-content">
 					<form id="PersonCarForm" name="PersonCarForm"
 						action="person/personCarList.do" method="get"> 
-							 <div> 
-								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox" 
-									placeholder="搜索" value="${PersonCar.searchName}" /> 
-								<span onclick="search();">搜索</span>
-							</div>  
-		                    
-						<input type="hidden" id="pageNumber" name="pageNo"
-							value="${PersonCar.pageNo}" />
-					</form> 
-	        <div style="margin-top:25px;"><input type="button" class="btn-sm" onclick="window.location.href='person/personCarInfo.do?PersonCarId=0'" value="新建重点人员车辆"></div>
+							 <div style="width:100%;text-align:right;">
+								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="搜索" value="${PersonCar.searchName}" /> 
+								<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
+								<input type="hidden" id="pageNumber" name="pageNo" value="${PersonCar.pageNo}" />
+								<input type="button" class="btn-add" style="margin-left:25px" onclick="window.location.href='person/personCarInfo.do?PersonCarId=0'" value="新建重点人员车辆" />
+							</div>   
+					</form>  
                 </div>
             </div>
             <div class="containner-fluid">
@@ -108,5 +107,6 @@ function pagesearch(){
                 </table>
 				<div class="page" id="pager"></div> 
             </div> 
+            </div>
 </body>
 </html>

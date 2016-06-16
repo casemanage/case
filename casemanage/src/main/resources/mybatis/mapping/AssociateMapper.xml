@@ -43,7 +43,8 @@
     delete from MC_ASSOCIATE
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.security.manage.model.Associate" >
+  <insert id="insert" parameterType="com.security.manage.model.Associate" useGeneratedKeys="true" keyProperty="id"  >
+   
     insert into MC_ASSOCIATE (NAME, TYPEID, 
       SERIALNO, LATITUDE, LONGITUDE, 
       ADDRESS, CREATOR, CREATORNAME, 

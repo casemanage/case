@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.security.manage.dao.AssociateMapper;
 import com.security.manage.dao.AssociatePersonMapper;
+import com.security.manage.dao.AssociatePlanMapper;
 import com.security.manage.dao.AssociateTypeMapper;
 import com.security.manage.model.Associate;
 import com.security.manage.model.AssociatePerson;
+import com.security.manage.model.AssociatePlan;
 import com.security.manage.model.AssociateType;
 import com.security.manage.model.TypeStatistic;
 import com.security.manage.service.AssociateService; 
@@ -25,6 +27,8 @@ public class AssociateServiceImpl implements AssociateService{
 	private AssociateTypeMapper associateTypeMapper;
 	@Resource
 	private AssociatePersonMapper associatePersonMapper;
+	@Resource
+	private AssociatePlanMapper associatePlanMapper;
 	
 	@Override
 	public List<Associate> getAssociateList(Associate associate) {
@@ -130,6 +134,25 @@ public class AssociateServiceImpl implements AssociateService{
 	public void deleteMemberById(AssociatePerson AssociatePerson) {
 		// TODO Auto-generated method stub
 		associatePersonMapper.updateById(AssociatePerson);
+	}
+
+	@Override
+	public List<AssociatePlan> getAssociatePlanListById(Integer associateId) {
+		// TODO Auto-generated method stub
+		return associatePlanMapper.getAssociatePlanListById(associateId);
+	}
+
+	@Override
+	public void saveOrUpdateAssociatePlan(List<String> urlList,
+			Integer associateid) {
+		// TODO Auto-generated method stub
+		for(String url : urlList){
+			AssociatePlan ap = new AssociatePlan();
+			ap.setId(0);
+			ap.setAssociateid(associateid);
+			ap.setPlanurl(url);
+			associatePlanMapper.insert(ap);
+		}
 	}
 
 	

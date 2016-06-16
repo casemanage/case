@@ -62,30 +62,65 @@ function pagesearch(){
 		AssociateForm.submit();
 	}  
 }
- 
+function showdialog(itemId){
+	$("#hid_associateid").val(itemId);
+	var wz = getDialogPosition($('#planwindow').get(0),100);
+	$('#planwindow').window({
+		  	top: 100,
+		    left: wz[1]
+	});
+	$('#planwindow').window('open');
+}
+ function uploadPlan(obj){ 
+	$(obj).attr("onclick", "");
+	$('#uploadForm').form('submit',{
+			success : function(data) {
+				data = $.parseJSON(data);
+				if (data.code == 0) {
+					$.messager.alert('保存信息',data.message,'info',
+									function() {
+										$('#planwindow input[type=file]').val('');
+										$('#planwindow').window('close');
+									});
+				} else {
+					$.messager.alert('错误信息',
+							data.message, 'error',
+							function() {
+							});
+					$(obj).attr("onclick",
+							"uploadPlan(this);");
+				}
+			}
+		}); 
+ }
+ function showName(obj){
+	 if(!(/(?:jpg)$/i.test(obj.value))&&!(/(?:jpeg)$/i.test(obj.value))&&!(/(?:png)$/i.test(obj.value))) {
+         $.messager.alert('错误', "选择平面图文件格式错误", 'error');
+         if(window.ActiveXObject) {//for IE
+             obj.select();//lect the file ,and clear selection
+             document.selection.clear();
+         } else if(window.opera) {//for opera
+             obj.type="text";
+             obj.type="file";
+         } else obj.value="";//for FF,Chrome,Safari
+     } 
+}
 </script>
   </head>
   
   <body style="background:#fff;">
+  <div id="contentRight" style="width:83%;height:99%;float:right;background:#fff;"	>
 	<div class="containner-fluid">
 		<div class="pannel-header">社会机构管理</div>
 		<div class="Panel-content">
-			<form id="AssociateForm" name="AssociateForm"
-				action="associate/associateList.do" method="get">
-				<div>
-					<input type="text" name="searchName" validType="SpecialWord"
-						class="easyui-validatebox" placeholder="搜索"
-						value="${associate.searchName}" /> <span onclick="search();">搜索</span>
+			<form id="AssociateForm" name="AssociateForm" action="associate/associateList.do" method="get">
+				<div style="width:100%;text-align:right;">
+					<input type="text" name="searchName" validType="SpecialWord" class="easyui-validatebox" placeholder="搜索" value="${associate.searchName}" /> 
+					<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
+					<input type="hidden" id="pageNumber" name="pageNo" value="${associate.pageNo}" /> 
+					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='associate/associateInfo.do?associateId=0'" value="新建社会机构"> 
 				</div>
-
-				<input type="hidden" id="pageNumber" name="pageNo"
-					value="${associate.pageNo}" />
 			</form>
-			<div style="margin-top:25px;">
-				<input type="button" class="btn-sm"
-					onclick="window.location.href='associate/associateInfo.do?associateId=0'"
-					value="新建社会机构">
-			</div>
 		</div>
 	</div>
 	<div class="containner-fluid">
@@ -103,6 +138,7 @@ function pagesearch(){
 					<th>采集人</th>
 					<th>采集时间</th>
 					<th>描述</th>
+					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -124,11 +160,44 @@ function pagesearch(){
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.creatorname}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.createtimes}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.description}</td>
+						<td><a href="javascript:void(0);" onclick="showdialog(${item.id});">上传平面图</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	  <div class="page" id="pager"></div>
+	</div> 
+	</div>
+	 <div id="planwindow" class="easyui-window" title="上传平面图" style="width:480px;height:300px;overflow:hidden;padding:10px;text-align:center;" iconCls="icon-info" closed="true" modal="true"   resizable="false" collapsible="false" minimizable="false" maximizable="false">
+		<form id="uploadForm" name ="uploadForm" action="associate/jsonupdateplan.do"  method="post" enctype="multipart/form-data"  style="text-align:left;"> 
+		<p style="display:none">
+        	<span >id：</span><input name="associateid" id="hid_associateid" type="text"  class="easyui-validatebox"/> 
+        </p>
+    	<div style="margin-top:15px;width:100%;">
+    		<span class="from-style">平面图1:</span> 
+    		<input type="file" name="file1" id="jfile1" onchange="showName(this)" />
+    	</div>
+    	<div style="margin-top:15px;width:100%;">
+    		<span class="from-style">平面图2:</span> 
+    		<input type="file" name="file2" id="jfile2" onchange="showName(this)" />
+    	</div>
+    	<div style="margin-top:15px;width:100%;">
+    		<span class="from-style">平面图3:</span> 
+    		<input type="file" name="file3" id="jfile3" onchange="showName(this)" />
+    	</div>
+    	<div style="margin-top:15px;width:100%;">
+    		<span class="from-style">平面图4:</span> 
+    		<input type="file" name="file4" id="jfile4" onchange="showName(this)" />
+    	</div>
+    	<div style="margin-top:15px;width:100%;">
+    		<span class="from-style">平面图5:</span> 
+    		<input type="file" name="file5" id="jfile5" onchange="showName(this)" />
+    	</div> 
+		<div style="margin-top:15px;width:100%;"> 
+	        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="$('#planwindow input[type=file]').val('');$('#planwindow').window('close');"> 
+	         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="uploadPlan(this);"> 
+		</div>
+        </form>
 	</div>
 </body>
 </html>

@@ -48,7 +48,7 @@ import com.security.manage.util.Constants;
 @Scope("prototype")
 @Controller
 @RequestMapping("/Home")
-public class HomeController { 
+public class HomeController extends BaseController { 
 	@Resource(name = "associateService")
 	private AssociateService associateService;
 	@Resource(name = "personService")
@@ -72,6 +72,14 @@ public class HomeController {
 //				res.getResultObject().setSelectedChildMenu(lf.get(0).getChildFunctionlist().get(0).getId());
 //				res.getResultObject().setChildMenuList(lf.get(0).getChildFunctionlist());
 //				this.setLoginUser(res.getResultObject());
+			User u = new User();
+			u.setGuid("111111");
+			u.setName("张三");
+			u.setOrganId(1);
+			u.setId(3);
+			u.setOrganName("青羊区公安分局");
+			u.setKeyWords("ssss");
+			this.setLoginUser(u);
 //				
 //				json.setCode(new Integer(0)); 
 //				json.setGotoUrl(lf.get(0).getUrl());

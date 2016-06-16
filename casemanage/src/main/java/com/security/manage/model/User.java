@@ -5,10 +5,17 @@ public class User {
     private String name;
     private String guid;
     private String organName;
-    private String organId;
+    private Integer organId;
     private String keyWords;
     private String account;
     private String password;
+    private String token;
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	public String getAccount() {
 		return account;
 	}
@@ -45,10 +52,10 @@ public class User {
 	public void setOrganName(String organName) {
 		this.organName = organName;
 	}
-	public String getOrganId() {
+	public Integer getOrganId() {
 		return organId;
 	}
-	public void setOrganId(String organId) {
+	public void setOrganId(Integer organId) {
 		this.organId = organId;
 	}
 	public String getKeyWords() {

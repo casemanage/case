@@ -5,11 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger; 
 import org.apache.shiro.SecurityUtils;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.security.manage.model.User;
  
 
-public abstract class BaseController {
+public abstract class BaseController extends CommonsMultipartResolver {
 	protected Logger log = Logger.getLogger(getClass());
 
 	private String resultCode;

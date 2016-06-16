@@ -117,7 +117,14 @@ $.extend($.fn.validatebox.defaults.rules, {
             return myReg.test(value);
         },
         message:'输入查询条件不能包含特殊字符'
-    }
+    },
+	macAddress: {
+		validator:function(value, param){
+			var myReg = /^([0-9a-fA-F]{2})(([/\s:-][0-9a-fA-F]{2}){5})$/;
+			return myReg.test(value);
+		},
+		message:'输入正确的MAC地址格式，以空格,"-",":"分开'
+	}
 });
 
 /* 密码由字母和数字组成，至少6位 */
@@ -439,4 +446,67 @@ function showProcess(isShow, title, msg) {
         title: title,
         msg: msg
     });
+}
+function validatationBirth(obj){
+	var idCardNo = $.trim($(obj).val());
+	var birthStr = "";
+	var sexStr = "";
+	if(idCardNo.length>0){
+		if(idCardNo.length != 15 && idCardNo.length != 18){
+			$.messager.alert("错误提示","请输入正确的身份证号码","error",function(){
+				$("input[name='radio']").removeAttr("disabled");
+				$("#dtb_birth").datebox("enable");
+				$("#dtb_birth").datebox("setValue","");
+			});
+		}else if(idCardNo.length == 15){ 
+			$("input[name='radio']").attr("disabled","disabled");
+			$("#dtb_birth").datebox("disable");
+			tmpStr = idCardNo.substring(6, 12);
+		    tmpStr = "19" + tmpStr;
+		    tmpStr = tmpStr.substring(0, 4) + "-" + tmpStr.substring(4, 6) + "-" + tmpStr.substring(6);
+		    sexStr = parseInt(idCardNo.substring(14, 1),10) % 2 ? "男" : "女";
+		    $("#dtb_birth").datebox("setValue",tmpStr);
+		    $("#hid_birth").val(tmpStr);
+		    if(sexStr == 0){ 
+				$("#radio2").attr("checked",'checked');
+		    } 
+		}else if(idCardNo.length == 18){
+			$("input[name='radio']").attr("disabled","disabled");
+			$("#dtb_birth").datebox("disable");
+			tmpStr = idCardNo.substring(6, 14);
+	        tmpStr = tmpStr.substring(0, 4) + "-" + tmpStr.substring(4, 6) + "-" + tmpStr.substring(6);
+	        sexStr = parseInt(idCardNo.substring(17, 1),10) % 2 ? "男" : "女";
+		    $("#dtb_birth").datebox("setValue",tmpStr);
+		    $("#hid_birth").val(tmpStr);
+		    if(sexStr == 0){ 
+				$("#radio2").attr("checked",'checked');
+		    }  
+		}
+	}else{
+		$("input[name='radio']").removeAttr("disabled");
+		$("#dtb_birth").datebox("enable");
+		$("#dtb_birth").datebox("setValue","");
+	}
+}
+
+
+/**获得弹出层居中的方法**/
+function getDialogPosition(wrap,offsize){
+	var temp = $(wrap).css("width");
+	var dl = $(document).scrollLeft(),
+		dt = $(document).scrollTop(),
+		ww = $(window).width(),
+		wh = $(window).height(),
+		ow = temp.substring(0,temp.indexOf("p")),
+		oh = $(wrap).height(),
+		left = (ww - ow) / 2 + dl,
+		top = top = (oh < 4 * wh / 7 ? wh * 0.382 - oh / 2 : (wh - oh) / 2) + dt;
+	
+    left = Math.max(left, dl),
+    top = Math.max(top, dt) - offsize;
+    sc = new Array();
+    sc[0] = top;
+    sc[1] = left;
+	    
+	return sc;
 }

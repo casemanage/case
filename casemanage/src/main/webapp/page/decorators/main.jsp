@@ -48,10 +48,12 @@ String  url  =  uri.substring(uri.lastIndexOf("/")+1);
 <body>
 	<div id="main">
 		<div id="header"><jsp:include page="/page/decorators/header.jsp"></jsp:include></div>
-		<div id="content">
-			<jsp:include page="/page/decorators/left.jsp"></jsp:include>
-			<sitemesh:write property='body'/>
-			<div class="cl"></div>
+		<div id="content" style="width:100%;">
+			 <div class="container">
+				<jsp:include page="/page/decorators/left.jsp"></jsp:include>
+				<sitemesh:write property='body'/>
+				<div class="cl"></div>
+			</div>
 		</div>
 		<%-- <div id="footer"><jsp:include page="/page/decorators/footer.jsp"></jsp:include> --%></div>
 	</div>

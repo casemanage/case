@@ -51,32 +51,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
  <body style="background:#fff;">
 	
+  <div id="contentRight" style="width:83%;height:99%;float:right;background:#fff;"	>
        	<div class="containner-fluid">
            	<div class="pannel-header">社会机构类型信息</div>          
                  <div class="Panel-content">社会机构类型：${AssociateType.id == 0?"新建社会机构类型信息":AssociateType.name}</div>                       
         </div>
        
-    <div class="containner-fluid text-center" style="margin-top:120px;">
-		<form id="associateTypeInfoForm" name="associateTypeInfoForm" action="associate/jsonSaveOrUpdateAssociateType.do" method="post">
-	    	
-	    	<div><input name="id" value="${AssociateType.id}" type="hidden"</div>
-	        <div style="margin-top:15px;">
-	        	<span class="from-style">关键字</span>
-	    		<input type="text" name="keyword" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入关键字" value="${AssociateType.keyword}" />
+    <div class="containner-fluid text-center">
+		<form id="associateTypeInfoForm" name="associateTypeInfoForm" action="associate/jsonSaveOrUpdateAssociateType.do" method="post" style="text-align:left;">
+			<div style="margin-top:15px;width:100%;"> 
+		        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
+		         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveAssociateType(this);"> 
+			</div> 
+		    	<div style="margin-top:15px;width:100%;">
+	        	<span class="from-style">&nbsp;&nbsp;关键字:</span>
+	    		<input name="id" value="${AssociateType.id}" type="hidden" />
+	    		<input type="text" name="keyword" required="true"  validType="Length[1,20]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入关键字" value="${AssociateType.keyword}" />
 	    	</div>
-	        <div style="margin-top:15px;">
-	        	<span class="from-style">类型</span>
-	    		<input type="text" name="name" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入类型" value="${AssociateType.name}" />
+		    	<div style="margin-top:15px;width:100%;">
+	        	<span class="from-style">类型名称:</span>
+	    		<input type="text" name="name" required="true"  validType="Length[1,20]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入类型" value="${AssociateType.name}" />
 	    	</div>
-	        <div style="margin-top:15px;">
-	        	<span class="from-style">描述</span>
-	    		<input type="text" name="description" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入描述信息" value="${AssociateType.description}" />
-	    	</div> 
-	       	<div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存" onclick="saveAssociateType(this);"></div>
-	        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>
-	        
+		    	<div style="margin-top:15px;width:100%;">
+	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述:</span>
+	    		<input type="text" name="description"  validType="Length[1,100]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入描述信息" value="${AssociateType.description}" />
+	    	</div>   
 		</form>
     </div>
-
+</div>
 </body>
 </html>

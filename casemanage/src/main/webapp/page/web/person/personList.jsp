@@ -58,25 +58,20 @@ function pagesearch(){
   </head>
   
   <body style="background:#fff;">
+  
+  <div id="contentRight" style="width:83%;height:99%;float:right;background:#fff;"	>
 	<div class="containner-fluid">
 		<div class="pannel-header">重点人员管理</div>
 		<div class="Panel-content">
 			<form id="PersonForm" name="PersonForm"
 				action="person/personList.do" method="get">
-				<div>
-					<input type="text" name="searchName" validType="SpecialWord"
-						class="easyui-validatebox" placeholder="搜索"
-						value="${Person.searchName}" /> <span onclick="search();">搜索</span>
-				</div>
-
-				<input type="hidden" id="pageNumber" name="pageNo"
-					value="${Person.pageNo}" />
-			</form>
-			<div style="margin-top:25px;">
-				<input type="button" class="btn-sm"
-					onclick="window.location.href='person/personInfo.do?personId=0'"
-					value="新建重点人员">
-			</div>
+				<div style="width:100%;text-align:right;">
+					<input type="text" name="searchName" validType="SpecialWord" class="easyui-validatebox" placeholder="搜索" value="${Person.searchName}" />
+					<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
+				    <input type="hidden" id="pageNumber" name="pageNo" value="${Person.pageNo}" />
+					<input type="button" class="btn-add" style="margin-left:25px;"  onclick="window.location.href='person/personInfo.do?personId=0'" value="新建重点人员">
+				</div> 
+			</form> 
 		</div>
 	</div>
 	<div class="containner-fluid">
@@ -84,6 +79,8 @@ function pagesearch(){
 			<thead>
 				<tr style="background-color:#D6D3D3;font-weight: bold;">
 					<th width="4%" style="display:none">&nbsp;</th>
+					<th>头像</th>
+					<th>编号</th>
 					<th>姓名</th>
 					<th>人员类型</th>
 					<th>人员级别</th>
@@ -91,20 +88,23 @@ function pagesearch(){
 					<!-- <th>出生年月</th> -->
 					<!-- <th>照片</th> -->
 					<th>身份证号</th>
-					<th>地址</th>
-					<th>编号</th>
-					<th>事由</th>
 					<th>联系方式</th>
+					<th>mac地址</th>
+					<th>地址</th>
+					<th>事由</th>
 					<th>描述</th>
 					<th>采集人</th>
 					<th>采集时间</th>
-					<th>mac地址</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="item" items="${personList}">
 					<tr>
 						<td align="center" style="display:none">${item.id}</td>
+						<td	align="center">
+							<img alt="头像" src="<%=basePath %>${item.photourl}" style="width:35px;height:35px">
+						</td>
+						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.serialno}</td>
 						<td	align="center" ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.name}</td>
 						<td ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.typeName}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.levelName}</td>
@@ -117,19 +117,19 @@ function pagesearch(){
 						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.birth}</td> --%>
 						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.photourl}</td> --%>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.idcard}</td>
-						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.address}</td>
-						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.serialno}</td>
-						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.casecomment}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.telephone}</td>
+						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.macaddress}</td>
+						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.address}</td>
+						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.casecomment}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.description}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.creatorname}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.createtimes}</td>
-						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.macaddress}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	  <div class="page" id="pager"></div>
+	</div>
 	</div>
 </body>
 </html>

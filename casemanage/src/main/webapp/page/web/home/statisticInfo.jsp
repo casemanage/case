@@ -23,13 +23,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->  
 	
-    <script src="${pageContext.request.contextPath}/source/js/jqplot/jquery.jqplot.min.js"></script>
+	<script src="<%=basePath %>source/js/fusionChart/fusioncharts.js"></script>  
+    <link href="<%=basePath %>source/js/fusionChart/assets/css/style.css" rel="stylesheet" />
+	
+<%--     <script src="${pageContext.request.contextPath}/source/js/jqplot/jquery.jqplot.min.js"></script>
     <link href="${pageContext.request.contextPath}/source/js/jqplot/jquery.jqplot.min.css" rel="stylesheet" />
     <!--[if lt IE 9]>
     <script src="${pageContext.request.contextPath}/source/js/jqplot/excanvas.js"></script>
     <![endif]-->
     <script src="${pageContext.request.contextPath}/source/js/jqplot/jqplot.pieRenderer.js"></script>
-    <script src="${pageContext.request.contextPath}/source/js/jqplot/jqplot.donutRenderer.js"></script>
+    <script src="${pageContext.request.contextPath}/source/js/jqplot/jqplot.donutRenderer.js"></script> --%>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			 loadStatisticInfo(); 
@@ -41,173 +44,116 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				dataType:"json",
 				success : function(req) { 
 		  			if(req.code == 0){   
-		  				 var asototal = req.obj[0];
-		  				 var asototalary = []; 
-		  				 $.each(asototal.list,function(index,ary){
-		  				 	var temp = [ary.typeName, ary.totalCount];
-		  				 	asototalary.push(temp);
-		  				 });
-		  				 $.jqplot('asso_totalStatistic', [asototalary], {
-				            title: {
-				                text: '采集信息汇总', //设置当前图的标题
-				                show: true//设置当前图的标题是否显示
-				            },
-				            grid: {
-				                drawGridLines: false, // wether to draw lines across the grid or not.
-				                background: '#fff', //设置整个图标区域的背景色
-				                borderWidth: 0, //设置图表的(最外侧)边框宽度
-				                shadow: false, //为整个图标（最外侧）边框设置阴影，以突出其立体效果
-				                renderer: jQuery.jqplot.CanvasGridRenderer, // renderer to use to draw the grid.
-				                rendererOptions: {} // options to pass to the renderer. Note, the default CanvasGridRenderer takes no additional options.
-				            },
-				            seriesDefaults: {
-				                renderer: $.jqplot.PieRenderer,
-				                rendererOptions: {
-				                    showDataLabels: true,
-				                    dataLabels: 'value',
-				                    startAngle: -90,
-				                    shadow: false
-				                }
-				            },
-				            legend: {
-				                show: true,
-				                location: "e"
-				            }
-				        });
-				        var pertotal = req.obj[1];
-		  				 var pertotalary = []; 
-		  				 $.each(pertotal.list,function(index,ary){
-		  				 	var temp = [ary.typeName, ary.totalCount];
-		  				 	pertotalary.push(temp);
-		  				 });
-		  				 $.jqplot('person_totalStatistic', [pertotalary], {
-				            title: {
-				                text: '采集信息汇总', //设置当前图的标题
-				                show: true//设置当前图的标题是否显示
-				            },
-				            grid: {
-				                drawGridLines: false, // wether to draw lines across the grid or not.
-				                background: '#fff', //设置整个图标区域的背景色
-				                borderWidth: 0, //设置图表的(最外侧)边框宽度
-				                shadow: false, //为整个图标（最外侧）边框设置阴影，以突出其立体效果
-				                renderer: jQuery.jqplot.CanvasGridRenderer, // renderer to use to draw the grid.
-				                rendererOptions: {} // options to pass to the renderer. Note, the default CanvasGridRenderer takes no additional options.
-				            },
-				            seriesDefaults: {
-				                renderer: $.jqplot.PieRenderer,
-				                rendererOptions: {
-				                    showDataLabels: true,
-				                    dataLabels: 'value',
-				                    startAngle: -90,
-				                    shadow: false
-				                }
-				            },
-				            legend: {
-				                show: true,
-				                location: "e"
-				            }
-				        });
-				        var stationtotal = req.obj[2];
-		  				 var stationtotalary = []; 
-		  				 $.each(stationtotal.list,function(index,ary){
-		  				 	var temp = [ary.typeName, ary.totalCount];
-		  				 	stationtotalary.push(temp);
-		  				 });
-		  				 $.jqplot('asso_stationTypeStatistic', [stationtotalary], {
-				            title: {
-				                text: '采集信息汇总', //设置当前图的标题
-				                show: true//设置当前图的标题是否显示
-				            },
-				            grid: {
-				                drawGridLines: false, // wether to draw lines across the grid or not.
-				                background: '#fff', //设置整个图标区域的背景色
-				                borderWidth: 0, //设置图表的(最外侧)边框宽度
-				                shadow: false, //为整个图标（最外侧）边框设置阴影，以突出其立体效果
-				                renderer: jQuery.jqplot.CanvasGridRenderer, // renderer to use to draw the grid.
-				                rendererOptions: {} // options to pass to the renderer. Note, the default CanvasGridRenderer takes no additional options.
-				            },
-				            seriesDefaults: {
-				                renderer: $.jqplot.PieRenderer,
-				                rendererOptions: {
-				                    showDataLabels: true,
-				                    dataLabels: 'value',
-				                    startAngle: -90,
-				                    shadow: false
-				                }
-				            },
-				            legend: {
-				                show: true,
-				                location: "e"
-				            }
-				        });
-				        var perstationtotal = req.obj[3];
-		  				 var perstationtotalary = []; 
-		  				 $.each(perstationtotal.list,function(index,ary){
-		  				 	var temp = [ary.typeName, ary.totalCount];
-		  				 	perstationtotalary.push(temp);
-		  				 });
-		  				 $.jqplot('person_stationTypeStatistic', [perstationtotalary], {
-				            title: {
-				                text: '采集信息汇总', //设置当前图的标题
-				                show: true//设置当前图的标题是否显示
-				            },
-				            grid: {
-				                drawGridLines: false, // wether to draw lines across the grid or not.
-				                background: '#fff', //设置整个图标区域的背景色
-				                borderWidth: 0, //设置图表的(最外侧)边框宽度
-				                shadow: false, //为整个图标（最外侧）边框设置阴影，以突出其立体效果
-				                renderer: jQuery.jqplot.CanvasGridRenderer, // renderer to use to draw the grid.
-				                rendererOptions: {} // options to pass to the renderer. Note, the default CanvasGridRenderer takes no additional options.
-				            },
-				            seriesDefaults: {
-				                renderer: $.jqplot.PieRenderer,
-				                rendererOptions: {
-				                    showDataLabels: true,
-				                    dataLabels: 'value',
-				                    startAngle: -90,
-				                    shadow: false
-				                }
-				            },
-				            legend: {
-				                show: true,
-				                location: "e"
-				            }
-				        });
+		  				 var perTotalCount = getJsonData(req,1);
+		  				 var perTotalchart = new FusionCharts("<%=basePath %>source/chart/Column2D.swf", "ChartId1", "650", "350", "0", "0");
+						 perTotalchart.setJSONData({
+						 	"chart":{      
+			                    "caption":"重点人员分类统计图",     
+			                    "xaxisname":"类型",     
+			                    "yaxisname":"数量",    
+			                    "showvalues":"0",      
+			                    "decimals":"2",
+			                    "useRoundEdges":"1",
+			                    "theme": "fint",
+			                    "formatNumberScale":"0"  },
+			                   "data":perTotalCount
+						 }); 
+   						 perTotalchart.render("person_totalStatistic"); 
+		  				 var assoTotalCount = getJsonData(req,0);
+		  				 var assoTotalchart = new FusionCharts("<%=basePath %>source/chart/Column2D.swf", "ChartId2", "650", "350", "0", "0");
+						 assoTotalchart.setJSONData({
+						 	"chart":{      
+			                    "caption":"社会机构分类统计图",     
+			                    "xaxisname":"类型",     
+			                    "yaxisname":"数量",    
+			                    "showvalues":"0",      
+			                    "decimals":"2",
+			                    "theme": "fint",
+			                    "useRoundEdges":"1",
+			                    "formatNumberScale":"0"  }, 
+			                   "data":assoTotalCount
+						 });  
+   						 assoTotalchart.render("asso_totalStatistic");  
+   						 
+		  				 var assostationCount = getJsonData(req,2);
+		  				 var assostationchart = new FusionCharts("<%=basePath %>source/chart/Column2D.swf", "ChartId3", "650", "350", "0", "0");
+						 assostationchart.setJSONData({
+						 	"chart":{      
+			                    "caption":"社会机构单位采集统计图",     
+			                    "xaxisname":"单位",     
+			                    "yaxisname":"数量",    
+			                    "showvalues":"0",      
+			                    "decimals":"2",
+			                    "useRoundEdges":"1",
+			                    "theme": "fint",
+			                    "formatNumberScale":"0"  },
+			                   "data":assostationCount
+						 });  
+   						 assostationchart.render("asso_stationTypeStatistic");  
+   						 
+		  				 var personstationCount = getJsonData(req,3);
+		  				 var personstationchart = new FusionCharts("<%=basePath %>source/chart/Column2D.swf", "ChartId4", "650", "350", "0", "0");
+						 personstationchart.setJSONData({
+						 	"chart":{      
+			                    "caption":"重点人员单位采集统计图",     
+			                    "xaxisname":"单位",     
+			                    "yaxisname":"数量",    
+			                    "showvalues":"0",      
+			                    "decimals":"2",
+			                    "useRoundEdges":"1",
+			                    "theme": "fint",
+			                    "formatNumberScale":"0"  },
+			                   "data":personstationCount
+						 });  
+   						 personstationchart.render("person_stationTypeStatistic");  
+   						 
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error');
 		  			} 
 				}
 			}); 
 		}; 
+		function getJsonData(req,i){
+			var arry = req.obj[i].list;
+			var arryList = [];
+			$.each(arry,function(index,item){
+				var per = {};
+				per.label = item.typeName;
+				per.value = item.totalCount;
+				arryList.push(per);
+			});
+			return arryList;
+		}
 	</script>
   </head>
   
  <body style="background:#fff;"> 
 		    
+  <div id="contentRight" style="width:83%;height:99%;float:right;background:#fff;"	>
      <div style="float:left" >
- 		<div id="asso_totalStatistic" style="width:400px;height:300px;float:left;padding:5px;margin-top: 20px;" >
- 		</div> 
+ 		<div id="asso_totalStatistic"></div> 
  	 </div>
 	 <div style="float:left" >
-	 	<div id="person_totalStatistic" style="width:400px;height:300px;float:left;padding:5px;margin-top: 20px;" ></div>
+	 	<div id="person_totalStatistic"></div>
 	 </div>
 	 <div style="float:left" >
-	 	<div id="asso_stationTypeStatistic" style="width:400px;height:300px;float:left;padding:5px;margin-top: 20px;" ></div>
+	 	<div id="asso_stationTypeStatistic"></div>
 	 </div>
 	 <div style="float:left" >
-	 	<div id="person_stationTypeStatistic" style="width:400px;height:300px;float:left;padding:5px;margin-top: 20px;" ></div>
+	 	<div id="person_stationTypeStatistic"></div>
 	 </div>
 	 <div style="float:left" >
-	 	<div id="asso_lastMonthStatistic" style="width:400px;height:300px;float:left;padding:5px;margin-top: 20px;" ></div>
+	 	<div id="asso_lastMonthStatistic"></div>
 	 </div>
 	 <div style="float:left" >
-	 	<div id="person_lastMonthStatistic" style="width:400px;height:300px;float:left;padding:5px;margin-top: 20px;" ></div>
+	 	<div id="person_lastMonthStatistic"></div>
 	 </div> 
 	 <div style="float:left" >
-	 	<div id="asso_lastWeekStatistic" style="width:400px;height:300px;float:left;padding:5px;margin-top: 20px;" ></div>
+	 	<div id="asso_lastWeekStatistic"></div>
 	 </div>
 	 <div style="float:left" >
-	 	<div id="person_lastWeekStatistic" style="width:400px;height:300px;float:left;padding:5px;margin-top: 20px;" ></div>
+	 	<div id="person_lastWeekStatistic"></div>
 	 </div> 
+	 </div>
 </body>
 </html>

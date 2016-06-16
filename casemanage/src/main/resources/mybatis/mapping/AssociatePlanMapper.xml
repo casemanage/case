@@ -20,9 +20,9 @@
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.security.manage.model.AssociatePlan" >
-    insert into MC_ASSOCIATE_PLAN (ID, ASSOCIATEID, PLANURL
+    insert into MC_ASSOCIATE_PLAN (ASSOCIATEID, PLANURL
       )
-    values (#{id,jdbcType=INTEGER}, #{associateid,jdbcType=INTEGER}, #{planurl,jdbcType=VARCHAR}
+    values (#{associateid,jdbcType=INTEGER}, #{planurl,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.security.manage.model.AssociatePlan" >
@@ -68,4 +68,9 @@
       PLANURL = #{planurl,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getAssociatePlanListById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from MC_ASSOCIATE_PLAN
+  	where ASSOCIATEID = #{associateid,jdbcType=INTEGER}
+  </select>
 </mapper>

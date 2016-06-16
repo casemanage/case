@@ -1,5 +1,7 @@
 package com.security.manage.dao;
 
+import java.util.List;
+
 import com.security.manage.model.AssociatePlan;
 
 public interface AssociatePlanMapper {
@@ -14,4 +16,6 @@ public interface AssociatePlanMapper {
     int updateByPrimaryKeySelective(AssociatePlan record);
 
     int updateByPrimaryKey(AssociatePlan record);
+
+	List<AssociatePlan> getAssociatePlanListById(Integer associateId);
 }

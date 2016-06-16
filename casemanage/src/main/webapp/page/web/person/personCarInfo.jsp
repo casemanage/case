@@ -49,30 +49,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
  <body style="background:#fff;">	
+ 
+  <div id="contentRight" style="width:83%;height:99%;float:right;background:#fff;"	>
        	<div class="containner-fluid">
            	<div class="pannel-header">重点人员车辆信息</div>         
                  <div class="Panel-content">重点人员车辆：${PersonCar.id == 0?"新建重点人员车辆信息":PersonCar.name}</div>              											
         </div>       
-    <div class="containner-fluid text-center" style="margin-top:120px;">
-		<form id="personCarInfoForm" name="personCarInfoForm" action="person/jsonSaveOrUpdatePersonCar.do" method="post">
-	    	
-	    	<div><input name="id" value="${PersonCar.id}" type="hidden"</div>
+    <div class="containner-fluid text-center" >
+		<form id="personCarInfoForm" name="personCarInfoForm" action="person/jsonSaveOrUpdatePersonCar.do" method="post" style="text-align:left">
+    		<div style="margin-top:15px;width:100%;"> 
+		        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
+		         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePersonCar(this);"> 
+			</div> 
 	        <div style="margin-top:15px;">
-	        	<span class="from-style">车牌号</span>
-	    		<input type="text" name="number" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入车牌号" value="${PersonCar.number}" />
+	        	<span class="from-style">车牌号码:</span><input name="id" value="${PersonCar.id}" type="hidden" />
+	    		<input type="text" name="number"  required="true"  validType="Length[1,30]" class="easyui-validatebox" placeholder="请输入车牌号" style="width:354px;height:32px;"  value="${PersonCar.number}" />
 	    	</div>
 	        <div style="margin-top:15px;">
-	        	<span class="from-style">姓名</span>
-	    		<input type="text" name="name" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入车主姓名" value="${PersonCar.name}" />
+	        	<span class="from-style">车主姓名:</span>
+	    		<input type="text" name="name"  required="true"  validType="Length[1,30]" class="easyui-validatebox" placeholder="请输入车主姓名" style="width:354px;height:32px;"  value="${PersonCar.name}" />
 	    	</div>
 	    	 <div style="margin-top:15px;">
-	        	<span class="from-style">描述</span>
-	    		<input type="text" name="description" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入详细描述" value="${PersonCar.description}" />
-	    	</div>	      
-	       <div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存" onclick="savePersonCar(this);"></div>
-	        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>	        
+	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述:</span>
+	    		<input type="text" name="description" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入详细描述" style="width:354px;height:32px;"  value="${PersonCar.description}" />
+	    	</div>	               
 		</form>
     </div>
-
+</div>
 </body>
 </html>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.security.manage.model.Associate;
 import com.security.manage.model.AssociatePerson;
+import com.security.manage.model.AssociatePlan;
 import com.security.manage.model.AssociateType;
 import com.security.manage.model.TypeStatistic;
 
@@ -40,6 +41,10 @@ public interface AssociateService {
 	void updateAssociatePerson(AssociatePerson associatePerson); 
 
 	void deleteMemberById(AssociatePerson ap);
+
+	List<AssociatePlan> getAssociatePlanListById(Integer associateId);
+
+	void saveOrUpdateAssociatePlan(List<String> urlList, Integer associateid);
 
 
 

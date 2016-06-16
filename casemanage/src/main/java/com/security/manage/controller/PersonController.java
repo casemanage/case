@@ -1,5 +1,10 @@
 package com.security.manage.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,12 +21,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.security.manage.common.JsonResult; 
+import com.security.manage.model.Associate;
+import com.security.manage.model.AssociateType;
 import com.security.manage.model.Person;
 import com.security.manage.model.PersonCar;
 import com.security.manage.model.PersonLevel; 
 import com.security.manage.model.PersonType;
+import com.security.manage.model.User;
 import com.security.manage.service.PersonService;
 import com.security.manage.util.Constants;
  
@@ -394,7 +403,7 @@ public class PersonController extends BaseController{
 			personlist = personService.getPersonList(person);
 			for(Person p:personlist){
 				Date d = p.getCreatetime();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 				String s = sdf.format(d);
 				p.setCreatetimes(s);
 			}
@@ -438,26 +447,23 @@ public class PersonController extends BaseController{
 	@ResponseBody
 	@RequestMapping(value = "/jsonSaveOrUpdatePerson.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
 	public JsonResult<Person> jsonSaveOrUpdatePerson(Person person,
+            @RequestParam(value = "file", required = true) CommonsMultipartFile file,
 			HttpServletRequest request, HttpServletResponse response){
 		JsonResult<Person> js = new JsonResult<Person>();
 		js.setCode(1);
 		js.setMessage("保存失败!");
 		try {
-			if (person.getId() == null || person.getId() == 0) {
-				//User u = this.getLoginUser();
-				//person.setCreator(u.getId());
-				//person.setCreatorname(u.getName());
-				person.setCreator(1);
-				person.setCreatorname("张三");
-				person.setSerialno("000000");
-				person.setOrganname("太升路派出所");
-				person.setPhotourl("baidu");
+			if (person.getId() == null || person.getId() == 0) { 
+				User u = this.getLoginUser();
+				person.setCreator(u.getId());
+				person.setCreatorname(u.getName());
+				person.setOrganname(u.getOrganName());   
+				person.setCreatetime(new Date());
+				String serialNo = getPersonSerialNo(person.getTypeid()); 
+				person.setSerialno(serialNo); 
+				person.setCreatetime(new Date());
 				person.setId(0);
-			}
-			if(person.getSex() == null){
-				js.setMessage("请选择性别!");
-				return js;
-			}
+			} 
 			if(person.getLevelid() == null){
 				js.setMessage("请选择人员级别!");
 				return js;
@@ -477,25 +483,101 @@ public class PersonController extends BaseController{
 					js.setMessage("身份证号已存在!");
 					return js;
 				}
-			} 
-			if(person.getCreatetimes() != null && !"".equals(person.getCreatetimes())){
-				try {
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					String s = person.getCreatetimes();
-					Date d = sdf.parse(s);
-					person.setCreatetime(d);
-				} catch (Exception e) {
-					js.setMessage("日期格式只能为(如：2016-06-15)!");
-					return js;
+			}  
+			
+			 if(file.getSize()>0){
+				String path = request.getSession().getServletContext().getRealPath("uploadsource");
+				String tempName = file.getOriginalFilename();    //这里不用原文件名称 
+				String fileType = tempName.split("\\.")[1];
+				String fileName = person.getSerialno()+"."+fileType;
+				File targetFile = new File(path);
+				if (!targetFile.exists()) {
+					targetFile.mkdirs();
 				}
-			}
+				targetFile = new File(path+"/userphoto");
+				if (!targetFile.exists()) {
+					targetFile.mkdirs();
+				}
+				targetFile = new File(path+"/userphoto",fileName);  
+				if(targetFile.exists()){
+					targetFile.delete();
+				}
+				String filePath ="uploadsource/userphoto/"+fileName;
+				/*BufferedInputStream in = new BufferedInputStream(file.getInputStream());
+				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(path+"/userphoto/"+fileName));
+				int i;
+				while((i=in.read())!=-1){
+					out.write(i);
+				}
+				out.flush(); 
+				out.close();
+				in.close();*/
+				//调用公安内部图像审核接口，是否符合要求
+				//if(filePath 上传头像验证成功){
+				file.transferTo(targetFile);	
+				person.setPhotourl(filePath); 
+				//}
+				//else {
+
+//					targetFile = new File(path+"/userphoto",fileName);  
+//					if(targetFile.exists()){
+//						targetFile.delete();
+//					}
+					//js.setMessage("上传头像，不符合公安部要求，请重新选择图片上传!"); 
+				// }
+			 }else{
+				js.setMessage("请选择头像文件进行上传！");
+				return js;
+			 }
 			personService.saveOrUpdatePerson(person);
+						 
 			js.setCode(new Integer(0));
-			js.setMessage("保存成功!");
+			js.setMessage("保存成功!"); 
+			 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return js;
+	}
+
+	private String getPersonSerialNo(Integer typeid) {
+		// TODO Auto-generated method stub
+		String serialNo = "";
+		PersonType at = new PersonType();
+		at = personService.getPersonTypeById(typeid);
+		serialNo = at.getKeyword() +"000001";
+		List<Person> personList = new ArrayList<Person>();
+		Person person = new Person();
+		person.setSearchName(at.getKeyword());
+		personList = personService.getPersonList(person); 
+		int temp =0;
+		if(personList.size() >0){
+			for(Person a : personList){
+				String sNo = a.getSerialno();
+				sNo = sNo.replaceAll(at.getKeyword(), "");
+				sNo = sNo.replaceAll("^(0+)", "");
+				int maxSerialNo = Integer.parseInt(sNo);
+				if(maxSerialNo > temp){
+					temp = maxSerialNo;
+				}
+			}
+			int maxNo  = temp +1;
+			String maxStr = maxNo+"";
+			if(maxStr.length() == 1){
+				serialNo = at.getKeyword() + "00000" + maxStr;
+			}else if(maxStr.length() == 2){
+				serialNo = at.getKeyword() + "0000" + maxStr;
+			}else if(maxStr.length() == 3){
+				serialNo = at.getKeyword() + "000" + maxStr;
+			}else if(maxStr.length() == 4){
+				serialNo = at.getKeyword() + "00" + maxStr;
+			}else if(maxStr.length() == 5){
+				serialNo = at.getKeyword() + "0" + maxStr;
+			}else if(maxStr.length() == 6){
+				serialNo = at.getKeyword() + maxStr;
+			}
+		} 
+		return serialNo;
 	} 
 }
 

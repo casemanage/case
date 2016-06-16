@@ -39,7 +39,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										if (data.code == 0) {
 											$.messager.alert('保存信息',data.message,'info',
 															function() {
-																window.location.href = "associate/associateList.do";
+																if(data.obj !=undefined ||data.obj != null){
+																	window.location.href = "associate/associateInfo.do?associateId="+data.obj;
+																}else{
+																	window.location.href = "associate/associateInfo.do?associateId=";
+																}
 															});
 										} else {
 											$.messager.alert('错误信息',
@@ -84,81 +88,89 @@ function fillMemberList(lst){
 		html += "</tr>";
 	}
 	$("#MemberList").html(html);
-} 
+}  
 	</script>
   </head>
   
  <body style="background:#fff;">
 	
+  <div id="contentRight" style="width:83%;height:99%;float:right;background:#fff;"	>
      	<div class="containner-fluid">
          	<div class="pannel-header">社会机构信息</div> 
                <div class="Panel-content">社会机构信息：${Associate.id == 0?"新建社会机构信息":Associate.name}</div>
       </div>
-      <div id="tabInfo" class="easyui-tabs" style="width:99%;height:95%;border:0;">  
-    <div title="基础信息" >  
-         <div class="containner-fluid text-center" style="margin-top:120px;">
-			<form id="associsteForm" name="associsteForm" action="associate/jsonSaveOrUpdateAssociate.do" method="post">
-		    	<div style="margin-top:15px;">
-		    		<span class="from-style">名称</span>
-		    		<input type="hidden" id="hid_assoId" name="id" value="${Associate.id}" />
-		    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入机构名称" value="${Associate.name}" name="name"/>
-		    	</div>
-		        <div style="margin-top:15px;">
-		        	<span class="from-style">类型</span>
-					<input id="typeid" type="hidden"  name="typeid"   value="${Associate.typeid}" />
-					<select id="cmb_type" class="easyui-combobox"  data-options="editable:false,required:true,onSelect:function(record){$('#typeid').val(record.value);}"  style="width:254px;height:32px;">  
-						 <option value="">=请选择机构类型=</option>
-						 <c:forEach var="item" items="${assoType }">
-						 	<option value="${item.id}">${item.name }</option> 
-						 </c:forEach>
-					</select>  
-		    	</div>
-		        <div style="margin-top:15px;">
-		        	<span class="from-style">经度</span>
-		    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入经度" value="${Associate.latitude}" name="latitude"/>
-		    	</div>
-		        <div style="margin-top:15px;">
-		        	<span class="from-style">维度</span>
-		    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入维度" value="${Associate.longitude}" name="longitude"/>
-		    	</div>
-		        <div style="margin-top:15px;">
-		        	<span class="from-style">地址</span>
-		    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入地址" value="${Associate.address}" name="address"/>
-		    	</div>
-		    	<div style="margin-top:15px;">
-		        	<span class="from-style">联系方式</span>
-		    		<input type="text"  class="easyui-validatebox" placeholder="请输入联系方式" value="${Associate.telephone}" name="telephone"/>
-	    		</div>
-		        <div style="margin-top:15px;">
-		        	<span class="from-style">描述</span>
-		    		<input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入描述信息" value="${Associate.description}" name="description"/>
-		    	</div>
-		    	<c:if test="${Associate.id>0}"> 
-			        <div style="margin-top:15px;">
-			        	<span class="from-style">采集单位</span>
-			    		<input type="text"  disabled="disabled"  class="easyui-validatebox" placeholder="请输入采集单位" value="${Associate.organname}" name="organname"/>
-			    	</div> 
-			        <div style="margin-top:15px;">
-			        	<span class="from-style">采集人</span>
-			    		<input type="text" disabled="disabled" class="easyui-validatebox" placeholder="请输入采集人" value="${Associate.creatorname}" name="creatorname"/>
-			    	</div>
-			    </c:if>
-			    <div style="margin-top:15px;">
-		        	<span class="from-style">采集时间</span>
-		    		<input type="text"  class="easyui-validatebox" placeholder="请输入采集时间" value="${Associate.createtimes}" name="createtimes"/>
-		    	</div> 
-		        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="保存" onclick="saveAssociste(this);"></div>
-		        <div style="margin-top:25px;"><input type="button" class="btn-sm" value="返回" onclick="javascript:history.back();"></div>
+      <div id="tabInfo" class="easyui-tabs" style="width:100%;border:0;">  
+    <div title="基础信息" style="padding:20px;" >  
+         <div class="containner-fluid text-center"> 
+			<form id="associsteForm" name="associsteForm" action="associate/jsonSaveOrUpdateAssociate.do" method="post" style="text-align:left;">
+			<table style="width:100%;">
+				<tr style="height:40px"> 
+					<td rowspan="2" style="width:40%"> 
+					    	<div style="margin-top:15px;width:100%;">
+					    		<span class="from-style">机构名称:</span>
+					    		<input type="hidden" id="hid_assoId" name="id" value="${Associate.id}" />
+					    		<input type="text" required="true"  validType="Length[1,150]" class="easyui-validatebox"  style="width:354px;height:32px;" placeholder="请输入机构名称" value="${Associate.name}" name="name"/>
+					    	</div>
+					        <div style="margin-top:15px;">
+					        	<span class="from-style">机构类型:</span>
+								<input id="typeid" type="hidden"  name="typeid"   value="${Associate.typeid}" />
+								<select id="cmb_type" class="easyui-combobox"  data-options="editable:false,required:true,onSelect:function(record){$('#typeid').val(record.value);}"  style="width:354px;height:35px;">  
+									 <option value="">=请选择机构类型=</option>
+									 <c:forEach var="item" items="${assoType }">
+									 	<option value="${item.id}">${item.name }</option> 
+									 </c:forEach>
+								</select>  
+					    	</div>
+					        <div style="margin-top:15px;">
+					        	<span class="from-style">机构地址:</span>
+					    		<input type="text" required="true"  validType="Length[1,150]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入地址" value="${Associate.address}" name="address"/>
+					    	</div>
+					    	<div style="margin-top:15px;">
+					        	<span class="from-style">联系方式:</span>
+					    		<input type="text" required="true"  validType="phone"  class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入联系方式" value="${Associate.telephone}" name="telephone"/>
+				    		</div>
+					        <div style="margin-top:15px;">
+					        	<span class="from-style">坐标经度:</span>
+					    		<input type="text" required="true"  validType="LoctionX"   style="width:354px;height:32px;" class="easyui-validatebox" placeholder="请输入经度" value="${Associate.latitude}" name="latitude"/>
+					    	</div>
+					        <div style="margin-top:15px;">
+					        	<span class="from-style">坐标纬度:</span>
+					    		<input type="text" required="true"  validType="LoctionY"  style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入纬度" value="${Associate.longitude}" name="longitude"/>
+					    	</div>
+					        <div style="margin-top:15px;">
+					        	<span class="from-style">备注描述:</span>
+					        	<textarea rows="4" cols="3"   style="width:354px;"  value="${Associate.description}" name="description" ></textarea>
+					    		<!-- <input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入描述信息"/> -->
+					    	</div> 
+						</td>
+						<c:if test="${Associate.id >0}">
+							<td rowspan="2" style="vertical-align: top;"> 
+							<c:forEach var="item" items="${associateplanList}">
+								<img alt="平面图" title="平面图" src="<%=basePath %>${item.planurl}" style="width:400px;height:120px">
+							</c:forEach>
+							</td> 
+						</c:if>
+						<td style="width:20%">
+							<div style="margin-top:15px;width:100%;"> 
+						        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
+						         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveAssociste(this);"> 
+							</div>
+						</td>
+					</tr> 
+					<tr>
+						<td></td>
+					</tr>
+				</table>
 			</form>
 	    </div>
     </div> 
     <c:if test="${Associate.id>0}">
-	    <div title="相关人员">
+	    <div title="相关人员" style="padding:20px;" >
 	    <div class="containner-fluid">
 	    	<div class="Panel-content">
-		    	<div style="margin-top:25px;">
-					<input type="button" class="btn-sm"	onclick="window.location.href='associate/associateMember.do?associateId=${Associate.id}'" value="新增相关人员">
-					<input type="button" class="btn-sm"	onclick="javascript:history.back();" value="返回">
+		    	<div style="width:100%;text-align:right">
+					<input type="button" class="btn-add"	onclick="window.location.href='associate/associateMember.do?associateId=${Associate.id}'" value="新增相关人员">
+					<input type="button" class="btn-back" style="margin-left:25px;margin-right:25px"	onclick="javascript:history.back();" value="返回">
 				</div>
 			</div>
 			</div>   
@@ -167,6 +179,7 @@ function fillMemberList(lst){
 					<thead>
 						<tr style="background-color:#D6D3D3;font-weight: bold;">
 							<th width="4%" style="display:none">&nbsp;</th>
+							<th align="center">头像</th>
 							<th align="center">姓名</th>
 							<th align="center">性别</th>
 							<th align="center">出生年月</th>
@@ -184,6 +197,9 @@ function fillMemberList(lst){
 						<c:forEach var="item" items="${associateList}">
 							<tr>
 								<td align="center" style="display:none">${item.id}</td>
+								<td	align="center">
+									<img alt="头像" src="<%=basePath %>${item.photourl}" style="width:35px;height:35px">
+								</td>
 								<td	align="center">${item.name}</td>
 								<c:if test="${item.sex == 1}">
 									<td>男</td>
@@ -204,7 +220,7 @@ function fillMemberList(lst){
 								</c:if>
 								<td>${item.creatorname}</td>
 								<td>${item.organname}</td>
-								<td><input type="button" onclick="deleteByAssociateId(${Associate.id},${item.id});" value="X"/></td>
+								<td><a href="javascript:void(0);" onclick="deleteByAssociateId(${Associate.id},${item.id});">删除</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -215,6 +231,7 @@ function fillMemberList(lst){
     </c:if>  
 </div> 
    
+</div> 
 
 </body>
 </html>
