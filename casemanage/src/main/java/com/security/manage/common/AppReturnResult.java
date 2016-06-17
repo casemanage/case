@@ -10,7 +10,9 @@ public class AppReturnResult<E>  implements Serializable {
 	/** 变量 serialVersionUID(long) */
 	private static final long serialVersionUID = 1L;
  
-
+    /**
+     * 返回状态值：200：正常，201：获取数据失败，202：内部方法异常
+     */
 	private Integer code;
 	
 	private String message;
