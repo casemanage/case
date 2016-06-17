@@ -403,9 +403,11 @@ public class PersonController extends BaseController{
 			personlist = personService.getPersonList(person);
 			for(Person p:personlist){
 				Date d = p.getCreatetime();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
-				String s = sdf.format(d);
-				p.setCreatetimes(s);
+				if(d != null){
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
+					String s = sdf.format(d);
+					p.setCreatetimes(s);
+				}
 			}
 			countTotal = personService.getTotal(person);
 		}catch(Exception ex){
@@ -429,9 +431,11 @@ public class PersonController extends BaseController{
 		if(personId != 0 && personId != null){
 			p = personService.getPersonById(personId);
 			Date d = p.getCreatetime();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String s = sdf.format(d);
-			p.setCreatetimes(s);
+			if(d != null){
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String s = sdf.format(d);
+				p.setCreatetimes(s);
+			}
 		}else{
 			p.setId(personId);
 		}

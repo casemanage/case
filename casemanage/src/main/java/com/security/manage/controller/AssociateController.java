@@ -63,9 +63,11 @@ public class AssociateController extends BaseController{
 			associatelist = associateService.getAssociateList(associate);  
 			for(Associate a:associatelist){
 				Date d = a.getCreatetime();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				String s = sdf.format(d);
-				a.setCreatetimes(s);
+				if(d != null){
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String s = sdf.format(d);
+					a.setCreatetimes(s);
+				}
 			}
 			countTotal = associateService.getTotalCount(associate);
 		} catch (Exception e) {
@@ -101,8 +103,10 @@ public class AssociateController extends BaseController{
 				associate = associateService.getAssociateById(associateId);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				Date d = associate.getCreatetime();
-				String s = sdf.format(d);
-				associate.setCreatetimes(s);
+				if(d != null){
+					String s = sdf.format(d);
+					associate.setCreatetimes(s);
+				}
 				la = associateService.getAssociateListById(associateId);
 				plala = associateService.getAssociatePlanListById(associateId);
 			}catch(Exception ex){
