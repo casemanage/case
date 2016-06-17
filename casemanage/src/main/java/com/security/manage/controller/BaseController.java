@@ -69,6 +69,5 @@ public abstract class BaseController extends CommonsMultipartResolver {
 	protected void setLoginUser(User loginUser) {
 		SecurityUtils.getSubject().getSession().setAttribute("username", loginUser);
 	}
-
 	
 }

@@ -1,8 +1,13 @@
 package com.security.manage.controller;
   
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -53,6 +58,9 @@ public class HomeController extends BaseController {
 	private AssociateService associateService;
 	@Resource(name = "personService")
 	private PersonService personService;
+	
+	
+	
 	@ResponseBody
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
 	public JsonResult <User> login(User user, 
@@ -61,17 +69,30 @@ public class HomeController extends BaseController {
 		json.setCode(new Integer(1));
 		json.setMessage("登录失败!");
 		try{
-//			ReturnResult<User> res =login(user.getAccount(), user.getPassword());
-//			if(res.getCode() == ReturnResult.SUCCESS){
-//				//List<Functions> lf = parseFunctionList(functionService.getFunctionByParentId(res.getResultObject().getId()));
-//				List<Functions> lf = parseFunctionList(functionService.getFunctionByParentId(0));
-//				request.getSession().setAttribute(Constants.USER_SESSION_FUNCTION,lf); 
-//				
-//				
-//				res.getResultObject().setSelectedMainMemu(lf.get(0).getId());
-//				res.getResultObject().setSelectedChildMenu(lf.get(0).getChildFunctionlist().get(0).getId());
-//				res.getResultObject().setChildMenuList(lf.get(0).getChildFunctionlist());
-//				this.setLoginUser(res.getResultObject());
+			String path = "http://服务器域名(端口)/index.php/API/Police/policeLogin?pc_num="+user.getAccount()+"&pc_pwd="+user.getPassword();
+			URL url = new URL(path);
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        
+	        conn.setRequestMethod("POST");
+	        conn.setConnectTimeout(5 * 1000);// 设置连接超时时间为5秒 
+	        conn.setReadTimeout(20 * 1000);// 设置读取超时时间为20秒 
+	        // 使用 URL 连接进行输出，则将 DoOutput标志设置为 true
+	        conn.setDoOutput(true); 
+	        conn.setUseCaches(false);
+	        conn.setInstanceFollowRedirects(true);
+	        conn.setRequestProperty("Content-Type", "application/x-javascript");
+	        conn.connect();
+	        DataOutputStream out = new DataOutputStream(conn.getOutputStream());
+	        String content = "pc_num=" + user.getAccount()+"&pc_pwd="+user.getPassword();
+	        out.writeBytes(content);  
+	        out.flush();
+	        out.close(); // flush and close 
+	        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        String msg;
+	        while ((msg = reader.readLine()) != null) {
+	        	msg += msg;
+	        }
+	        reader.close();
 			User u = new User();
 			u.setGuid("111111");
 			u.setName("张三");

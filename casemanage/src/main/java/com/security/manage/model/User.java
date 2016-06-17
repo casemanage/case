@@ -9,7 +9,7 @@ public class User {
     private String keyWords;
     private String account;
     private String password;
-    private String token;
+    private String token; 
 	public String getToken() {
 		return token;
 	}
