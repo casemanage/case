@@ -488,7 +488,6 @@ public class PersonController extends BaseController{
 					return js;
 				}
 			}  
-			
 			 if(file.getSize()>0){
 				String path = request.getSession().getServletContext().getRealPath("uploadsource");
 				String tempName = file.getOriginalFilename();    //这里不用原文件名称 
@@ -537,6 +536,7 @@ public class PersonController extends BaseController{
 						 
 			js.setCode(new Integer(0));
 			js.setMessage("保存成功!"); 
+			js.setObj(person.getId());
 			 
 		} catch (Exception e) {
 			e.printStackTrace();

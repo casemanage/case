@@ -46,6 +46,10 @@ public interface AssociateService {
 
 	void saveOrUpdateAssociatePlan(List<String> urlList, Integer associateid);
 
+	AssociatePerson getAssociateMemberById(Integer id);
+
+	List<Associate> getAssociateListByCreatorname(Associate associate);
+
 
 
 

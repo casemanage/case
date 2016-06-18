@@ -155,6 +155,18 @@ public class AssociateServiceImpl implements AssociateService{
 		}
 	}
 
+	@Override
+	public AssociatePerson getAssociateMemberById(Integer id) {
+		// TODO Auto-generated method stub
+		return associatePersonMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<Associate> getAssociateListByCreatorname(Associate associate) {
+		// TODO Auto-generated method stub
+		return associateMapper.getAssociateListByCreatorname(associate);
+	}
+
 	
 
 }

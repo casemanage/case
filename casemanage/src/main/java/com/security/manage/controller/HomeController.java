@@ -69,7 +69,7 @@ public class HomeController extends BaseController {
 		json.setCode(new Integer(1));
 		json.setMessage("登录失败!");
 		try{
-			String path = "http://服务器域名(端口)/index.php/API/Police/policeLogin?pc_num="+user.getAccount()+"&pc_pwd="+user.getPassword();
+			/*String path = "http://服务器域名(端口)/index.php/API/Police/policeLogin?pc_num="+user.getAccount()+"&pc_pwd="+user.getPassword();
 			URL url = new URL(path);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        
@@ -108,7 +108,7 @@ public class HomeController extends BaseController {
 //			}else{				
 //				json.setMessage(res.getMessage());
 //			}
-
+*/
 			json.setCode(new Integer(0));  
 			json.setMessage("登录成功!");
 		}catch(Exception e){
