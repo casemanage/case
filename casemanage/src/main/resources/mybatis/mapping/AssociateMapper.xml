@@ -283,27 +283,7 @@
   		and a.id != #{id,jdbcType=INTEGER}
   	</if>
   </select> 
-   <resultMap id="QueryResultMap" type="com.security.manage.model.app.AssociateApp" >
-    <id column="ID" property="id" jdbcType="INTEGER" />
-    <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="TYPEID" property="typeid" jdbcType="INTEGER" />
-    <result column="TYPENAME" property="typename" jdbcType="VARCHAR" />
-    <result column="SERIALNO" property="serialno" jdbcType="VARCHAR" />
-    <result column="LATITUDE" property="latitude" jdbcType="VARCHAR" />
-    <result column="LONGITUDE" property="longitude" jdbcType="VARCHAR" />
-    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
-    <result column="CREATOR" property="creator" jdbcType="INTEGER" />
-    <result column="CREATORNAME" property="creatorname" jdbcType="VARCHAR" />
-    <result column="ORGANNAME" property="organname" jdbcType="VARCHAR" />
-    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" /> 
-    <result column="createTime" property="createtime" jdbcType="DATE"/>
-    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
-  </resultMap>   
-  <resultMap id="ResultMapWithBLOBs" type="com.security.manage.model.app.AssociateApp" extends="QueryResultMap" >
-    <result column="TIMESPAN" property="timespan" jdbcType="BINARY" />
-  </resultMap>
-  
-  <select id="getAssociateListByCreatorname" parameterType="com.security.manage.model.Associate" resultMap="QueryResultMap">
+  <select id="getAssociateListByCreatorname" parameterType="com.security.manage.model.Associate" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List" />
   	from MC_ASSOCIATE a
   	where 
