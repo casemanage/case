@@ -34,7 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$("#dtb_birth").datebox("setValue",birth); 
 			}
 			var sex = $("#sex").val();
-			if(sex == 1){
+			if(sex == 1 && sex != ""){
 				$("#radio1").attr("checked",'checked');
 			}else if(sex == 0 && sex != ""){
 				$("#radio2").attr("checked",'checked');
@@ -91,6 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 } else obj.value="";//for FF,Chrome,Safari
             }else{
 				$("#filename").val(obj.value); 
+				$("#photourl").val(obj.value);
 			}
 		}
 	</script>

@@ -38,5 +38,14 @@ public class Constants {
 	public static final Integer STATUS_ENABLE = 0;
 	public static final Integer STATUS_DISABLE = 1; 
 	public static final Integer LATEST_TIME =10;
+	public static final String INNER_ERROR_MESSAGE ="内部方法调用异常！";
+	public static final String PARAM_ERROR_MESSAGE ="参数传递错误！";
+	public static final String LOAD_OK_MESSAGE ="获取数据成功！";
+	public static final String LOAD_FAIL_MESSAGE ="获取数据失败！";
+	public static final String SAVE_OK_MESSAGE ="保存成功！";
+	public static final String SAVE_FAIL_MESSAGE ="保存失败！";
+	public static final String LOGIN_SUCCESS ="登陆成功！";
+	public static final String LOGIN_FAIL ="登陆失败！";
+	public static final String ID_CARD_EXIST ="身份证号已存在！";
 	 
 }

@@ -403,9 +403,11 @@ public class PersonController extends BaseController{
 			personlist = personService.getPersonList(person);
 			for(Person p:personlist){
 				Date d = p.getCreatetime();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
-				String s = sdf.format(d);
-				p.setCreatetimes(s);
+				if(d != null){
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
+					String s = sdf.format(d);
+					p.setCreatetimes(s);
+				}
 			}
 			countTotal = personService.getTotal(person);
 		}catch(Exception ex){
@@ -429,9 +431,11 @@ public class PersonController extends BaseController{
 		if(personId != 0 && personId != null){
 			p = personService.getPersonById(personId);
 			Date d = p.getCreatetime();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String s = sdf.format(d);
-			p.setCreatetimes(s);
+			if(d != null){
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String s = sdf.format(d);
+				p.setCreatetimes(s);
+			}
 		}else{
 			p.setId(personId);
 		}
@@ -484,7 +488,6 @@ public class PersonController extends BaseController{
 					return js;
 				}
 			}  
-			
 			 if(file.getSize()>0){
 				String path = request.getSession().getServletContext().getRealPath("uploadsource");
 				String tempName = file.getOriginalFilename();    //这里不用原文件名称 
@@ -533,6 +536,7 @@ public class PersonController extends BaseController{
 						 
 			js.setCode(new Integer(0));
 			js.setMessage("保存成功!"); 
+			js.setObj(person.getId());
 			 
 		} catch (Exception e) {
 			e.printStackTrace();

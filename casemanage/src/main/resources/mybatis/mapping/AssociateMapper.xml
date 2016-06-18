@@ -222,12 +222,16 @@
   	  left join MC_ASSOCIATE_TYPE at on a.TYPEID = at.ID
   	   where 1=1 
   	   <if test="searchName != null and searchName !=''" >
-	      and ( 
-	      	a.NAME like '${searchName}%'
+	      <![CDATA[and ( NAME like '%'+'#{searchName}'+'%' or]]>
+	      
+	      <![CDATA[ADDRESS like '%'+'#{searchName}'+'%' or]]>
+	      
+	      <![CDATA[SERIALNO like '%'+'#{searchName}'+'%' ]]>
+	      	<!-- a.NAME like '${searchName}%'
 	      	OR 
 	      	a.ADDRESS like '${searchName}%'
 	      	OR 
-	      	a.SERIALNO like '${searchName}%'
+	      	a.SERIALNO like '${searchName}%' -->
 	      )
 	     </if>
 	  	 <if test="pageCount != null and pageCount>-1">
@@ -246,12 +250,16 @@
   	 select count(*)
   	 from MC_ASSOCIATE where 1=1 
   	   <if test="searchName != null and searchName !=''" >
-	      and ( 
-	      	NAME like '${searchName}%'
+	      <![CDATA[and ( NAME like '%'+'#{searchName}'+'%' or]]>
+	      
+	      <![CDATA[ADDRESS like '%'+'#{searchName}'+'%' or]]>
+	      
+	      <![CDATA[SERIALNO like '%'+'#{searchName}'+'%' ]]>
+	      	<!-- NAME like '${searchName}%'
 	      	OR 
 	      	ADDRESS like '${searchName}%'
 	      	OR 
-	        SERIALNO like '${searchName}%'
+	        SERIALNO like '${searchName}%' -->
 	      )
 	     </if>
   </select> 
@@ -275,4 +283,10 @@
   		and a.id != #{id,jdbcType=INTEGER}
   	</if>
   </select> 
+  <select id="getAssociateListByCreatorname" parameterType="com.security.manage.model.Associate" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	from MC_ASSOCIATE a
+  	where 
+  	<![CDATA[a.CREATORNAME =#{creatorname} ]]>
+  </select>
 </mapper>

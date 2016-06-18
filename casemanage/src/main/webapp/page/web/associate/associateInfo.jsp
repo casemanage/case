@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 																if(data.obj !=undefined ||data.obj != null){
 																	window.location.href = "associate/associateInfo.do?associateId="+data.obj;
 																}else{
-																	window.location.href = "associate/associateInfo.do?associateId=";
+																	window.location.href = "associate/associateInfo.do?associateId="+0;
 																}
 															});
 										} else {
@@ -88,7 +88,10 @@ function fillMemberList(lst){
 		html += "</tr>";
 	}
 	$("#MemberList").html(html);
-}  
+} 
+function back(){
+	window.location.href = "associate/associateList.do";
+} 
 	</script>
   </head>
   
@@ -152,7 +155,7 @@ function fillMemberList(lst){
 						</c:if>
 						<td style="width:20%">
 							<div style="margin-top:15px;width:100%;"> 
-						        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
+						        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="back();"> 
 						         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveAssociste(this);"> 
 							</div>
 						</td>

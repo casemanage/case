@@ -28,5 +28,7 @@ public interface AssociateMapper {
 
 	List<TypeStatistic> getAssociateStationCountList(); 
 	
-	List<Associate> getExistAssociate(Associate a); 
+	List<Associate> getExistAssociate(Associate a);
+
+	List<Associate> getAssociateListByCreatorname(Associate associate); 
 }
