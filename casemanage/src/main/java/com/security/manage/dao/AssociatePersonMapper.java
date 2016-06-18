@@ -20,7 +20,7 @@ public interface AssociatePersonMapper {
 
     int updateByPrimaryKey(AssociatePerson record);
 
-	List<AssociatePerson> getAssociateListById(Integer associateId);
+	List<AssociatePerson> getAssociatePersonListById(Integer associateId);
 
 	List<Associate> getExistAssociate(AssociatePerson a);
 

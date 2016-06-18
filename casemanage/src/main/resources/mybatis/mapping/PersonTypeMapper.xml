@@ -20,7 +20,7 @@
     delete from MC_PERSON_TYPE
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.security.manage.model.PersonType" >
+  <insert id="insert" parameterType="com.security.manage.model.PersonType">
     insert into MC_PERSON_TYPE ( KEYWORD, NAME, 
       DESCRIPTION)
     values ( #{keyword,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
@@ -86,36 +86,38 @@
   	  from MC_PERSON_TYPE 
   	 </select>
   
-     <select id="getPersonTypeList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonType">
-  	 select 
-  <!-- 	 <if test="pageSize != null and pageSize>-1">
-        top ${pageSize,jdbcType=INTEGER}
-    </if>  -->
-  	    
+  <select id="getPersonTypeList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonType">
+  	 select  	 
+  <!-- 	 TOP ${pageSize}  		 -->
+  	 <include refid="Base_Column_List" />  
+          FROM MC_PERSON_TYPE
+          WHERE 1=1
+          <if test="pageStart != null and pageStart > -1">
+           (ID NOT IN
+           (SELECT TOP ${pageStart} id
+         FROM MC_PERSON_TYPE
+         ORDER BY id))
+         </if>
+        <!--  and keyword like '%2%' -->
+          ORDER BY ID
+  	 	<!--
+  	 select  top ${pageSize,jdbcType=INERGER} 
   	  <include refid="Base_Column_List" />  
   		from MC_PERSON_TYPE 
-  	 <!-- 	where 1=1
-  	<if test="searchName != null and searchName !=''" >
+      	where(ID NOT IN
+          (SELECT TOP ${pageStart-1,jdbcType=INTEGER} id
+         FROM MC_PERSON_TYPE
+         ORDER BY id))
+           1=1
+  		<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '#{searchName,jdbcType=VARCHAR}%'
+	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	KEYWORD like '#{searchName,jdbcType=VARCHAR}%'
+	      	name like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	DESCRIPTION like '#{searchName,jdbcType=VARCHAR}%'
-	      )
-	 </if> -->
-	<!--  <if test="pageStart != null and pageStart>-1">
-	 and  ID >
-	  (
-	     SELECT ISNULL(MAX(AID),0) 
-          FROM 
-	     (
-     SELECT TOP ${pageStart,jdbcType=INTEGER} ma.ID AS AID FROM MC_PERSON_TYPE ma ORDER BY ma.ID DESC
-		    ) A
-	  )
-	 (SELECT TOP ${pageStart,jdbcType=INTEGER} ID FROM MC_PERSON_TYPE ORDER BY ID DESC) 
-	 ORDER BY ID DESC
-	 </if> -->
+	      	description like '%#{searchName,jdbcType=VARCHAR}%'
+	      ) 
+	  </if>-->
   </select>
   
  
@@ -126,13 +128,13 @@
   	 	where 1=1
   	<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '${searchName,jdbcType=VARCHAR}$'
+	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	keyword like '${searchName,jdbcType=VARCHAR}$'
+	      	name like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	description like '${searchName,jdbcType=VARCHAR}$'
+	      	description like '%#{searchName,jdbcType=VARCHAR}%'
 	      )
-	 </if>
+	  </if>
   	  	    
   </select>
   
@@ -143,6 +145,9 @@
   	  where 1=1
     	<if test="name != null" >
         and  t.name = #{name,jdbcType=VARCHAR}
+       </if>  
+       <if test="keyword != null" >
+        and  t.keyword = #{keyword,jdbcType=VARCHAR}
        </if>  
         	  
     </select> 

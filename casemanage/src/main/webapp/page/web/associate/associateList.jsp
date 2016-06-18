@@ -134,8 +134,8 @@ function showdialog(itemId){
 					<th>经纬度</th>
 					<th>地址</th>
 					<th>联系方式</th>
-					<th>采集单位</th>
-					<th>采集人</th>
+					<!-- <th>采集单位</th>
+					<th>采集人</th> -->
 					<th>采集时间</th>
 					<th>描述</th>
 					<th>操作</th>
@@ -156,8 +156,8 @@ function showdialog(itemId){
 						</c:if>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.address}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.telephone}</td>
-						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.organname}</td>
-						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.creatorname}</td>
+<%-- 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.organname}</td>
+						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.creatorname}</td> --%>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.createtimes}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.description}</td>
 						<td><a href="javascript:void(0);" onclick="showdialog(${item.id});">上传平面图</a></td>

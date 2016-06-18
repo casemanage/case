@@ -1,5 +1,7 @@
 package com.security.manage.model;
 
+import java.util.Date;
+
 import com.security.manage.util.Page;
 
 public class AssociatePerson extends Page  {
@@ -33,6 +35,12 @@ public class AssociatePerson extends Page  {
 
     private byte[] timespan;
 
+    private String telephone;
+    
+    private Date createtime;
+    
+    private String createtimes;
+    
     public Integer getId() {
         return id;
     }
@@ -152,4 +160,28 @@ public class AssociatePerson extends Page  {
     public void setTimespan(byte[] timespan) {
         this.timespan = timespan;
     }
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public Date getCreatetime() {
+		return createtime;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+
+	public String getCreatetimes() {
+		return createtimes;
+	}
+
+	public void setCreatetimes(String createtimes) {
+		this.createtimes = createtimes;
+	}
 }

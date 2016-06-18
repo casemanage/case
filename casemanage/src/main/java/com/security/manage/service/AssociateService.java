@@ -34,7 +34,7 @@ public interface AssociateService {
 
 	void saveOrUpdateAssociate(Associate associate);
 
-	List<AssociatePerson> getAssociateListById(Integer associateId);
+	List<AssociatePerson> getAssociatePersonListById(Integer associateId);
 
 	List<Associate> getExistAssociate(AssociatePerson a);
 
@@ -45,6 +45,10 @@ public interface AssociateService {
 	List<AssociatePlan> getAssociatePlanListById(Integer associateId);
 
 	void saveOrUpdateAssociatePlan(List<String> urlList, Integer associateid);
+
+	AssociatePerson getAssociateMemberById(Integer id);
+
+	List<Associate> getAssociateListByCreatorname(Associate associate);
 
 
 

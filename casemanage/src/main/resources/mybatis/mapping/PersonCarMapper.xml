@@ -20,7 +20,7 @@
     delete from MC_PERSON_CAR
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.security.manage.model.PersonCar" >
+  <insert id="insert" parameterType="com.security.manage.model.PersonCar"  >
     insert into MC_PERSON_CAR ( NUMBER, NAME, 
       DESCRIPTION)
     values ( #{number,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
@@ -82,20 +82,25 @@
   
   
      <select id="getPersonCarList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonCar">
-  	 select 
+  	 select
+  	 <!--  top #{pageSize,jdbcType=Integer} -->
   	  <include refid="Base_Column_List" />  
   		from MC_PERSON_CAR 
-  	 	where 1=1
-  		<if test="searchName != null and searchName !=''" >
+  	<!-- 	where(ID NOT IN
+          (SELECT TOP #{pageStart-1,jdbcType=Integer} id
+         FROM MC_PERSON_TYPE
+         ORDER BY id))
+          1=1
+  		 <if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '${searchName,jdbcType=VARCHAR}$'
+	      	number like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	number like '${searchName,jdbcType=VARCHAR}$'
+	      	name like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	description like '${searchName,jdbcType=VARCHAR}$'
+	      	description like '%#{searchName,jdbcType=VARCHAR}%'
 	      )
-	 </if>
-  </select>
+	  </if> -->
+     </select>
   
  
   
@@ -105,14 +110,13 @@
   	 	where 1=1
   	<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '%#{searchName,jdbcType=VARCHAR}%'
-	      	OR 
 	      	number like '%#{searchName,jdbcType=VARCHAR}%'
+	      	OR 
+	      	name like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
 	      	description like '%#{searchName,jdbcType=VARCHAR}%'
 	      )
 	 </if>
-  	  	    
   </select>
   
    <select id="getExistPersonCar" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonCar">

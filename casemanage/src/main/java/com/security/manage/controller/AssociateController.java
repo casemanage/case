@@ -63,9 +63,11 @@ public class AssociateController extends BaseController{
 			associatelist = associateService.getAssociateList(associate);  
 			for(Associate a:associatelist){
 				Date d = a.getCreatetime();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				String s = sdf.format(d);
-				a.setCreatetimes(s);
+				if(d != null){
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String s = sdf.format(d);
+					a.setCreatetimes(s);
+				}
 			}
 			countTotal = associateService.getTotalCount(associate);
 		} catch (Exception e) {
@@ -101,9 +103,11 @@ public class AssociateController extends BaseController{
 				associate = associateService.getAssociateById(associateId);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				Date d = associate.getCreatetime();
-				String s = sdf.format(d);
-				associate.setCreatetimes(s);
-				la = associateService.getAssociateListById(associateId);
+				if(d != null){
+					String s = sdf.format(d);
+					associate.setCreatetimes(s);
+				}
+				la = associateService.getAssociatePersonListById(associateId);
 				plala = associateService.getAssociatePlanListById(associateId);
 			}catch(Exception ex){
 				ex.printStackTrace();
@@ -245,14 +249,20 @@ public class AssociateController extends BaseController{
 		js.setMessage("保存失败!");
 		try {
 			if(associate.getId() == null ||associate.getId() == 0){
-				User u = this.getLoginUser();
+				/*User u = this.getLoginUser();
 				associate.setCreator(u.getId());
 				associate.setCreatorname(u.getName());
 				associate.setOrganname(u.getOrganName()); 
 				associate.setCreatetime(new Date());
 				String serialNo = getAssoSerialNo(associate.getTypeid()); 
 				associate.setSerialno(serialNo); 
+				associate.setId(0);*/
+				associate.setCreator(1);
+				associate.setCreatorname("张三");
+				associate.setOrganname("派出所"); 
 				associate.setCreatetime(new Date());
+				String serialNo = getAssoSerialNo(associate.getTypeid()); 
+				associate.setSerialno(serialNo); 
 				associate.setId(0);
 			}
 			if(associate.getTypeid() == null){
@@ -425,7 +435,7 @@ public class AssociateController extends BaseController{
 			ap.setAssociateid(associateId);
 			try {
 				associateService.deleteMemberById(ap);
-				la = associateService.getAssociateListById(associateId);
+				la = associateService.getAssociatePersonListById(associateId);
 				if(la.size() > 0){
 					js.setList(la);
 				}
@@ -442,11 +452,11 @@ public class AssociateController extends BaseController{
 		@RequestMapping(value = "/jsonupdateplan.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
 		public JsonResult<AssociatePlan> jsonupdateplan(AssociatePlan associatePlan,
 				@RequestParam(value="associateid", required = false)Integer associateid, 
-	            @RequestParam(value = "file1", required = true) CommonsMultipartFile file1,
-	            @RequestParam(value = "file2", required = true) CommonsMultipartFile file2,
-	            @RequestParam(value = "file3", required = true) CommonsMultipartFile file3,
-	            @RequestParam(value = "file4", required = true) CommonsMultipartFile file4,
-	            @RequestParam(value = "file5", required = true) CommonsMultipartFile file5,
+	            @RequestParam(value = "file1", required = false) CommonsMultipartFile file1,
+	            @RequestParam(value = "file2", required = false) CommonsMultipartFile file2,
+	            @RequestParam(value = "file3", required = false) CommonsMultipartFile file3,
+	            @RequestParam(value = "file4", required = false) CommonsMultipartFile file4,
+	            @RequestParam(value = "file5", required = false) CommonsMultipartFile file5,
 				HttpServletRequest request, HttpServletResponse response){
 			JsonResult<AssociatePlan> js = new JsonResult<AssociatePlan>();
 			js.setCode(1);

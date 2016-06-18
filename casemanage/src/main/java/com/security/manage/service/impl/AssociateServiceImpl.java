@@ -113,9 +113,9 @@ public class AssociateServiceImpl implements AssociateService{
 	}
 
 	@Override
-	public List<AssociatePerson> getAssociateListById(Integer associateId) {
+	public List<AssociatePerson> getAssociatePersonListById(Integer associateId) {
 		// TODO Auto-generated method stub
-		return associatePersonMapper.getAssociateListById(associateId);
+		return associatePersonMapper.getAssociatePersonListById(associateId);
 	}
 
 	@Override
@@ -153,6 +153,18 @@ public class AssociateServiceImpl implements AssociateService{
 			ap.setPlanurl(url);
 			associatePlanMapper.insert(ap);
 		}
+	}
+
+	@Override
+	public AssociatePerson getAssociateMemberById(Integer id) {
+		// TODO Auto-generated method stub
+		return associatePersonMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<Associate> getAssociateListByCreatorname(Associate associate) {
+		// TODO Auto-generated method stub
+		return associateMapper.getAssociateListByCreatorname(associate);
 	}
 
 	
