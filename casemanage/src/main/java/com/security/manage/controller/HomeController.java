@@ -21,6 +21,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.dom4j.Branch;
 import org.dom4j.Comment;
 import org.dom4j.Document;
@@ -40,9 +42,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.xml.sax.EntityResolver;
 
 import com.security.manage.common.JsonResult; 
+import com.security.manage.common.UserLogin;
 import com.security.manage.model.Associate;
 import com.security.manage.model.AssociateType;
+import com.security.manage.model.LoginResult;
 import com.security.manage.model.Person;
+import com.security.manage.model.PoliceMan;
 import com.security.manage.model.ResultList;
 import com.security.manage.model.TypeStatistic;
 import com.security.manage.model.User;
@@ -69,50 +74,21 @@ public class HomeController extends BaseController {
 		json.setCode(new Integer(1));
 		json.setMessage("登录失败!");
 		try{
-			String path = "http://服务器域名(端口)/index.php/API/Police/policeLogin?pc_num="+user.getAccount()+"&pc_pwd="+user.getPassword();
-			URL url = new URL(path);
-	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        
-	        conn.setRequestMethod("POST");
-	        conn.setConnectTimeout(5 * 1000);// 设置连接超时时间为5秒 
-	        conn.setReadTimeout(20 * 1000);// 设置读取超时时间为20秒 
-	        // 使用 URL 连接进行输出，则将 DoOutput标志设置为 true
-	        conn.setDoOutput(true); 
-	        conn.setUseCaches(false);
-	        conn.setInstanceFollowRedirects(true);
-	        conn.setRequestProperty("Content-Type", "application/x-javascript");
-	        conn.connect();
-	        DataOutputStream out = new DataOutputStream(conn.getOutputStream());
-	        String content = "pc_num=" + user.getAccount()+"&pc_pwd="+user.getPassword();
-	        out.writeBytes(content);  
-	        out.flush();
-	        out.close(); // flush and close 
-	        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	        String msg;
-	        while ((msg = reader.readLine()) != null) {
-	        	msg += msg;
-	        }
-	        reader.close();
-			User u = new User();
-			u.setGuid("111111");
-			u.setName("张三");
-			u.setOrganId(1);
-			u.setId(3);
-			u.setOrganName("青羊区公安分局");
-			u.setKeyWords("ssss");
-			this.setLoginUser(u);
-//				
-//				json.setCode(new Integer(0)); 
-//				json.setGotoUrl(lf.get(0).getUrl());
-//				json.setMessage("登录成功!");
-//			}else{				
-//				json.setMessage(res.getMessage());
-//			}
-
-			json.setCode(new Integer(0));  
-			json.setMessage("登录成功!");
+			LoginResult loginResult = UserLogin.login(user.getAccount(),user.getPassword());
+			if(loginResult.getStatus().equals("200")){
+				user.setGuid(loginResult.getPoliceman().getGuid());
+				user.setName(loginResult.getPoliceman().getPc_name());
+				user.setDeptGuid(loginResult.getPoliceman().getDept_guid());
+				user.setId(loginResult.getPoliceman().getId());
+				user.setKeyWords(loginResult.getPoliceman().getGuid());
+				json.setCode(0);
+				json.setMessage(loginResult.getMsg());
+			}else{
+				json.setMessage(loginResult.getMsg());
+			}
 		}catch(Exception e){
 			e.printStackTrace();
+			json.setMessage("登录接口调用异常，详细："+e.getMessage());
 		}
 		return json;
 	}
