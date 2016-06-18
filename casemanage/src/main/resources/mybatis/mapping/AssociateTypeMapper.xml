@@ -20,7 +20,7 @@
     delete from MC_ASSOCIATE_TYPE
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.security.manage.model.AssociateType" >
+  <insert id="insert" parameterType="com.security.manage.model.AssociateType"  >
    
     insert into MC_ASSOCIATE_TYPE (KEYWORD, NAME, 
       DESCRIPTION)
@@ -81,19 +81,24 @@
     where ID = #{id,jdbcType=INTEGER}
   </update>
   <select id="getAssociateTypeList" resultMap="BaseResultMap" parameterType="com.security.manage.model.AssociateType">
-  	 select  
-  	  <include refid="Base_Column_List" /> 
-  	  from MC_ASSOCIATE_TYPE
-  	 	where 1=1
+  	 select 
+  	 <!-- top #{pageSize,jdbcType=Integer} -->
+  	  <include refid="Base_Column_List" />  
+  		from MC_ASSOCIATE_TYPE 
+  	 <!-- 	where(ID NOT IN
+          (SELECT TOP #{pageStart-1,jdbcType=Integer} id
+         FROM MC_ASSOCIATE_TYPE
+         ORDER BY id))
+         1=1
   		<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '${searchName,jdbcType=VARCHAR}$'
+	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	keyword like '${searchName,jdbcType=VARCHAR}$'
+	      	name like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	description like '${searchName,jdbcType=VARCHAR}$'
-	      )
-	 </if>
+	      	description like '%#{searchName,jdbcType=VARCHAR}%'
+	      ) 
+	  </if>-->
   </select>
   <select id="getAssociateTypeTotalCount" resultType="java.lang.Integer" parameterType="com.security.manage.model.AssociateType">
   	 select  
@@ -102,13 +107,13 @@
   	 	where 1=1
   	<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '${searchName,jdbcType=VARCHAR}$'
+	      	keyword like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	keyword like '${searchName,jdbcType=VARCHAR}$'
+	      	name like '%#{searchName,jdbcType=VARCHAR}%'
 	      	OR 
-	      	description like '${searchName,jdbcType=VARCHAR}$'
+	      	description like '%#{searchName,jdbcType=VARCHAR}%'
 	      )
-	 </if>
+	  </if>
   </select>
   <select id="getExistAssociateType" resultMap="BaseResultMap" parameterType="com.security.manage.model.AssociateType">
   	 select 
@@ -118,8 +123,8 @@
     	<if test="name != null" >
         and  name = #{name,jdbcType=VARCHAR}
        </if>  
-        <if test="id != null" >
-        and id = #{id,jdbcType=INTEGER}
+        <if test="keyword != null" >
+        and keyword = #{keyword,jdbcType=VARCHAR}
     </if>  	  
   </select>
 </mapper>

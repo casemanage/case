@@ -286,10 +286,25 @@
 	 </if>
     order by p.ID desc 
   </sql>
-  <select id="getPersonList" parameterType="com.security.manage.model.Person" resultMap="BaseResultMap">
+  
+   <select id="getPersonList" parameterType="com.security.manage.model.Person" resultMap="BaseResultMap" >
+  	select 
+  	<include refid="Base_Column_List"/>,
+    <include refid="Blob_Column_List" />,
+    pt.name as typeName,
+    pl.name as levelName
+  	from MC_PERSON p left join MC_PERSON_TYPE pt on p.TYPEID = pt.id
+  					left join MC_PERSON_LEVEL pl on p.LEVELID = pl.id
+  	where
+         p.CREATORNAME = #{creatorname,jdbcType=VARCHAR}
+	
+	order by p.ID desc
+  	</select>
+  <!-- 
+  <select id="getPersonList" parameterType="com.security.manage.model.Person" resultMap="BaseResultMap" >
   	select 
   	<if test="pageSize != null and pageSize>-1">
-        top ${pageSize,jdbcType=INTEGER}
+         top #{pageSize,jdbcType=INTEGER}
     </if>
   	<include refid="Base_Column_List"/>,
     <include refid="Blob_Column_List" />,
@@ -300,12 +315,16 @@
   	where 1=1
   	<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	p.NAME like '${searchName}%'
+	      	 p.NAME like '%#{searchName,jdbcType=VARCHAR}%' 
 	      	OR 
-	      	p.ADDRESS like '${searchName}%'
+	      	 p.ADDRESS like '%#{searchName,jdbcType=VARCHAR}%' 
 	      	OR 
-	      	p.SERIALNO like '${searchName}%'
+	      	 p.SERIALNO like '%#{searchName,jdbcType=VARCHAR}%' 
 	      )
+	</if>
+	<if test="creatorname != null and creatorname != ''">
+	 and 
+	 <![CDATA[p.CREATORNAME =#{creatorname,jdbcType=VARCHAR} ]]>
 	</if>
   	<if test="pageCount != null and pageCount>-1">
 	        and p.ID >  (
@@ -331,7 +350,9 @@
 	      	p.SERIALNO like '${searchName}%'
 	      )
 	</if>
-  </select>
+  </select> -->
+  
+  
   <select id="getExistPersonList" parameterType="com.security.manage.model.Person" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List"/>
   	from MC_PERSON p

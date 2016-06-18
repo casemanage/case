@@ -66,33 +66,34 @@ public class HomeController extends BaseController {
 	public JsonResult <User> login(User user, 
 			HttpServletRequest request, HttpServletResponse response){
 		JsonResult <User>json  = new JsonResult<User>();
-		json.setCode(new Integer(1));
+		json.setCode(new Integer(0));
+		//json.setCode(new Integer(1));
 		json.setMessage("登录失败!");
 		try{
-			String path = "http://服务器域名(端口)/index.php/API/Police/policeLogin?pc_num="+user.getAccount()+"&pc_pwd="+user.getPassword();
-			URL url = new URL(path);
-	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        
-	        conn.setRequestMethod("POST");
-	        conn.setConnectTimeout(5 * 1000);// 设置连接超时时间为5秒 
-	        conn.setReadTimeout(20 * 1000);// 设置读取超时时间为20秒 
-	        // 使用 URL 连接进行输出，则将 DoOutput标志设置为 true
-	        conn.setDoOutput(true); 
-	        conn.setUseCaches(false);
-	        conn.setInstanceFollowRedirects(true);
-	        conn.setRequestProperty("Content-Type", "application/x-javascript");
-	        conn.connect();
-	        DataOutputStream out = new DataOutputStream(conn.getOutputStream());
-	        String content = "pc_num=" + user.getAccount()+"&pc_pwd="+user.getPassword();
-	        out.writeBytes(content);  
-	        out.flush();
-	        out.close(); // flush and close 
-	        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	        String msg;
-	        while ((msg = reader.readLine()) != null) {
-	        	msg += msg;
-	        }
-	        reader.close();
+//			String path = "http://服务器域名(端口)/index.php/API/Police/policeLogin?pc_num="+user.getAccount()+"&pc_pwd="+user.getPassword();
+//			URL url = new URL(path);
+//	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//	        
+//	        conn.setRequestMethod("POST");
+//	        conn.setConnectTimeout(5 * 1000);// 设置连接超时时间为5秒 
+//	        conn.setReadTimeout(20 * 1000);// 设置读取超时时间为20秒 
+//	        // 使用 URL 连接进行输出，则将 DoOutput标志设置为 true
+//	        conn.setDoOutput(true); 
+//	        conn.setUseCaches(false);
+//	        conn.setInstanceFollowRedirects(true);
+//	        conn.setRequestProperty("Content-Type", "application/x-javascript");
+//	        conn.connect();
+//	        DataOutputStream out = new DataOutputStream(conn.getOutputStream());
+//	        String content = "pc_num=" + user.getAccount()+"&pc_pwd="+user.getPassword();
+//	        out.writeBytes(content);  
+//	        out.flush();
+//	        out.close(); // flush and close 
+//	        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//	        String msg;
+//	        while ((msg = reader.readLine()) != null) {
+//	        	msg += msg;
+//	        }
+//	        reader.close();
 			User u = new User();
 			u.setGuid("111111");
 			u.setName("张三");
