@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.security.manage.common.AppReturnResult;
-import com.security.manage.common.JsonResult;
 import com.security.manage.common.UserLogin;
 import com.security.manage.controller.BaseController; 
 import com.security.manage.model.AssociateType;
@@ -90,7 +89,7 @@ public class AppController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/jsonLoadAssociateType.do", produces = { "text/html;charset=UTF-8" })
+	@RequestMapping(value = "/getAssoType.do", produces = { "text/html;charset=UTF-8" })
 	public AppReturnResult<AssociateType> AssociateTypeList(
 			HttpServletRequest request, HttpServletResponse response) {
 		AppReturnResult<AssociateType> js = new AppReturnResult<AssociateType>();
@@ -265,7 +264,7 @@ public class AppController extends BaseController {
 	 * App获取数据接口---获取社会机构列表
 	 */
 	@ResponseBody
-	@RequestMapping(value="/jsonLoadAssociateListByGuid.do")
+	@RequestMapping(value="/getAssoListByGuid.do")
 	public AppReturnResult <Associate> jsonLoadAssociateListByGuid(
 			@RequestParam(value="guid", required = false)String guid,
 			HttpServletRequest request, HttpServletResponse response){
@@ -297,8 +296,8 @@ public class AppController extends BaseController {
 	 * App获取数据接口---获取社会机构详情
 	 */
 	@ResponseBody
-	@RequestMapping(value="/jsonLoadAssociateInfoById.do")
-	public AppReturnResult<AssociatePerson> jsonLoadAssociateInfoByAssociateId(
+	@RequestMapping(value="/getAssociateById.do")
+	public AppReturnResult<AssociatePerson> getAssociateById(
 			@RequestParam(value="id", required = true)Integer id,
 			HttpServletRequest request, HttpServletResponse response){
 		AppReturnResult<AssociatePerson> js = new AppReturnResult<AssociatePerson>();
@@ -329,8 +328,8 @@ public class AppController extends BaseController {
 	 * App获取数据接口---新增社会机构
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/jsonSaveOrUpdateAssociate.do", produces = { "text/html;charset=UTF-8" })
-	public AppReturnResult<Associate> jsonSaveOrUpdateAssociate(Associate associate,
+	@RequestMapping(value = "/saveAssociate.do", produces = { "text/html;charset=UTF-8" })
+	public AppReturnResult<Associate> saveAssociate(Associate associate,
 			@RequestParam(value = "file", required = false) CommonsMultipartFile file,
 //            @RequestParam(value = "file2", required = false) CommonsMultipartFile file2,
 //            @RequestParam(value = "file3", required = false) CommonsMultipartFile file3,
@@ -492,9 +491,9 @@ public class AppController extends BaseController {
 	 * App获取数据接口---获取社会相关人员详情
 	 */
 	@ResponseBody
-	@RequestMapping(value="/jsonLoadAssociateMemberInfoById.do")
+	@RequestMapping(value="/getAssoPersonById.do")
 	public AppReturnResult <AssociatePerson> jsonLoadAssociateMemberInfoById(
-			@RequestParam(value="Id", required = true)Integer id,
+			@RequestParam(value="id", required = true)Integer id,
 			HttpServletRequest request, HttpServletResponse response){
 		AppReturnResult <AssociatePerson> js = new AppReturnResult<AssociatePerson>();
 		AssociatePerson ap = new AssociatePerson();
@@ -523,8 +522,8 @@ public class AppController extends BaseController {
 	 * App获取数据接口---社会机构相关人员的新增
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/jsonSaveOrUpdatedAssociatePerson.do", produces = { "text/html;charset=UTF-8" })
-	public AppReturnResult<AssociatePerson> jsonSaveOrUpdatedAssociatePerson(AssociatePerson associatePerson,
+	@RequestMapping(value = "/saveAssoPerson.do", produces = { "text/html;charset=UTF-8" })
+	public AppReturnResult<AssociatePerson> saveAssoPerson(AssociatePerson associatePerson,
             @RequestParam(value = "file", required = false) CommonsMultipartFile file,
 			HttpServletRequest request, HttpServletResponse response){
 		AppReturnResult<AssociatePerson> js = new AppReturnResult<AssociatePerson>();
