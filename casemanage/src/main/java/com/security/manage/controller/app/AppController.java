@@ -123,8 +123,8 @@ public class AppController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/jsonLoadPersonType.do", produces = { "text/html;charset=UTF-8" })
-	public AppReturnResult<PersonType> PersonTypeList(
+	@RequestMapping(value = "/getPersonType.do", produces = { "text/html;charset=UTF-8" })
+	public AppReturnResult<PersonType> getPersonType(
 			HttpServletRequest request, HttpServletResponse response) {
 		AppReturnResult<PersonType> js = new AppReturnResult<PersonType>();
 		js.setCode(201);
@@ -155,8 +155,8 @@ public class AppController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/jsonLoadPersonLevel.do", produces = { "text/html;charset=UTF-8" })
-	public AppReturnResult<PersonLevel> PersonLevelList(
+	@RequestMapping(value = "/getPersonLevel.do", produces = { "text/html;charset=UTF-8" })
+	public AppReturnResult<PersonLevel> getPersonLevel(
 			HttpServletRequest request, HttpServletResponse response) {
 		AppReturnResult<PersonLevel> js = new AppReturnResult<PersonLevel>();
 		js.setCode(201);
@@ -186,8 +186,8 @@ public class AppController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/jsonLoadPersonList.do", produces = { "text/html;charset=UTF-8" })
-	public AppReturnResult<Person> PersonList(
+	@RequestMapping(value = "/getPersonList.do", produces = { "text/html;charset=UTF-8" })
+	public AppReturnResult<Person> getPersonList(
 			@RequestParam(value="guid", required = false)String guid,
 			HttpServletRequest request, HttpServletResponse response) {
 		AppReturnResult<Person> js = new AppReturnResult<Person>();
@@ -227,8 +227,8 @@ public class AppController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/jsonLoadPersonById.do", produces = { "text/html;charset=UTF-8" })
-	public AppReturnResult<Person> GetPersonById(
+	@RequestMapping(value = "/getPersonById.do", produces = { "text/html;charset=UTF-8" })
+	public AppReturnResult<Person> getPersonById(
 			@RequestParam(value="id", required = false)Integer id,
 			HttpServletRequest request, HttpServletResponse response) {
 		AppReturnResult<Person> js = new AppReturnResult<Person>();
@@ -592,8 +592,8 @@ public class AppController extends BaseController {
 	 * App获取数据接口---重点人员新增
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/jsonSaveOrUpdatedPerson.do", produces = { "text/html;charset=UTF-8" })
-	public AppReturnResult<Person> jsonSaveOrUpdatedPerson(Person person,
+	@RequestMapping(value = "/savePerson.do", produces = { "text/html;charset=UTF-8" })
+	public AppReturnResult<Person> savePerson(Person person,
 			@RequestParam(value = "file", required = false) CommonsMultipartFile file,
 			HttpServletRequest request, HttpServletResponse response){
 		AppReturnResult<Person> js = new AppReturnResult<Person>();
