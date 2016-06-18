@@ -93,7 +93,7 @@ function pagesearch(){
 					<th>地址</th>
 					<th>事由</th>
 					<th>描述</th>
-					<th>采集人</th>
+					<!-- <th>采集人</th> -->
 					<th>采集时间</th>
 				</tr>
 			</thead>
@@ -122,7 +122,7 @@ function pagesearch(){
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.address}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.casecomment}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.description}</td>
-						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.creatorname}</td>
+						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.creatorname}</td> --%>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.createtimes}</td>
 					</tr>
 				</c:forEach>

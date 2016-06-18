@@ -336,18 +336,18 @@ public class AppController extends BaseController {
 				associate.setSerialno(serialNo); 
 				associate.setId(0);
 			}
-			if(associate.getName() != null && !"".equals(associate.getName())){
-				Associate a = new Associate();
-				a.setName(associate.getName());
-				if(associate.getId() > 0){
-					a.setId(associate.getId());
-				}
-				List<Associate> la = new ArrayList<Associate>();
-				la = associateService.getExistAssociate(a);
-				if(la.size() > 0){
-					return js;
-				}
-			}
+//			if(associate.getName() != null && !"".equals(associate.getName())){
+//				Associate a = new Associate();
+//				a.setName(associate.getName());
+//				if(associate.getId() > 0){
+//					a.setId(associate.getId());
+//				}
+//				List<Associate> la = new ArrayList<Associate>();
+//				la = associateService.getExistAssociate(a);
+//				if(la.size() > 0){
+//					return js;
+//				}
+//			}
 			associateService.saveOrUpdateAssociate(associate);
 			
 			List<String> urlList = new ArrayList<String>();
@@ -536,6 +536,7 @@ public class AppController extends BaseController {
 				associatePerson.setCreatorname(u.getName());
 				associatePerson.setOrganname(u.getOrganName());  
 			}
+			
 			 if(file.getSize()>0){
 				String path = request.getSession().getServletContext().getRealPath("uploadsource");
 				String fileName = file.getOriginalFilename();    //这里不用原文件名称 
@@ -567,9 +568,6 @@ public class AppController extends BaseController {
 				//if(filePath 上传头像验证成功){
 					file.transferTo(targetFile);	
 					associatePerson.setPhotourl(filePath); 
-					associateService.updateAssociatePerson(associatePerson);
-					js.setCode(200);
-					js.setMessage(Constants.SAVE_OK_MESSAGE);
 				//}
 				//else {
 	
@@ -579,10 +577,10 @@ public class AppController extends BaseController {
 	//							}
 					//js.setMessage("上传头像，不符合公安部要求，请重新选择图片上传!"); 
 				// }
-			 }else{
-				return js;
-			 }
-				
+			 } 
+				associateService.updateAssociatePerson(associatePerson);
+				js.setCode(200);
+				js.setMessage(Constants.SAVE_OK_MESSAGE);	
 		} catch (Exception e) {
 			js.setCode(202);
 			js.setMessage(Constants.INNER_ERROR_MESSAGE);
