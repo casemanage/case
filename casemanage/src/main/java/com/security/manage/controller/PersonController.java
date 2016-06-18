@@ -499,10 +499,10 @@ public class PersonController extends BaseController{
 //					}
 					//js.setMessage("上传头像，不符合公安部要求，请重新选择图片上传!"); 
 				// }
-			 }else{
+			 }/*else{
 				js.setMessage("请选择头像文件进行上传！");
 				return js;
-			 }
+			 }*/
 			personService.saveOrUpdatePerson(person);
 						 
 			js.setCode(new Integer(0));

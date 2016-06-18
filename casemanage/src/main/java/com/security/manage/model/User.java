@@ -4,12 +4,26 @@ public class User {
     private Integer id;
     private String name;
     private String guid;
+    private String deptGuid;
     private String organName;
     private Integer organId;
     private String keyWords;
     private String account;
     private String password;
     private String token; 
+    private String policeNo;
+	public String getPoliceNo() {
+		return policeNo;
+	}
+	public void setPoliceNo(String policeNo) {
+		this.policeNo = policeNo;
+	}
+	public String getDeptGuid() {
+		return deptGuid;
+	}
+	public void setDeptGuid(String deptGuid) {
+		this.deptGuid = deptGuid;
+	}
 	public String getToken() {
 		return token;
 	}

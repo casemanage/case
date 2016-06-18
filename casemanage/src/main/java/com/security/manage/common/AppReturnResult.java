@@ -11,7 +11,7 @@ public class AppReturnResult<E>  implements Serializable {
 	private static final long serialVersionUID = 1L;
  
     /**
-     * 返回状态值：200：正常，201：获取数据失败，202：内部方法异常
+     * 返回状态值：200：正常，201：获取数据失败，202：内部方法异常,203:传入参数出错
      */
 	private Integer code;
 	
