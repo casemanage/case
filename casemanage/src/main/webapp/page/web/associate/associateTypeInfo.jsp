@@ -34,12 +34,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  			data = $.parseJSON(data);
 		  			if(data.code==0){	  					
 		  				$.messager.alert('保存信息',data.message,'info',function(){
+	  						window.location.href="associate/associateTypeList.do";
 	        			});
-	  					window.location.href="associate/associateTypeList.do";
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error',function(){
 	        			});
-						$(obj).attr("onclick", "saveTask(this);"); 						
+						$(obj).attr("onclick", "saveAssociateType(this);"); 						
 		  			}
 		  		}
 		  	 });  

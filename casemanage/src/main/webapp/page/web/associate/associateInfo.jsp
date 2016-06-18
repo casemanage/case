@@ -115,8 +115,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				success : function(data) { 
 		  			if(data.code==0){ 
 		  				$.messager.alert('删除信息',data.message,'info',function(){ 
-		  					$("#MemberList").html("");
-							fillMemberList(data.list);
+							getAssociatePersonList();
 		       			});
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error');
@@ -132,7 +131,7 @@ function fillMemberList(lst){
 		html += "<tr>";
 		html += "<td align='center' style='display:none'>"+lst[i].id+"</td><td	align='center'><img alt='头像' src='<%=basePath %>"+(lst[i].photourl == null ? "":lst[i].photourl)+"style='width:35px;height:35px'></td><td align='center'>"+(lst[i].name == null ? "":lst[i].name)+"<td align='center'>"+(lst[i].sex == 0 ? "女":"男")+"</td>";
 		html += "<td align='center'>"+(lst[i].birth == null ? "":lst[i].birth)+"</td><td align='center'>"+(lst[i].idcard == null ? "":lst[i].idcard)+"</td>"+"<td align='center'>"+(lst[i].address == null ? "" : lst[i].address)+"</td><td align='center'>"+(lst[i].description == null ? "" : lst[i].description)+"</td>"+"<td align='center'>"+(lst[i].isleader == 0 ?"普通人员":"负责人")+"</td>";
-		html += "<td align='center'>"+(lst[i].creatorname == null ? "":lst[i].creatorname)+"</td><td align='center'>"+(lst[i].organname == null ? "":lst[i].organname)+"</td>"+"<td><input type='button' onclick='deleteByAssociateId("+lst[i].associateid+","+lst[i].id+");' value='X'/>";
+		html += "<td align='center'>"+(lst[i].creatorname == null ? "":lst[i].creatorname)+"</td><td align='center'>"+(lst[i].organname == null ? "":lst[i].organname)+"</td>"+"<td><a href='javascript:void(0);' onclick='deleteByAssociateId("+lst[i].associateid+","+lst[i].id+");'>"+"删除"+"</a>";
 		html += "</tr>";
 	}
 	$("#MemberList").html(html);

@@ -115,6 +115,7 @@
 	      	OR 
 	      	keyword like '%${searchName}%'
 	      	OR 
+	      	DESCRIPTION like '%${searchName}%'
 	      )
 	  </if>
   	  	    

@@ -88,7 +88,7 @@
   	 	where 1=1
   		<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	a.keyword like '%${searchName,jdbcType=VARCHAR}%'
+	      	a.keyword like '%${searchName}%'
 	      	OR 
 	      	a.NAME like '%${searchName}%'
 	      )

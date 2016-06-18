@@ -263,4 +263,9 @@
   	from MC_ASSOCIATE_PERSON
   	where ASSOCIATEID = #{associateid,jdbcType=INTEGER}
   </select>
+  <select id="getAssociatePersonListById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from MC_ASSOCIATE_PERSON
+  	where ASSOCIATEID = #{associateid,jdbcType=INTEGER}
+  </select>
 </mapper>
