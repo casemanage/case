@@ -29,9 +29,7 @@ public class Associate extends Page {
 
     private String description;
 
-    private byte[] timespan;
-    
-    private String timestring;
+    private byte[] timespan; 
     
     private Date createtime;
     
@@ -144,15 +142,7 @@ public class Associate extends Page {
     public void setTimespan(byte[] timespan) {
         this.timespan = timespan;
     }
-
-	public String getTimestring() {
-		return timestring;
-	}
-
-	public void setTimestring(String timestring) {
-		this.timestring = timestring;
-	}
-	
+ 
 	public String getTypename() {
 		return typename;
 	}
