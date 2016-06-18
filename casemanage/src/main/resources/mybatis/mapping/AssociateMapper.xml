@@ -212,29 +212,29 @@
   </update>
    <select id="getAssociateList" resultMap="BaseResultMap" parameterType="com.security.manage.model.Associate">
   	 select 
-  	 <if test="pageSize != null and pageSize>-1">
+  	 <!-- <if test="pageSize != null and pageSize>-1">
         top ${pageSize,jdbcType=INTEGER}
-    </if>
+    </if> -->
   	  <include refid="Base_Column_List" />,
-      <include refid="Blob_Column_List" /> ,
+      <include refid="Blob_Column_List" />,
     	at.NAME AS TYPENAME
-  	  from MC_ASSOCIATE a
+  	  from  
+  	  (select *, ROW_NUMBER() OVER(Order by b.ID DESC ) AS RowNumber from MC_ASSOCIATE as b) as a
   	  left join MC_ASSOCIATE_TYPE at on a.TYPEID = at.ID
   	   where 1=1 
   	   <if test="searchName != null and searchName !=''" >
-	      <![CDATA[and ( NAME like '%'+'#{searchName}'+'%' or]]>
-	      
-	      <![CDATA[ADDRESS like '%'+'#{searchName}'+'%' or]]>
-	      
-	      <![CDATA[SERIALNO like '%'+'#{searchName}'+'%' ]]>
-	      	<!-- a.NAME like '${searchName}%'
+  	   	and(
+	        a.NAME like '%${searchName}%'
 	      	OR 
-	      	a.ADDRESS like '${searchName}%'
+	      	a.ADDRESS like '%${searchName}%'
 	      	OR 
-	      	a.SERIALNO like '${searchName}%' -->
+	      	a.SERIALNO like '%${searchName}%'
 	      )
 	     </if>
-	  	 <if test="pageCount != null and pageCount>-1">
+	     <if test="pageStart != null and pageSize != null and pageStart>-1 and pageSize>-1">
+    		and RowNumber BETWEEN #{pageStart} and #{pageSize}
+    	</if>
+	  	 <!-- <if test="pageCount != null and pageCount>-1">
 	        and a.ID >  (
 			          SELECT ISNULL(MAX(AID),0) 
 			          FROM 
@@ -242,24 +242,21 @@
 			                SELECT TOP ${pageCount,jdbcType=INTEGER} ma.ID AS AID FROM MC_ASSOCIATE ma ORDER BY ma.ID DESC
 			                ) A
 			          )
-	    </if>
-    order by a.ID desc
+	    </if> -->
   </select>
   
   <select id="getTotalCount" resultType="java.lang.Integer" parameterType="com.security.manage.model.Associate">
   	 select count(*)
-  	 from MC_ASSOCIATE where 1=1 
+  	 from 
+  	 MC_ASSOCIATE 
+  	  where 1=1 
   	   <if test="searchName != null and searchName !=''" >
-	      <![CDATA[and ( NAME like '%'+'#{searchName}'+'%' or]]>
-	      
-	      <![CDATA[ADDRESS like '%'+'#{searchName}'+'%' or]]>
-	      
-	      <![CDATA[SERIALNO like '%'+'#{searchName}'+'%' ]]>
-	      	<!-- NAME like '${searchName}%'
+  	     and (
+	        NAME like '%${searchName}%'
 	      	OR 
-	      	ADDRESS like '${searchName}%'
+	      	ADDRESS like '%${searchName}%'
 	      	OR 
-	        SERIALNO like '${searchName}%' -->
+	        SERIALNO like '%${searchName}%'
 	      )
 	     </if>
   </select> 

@@ -50,6 +50,10 @@ public interface AssociateService {
 
 	List<Associate> getAssociateListByCreatorname(Associate associate);
 
+	List<AssociatePerson> getAssociateListById(AssociatePerson associatePerson);
+
+	int getTotalCount(AssociatePerson associatePerson);
+
 
 
 

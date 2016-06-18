@@ -22,14 +22,62 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	--> 
+	<script
+	src="${pageContext.request.contextPath}/source/js/pager/jquery.pager.js"></script>
+	<link
+	href="${pageContext.request.contextPath}/source/js/pager/Pager.css"
+	rel="stylesheet" />
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$("#pager").pager({
+			    pagenumber:'${associatePerson.pageNo}',                         /* 表示初始页数 */
+			    pagecount:'${associatePerson.pageCount}',                      /* 表示总页数 */
+			    totalCount:'${associatePerson.totalCount}',
+			    buttonClickCallback:PageClick                     /* 表示点击分页数按钮调用的方法 */                  
+			}); 
 			var aId = Number($("#hid_assoId").val());
 			if(aId > 0){
 				var typeid = $("#typeid").val();
 				$("#cmb_type").combobox("setValue",typeid);
 			}
 		});
+		PageClick = function(pageclickednumber) {
+			$("#pager").pager({
+			    pagenumber:pageclickednumber,                 /* 表示启示页 */
+			    pagecount:'${associatePerson.pageCount}',                  /* 表示最大页数pagecount */
+			    buttonClickCallback:PageClick                 /* 表示点击页数时的调用的方法就可实现javascript分页功能 */            
+			});
+			
+			$("#pageNumber").val(pageclickednumber);          /* 给pageNumber从新赋值 */
+			/* 执行Action */
+			pagesearch();
+		}
+		function pagesearch(){
+			getAssociatePersonList();
+		}
+		function getAssociatePersonList(){
+			var associateId = $("#hid_assoId").val();
+			var pageNumber = $("#pageNumber").val();
+			$.ajax({
+				url : "associate/jsonLoadAssociatePersonList.do?associateId="+associateId+"&&pageNumber="+pageNumber,
+				type : "post",  
+				dataType:"json",
+				success : function(data) { 
+		  			if(data.code == 0){ 
+		  				 $("#pager").pager({
+						    pagenumber:data.obj.pageNo,                         /* 表示初始页数 */
+						    pagecount:data.obj.pageCount,                      /* 表示总页数 */
+						    totalCount:data.obj.totalCount,
+						    buttonClickCallback:PageClick                     /* 表示点击分页数按钮调用的方法 */                  
+						});
+						$("#MemberList").html("");
+						fillMemberList(data.list);
+		  			}else{
+						$.messager.alert('错误信息',data.message,'error');
+		  			} 
+				}
+			});
+		}
 		function saveAssociste(obj){
 			if ($('#associsteForm').form('validate')) {
 				$(obj).attr("onclick", "");
@@ -77,12 +125,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			});
 	    }  
 	});
-} 
+}
 function fillMemberList(lst){
 	var html = "";
 	for(var i = 0; i<lst.length;i++){
 		html += "<tr>";
-		html += "<td align='center' style='display:none'>"+lst[i].id+"</td>"+"<td align='center'>"+(lst[i].name == null ? "":lst[i].name)+"<td align='center'>"+(lst[i].sex == 0 ? "女":"男")+"</td>";
+		html += "<td align='center' style='display:none'>"+lst[i].id+"</td><td	align='center'><img alt='头像' src='<%=basePath %>"+(lst[i].photourl == null ? "":lst[i].photourl)+"style='width:35px;height:35px'></td><td align='center'>"+(lst[i].name == null ? "":lst[i].name)+"<td align='center'>"+(lst[i].sex == 0 ? "女":"男")+"</td>";
 		html += "<td align='center'>"+(lst[i].birth == null ? "":lst[i].birth)+"</td><td align='center'>"+(lst[i].idcard == null ? "":lst[i].idcard)+"</td>"+"<td align='center'>"+(lst[i].address == null ? "" : lst[i].address)+"</td><td align='center'>"+(lst[i].description == null ? "" : lst[i].description)+"</td>"+"<td align='center'>"+(lst[i].isleader == 0 ?"普通人员":"负责人")+"</td>";
 		html += "<td align='center'>"+(lst[i].creatorname == null ? "":lst[i].creatorname)+"</td><td align='center'>"+(lst[i].organname == null ? "":lst[i].organname)+"</td>"+"<td><input type='button' onclick='deleteByAssociateId("+lst[i].associateid+","+lst[i].id+");' value='X'/>";
 		html += "</tr>";
@@ -228,7 +276,8 @@ function back(){
 						</c:forEach>
 					</tbody>
 				</table>
-			 <!--  <div class="page" id="pager"></div> -->
+				<input type="hidden" id="pageNumber" name="pageNo" value="${associatePerson.pageNo}" /> 
+			 	<div class="page" id="pager"></div>
 			</div>
 	    </div> 
     </c:if>  

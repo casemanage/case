@@ -55,16 +55,18 @@ public class AssociateController extends BaseController{
 					"iso8859-1"), "utf-8");
 			associate.setSearchName(searchName);
 		}
-		
+		//通过request绑定对象传到前台
+		associate.setPageSize(Constants.DEFAULT_PAGE_SIZE); 
+		if (associate.getPageNo() == null)
+			associate.setPageNo(1);
 		List<Associate> associatelist = new ArrayList<Associate>();
 		int countTotal = 0;
 		try { 
-		
 			associatelist = associateService.getAssociateList(associate);  
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			for(Associate a:associatelist){
 				Date d = a.getCreatetime();
 				if(d != null){
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					String s = sdf.format(d);
 					a.setCreatetimes(s);
 				}
@@ -73,12 +75,7 @@ public class AssociateController extends BaseController{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		//通过request绑定对象传到前台
 		associate.setTotalCount(countTotal);
-		associate.setPageSize(Constants.DEFAULT_PAGE_SIZE); 
-		associate.setPageCount(countTotal/Constants.DEFAULT_PAGE_SIZE+1); 
-		if (associate.getPageNo() == null)
-			associate.setPageNo(1);
 		request.setAttribute("associate", associate);
 		request.setAttribute("associatelist",associatelist);
 		return "web/associate/associateList";
@@ -93,12 +90,19 @@ public class AssociateController extends BaseController{
 	 */
 	@RequestMapping(value = "/associateInfo.do")
 	public String associateInfo(
+			AssociatePerson associatePerson,
 			@RequestParam(value="associateId", required = false)Integer associateId,
 			HttpServletRequest request, HttpServletResponse response){ 
 		Associate  associate = new Associate();
 		List<AssociatePerson> la = new ArrayList<AssociatePerson>();
 		List<AssociatePlan> plala = new ArrayList<AssociatePlan>();
+		if(associatePerson.getPageNo() == null){
+			associatePerson.setPageNo(1);
+		}
+		associatePerson.setPageSize(Constants.DEFAULT_PAGE_SIZE);
+		int total = 0;
 		if(associateId != null && associateId != 0){
+			associatePerson.setAssociateid(associateId);
 			try{
 				associate = associateService.getAssociateById(associateId);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -107,11 +111,14 @@ public class AssociateController extends BaseController{
 					String s = sdf.format(d);
 					associate.setCreatetimes(s);
 				}
-				la = associateService.getAssociateListById(associateId);
+				la = associateService.getAssociateListById(associatePerson);
+				total = associateService.getTotalCount(associatePerson);
 				plala = associateService.getAssociatePlanListById(associateId);
 			}catch(Exception ex){
 				ex.printStackTrace();
 			}
+			associatePerson.setTotalCount(total);
+			request.setAttribute("associatePerson", associatePerson);
 			request.setAttribute("Associate", associate);
 			request.setAttribute("associateList",la);
 			request.setAttribute("associateplanList",plala);
@@ -145,24 +152,20 @@ public class AssociateController extends BaseController{
 					"iso8859-1"), "utf-8");
 			associateType.setSearchName(searchName);
 		}
-		
+		if(associateType.getPageNo() == null){
+			associateType.setPageNo(1);
+		}
+		associateType.setPageSize(Constants.DEFAULT_PAGE_SIZE);
 		List<AssociateType> associateTypelist = new ArrayList<AssociateType>();
 		int countTotal = 0;
 		try { 
-			
 			associateTypelist = associateService.getAssociateTypeList(associateType); 
-
 			countTotal = associateService.getAssociateTypeTotalCount(associateType);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 		//通过request绑定对象传到前台
-		
 		associateType.setTotalCount(countTotal);
-		associateType.setPageSize(Constants.DEFAULT_PAGE_SIZE); 
-		associateType.setPageCount(countTotal/Constants.DEFAULT_PAGE_SIZE+1); 
-		if (associateType.getPageNo() == null)
-			associateType.setPageNo(1);
 		request.setAttribute("AssociateType", associateType);
 		request.setAttribute("AssociateTypelist",associateTypelist);
 		return "web/associate/associateTypeList";
@@ -562,5 +565,36 @@ public class AssociateController extends BaseController{
 			}
 			return js;
 		}
-		
+		@ResponseBody
+		@RequestMapping(value = "/jsonLoadAssociatePersonList.do", method = RequestMethod.POST)
+		public JsonResult<AssociatePerson> jsonLoadAssociatePersonList(
+				@RequestParam(value="associateId", required = false)Integer associateId,
+				@RequestParam(value="pageNumber", required = false)Integer pageNumber,
+				HttpServletRequest request, HttpServletResponse response) {
+			JsonResult<AssociatePerson> js = new JsonResult<AssociatePerson>();
+			AssociatePerson ap = new AssociatePerson();
+			List<AssociatePerson> la = new ArrayList<AssociatePerson>();
+			int total = 0;
+			if(pageNumber != null){
+				ap.setPageNo(pageNumber);
+			}
+			ap.setPageSize(Constants.DEFAULT_PAGE_SIZE);
+			if(associateId != null){
+				ap.setAssociateid(associateId);
+			}
+			js.setMessage("加载失败!");
+			js.setCode(1);
+			try {
+				la = associateService.getAssociateListById(ap);
+				total = associateService.getTotalCount(ap);
+				ap.setTotalCount(total);
+				js.setObj(ap);
+				js.setCode(0);
+				js.setList(la);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			return js;
+		}
 }

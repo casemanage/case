@@ -83,33 +83,37 @@
   
      <select id="getPersonCarList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonCar">
   	 select 
-  	  <include refid="Base_Column_List" />  
-  		from MC_PERSON_CAR 
+  	  *  
+  		from 
+  		(select *, ROW_NUMBER() OVER(Order by b.ID DESC ) AS RowNumber from MC_PERSON_CAR as b) as a
   	 	where 1=1
   		<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '${searchName,jdbcType=VARCHAR}$'
+	      	a.NAME like '%${searchName}%'
 	      	OR 
-	      	number like '${searchName,jdbcType=VARCHAR}$'
+	      	a.number like '%${searchName}%'
 	      	OR 
-	      	description like '${searchName,jdbcType=VARCHAR}$'
+	      	a.description like '%${searchName}%'
 	      )
 	 </if>
+	 <if test="pageStart != null and pageSize != null and pageStart>-1 and pageSize>-1">
+    		and RowNumber BETWEEN #{pageStart} and #{pageSize}
+    	</if>
   </select>
   
  
   
   <select id="getPersonCarTotalCount" resultType="java.lang.Integer" parameterType="com.security.manage.model.PersonCar">
   	 select count(*)
-  	 	from MC_PERSON_CAR 
-  	 	where 1=1
+ 	from MC_PERSON_CAR 
+ 	where 1=1
   	<if test="searchName != null and searchName !=''" >
 	      and ( 
-	      	NAME like '%#{searchName,jdbcType=VARCHAR}%'
+	      	NAME like '%${searchName}%'
 	      	OR 
-	      	number like '%#{searchName,jdbcType=VARCHAR}%'
+	      	number like '%${searchName}%'
 	      	OR 
-	      	description like '%#{searchName,jdbcType=VARCHAR}%'
+	      	description like '%${searchName}%'
 	      )
 	 </if>
   	  	    

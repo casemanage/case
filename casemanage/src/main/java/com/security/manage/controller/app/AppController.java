@@ -108,7 +108,7 @@ public class AppController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="/jsonLoadAssociateInfoByAssociateId.do", method=RequestMethod.GET)
 	public AppReturnResult <Associate> jsonLoadAssociateInfoByAssociateId(
-			@RequestParam(value="associateId", required = false)Integer associateId,
+			@RequestParam(value="id", required = false)Integer associateId,
 			HttpServletRequest request, HttpServletResponse response){
 		AppReturnResult <Associate> js = new AppReturnResult<Associate>();
 		Associate associate = new Associate();
@@ -287,7 +287,7 @@ public class AppController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="/jsonLoadAssociateMemberByAssociateId.do", method=RequestMethod.GET)
 	public AppReturnResult <AssociatePerson> jsonLoadAssociateMemberByAssociateId(
-			@RequestParam(value="associateId", required = false)Integer associateId,
+			@RequestParam(value="id", required = false)Integer associateId,
 			HttpServletRequest request, HttpServletResponse response){
 		AppReturnResult<AssociatePerson> js = new AppReturnResult<AssociatePerson>();
 		js.setCode(201);
@@ -314,7 +314,7 @@ public class AppController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="/jsonLoadAssociateMemberInfoById.do", method=RequestMethod.GET)
 	public AppReturnResult <AssociatePerson> jsonLoadAssociateMemberInfoById(
-			@RequestParam(value="Id", required = false)Integer id,
+			@RequestParam(value="id", required = false)Integer id,
 			HttpServletRequest request, HttpServletResponse response){
 		AppReturnResult <AssociatePerson> js = new AppReturnResult<AssociatePerson>();
 		AssociatePerson ap = new AssociatePerson();

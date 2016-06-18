@@ -24,10 +24,11 @@ public class Page {
      * 查询条件
      */
     private String searchName;
-    
+
     /**
 	 * 分页起始行数，自动计算
-	 */ 
+	 */
+    @SuppressWarnings("unused")
 	private Integer pageCount;
     
     private Integer totalCount;  
@@ -53,6 +54,15 @@ public class Page {
 	} 
 	
 	public Integer getPageCount() {
+		int pageCount = 0;
+		if(totalCount != null){
+			 pageCount = totalCount%pageSize==0 ? totalCount/pageSize:totalCount/pageSize+1;
+			if(pageCount == 0){
+				pageCount = 1;
+			}
+		}else{
+			pageCount = 1;
+		}
 		return pageCount;
 	}
 

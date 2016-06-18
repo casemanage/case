@@ -233,10 +233,17 @@
       ISLEADER = #{isleader,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getAssociateListById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-  	select <include refid="Base_Column_List"/>
-  	from MC_ASSOCIATE_PERSON
-  	where ASSOCIATEID = #{associateid,jdbcType=INTEGER}
+  <select id="getAssociateListById" parameterType="com.security.manage.model.AssociatePerson" resultMap="BaseResultMap">
+  	select *
+  	from 
+  	(select *, ROW_NUMBER() OVER(Order by b.ID DESC ) AS RowNumber from MC_ASSOCIATE_PERSON as b) as a
+  	where 1=1
+  	<if test="associateid != null">
+  		and a.ASSOCIATEID = #{associateid,jdbcType=INTEGER}
+  	</if>
+  	<if test="pageStart != null and pageSize != null and pageStart>-1 and pageSize>-1">
+    	and RowNumber BETWEEN #{pageStart} and #{pageSize}
+    </if>
   </select>
   <select id="getExistAssociate" parameterType="com.security.manage.model.AssociatePerson" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List"/>
@@ -251,4 +258,9 @@
   	set ASSOCIATEID = 0
   	where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getTotalCount" parameterType="com.security.manage.model.AssociatePerson" resultType="java.lang.Integer">
+  	select count(*)
+  	from MC_ASSOCIATE_PERSON
+  	where ASSOCIATEID = #{associateid,jdbcType=INTEGER}
+  </select>
 </mapper>

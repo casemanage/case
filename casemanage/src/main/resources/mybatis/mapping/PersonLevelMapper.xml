@@ -15,12 +15,6 @@
     from MC_PERSON_LEVEL
     where ID = #{id,jdbcType=INTEGER}
   </select>
-  
-  <select id="getPersonLevelTotalCount" resultType="java.lang.Integer" parameterType="com.security.manage.model.PersonLevel">
-  	select count(*)
-  	from MC_PERSON_LEVEL
-  </select>
-  
   <select id="getExistPersonLevel" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonLevel">
   	select
   	<include refid="Base_Column_List" />
@@ -93,14 +87,28 @@
   </select>
   <select id="getPersonLevelList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonType">
   	select
-  	<include refid="Base_Column_List" />
+  	*
+  	from 
+  	(select *, ROW_NUMBER() OVER(Order by b.ID DESC ) AS RowNumber from MC_PERSON_LEVEL as b) as a
+  	where 1=1
+    <if test="searchName != null and searchName !=''" >
+	     and(
+		    a.name like '%${searchName}%'
+	     )
+   </if>
+   <if test="pageStart != null and pageSize != null and pageStart>-1 and pageSize>-1">
+   		and RowNumber BETWEEN #{pageStart} and #{pageSize}
+   	</if>
+  </select>
+  <select id="getPersonLevelTotalCount" resultType="java.lang.Integer" parameterType="com.security.manage.model.PersonLevel">
+  	select count(*)
   	from MC_PERSON_LEVEL
-  	<!--   where 1=1
-  	  <if test="searchName != null" >
-       keyword like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
-       or name like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
-        or description like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
-    </if> -->
+  	where 1=1
+  	<if test="searchName != null and searchName !=''" >
+	     and(
+		     name like '%${searchName}%'
+	     )
+   </if>
   </select>	
 	  
 </mapper>

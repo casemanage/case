@@ -167,6 +167,19 @@ public class AssociateServiceImpl implements AssociateService{
 		return associateMapper.getAssociateListByCreatorname(associate);
 	}
 
+	@Override
+	public List<AssociatePerson> getAssociateListById(
+			AssociatePerson associatePerson) {
+		// TODO Auto-generated method stub
+		return associatePersonMapper.getAssociateListById(associatePerson);
+	}
+
+	@Override
+	public int getTotalCount(AssociatePerson associatePerson) {
+		// TODO Auto-generated method stub
+		return associatePersonMapper.getTotalCount(associatePerson);
+	}
+
 	
 
 }

@@ -1,10 +1,6 @@
 package com.security.manage.controller;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,8 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.security.manage.common.JsonResult; 
-import com.security.manage.model.Associate;
-import com.security.manage.model.AssociateType;
 import com.security.manage.model.Person;
 import com.security.manage.model.PersonCar;
 import com.security.manage.model.PersonLevel; 
@@ -65,7 +59,6 @@ public class PersonController extends BaseController{
 		List<PersonType> personTypelist = new ArrayList<PersonType>();
 		int countTotal = 0;
 		try { 
-		
 			personTypelist = personService.getPersonTypeList(personType); 		
 			countTotal = personService.getPersonTypeTotalCount(personType);
 		} catch (Exception e) {
@@ -73,8 +66,6 @@ public class PersonController extends BaseController{
 		} 
 		//通过request绑定对象传到前台
 		personType.setTotalCount(countTotal);
-		
-		personType.setPageCount(countTotal/Constants.DEFAULT_PAGE_SIZE+1);		
 		request.setAttribute("PersonType", personType);
 		request.setAttribute("PersonTypelist",personTypelist);
 		return "web/person/personTypeList";
@@ -98,11 +89,12 @@ public class PersonController extends BaseController{
 					"iso8859-1"), "utf-8");
 			personCar.setSearchName(searchName);
 		}
-		
 		List<PersonCar> personCarlist = new ArrayList<PersonCar>();
+		personCar.setPageSize(Constants.DEFAULT_PAGE_SIZE);
+		if (personCar.getPageNo() == null)
+			personCar.setPageNo(1);
 		int countTotal = 0;
 		try { 
-		
 			personCarlist = personService.getPersonCarList(personCar); 		
 			countTotal = personService.getPersonCarTotalCount(personCar);
 		} catch (Exception e) {
@@ -110,10 +102,6 @@ public class PersonController extends BaseController{
 		} 
 		//通过request绑定对象传到前台
 		personCar.setTotalCount(countTotal);
-		personCar.setPageSize(Constants.DEFAULT_PAGE_SIZE);
-		personCar.setPageCount(countTotal/Constants.DEFAULT_PAGE_SIZE+1);	
-		if (personCar.getPageNo() == null)
-			personCar.setPageNo(1);
 		request.setAttribute("PersonCar", personCar);
 		request.setAttribute("PersonCarlist",personCarlist);
 		return "web/person/personCarList";
@@ -138,34 +126,17 @@ public class PersonController extends BaseController{
 				personLevel.setSearchName(searchName);
 			}
 			List<PersonLevel> personLevellist = new ArrayList<PersonLevel>();
+			personLevel.setPageSize(Constants.DEFAULT_PAGE_SIZE);
+			if (personLevel.getPageNo() == null)
+				personLevel.setPageNo(1);
 			int countTotal = 0;
 			try { 
-				//Associate ax = associateService.getAssociateById(1);
 				personLevellist = personService.getPersonLevelList(personLevel); 
-//				for(Associate a :associatelist){
-//					if(a.getTimespan()!= null){
-//						String strDate = new String(a.getTimespan(),"UTF-8");
-//						try{
-//							 int year = Integer.parseInt(strDate.substring(0, 4));
-//						     int month = Integer.parseInt(strDate.substring(4, 6));
-//						     int day = Integer.parseInt(strDate.substring(6, 8));
-//						     String createdate = year+"-"+month+"-"+day;
-//						     a.setCreatedate(createdate);
-//						}catch(Exception ex){
-//						     a.setCreatedate("");
-//						}
-//					}
-//				}
 				countTotal = personService.getPersonLevelTotalCount(personLevel);
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
-			//通过request绑定对象传到前台
 			personLevel.setTotalCount(countTotal);
-			personLevel.setPageSize(Constants.DEFAULT_PAGE_SIZE);
-			personLevel.setPageCount(countTotal/Constants.DEFAULT_PAGE_SIZE+1);
-			if (personLevel.getPageNo() == null)
-				personLevel.setPageNo(1);
 			request.setAttribute("PersonLevel", personLevel);
 			request.setAttribute("PersonLevellist",personLevellist);
 			return "web/person/PersonLevelList";
@@ -398,13 +369,17 @@ public class PersonController extends BaseController{
 			person.setSearchName(searchName);
 		}
 		List<Person> personlist = new ArrayList<Person>();
+		if(person.getPageNo() == null){
+			person.setPageNo(1);
+		}
+		person.setPageSize(Constants.DEFAULT_PAGE_SIZE);
 		int countTotal = 0;
 		try { 
 			personlist = personService.getPersonList(person);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 			for(Person p:personlist){
 				Date d = p.getCreatetime();
 				if(d != null){
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 					String s = sdf.format(d);
 					p.setCreatetimes(s);
 				}
@@ -413,12 +388,8 @@ public class PersonController extends BaseController{
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
-		if(person.getPageNo() == null){
-			person.setPageNo(1);
-		}
-		person.setPageSize(Constants.DEFAULT_PAGE_SIZE);
 		person.setTotalCount(countTotal);
-		person.setPageCount(countTotal/Constants.DEFAULT_PAGE_SIZE+1);
+		request.setAttribute("Person", person);
 		request.setAttribute("personList", personlist);
 		request.setAttribute("Person", person);
 		return "web/person/personList";
