@@ -40,26 +40,27 @@ public class HomeController extends BaseController {
 	public JsonResult <User> login(User user, 
 			HttpServletRequest request, HttpServletResponse response){
 		JsonResult <User>json  = new JsonResult<User>();
-		json.setCode(new Integer(0));
-		//json.setCode(new Integer(1));
+		json.setCode(1); 
 		json.setMessage("登录失败!"); 
-		try{
-			LoginResult loginResult = UserLogin.login(user.getAccount(),user.getPassword());
-			if(loginResult.getStatus().equals("200")){
-				user.setGuid(loginResult.getPoliceman().getGuid());
-				user.setName(loginResult.getPoliceman().getPc_name());
-				user.setDeptGuid(loginResult.getPoliceman().getDept_guid());
-				user.setId(loginResult.getPoliceman().getId());
-				user.setKeyWords(loginResult.getPoliceman().getGuid());
-				json.setCode(0);
-				json.setMessage(loginResult.getMsg());
-			}else{
-				json.setMessage(loginResult.getMsg());
-			} 
-		}catch(Exception e){
-			e.printStackTrace();
-			json.setMessage("登录接口调用异常，详细："+e.getMessage());
-		}
+//		try{
+//			LoginResult loginResult = UserLogin.login(user.getAccount(),user.getPassword());
+//			if(loginResult.getStatus().equals("200")){
+//				user.setGuid(loginResult.getPoliceman().getGuid());
+//				user.setName(loginResult.getPoliceman().getPc_name());
+//				user.setDeptGuid(loginResult.getPoliceman().getDept_guid());
+//				user.setId(loginResult.getPoliceman().getId());
+//				user.setKeyWords(loginResult.getPoliceman().getGuid());
+//				json.setCode(0);
+//				json.setMessage(loginResult.getMsg());
+//			}else{
+//				json.setMessage(loginResult.getMsg());
+//			} 
+//		}catch(Exception e){
+//			e.printStackTrace();
+//			json.setMessage("登录接口调用异常，详细："+e.getMessage());
+//		}
+		json.setCode(0); 
+		json.setMessage("登录成功!"); 
 		return json;
 	}
 	/**

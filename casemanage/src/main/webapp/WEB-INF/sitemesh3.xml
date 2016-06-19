@@ -14,5 +14,7 @@
      <mapping path="**/jsonDelete**" exclue="true" />
      <mapping path="**/jsonUpdate**" exclue="true" />
      <mapping path="**/instance/api/**" exclue="true" />
+     <mapping path="**/get**" exclue="true" />
+     <mapping path="**/save**" exclue="true" />
 </sitemesh>
     
