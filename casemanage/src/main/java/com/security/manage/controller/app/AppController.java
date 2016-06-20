@@ -65,15 +65,19 @@ public class AppController extends BaseController {
 		try{
 			if(StringUtil.isEmpty(account)){ 
 				json.setMessage("请输入用户名");
+				return json;
 			}
 			if(StringUtil.isEmpty(password)){ 
 				json.setMessage("请输入密码");
+				return json;
 			}
 			if(!account.equals("admin")){ 
 				json.setMessage("用户名错误");
+				return json;
 			}
 			if(!password.equals("111111")){ 
 				json.setMessage("密码错误");
+				return json;
 			}
 			user.setGuid("111111");
 			user.setName("张三");

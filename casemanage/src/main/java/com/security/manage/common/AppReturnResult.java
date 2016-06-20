@@ -19,6 +19,32 @@ public class AppReturnResult<E>  implements Serializable {
 	
 	private Object obj;
 	
+	/**
+	 * 数据总记录条数
+	 */
+	private Integer totalCount;
+	
+	/**
+	 * 总记录数按照pageSize计算得到总页数
+	 */
+	private Integer pageCount;
+	
+	public Integer getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(Integer totalCount) {
+		this.totalCount = totalCount;
+	}
+
+	public Integer getPageCount() {
+		return pageCount;
+	}
+
+	public void setPageCount(Integer pageCount) {
+		this.pageCount = pageCount;
+	}
+
 	private List<E> list =new ArrayList<E>(); 
 	
 	public Integer getCode() {
