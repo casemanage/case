@@ -241,7 +241,15 @@ public class AppController extends BaseController {
 		}
 		try {
 			List<Person> personlist = new ArrayList<Person>();
+			int count = 0;
 			personlist = personService.getPersonList(person);
+			count = personService.getTotal(person);
+			js.setTotalCount(count);
+			if(count/Constants.DEFAULT_PAGE_SIZE == 0){
+				js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE);
+			}else{
+				js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE + 1);
+			}
 			js.setList(personlist);
 			js.setCode(200);
 			js.setMessage(Constants.LOAD_OK_MESSAGE);	
@@ -271,7 +279,6 @@ public class AppController extends BaseController {
 		js.setMessage(Constants.LOAD_FAIL_MESSAGE);	
 		try 
 		{
-			
 			if(id == null||id==0)
 			{	 
 				js.setCode(203);
@@ -301,13 +308,14 @@ public class AppController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="/getAssoListByGuid.do")
 	public AppReturnResult <Associate> jsonLoadAssociateListByGuid(
-			@RequestParam(value="guid", required = false)String guid,
+			@RequestParam(value="guid", required = true)String guid,
 			@RequestParam(value="page", required = false)Integer page,
 			@RequestParam(value="search", required = false)String searchName,
 			HttpServletRequest request, HttpServletResponse response){
 		AppReturnResult <Associate> js = new AppReturnResult<Associate>();
 		Associate associate = new Associate();
 		List<Associate> la = new ArrayList<Associate>();
+		int count = 0;
 		js.setCode(201);
 		js.setMessage(Constants.LOAD_FAIL_MESSAGE);
 		try {
@@ -326,6 +334,13 @@ public class AppController extends BaseController {
 			} 
 			associate.setCreatorname(guid);
 			la = associateService.getAssociateList(associate); 
+			count = associateService.getTotalCount(associate);
+			js.setTotalCount(count);
+			if(count/Constants.DEFAULT_PAGE_SIZE == 0){
+				js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE);
+			}else{
+				js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE + 1);
+			}
 			js.setCode(200);
 			//js.setObj(associate);
 			js.setList(la);
@@ -360,6 +375,7 @@ public class AppController extends BaseController {
 			associatePerson.setSearchName(s);
 		}
 		List<AssociatePerson> la = new ArrayList<AssociatePerson>();
+		int count = 0;
 		js.setCode(201);
 		js.setMessage(Constants.LOAD_FAIL_MESSAGE);
 		try {
@@ -367,6 +383,13 @@ public class AppController extends BaseController {
 				associatePerson.setAssociateid(id);
 				associate = associateService.getAssociateById(id);
 				la = associateService.getAssociateListById(associatePerson);
+				count = associateService.getTotalCount(associatePerson);
+				js.setTotalCount(count);
+				if(count/Constants.DEFAULT_PAGE_SIZE == 0){
+					js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE);
+				}else{
+					js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE + 1);
+				}
 				js.setCode(200);
 				js.setObj(associate);
 				js.setList(la);

@@ -343,6 +343,9 @@
 	      	p.SERIALNO like '%${searchName}%'
 	      )
 	</if>
+	<if test="creatorname != null and creatorname != ''">
+	 and p.CREATORNAME =#{creatorname}
+	</if>
   </select>
   
   
