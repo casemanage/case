@@ -80,7 +80,7 @@ function pagesearch(){
 				<tr style="background-color:#D6D3D3;font-weight: bold;">
 					<th width="4%" style="display:none">&nbsp;</th>
 					<th>照片</th>
-					<th>编号</th>
+					<!-- <th>编号</th> -->
 					<th>姓名</th>
 					<th>人员类型</th>
 					<th>人员级别</th>
@@ -93,9 +93,9 @@ function pagesearch(){
 					<th>地址</th>
 					<th>事由</th>
 					<th>描述</th>
-					<th>警官名称</th>
+					<!-- <th>警官名称</th>
 					<th>看守单位</th>
-					<th>警官电话</th>
+					<th>警官电话</th> -->
 					<!-- <th>采集人</th> -->
 					<th>采集时间</th>
 				</tr>
@@ -107,7 +107,7 @@ function pagesearch(){
 						<td	align="center">
 							<img alt="头像" src="<%=basePath %>${item.photourl}" style="width:35px;height:35px">
 						</td>
-						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.serialno}</td>
+						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.serialno}</td> --%>
 						<td	align="center" ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.name}</td>
 						<td ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.typeName}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.levelName}</td>
@@ -125,9 +125,9 @@ function pagesearch(){
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.address}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.casecomment}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.description}</td>
-						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.policename}</td>
+						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.policename}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.policesector}</td>
-						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.policephone}</td>
+						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.policephone}</td> --%>
 						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.creatorname}</td> --%>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.createtimes}</td>
 					</tr>
