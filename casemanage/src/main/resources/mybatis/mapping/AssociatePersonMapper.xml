@@ -238,6 +238,13 @@
   	from 
   	(select *, ROW_NUMBER() OVER(Order by b.ID) AS RowNumber from MC_ASSOCIATE_PERSON as b) as a
   	where 1=1
+  	<if test="searchName != null and searchName !=''" >
+  	   	and(
+	        a.NAME like '%${searchName}%'
+	      	OR 
+	      	a.ADDRESS like '%${searchName}%'
+	      )
+	    </if>
   	<if test="associateid != null">
   		and a.ASSOCIATEID = #{associateid,jdbcType=INTEGER}
   	</if>
@@ -263,7 +270,7 @@
   	from MC_ASSOCIATE_PERSON
   	where ASSOCIATEID = #{associateid,jdbcType=INTEGER}
   </select>
-  <select id="getAssociatePersonListById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="getAssociatePersonListById" parameterType="com.security.manage.model.AssociatePerson" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List"/>
   	from MC_ASSOCIATE_PERSON
   	where ASSOCIATEID = #{associateid,jdbcType=INTEGER}

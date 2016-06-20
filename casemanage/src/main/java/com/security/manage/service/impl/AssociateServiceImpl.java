@@ -113,9 +113,9 @@ public class AssociateServiceImpl implements AssociateService{
 	}
 
 	@Override
-	public List<AssociatePerson> getAssociatePersonListById(Integer associateId) {
+	public List<AssociatePerson> getAssociatePersonListById(AssociatePerson associatePerson) {
 		// TODO Auto-generated method stub
-		return associatePersonMapper.getAssociatePersonListById(associateId);
+		return associatePersonMapper.getAssociatePersonListById(associatePerson);
 	}
 
 	@Override
