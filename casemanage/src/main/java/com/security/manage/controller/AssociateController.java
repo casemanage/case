@@ -131,6 +131,12 @@ public class AssociateController extends BaseController{
 		assoType = associateService.getAssociateTypeList(associateType);
 		request.setAttribute("assoType", assoType);
 		request.setAttribute("Associate", associate);
+		String url = "";
+		
+		if(plala.size()>0){
+			url = plala.get(0).getPlanurl();
+		}
+		request.setAttribute("AssociateUrl", url);
 		return "web/associate/associateInfo";
 	}	
 	
@@ -247,6 +253,7 @@ public class AssociateController extends BaseController{
 	@ResponseBody
 	@RequestMapping(value = "/jsonSaveOrUpdateAssociate.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
 	public JsonResult<Associate> jsonSaveOrUpdateAssociate(Associate associate,
+            @RequestParam(value = "file1", required = false) CommonsMultipartFile file1,
 			HttpServletRequest request, HttpServletResponse response){
 		JsonResult<Associate> js = new JsonResult<Associate>();
 		js.setCode(1);
@@ -282,7 +289,40 @@ public class AssociateController extends BaseController{
 				List<Associate> la = new ArrayList<Associate>();
 				la = associateService.getExistAssociate(a);
 				if(la.size() == 0){
+
+					List<String> urlList = new ArrayList<String>();
+					String path = request.getSession().getServletContext().getRealPath("uploadsource");
+					File targetFile = new File(path);
+					String filePath = "";
+					String fileName = "";
+
+					if(file1.getSize()>0){ 
+						String tempName = file1.getOriginalFilename();  
+						String fileType = tempName.split("\\.")[1];
+						fileName = associate.getSerialno()+"."+fileType;
+						
+						if (!targetFile.exists()) {
+							targetFile.mkdirs();
+						}
+						targetFile = new File(path+"/associateplan");
+						if (!targetFile.exists()) {
+							targetFile.mkdirs();
+						}
+						targetFile = new File(path+"/associateplan",fileName);  
+						if(targetFile.exists()){
+							targetFile.delete();
+						}
+						filePath ="uploadsource/associateplan/"+fileName;
+						file1.transferTo(targetFile);
+						urlList.add(filePath);
+					}
+					
 					associateService.saveOrUpdateAssociate(associate);
+					if(urlList.size()>0){
+						associateService.saveOrUpdateAssociatePlan(urlList,associate.getId());
+						js.setCode(0);
+						js.setMessage("上传成功!");
+					}
 					js.setCode(0);
 					js.setMessage("保存成功!");
 					js.setObj(associate.getId());
