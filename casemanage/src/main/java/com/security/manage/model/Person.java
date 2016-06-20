@@ -57,8 +57,17 @@ public class Person extends Page  {
 
     private Police police;
     
+    private String guid;
     
-    public Police getPolice() {
+    public String getGuid() {
+		return guid;
+	}
+
+	public void setGuid(String guid) {
+		this.guid = guid;
+	}
+
+	public Police getPolice() {
 		return police;
 	}
 

@@ -268,7 +268,10 @@
   <select id="getTotalCount" parameterType="com.security.manage.model.AssociatePerson" resultType="java.lang.Integer">
   	select count(*)
   	from MC_ASSOCIATE_PERSON
-  	where ASSOCIATEID = #{associateid,jdbcType=INTEGER}
+  	where 
+  	<if test="associateid != null">
+  		ASSOCIATEID = #{associateid,jdbcType=INTEGER}
+  	</if>
   </select>
   <select id="getAssociatePersonListById" parameterType="com.security.manage.model.AssociatePerson" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List"/>

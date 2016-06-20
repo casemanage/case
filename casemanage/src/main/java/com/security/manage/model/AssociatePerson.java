@@ -41,7 +41,17 @@ public class AssociatePerson extends Page  {
     
     private String createtimes;
     
-    public Integer getId() {
+    private String guid;
+    
+    public String getGuid() {
+		return guid;
+	}
+
+	public void setGuid(String guid) {
+		this.guid = guid;
+	}
+
+	public Integer getId() {
         return id;
     }
 

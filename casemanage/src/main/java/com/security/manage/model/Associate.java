@@ -38,15 +38,26 @@ public class Associate extends Page {
     
     private String telephone;
     
-    private List<PlanPicture> picture;
+    private PlanPicture picture;
     
-    public List<PlanPicture> getPicture() {
+    public PlanPicture getPicture() {
 		return picture;
 	}
 
-	public void setPicture(List<PlanPicture> picture) {
+	public void setPicture(PlanPicture picture) {
 		this.picture = picture;
 	}
+
+	private String guid;
+    
+    public String getGuid() {
+		return guid;
+	}
+
+	public void setGuid(String guid) {
+		this.guid = guid;
+	}
+ 
 
 	public String getCreatedate() {
 		return createdate;

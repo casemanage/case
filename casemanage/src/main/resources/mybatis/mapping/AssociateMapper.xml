@@ -262,6 +262,9 @@
 	        SERIALNO like '%${searchName}%'
 	      )
 	     </if>
+	     <if test="creatorname != null and creatorname != ''">
+	     	and <![CDATA[CREATORNAME =#{creatorname} ]]>
+	     </if>
   </select> 
   <select id="getAssociateTypeCountList" resultMap="StatisticResultMap" >
   	select COUNT(*) as totalCount,at.name as typeName from MC_ASSOCIATE a
