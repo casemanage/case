@@ -263,7 +263,7 @@
 	      )
 	     </if>
 	     <if test="creatorname != null and creatorname != ''">
-	     	and <![CDATA[a.CREATORNAME =#{creatorname} ]]>
+	     	and <![CDATA[CREATORNAME =#{creatorname} ]]>
 	     </if>
   </select> 
   <select id="getAssociateTypeCountList" resultMap="StatisticResultMap" >

@@ -245,7 +245,7 @@ public class AppController extends BaseController {
 			personlist = personService.getPersonList(person);
 			count = personService.getTotal(person);
 			js.setTotalCount(count);
-			if(count/Constants.DEFAULT_PAGE_SIZE == 0){
+			if(count%Constants.DEFAULT_PAGE_SIZE == 0){
 				js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE);
 			}else{
 				js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE + 1);
@@ -336,7 +336,7 @@ public class AppController extends BaseController {
 			la = associateService.getAssociateList(associate); 
 			count = associateService.getTotalCount(associate);
 			js.setTotalCount(count);
-			if(count/Constants.DEFAULT_PAGE_SIZE == 0){
+			if(count%Constants.DEFAULT_PAGE_SIZE == 0){
 				js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE);
 			}else{
 				js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE + 1);
@@ -385,7 +385,7 @@ public class AppController extends BaseController {
 				la = associateService.getAssociateListById(associatePerson);
 				count = associateService.getTotalCount(associatePerson);
 				js.setTotalCount(count);
-				if(count/Constants.DEFAULT_PAGE_SIZE == 0){
+				if(count%Constants.DEFAULT_PAGE_SIZE == 0){
 					js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE);
 				}else{
 					js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE + 1);
