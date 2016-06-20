@@ -139,6 +139,20 @@ function fillMemberList(lst){
 function back(){
 	window.location.href = "associate/associateList.do";
 } 
+function showName(obj){
+	 if(!(/(?:jpg)$/i.test(obj.value))&&!(/(?:jpeg)$/i.test(obj.value))&&!(/(?:png)$/i.test(obj.value))) {
+         $.messager.alert('错误', "选择平面图文件格式错误", 'error');
+         if(window.ActiveXObject) {//for IE
+             obj.select();//lect the file ,and clear selection
+             document.selection.clear();
+         } else if(window.opera) {//for opera
+             obj.type="text";
+             obj.type="file";
+         } else obj.value="";//for FF,Chrome,Safari
+     } else{
+				$("#filename").val(obj.value);  
+			}
+}
 	</script>
   </head>
   
@@ -152,7 +166,7 @@ function back(){
       <div id="tabInfo" class="easyui-tabs" style="width:100%;border:0;">  
     <div title="基础信息" style="padding:20px;" >  
          <div class="containner-fluid text-center"> 
-			<form id="associsteForm" name="associsteForm" action="associate/jsonSaveOrUpdateAssociate.do" method="post" style="text-align:left;">
+			<form id="associsteForm" name="associsteForm" action="associate/jsonSaveOrUpdateAssociate.do" method="post"  enctype="multipart/form-data"  style="text-align:left;">
 			<table style="width:100%;">
 				<tr style="height:40px"> 
 					<td rowspan="2" style="width:40%"> 
@@ -186,6 +200,16 @@ function back(){
 					        <div style="margin-top:15px;">
 					        	<span class="from-style">坐标纬度:</span>
 					    		<input type="text" required="true"  validType="LoctionY"  style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入纬度" value="${Associate.longitude}" name="longitude"/>
+					    	</div>
+					    	<div style="margin-top:15px;width:100%;">
+					    		<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;平面图:</span> 
+					        	<c:if test="${Associate.id >0}">
+					        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" value="${AssociateUrl}" />
+					        	</c:if>
+					        	<c:if test="${Associate.id == 0}">
+					        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" />
+					        	</c:if> 
+					    		<input type="file" name="file1" id="jfile1" onchange="showName(this)" />
 					    	</div>
 					        <div style="margin-top:15px;">
 					        	<span class="from-style">备注描述:</span>

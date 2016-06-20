@@ -138,7 +138,7 @@ function showdialog(itemId){
 					<th>采集人</th> -->
 					<th>采集时间</th>
 					<th>描述</th>
-					<th>操作</th>
+					<!-- <th>操作</th> -->
 				</tr>
 			</thead>
 			<tbody>
@@ -160,7 +160,7 @@ function showdialog(itemId){
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.creatorname}</td> --%>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.createtimes}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.description}</td>
-						<td><a href="javascript:void(0);" onclick="showdialog(${item.id});">上传平面图</a></td>
+						<%-- <td><a href="javascript:void(0);" onclick="showdialog(${item.id});">上传平面图</a></td> --%>
 					</tr>
 				</c:forEach>
 			</tbody>
