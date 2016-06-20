@@ -229,7 +229,7 @@ function back(){
 					<thead>
 						<tr style="background-color:#D6D3D3;font-weight: bold;">
 							<th width="4%" style="display:none">&nbsp;</th>
-							<th align="center">头像</th>
+							<th align="center">照片</th>
 							<th align="center">姓名</th>
 							<th align="center">性别</th>
 							<th align="center">出生年月</th>

@@ -325,7 +325,7 @@ public class AppController extends BaseController {
 				return js;
 			} 
 			associate.setCreatorname(guid);
-			la = associateService.getAssociateList(associate); 
+			la = associateService.getAssociateList(associate);  
 			js.setCode(200);
 			//js.setObj(associate);
 			js.setList(la);

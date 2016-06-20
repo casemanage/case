@@ -1,6 +1,7 @@
 package com.security.manage.model;
 
 import java.util.Date;
+import java.util.List;
 
 import com.security.manage.util.Page;
 
@@ -37,7 +38,17 @@ public class Associate extends Page {
     
     private String telephone;
     
-    public String getCreatedate() {
+    private List<PlanPicture> picture;
+    
+    public List<PlanPicture> getPicture() {
+		return picture;
+	}
+
+	public void setPicture(List<PlanPicture> picture) {
+		this.picture = picture;
+	}
+
+	public String getCreatedate() {
 		return createdate;
 	}
 
