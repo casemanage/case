@@ -109,7 +109,7 @@ function showdialog(itemId){
   </head>
   
   <body style="background:#fff;">
-  <div id="contentRight" style="width:83%;height:99%;float:right;background:#fff;"	>
+  <div id="contentRight" class="contentRight">
 	<div class="containner-fluid">
 		<div class="pannel-header">社会机构管理</div>
 		<div class="Panel-content">

@@ -129,7 +129,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
  <body style="background:#fff;"> 
 		    
-  <div id="contentRight" style="width:83%;height:99%;float:right;background:#fff;"	>
+  <div id="contentRight" class="contentRight">
      <div style="float:left" >
  		<div id="asso_totalStatistic"></div> 
  	 </div>

@@ -62,19 +62,40 @@ public class AppController extends BaseController {
 		json.setMessage(Constants.LOGIN_FAIL);
 		User user = new User();
 		try{
-			LoginResult loginResult = UserLogin.login(account,password);
-			if(loginResult.getStatus().equals("200")){
-				user.setGuid(loginResult.getPoliceman().getGuid());
-				user.setName(loginResult.getPoliceman().getPc_name());
-				user.setDeptGuid(loginResult.getPoliceman().getDept_guid());
-				user.setId(loginResult.getPoliceman().getId());
-				user.setKeyWords(loginResult.getPoliceman().getGuid());
-				json.setObj(loginResult.getPoliceman());
-				json.setCode(0);
-				json.setMessage(loginResult.getMsg());
-			}else{
-				json.setMessage(loginResult.getMsg());
-			} 
+			if(StringUtil.isEmpty(account)){ 
+				json.setMessage("请输入用户名");
+			}
+			if(StringUtil.isEmpty(password)){ 
+				json.setMessage("请输入密码");
+			}
+			if(!account.equals("admin")){ 
+				json.setMessage("用户名错误");
+			}
+			if(!password.equals("111111")){ 
+				json.setMessage("密码错误");
+			}
+			user.setGuid("111111");
+			user.setName("张三");
+			user.setDeptGuid("111111");
+			user.setId(1);
+			user.setKeyWords("111111");
+			user.setOrganName("111111");
+			//json.setObj(loginResult.getPoliceman());
+			json.setCode(200); 
+			json.setMessage("登录成功");
+//			LoginResult loginResult = UserLogin.login(account,password);
+//			if(loginResult.getStatus().equals("200")){
+//				user.setGuid(loginResult.getPoliceman().getGuid());
+//				user.setName(loginResult.getPoliceman().getPc_name());
+//				user.setDeptGuid(loginResult.getPoliceman().getDept_guid());
+//				user.setId(loginResult.getPoliceman().getId());
+//				user.setKeyWords(loginResult.getPoliceman().getGuid());
+//				json.setObj(loginResult.getPoliceman());
+//				json.setCode(0);
+//				json.setMessage(loginResult.getMsg());
+//			}else{
+//				json.setMessage(loginResult.getMsg());
+//			} 
 		}catch(Exception e){
 			e.printStackTrace();
 			json.setMessage("登录接口调用异常，详细："+e.getMessage());

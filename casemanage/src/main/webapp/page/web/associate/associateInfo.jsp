@@ -144,7 +144,7 @@ function back(){
   
  <body style="background:#fff;">
 	
-  <div id="contentRight" style="width:83%;height:99%;float:right;background:#fff;"	>
+  <div id="contentRight" class="contentRight">
      	<div class="containner-fluid">
          	<div class="pannel-header">社会机构信息</div> 
                <div class="Panel-content">社会机构信息：${Associate.id == 0?"新建社会机构信息":Associate.name}</div>

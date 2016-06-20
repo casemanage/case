@@ -49,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
  <body style="background:#fff;">
 	
-  <div id="contentRight" style="width:83%;height:99%;float:right;background:#fff;"	>
+  <div id="contentRight" class="contentRight">
        	<div class="containner-fluid">
            	<div class="pannel-header">重点人员级别信息</div> 
            	<div class="fl">

@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
  <body style="background:#fff;">
 	
-  <div id="contentRight" style="width:83%;height:99%;float:right;background:#fff;"	>
+  <div id="contentRight" class="contentRight">
        	<div class="containner-fluid">
            	<div class="pannel-header">社会机构类型信息</div>          
                  <div class="Panel-content">社会机构类型：${AssociateType.id == 0?"新建社会机构类型信息":AssociateType.name}</div>                       

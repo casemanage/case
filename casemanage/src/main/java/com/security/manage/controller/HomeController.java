@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
  
  
 
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import com.security.manage.model.TypeStatistic;
 import com.security.manage.model.User;
 import com.security.manage.service.AssociateService;
 import com.security.manage.service.PersonService;
+import com.security.manage.util.StringUtil;
 
 @Scope("prototype")
 @Controller
@@ -42,7 +44,31 @@ public class HomeController extends BaseController {
 		JsonResult <User>json  = new JsonResult<User>();
 		json.setCode(1); 
 		json.setMessage("登录失败!"); 
-//		try{
+		try{
+			if(StringUtil.isEmpty(user.getAccount())){ 
+				json.setMessage("请输入用户名");
+				return json;
+			}
+			if(StringUtil.isEmpty(user.getPassword())){ 
+				json.setMessage("请输入密码");
+				return json;
+			}
+			if(!user.getAccount().equals("admin")){ 
+				json.setMessage("用户名错误");
+				return json;
+			}
+			if(!user.getPassword().equals("111111")){ 
+				json.setMessage("密码错误");
+				return json;
+			}
+			json.setCode(0); 
+			json.setMessage("登录成功");
+			user.setGuid("111111");
+			user.setName("张三");
+			user.setDeptGuid("111111");
+			user.setOrganName("111111");
+			user.setId(1);
+			user.setKeyWords("111111");
 //			LoginResult loginResult = UserLogin.login(user.getAccount(),user.getPassword());
 //			if(loginResult.getStatus().equals("200")){
 //				user.setGuid(loginResult.getPoliceman().getGuid());
@@ -55,12 +81,10 @@ public class HomeController extends BaseController {
 //			}else{
 //				json.setMessage(loginResult.getMsg());
 //			} 
-//		}catch(Exception e){
-//			e.printStackTrace();
-//			json.setMessage("登录接口调用异常，详细："+e.getMessage());
-//		}
-		json.setCode(0); 
-		json.setMessage("登录成功!"); 
+		}catch(Exception e){
+			e.printStackTrace();
+			json.setMessage("登录接口调用异常，详细："+e.getMessage());
+		} 
 		return json;
 	}
 	/**

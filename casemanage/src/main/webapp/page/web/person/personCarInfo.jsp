@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
  <body style="background:#fff;">	
  
-  <div id="contentRight" style="width:83%;height:99%;float:right;background:#fff;"	>
+  <div id="contentRight" class="contentRight">
        	<div class="containner-fluid">
            	<div class="pannel-header">重点人员车辆信息</div>         
                  <div class="Panel-content">重点人员车辆：${PersonCar.id == 0?"新建重点人员车辆信息":PersonCar.name}</div>              											
