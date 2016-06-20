@@ -260,17 +260,17 @@ public class AssociateController extends BaseController{
 		js.setMessage("保存失败!");
 		try {
 			if(associate.getId() == null ||associate.getId() == 0){
-				/*User u = this.getLoginUser();
+				User u = this.getLoginUser();
 				associate.setCreator(u.getId());
 				associate.setCreatorname(u.getName());
 				associate.setOrganname(u.getOrganName()); 
 				associate.setCreatetime(new Date());
-				String serialNo = getAssoSerialNo(associate.getTypeid()); 
+				/*String serialNo = getAssoSerialNo(associate.getTypeid()); 
 				associate.setSerialno(serialNo); 
 				associate.setId(0);*/
-				associate.setCreator(1);
-				associate.setCreatorname("张三");
-				associate.setOrganname("派出所"); 
+//				associate.setCreator(1);
+//				associate.setCreatorname("张三");
+//				associate.setOrganname("派出所"); 
 				associate.setCreatetime(new Date());
 				String serialNo = getAssoSerialNo(associate.getTypeid()); 
 				associate.setSerialno(serialNo); 

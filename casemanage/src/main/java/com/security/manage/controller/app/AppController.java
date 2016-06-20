@@ -1,6 +1,7 @@
 package com.security.manage.controller.app;
 
  
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -413,6 +414,12 @@ public class AppController extends BaseController {
 			if(id != null){
 				associatePerson.setAssociateid(id);
 				associate = associateService.getAssociateById(id);
+
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
+			 
+					Date d =associate.getCreatetime(); 
+						String s = sdf.format(d);
+						associate.setCreatetimes(s); 
 				la = associateService.getAssociateListById(associatePerson);
 				associatePlanList = associateService.getAssociatePlanListById(id);
 				count = associateService.getTotalCount(associatePerson);

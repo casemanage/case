@@ -69,6 +69,7 @@ public class HomeController extends BaseController {
 			user.setOrganName("111111");
 			user.setId(1);
 			user.setKeyWords("111111");
+			this.setLoginUser(user);
 //			LoginResult loginResult = UserLogin.login(user.getAccount(),user.getPassword());
 //			if(loginResult.getStatus().equals("200")){
 //				user.setGuid(loginResult.getPoliceman().getGuid());
