@@ -79,7 +79,7 @@ function pagesearch(){
 			<thead>
 				<tr style="background-color:#D6D3D3;font-weight: bold;">
 					<th width="4%" style="display:none">&nbsp;</th>
-					<th>头像</th>
+					<th>照片</th>
 					<th>编号</th>
 					<th>姓名</th>
 					<th>人员类型</th>

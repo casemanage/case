@@ -29,6 +29,19 @@ public class AppReturnResult<E>  implements Serializable {
 	 */
 	private Integer pageCount;
 	
+	/**
+	 * 项目部署绝对路径，用于图片头像访问
+	 */
+	private String url; 
+	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 	public Integer getTotalCount() {
 		return totalCount;
 	}

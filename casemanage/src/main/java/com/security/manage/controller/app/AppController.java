@@ -30,6 +30,8 @@ import com.security.manage.model.PersonLevel;
 import com.security.manage.model.Associate;
 import com.security.manage.model.AssociatePerson;
 import com.security.manage.model.PersonType;
+import com.security.manage.model.PlanPicture;
+import com.security.manage.model.Police;
 import com.security.manage.model.PoliceMan;
 import com.security.manage.model.User;
 import com.security.manage.service.AssociateService;
@@ -251,14 +253,23 @@ public class AppController extends BaseController {
 			}else{
 				js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE + 1);
 			}
+			for(Person p : personlist){
+				Police police  = new Police();
+				police.setPolicename(p.getPolicename());
+				police.setPolicephone(p.getPolicephone());
+				police.setPolicesector(p.getPolicesector());
+				p.setPolice(police);
+			}
+			
+			js.setUrl(Constants.PROJECT_URL);
 			js.setList(personlist);
 			js.setCode(200);
 			js.setMessage(Constants.LOAD_OK_MESSAGE);	
-			} catch (Exception ex) 
+		} catch (Exception ex) 
 		{
-				js.setCode(202);
-				js.setMessage(Constants.INNER_ERROR_MESSAGE);	
-			    ex.printStackTrace();
+			js.setCode(202);
+			js.setMessage(Constants.INNER_ERROR_MESSAGE);	
+		    ex.printStackTrace();
 		}
 		return js;
 	}
@@ -351,7 +362,7 @@ public class AppController extends BaseController {
 				js.setMessage(Constants.PARAM_ERROR_MESSAGE);
 				return js;
 			} 
-			associate.setCreatorname(guid);
+			associate.setCreatorname(guid); 
 			la = associateService.getAssociateList(associate); 
 			count = associateService.getTotalCount(associate);
 			js.setTotalCount(count);
@@ -359,8 +370,8 @@ public class AppController extends BaseController {
 				js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE);
 			}else{
 				js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE + 1);
-			}
-			js.setCode(200);
+			} 
+			js.setCode(200); 
 			//js.setObj(associate);
 			js.setList(la);
 			js.setMessage(Constants.LOAD_OK_MESSAGE); 
@@ -394,7 +405,7 @@ public class AppController extends BaseController {
 			associatePerson.setSearchName(s);
 		}
 		List<AssociatePerson> la = new ArrayList<AssociatePerson>();
-		List<AssociatePlan> associatePlanList = new ArrayList<AssociatePlan>();
+		List<AssociatePlan> associatePlanList = new ArrayList<AssociatePlan>(); 
 		int count = 0;
 		js.setCode(201);
 		js.setMessage(Constants.LOAD_FAIL_MESSAGE);
@@ -411,9 +422,19 @@ public class AppController extends BaseController {
 				}else{
 					js.setPageCount(count/Constants.DEFAULT_PAGE_SIZE + 1);
 				}
+				PlanPicture picture = new PlanPicture();
+				picture.setCount(associatePlanList.size());
+				List<String> urlList = new ArrayList<String>();
+				for(AssociatePlan ap:associatePlanList){ 
+					urlList.add(ap.getPlanurl());
+				}
+				picture.setFile(urlList);
+				associate.setPicture(picture);
+				
 				js.setCode(200);
 				js.setObj(associate);
 				js.setList(la);
+				js.setUrl(Constants.PROJECT_URL);
 				js.setMessage(Constants.LOAD_OK_MESSAGE);
 			}else{
 				js.setCode(203); 
@@ -441,10 +462,10 @@ public class AppController extends BaseController {
 		js.setMessage(Constants.SAVE_FAIL_MESSAGE);
 		try {
 			if(associate.getId() == null ||associate.getId() == 0){
-				User u = this.getLoginUser();
-				associate.setCreator(u.getId());
-				associate.setCreatorname(u.getName());
-				associate.setOrganname(u.getOrganName()); 
+//				User u = this.getLoginUser();
+//				associate.setCreator(u.getId());
+				associate.setCreatorname(associate.getGuid());
+//				associate.setOrganname(u.getOrganName()); 
 				associate.setCreatetime(new Date());
 				String serialNo = getAssoSerialNo(associate.getTypeid()); 
 				associate.setSerialno(serialNo); 
@@ -610,6 +631,7 @@ public class AppController extends BaseController {
 				ap = associateService.getAssociateMemberById(id);
 				
 			}
+			js.setUrl(Constants.PROJECT_URL);
 			js.setCode(200);
 			js.setObj(ap);
 			js.setMessage(Constants.LOAD_OK_MESSAGE);
@@ -633,10 +655,11 @@ public class AppController extends BaseController {
 		js.setMessage(Constants.SAVE_FAIL_MESSAGE);
 		try { 
 			if(associatePerson.getId() == null || associatePerson.getId() == 0){
-				User u = this.getLoginUser();
-				associatePerson.setCreator(u.getId());
-				associatePerson.setCreatorname(u.getName());
-				associatePerson.setOrganname(u.getOrganName());  
+//				User u = this.getLoginUser();
+//				associatePerson.setCreator(u.getId());
+//				associatePerson.setCreatorname(u.getName());
+				associatePerson.setCreatorname(associatePerson.getGuid());
+//				associatePerson.setOrganname(u.getOrganName());  
 			}
 			
 			 if(file.getSize()>0){
@@ -703,10 +726,10 @@ public class AppController extends BaseController {
 		js.setMessage(Constants.SAVE_FAIL_MESSAGE);
 		try {
 			if (person.getId() == null || person.getId() == 0) { 
-				User u = this.getLoginUser();
-				person.setCreator(u.getId());
-				person.setCreatorname(u.getName());
-				person.setOrganname(u.getOrganName());   
+//				User u = this.getLoginUser();
+//				person.setCreator(u.getId());
+				person.setCreatorname(person.getGuid());
+//				person.setOrganname(u.getOrganName());   
 				person.setCreatetime(new Date());
 				String serialNo = getPersonSerialNo(person.getTypeid()); 
 				person.setSerialno(serialNo); 

@@ -22,7 +22,7 @@ public class Person extends Page  {
     private String idcard;
 
     private String address;
-
+ 
     private String serialno;
 
     private String casecomment;
@@ -55,7 +55,27 @@ public class Person extends Page  {
     
     private String policephone;
 
-    public String getPolicename() {
+    private Police police;
+    
+    private String guid;
+    
+    public String getGuid() {
+		return guid;
+	}
+
+	public void setGuid(String guid) {
+		this.guid = guid;
+	}
+
+	public Police getPolice() {
+		return police;
+	}
+
+	public void setPolice(Police police) {
+		this.police = police;
+	}
+
+	public String getPolicename() {
 		return policename;
 	}
 
