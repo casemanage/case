@@ -22,6 +22,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.security.manage.common.AppReturnResult;
 import com.security.manage.common.UserLogin;
 import com.security.manage.controller.BaseController; 
+import com.security.manage.model.AssociatePlan;
 import com.security.manage.model.AssociateType;
 import com.security.manage.model.LoginResult;
 import com.security.manage.model.Person;
@@ -273,19 +274,37 @@ public class AppController extends BaseController {
 	@RequestMapping(value = "/getPersonById.do", produces = { "text/html;charset=UTF-8" })
 	public AppReturnResult<Person> getPersonById(
 			@RequestParam(value="id", required = false)Integer id,
+			@RequestParam(value="idcard", required = false)String idcard,
+			@RequestParam(value="name", required = false)String name,
+			@RequestParam(value="birth", required = false)String birth,  
 			HttpServletRequest request, HttpServletResponse response) {
 		AppReturnResult<Person> js = new AppReturnResult<Person>();
 		js.setCode(201);
 		js.setMessage(Constants.LOAD_FAIL_MESSAGE);	
 		try 
 		{
-			if(id == null||id==0)
+			if(id == null&&StringUtil.isEmpty(idcard)&&StringUtil.isEmpty(name)&&StringUtil.isEmpty(birth))
 			{	 
 				js.setCode(203);
 				js.setMessage(Constants.PARAM_ERROR_MESSAGE);
 				return js;
 			}	
-			Person person  = personService.getPersonById(id);
+			Person person  = new Person();
+			if(id != null&& id>0){ 
+				person  = personService.getPersonById(id);
+			}else{
+				if(!StringUtil.isEmpty(idcard)){
+					person.setIdcard(idcard);
+				}
+				if(!StringUtil.isEmpty(name)){
+					String personName = new String(name.getBytes("iso8859-1"), "utf-8");
+					person.setName(personName);
+				}
+				if(!StringUtil.isEmpty(birth)){ 
+					person.setBirth(birth);
+				}
+				person  = personService.getPersonByCondition(person);
+			}
 			if(person != null)
 			{
 				js.setObj(person);
@@ -375,6 +394,7 @@ public class AppController extends BaseController {
 			associatePerson.setSearchName(s);
 		}
 		List<AssociatePerson> la = new ArrayList<AssociatePerson>();
+		List<AssociatePlan> associatePlanList = new ArrayList<AssociatePlan>();
 		int count = 0;
 		js.setCode(201);
 		js.setMessage(Constants.LOAD_FAIL_MESSAGE);
@@ -383,6 +403,7 @@ public class AppController extends BaseController {
 				associatePerson.setAssociateid(id);
 				associate = associateService.getAssociateById(id);
 				la = associateService.getAssociateListById(associatePerson);
+				associatePlanList = associateService.getAssociatePlanListById(id);
 				count = associateService.getTotalCount(associatePerson);
 				js.setTotalCount(count);
 				if(count%Constants.DEFAULT_PAGE_SIZE == 0){
@@ -796,4 +817,79 @@ public class AppController extends BaseController {
 		} 
 		return serialNo;
 	} 
+	@ResponseBody
+	@RequestMapping(value="/deleteAssociateById.do")
+	public AppReturnResult<Associate> deleteAssociateById(
+			@RequestParam(value="id", required = true)Integer id,
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
+		AppReturnResult<Associate> js = new AppReturnResult<Associate>();
+		js.setCode(201);
+		js.setMessage(Constants.DELETE_FAIL);
+		try {
+			if(id == null){
+				js.setCode(203);
+				js.setMessage(Constants.PARAM_ERROR_MESSAGE);
+			}else{
+				associateService.deleteAssociateById(id);
+				js.setCode(200);
+				js.setMessage(Constants.DELETE_SUCCESS);
+			}
+		} catch (Exception e) {
+			js.setCode(202);
+			js.setMessage(Constants.INNER_ERROR_MESSAGE);
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return js;
+	}
+	@ResponseBody
+	@RequestMapping(value="/deletePersonById.do")
+	public AppReturnResult<Person> deletePersonById(
+			@RequestParam(value="id", required = true)Integer id,
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
+		AppReturnResult<Person> js = new AppReturnResult<Person>();
+		js.setCode(201);
+		js.setMessage(Constants.DELETE_FAIL);
+		try {
+			if(id == null){
+				js.setCode(203);
+				js.setMessage(Constants.PARAM_ERROR_MESSAGE);
+			}else{
+				personService.deletePersonById(id);
+				js.setCode(200);
+				js.setMessage(Constants.DELETE_SUCCESS);
+			}
+		} catch (Exception e) {
+			js.setCode(202);
+			js.setMessage(Constants.INNER_ERROR_MESSAGE);
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return js;
+	}
+	@ResponseBody
+	@RequestMapping(value="/deleteAssoPersonById.do")
+	public AppReturnResult<AssociatePerson> deleteAssoPersonById(
+			@RequestParam(value="id", required = true)Integer id,
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
+		AppReturnResult<AssociatePerson> js = new AppReturnResult<AssociatePerson>();
+		js.setCode(201);
+		js.setMessage(Constants.DELETE_FAIL);
+		try {
+			if(id == null){
+				js.setCode(203);
+				js.setMessage(Constants.PARAM_ERROR_MESSAGE);
+			}else{
+				associateService.deleteAssociatePersonById(id);
+				js.setCode(200);
+				js.setMessage(Constants.DELETE_SUCCESS);
+			}
+		} catch (Exception e) {
+			js.setCode(202);
+			js.setMessage(Constants.INNER_ERROR_MESSAGE);
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return js;
+	}
 }

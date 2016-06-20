@@ -180,6 +180,18 @@ public class AssociateServiceImpl implements AssociateService{
 		return associatePersonMapper.getTotalCount(associatePerson);
 	}
 
+	@Override
+	public void deleteAssociateById(Integer id) {
+		// TODO Auto-generated method stub
+		associateMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public void deleteAssociatePersonById(Integer id) {
+		// TODO Auto-generated method stub
+		associatePersonMapper.deleteByPrimaryKey(id);
+	}
+
 	
 
 }

@@ -54,6 +54,10 @@ public interface AssociateService {
 
 	int getTotalCount(AssociatePerson associatePerson);
 
+	void deleteAssociateById(Integer id);
+
+	void deleteAssociatePersonById(Integer id);
+
 
 
 

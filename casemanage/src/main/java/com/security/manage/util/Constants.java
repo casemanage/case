@@ -47,5 +47,6 @@ public class Constants {
 	public static final String LOGIN_SUCCESS ="登陆成功！";
 	public static final String LOGIN_FAIL ="登陆失败！";
 	public static final String ID_CARD_EXIST ="身份证号已存在！";
-	 
+	public static final String DELETE_SUCCESS = "删除成功！";
+	public static final String DELETE_FAIL = "删除失败！";
 }

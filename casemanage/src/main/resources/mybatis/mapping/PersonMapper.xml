@@ -369,4 +369,24 @@
   	select COUNT(*) as totalCount,p.organname as typeName from MC_PERSON p 
 		group by p.organname
     </select>
+    <select id="getPersonByCondition" parameterType="com.security.manage.model.Person" resultMap="ResultMapWithBLOBs">
+    	select top 1 <include refid="Base_Column_List"/>,
+    		   <include refid="Blob_Column_List" />,
+			    pt.name as typeName,
+			    pl.name as levelName
+			  	from 
+			  	MC_PERSON as p
+			  	left join MC_PERSON_TYPE pt on p.TYPEID = pt.id
+			  	left join MC_PERSON_LEVEL pl on p.LEVELID = pl.id
+			  	where 1=1
+		<if test="idcard != null">
+			and p.IDCARD = #{idcard,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null">
+			and p.NAME = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="birth != null">
+			and p.BIRTH = #{birth,jdbcType=VARCHAR}
+		</if>
+    </select>
 </mapper>

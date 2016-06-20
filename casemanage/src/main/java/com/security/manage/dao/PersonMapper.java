@@ -29,4 +29,6 @@ public interface PersonMapper {
 	List<TypeStatistic> getPersonTypeCountList();
 
 	List<TypeStatistic> getPersonStationCountList();
+
+	Person getPersonByCondition(Person person);
 }

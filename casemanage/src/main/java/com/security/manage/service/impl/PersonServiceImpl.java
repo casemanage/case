@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service; 
+
 import com.security.manage.dao.PersonCarMapper; 
 import com.security.manage.dao.PersonTypeMapper; 
 import com.security.manage.dao.PersonLevelMapper;
@@ -193,5 +194,17 @@ public class PersonServiceImpl implements PersonService {
 	public int getPersonCarTotalCount(PersonCar personCar) {
 		// TODO Auto-generated method stub
 		return personCarMapper.getPersonCarTotalCount(personCar);
+	}
+
+	@Override
+	public Person getPersonByCondition(Person person) {
+		// TODO Auto-generated method stub
+		return personMapper.getPersonByCondition(person);
+	}
+
+	@Override
+	public void deletePersonById(Integer id) {
+		// TODO Auto-generated method stub
+		personMapper.deleteByPrimaryKey(id);
 	} 
 }

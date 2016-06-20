@@ -55,6 +55,10 @@ public interface PersonService {
 
 	List<PersonCar> getPersonCarList(PersonCar personCar);
 
-	int getPersonCarTotalCount(PersonCar personCar);       
+	int getPersonCarTotalCount(PersonCar personCar);
+
+	Person getPersonByCondition(Person person);
+
+	void deletePersonById(Integer id);       
 
 }
