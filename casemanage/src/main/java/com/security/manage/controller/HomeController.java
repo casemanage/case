@@ -53,14 +53,32 @@ public class HomeController extends BaseController {
 				json.setMessage("请输入密码");
 				return json;
 			}
-			if(!user.getAccount().equals("admin")){ 
-				json.setMessage("用户名错误");
+			if(user.getAccount().equals("admin")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin1")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin2")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin3")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin4")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin5")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin6")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin7")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin8")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin9")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin10")&&user.getPassword().equals("111111")){ 
+				 
+			}else{
+				json.setMessage("用户名或密码错误");
 				return json;
-			}
-			if(!user.getPassword().equals("111111")){ 
-				json.setMessage("密码错误");
-				return json;
-			}
+			} 
 			json.setCode(0); 
 			json.setMessage("登录成功");
 			user.setGuid("111111");

@@ -18,4 +18,6 @@ public interface AssociatePlanMapper {
     int updateByPrimaryKey(AssociatePlan record);
 
 	List<AssociatePlan> getAssociatePlanListById(Integer associateId);
+
+	void deleteByAssociate(Integer id);
 }

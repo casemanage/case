@@ -75,14 +75,32 @@ public class AppController extends BaseController {
 				json.setMessage("请输入密码");
 				return json;
 			}
-			if(!account.equals("admin")){ 
-				json.setMessage("用户名错误");
+			if(user.getAccount().equals("admin")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin1")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin2")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin3")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin4")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin5")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin6")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin7")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin8")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin9")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin10")&&user.getPassword().equals("111111")){ 
+				 
+			}else{
+				json.setMessage("用户名或密码错误");
 				return json;
-			}
-			if(!password.equals("111111")){ 
-				json.setMessage("密码错误");
-				return json;
-			}
+			} 
 			user.setGuid("111111");
 			user.setName("张三");
 			user.setDeptGuid("111111");
@@ -485,22 +503,24 @@ public class AppController extends BaseController {
 			File targetFile = new File(path);
 			String filePath = "";
 			String fileName = "";
-			if(file.getSize()>0){ 
-				fileName = file.getOriginalFilename();  
-				if (!targetFile.exists()) {
-					targetFile.mkdirs();
+			if(file!=null){
+				if(file.getSize()>0){ 
+					fileName = file.getOriginalFilename();  
+					if (!targetFile.exists()) {
+						targetFile.mkdirs();
+					}
+					targetFile = new File(path+"/associateplan");
+					if (!targetFile.exists()) {
+						targetFile.mkdirs();
+					}
+					targetFile = new File(path+"/associateplan",fileName);  
+					if(targetFile.exists()){
+						targetFile.delete();
+					}
+					filePath ="uploadsource/associateplan/"+fileName;
+					file.transferTo(targetFile);
+					urlList.add(filePath);
 				}
-				targetFile = new File(path+"/associateplan");
-				if (!targetFile.exists()) {
-					targetFile.mkdirs();
-				}
-				targetFile = new File(path+"/associateplan",fileName);  
-				if(targetFile.exists()){
-					targetFile.delete();
-				}
-				filePath ="uploadsource/associateplan/"+fileName;
-				file.transferTo(targetFile);
-				urlList.add(filePath);
 			}
 //			if(file2.getSize()>0){
 //				fileName = file2.getOriginalFilename();   
@@ -668,48 +688,49 @@ public class AppController extends BaseController {
 				associatePerson.setCreatorname(associatePerson.getGuid());
 //				associatePerson.setOrganname(u.getOrganName());  
 			}
-			
-			 if(file.getSize()>0){
-				String path = request.getSession().getServletContext().getRealPath("uploadsource");
-				String fileName = file.getOriginalFilename();    //这里不用原文件名称 
-				//String fileType = tempName.split("\\.")[1];
-				//String fileName = associatePerson.getSerialno()+"."+fileType;
-				File targetFile = new File(path);
-				if (!targetFile.exists()) {
-					targetFile.mkdirs();
-				}
-				targetFile = new File(path+"/associateuserphoto");
-				if (!targetFile.exists()) {
-					targetFile.mkdirs();
-				}
-				targetFile = new File(path+"/associateuserphoto",fileName);  
-				if(targetFile.exists()){
-					targetFile.delete();
-				}
-				String filePath ="uploadsource/associateuserphoto/"+fileName;
-				/*BufferedInputStream in = new BufferedInputStream(file.getInputStream());
-				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(path+"/userphoto/"+fileName));
-				int i;
-				while((i=in.read())!=-1){
-					out.write(i);
-				}
-				out.flush(); 
-				out.close();
-				in.close();*/
-				//调用公安内部图像审核接口，是否符合要求
-				//if(filePath 上传头像验证成功){
-					file.transferTo(targetFile);	
-					associatePerson.setPhotourl(filePath); 
-				//}
-				//else {
-	
-	//							targetFile = new File(path+"/userphoto",fileName);  
-	//							if(targetFile.exists()){
-	//								targetFile.delete();
-	//							}
-					//js.setMessage("上传头像，不符合公安部要求，请重新选择图片上传!"); 
-				// }
-			 } 
+			if(file != null){
+				 if(file.getSize()>0){
+					String path = request.getSession().getServletContext().getRealPath("uploadsource");
+					String fileName = file.getOriginalFilename();    //这里不用原文件名称 
+					//String fileType = tempName.split("\\.")[1];
+					//String fileName = associatePerson.getSerialno()+"."+fileType;
+					File targetFile = new File(path);
+					if (!targetFile.exists()) {
+						targetFile.mkdirs();
+					}
+					targetFile = new File(path+"/associateuserphoto");
+					if (!targetFile.exists()) {
+						targetFile.mkdirs();
+					}
+					targetFile = new File(path+"/associateuserphoto",fileName);  
+					if(targetFile.exists()){
+						targetFile.delete();
+					}
+					String filePath ="uploadsource/associateuserphoto/"+fileName;
+					/*BufferedInputStream in = new BufferedInputStream(file.getInputStream());
+					BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(path+"/userphoto/"+fileName));
+					int i;
+					while((i=in.read())!=-1){
+						out.write(i);
+					}
+					out.flush(); 
+					out.close();
+					in.close();*/
+					//调用公安内部图像审核接口，是否符合要求
+					//if(filePath 上传头像验证成功){
+						file.transferTo(targetFile);	
+						associatePerson.setPhotourl(filePath); 
+					//}
+					//else {
+		
+		//							targetFile = new File(path+"/userphoto",fileName);  
+		//							if(targetFile.exists()){
+		//								targetFile.delete();
+		//							}
+						//js.setMessage("上传头像，不符合公安部要求，请重新选择图片上传!"); 
+					// }
+				 } 
+			}
 				associateService.updateAssociatePerson(associatePerson);
 				js.setCode(200);
 				js.setMessage(Constants.SAVE_OK_MESSAGE);	
@@ -754,50 +775,51 @@ public class AppController extends BaseController {
 					return js;
 				}
 			}  
-			
-			 if(file.getSize()>0){
-				String path = request.getSession().getServletContext().getRealPath("uploadsource");
-				String tempName = file.getOriginalFilename();    //这里不用原文件名称 
-				String fileType = tempName.split("\\.")[1];
-				String fileName = person.getSerialno()+"."+fileType;
-				File targetFile = new File(path);
-				if (!targetFile.exists()) {
-					targetFile.mkdirs();
-				}
-				targetFile = new File(path+"/userphoto");
-				if (!targetFile.exists()) {
-					targetFile.mkdirs();
-				}
-				targetFile = new File(path+"/userphoto",fileName);  
-				if(targetFile.exists()){
-					targetFile.delete();
-				}
-				String filePath ="uploadsource/userphoto/"+fileName;
-				/*BufferedInputStream in = new BufferedInputStream(file.getInputStream());
-				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(path+"/userphoto/"+fileName));
-				int i;
-				while((i=in.read())!=-1){
-					out.write(i);
-				}
-				out.flush(); 
-				out.close();
-				in.close();*/
-				//调用公安内部图像审核接口，是否符合要求
-				//if(filePath 上传头像验证成功){
-				file.transferTo(targetFile);	
-				person.setPhotourl(filePath); 
-				//}
-				//else {
-
-//					targetFile = new File(path+"/userphoto",fileName);  
-//					if(targetFile.exists()){
-//						targetFile.delete();
-//					}
-					//js.setMessage("上传头像，不符合公安部要求，请重新选择图片上传!"); 
-				// }
-			 }else{
-				return js;
-			 }
+			if(file!= null){
+				 if(file.getSize()>0){
+					String path = request.getSession().getServletContext().getRealPath("uploadsource");
+					String tempName = file.getOriginalFilename();    //这里不用原文件名称 
+					String fileType = tempName.split("\\.")[1];
+					String fileName = person.getSerialno()+"."+fileType;
+					File targetFile = new File(path);
+					if (!targetFile.exists()) {
+						targetFile.mkdirs();
+					}
+					targetFile = new File(path+"/userphoto");
+					if (!targetFile.exists()) {
+						targetFile.mkdirs();
+					}
+					targetFile = new File(path+"/userphoto",fileName);  
+					if(targetFile.exists()){
+						targetFile.delete();
+					}
+					String filePath ="uploadsource/userphoto/"+fileName;
+					/*BufferedInputStream in = new BufferedInputStream(file.getInputStream());
+					BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(path+"/userphoto/"+fileName));
+					int i;
+					while((i=in.read())!=-1){
+						out.write(i);
+					}
+					out.flush(); 
+					out.close();
+					in.close();*/
+					//调用公安内部图像审核接口，是否符合要求
+					//if(filePath 上传头像验证成功){
+					file.transferTo(targetFile);	
+					person.setPhotourl(filePath); 
+					//}
+					//else {
+	
+	//					targetFile = new File(path+"/userphoto",fileName);  
+	//					if(targetFile.exists()){
+	//						targetFile.delete();
+	//					}
+						//js.setMessage("上传头像，不符合公安部要求，请重新选择图片上传!"); 
+					// }
+				 }else{
+					return js;
+				 }
+			}
 			personService.saveOrUpdatePerson(person);
 			js.setCode(200);
 			js.setMessage(Constants.SAVE_OK_MESSAGE); 

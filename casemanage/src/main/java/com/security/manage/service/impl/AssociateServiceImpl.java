@@ -146,6 +146,7 @@ public class AssociateServiceImpl implements AssociateService{
 	public void saveOrUpdateAssociatePlan(List<String> urlList,
 			Integer associateid) {
 		// TODO Auto-generated method stub
+		associatePlanMapper.deleteByAssociate(associateid);
 		for(String url : urlList){
 			AssociatePlan ap = new AssociatePlan();
 			ap.setId(0);

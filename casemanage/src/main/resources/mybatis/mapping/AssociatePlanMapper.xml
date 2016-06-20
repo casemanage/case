@@ -15,6 +15,10 @@
     from MC_ASSOCIATE_PLAN
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  <delete id="deleteByAssociate" parameterType="java.lang.Integer" >
+    delete from MC_ASSOCIATE_PLAN
+    where ASSOCIATEID = #{id,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from MC_ASSOCIATE_PLAN
     where ID = #{id,jdbcType=INTEGER}
