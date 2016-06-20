@@ -313,7 +313,7 @@
 	 <![CDATA[p.CREATORNAME =#{creatorname,jdbcType=VARCHAR} ]]>
 	</if>
   	<if test="pageStart != null and pageSize != null and pageStart>-1 and pageSize>-1">
-   		and RowNumber BETWEEN #{pageStart} and #{pageSize}
+   		and RowNumber BETWEEN (#{pageStart} + 1) and (#{pageSize} + #{pageStart})
    	</if>
   </select>
   <select id="getTotal" parameterType="com.security.manage.model.Person" resultType="java.lang.Integer">
