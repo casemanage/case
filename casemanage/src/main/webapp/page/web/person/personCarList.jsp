@@ -89,7 +89,10 @@ function pagesearch(){
 						<tr style="background-color:#D6D3D3;font-weight: bold;">
 							<th width="4%" style="display:none">&nbsp;</th>
 							<th>车牌号</th>							
-							<th>姓名</th>							
+							<th>姓名</th>
+							<th>品牌</th>	
+							<th>颜色</th>
+							<th>报警级别</th>						
 							<th>描述</th> 
 						</tr>
                     </thead>
@@ -99,8 +102,10 @@ function pagesearch(){
 							<td align="center" style="display:none">${item.id}</td>
 							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.number}</td>
 							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.name}</td>
+							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.pro}</td>
+							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.color}</td>
+							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.level}</td>
 							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.description}</td>
-							
 						</tr>
 					</c:forEach>
                     </tbody>

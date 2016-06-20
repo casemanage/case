@@ -11,8 +11,38 @@ public class PersonCar extends Page{
     private String name;
 
     private String description;
+    
+    private String pro;
+    
+    private String color;
+    
+    private String level;
 
-    public Integer getId() {
+    public String getPro() {
+		return pro;
+	}
+
+	public void setPro(String pro) {
+		this.pro = pro;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public Integer getId() {
         return id;
     }
 

@@ -290,10 +290,10 @@ public class PersonController extends BaseController{
 			{
 				personCar.setId(0);	
 			}
-			if (personCar.getName() != null) {
+			if (personCar.getNumber() != null) {
 				PersonCar p = new PersonCar();
-				String name = personCar.getName();
-				p.setName(name);
+				String number = personCar.getNumber();
+				p.setNumber(number);
 				if (personCar.getId() > 0) {
 					p.setId(personCar.getId());
 				}				
@@ -306,10 +306,7 @@ public class PersonController extends BaseController{
 				{
 					js.setMessage("该重点人员车辆已存在!");
 				}									
-			} else {
-				js.setMessage("重点人员姓名不能为空!");
-			}
-
+			} 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -439,14 +436,6 @@ public class PersonController extends BaseController{
 				person.setCreatetime(new Date());
 				person.setId(0);
 			} 
-			if(person.getLevelid() == null){
-				js.setMessage("请选择人员级别!");
-				return js;
-			}
-			if(person.getTypeid() == null){
-				js.setMessage("请选择人员类型!");
-				return js;
-			}
 			if (person.getIdcard() != null && !"".equals(person.getIdcard())) {
 				Person p = new Person();
 				p.setIdcard(person.getIdcard());

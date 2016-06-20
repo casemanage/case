@@ -217,11 +217,9 @@ public class AppController extends BaseController {
 		try {
 			List<Person> personlist = new ArrayList<Person>();
 			personlist = personService.getPersonList(person);
-			 
-				js.setList(personlist);
-				js.setCode(200);
-				js.setMessage(Constants.LOAD_OK_MESSAGE);	
-			 					
+			js.setList(personlist);
+			js.setCode(200);
+			js.setMessage(Constants.LOAD_OK_MESSAGE);	
 			} catch (Exception ex) 
 		{
 				js.setCode(202);

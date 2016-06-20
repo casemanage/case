@@ -22,6 +22,9 @@
     <result column="levelName" property="levelName" jdbcType="VARCHAR" />
     <result column="createTime" property="createtime" jdbcType="DATE"/>
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="POLICENAME" property="policename" jdbcType="VARCHAR" />
+    <result column="POLICESECTOR" property="policesector" jdbcType="VARCHAR" />
+    <result column="POLICEPHONE" property="policephone" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="StatisticResultMap" type="com.security.manage.model.TypeStatistic" >
     <id column="totalCount" property="totalCount" jdbcType="INTEGER" />
@@ -32,7 +35,8 @@
   </resultMap>
   <sql id="Base_Column_List" >
     p.ID, p.NAME, p.TYPEID, p.LEVELID, p.SEX, p.BIRTH, p.PHOTOURL, p.IDCARD, p.ADDRESS, p.SERIALNO, p.CASECOMMENT, 
-    p.DESCRIPTION, p.CREATOR, p.CREATORNAME, p.ORGANNAME, p.MACADDRESS,p.createTime,p.telephone
+    p.DESCRIPTION, p.CREATOR, p.CREATORNAME, p.ORGANNAME, p.MACADDRESS,p.createTime,p.telephone,
+    p.POLICENAME,p.POLICESECTOR,p.POLICEPHONE
   </sql>
   <sql id="Blob_Column_List" >
     p.TIMESPAN
@@ -55,13 +59,15 @@
       PHOTOURL, IDCARD, ADDRESS, 
       SERIALNO, CASECOMMENT, DESCRIPTION, 
       CREATOR, CREATORNAME, ORGANNAME, 
-      MACADDRESS,createTime,telephone)
+      MACADDRESS,createTime,telephone,
+      POLICENAME,POLICESECTOR,POLICEPHONE)
     values (#{name,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, 
       #{levelid,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{birth,jdbcType=NVARCHAR}, 
       #{photourl,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{serialno,jdbcType=VARCHAR}, #{casecomment,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{creator,jdbcType=INTEGER}, #{creatorname,jdbcType=VARCHAR}, #{organname,jdbcType=VARCHAR}, 
-      #{macaddress,jdbcType=VARCHAR},#{createtime,jdbcType=DATE}, #{telephone,jdbcType=VARCHAR})
+      #{macaddress,jdbcType=VARCHAR},#{createtime,jdbcType=DATE}, #{telephone,jdbcType=VARCHAR},
+      #{policename,jdbcType=VARCHAR},#{policesector,jdbcType=VARCHAR},#{policephone,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.security.manage.model.Person" >
     insert into MC_PERSON
@@ -226,8 +232,17 @@
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=DATE},
       </if>
-      <if test="description != null" >
+      <if test="telephone != null" >
         telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="policename != null" >
+        POLICENAME = #{policename,jdbcType=VARCHAR},
+      </if>
+      <if test="policesector != null" >
+        POLICESECTOR = #{policesector,jdbcType=VARCHAR},
+      </if>
+      <if test="policephone != null" >
+        POLICEPHONE = #{policephone,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
@@ -309,8 +324,7 @@
 	      )
 	</if>
 	<if test="creatorname != null and creatorname != ''">
-	 and 
-	 <![CDATA[p.CREATORNAME =#{creatorname,jdbcType=VARCHAR} ]]>
+	 and p.CREATORNAME =#{creatorname}
 	</if>
   	<if test="pageStart != null and pageSize != null and pageStart>-1 and pageSize>-1">
    		and RowNumber BETWEEN (#{pageStart} + 1) and (#{pageSize} + #{pageStart})

@@ -48,8 +48,38 @@ public class Person extends Page  {
     private String createtimes;
     
     private String telephone;
+    
+    private String policename;
+    
+    private String policesector;
+    
+    private String policephone;
 
-    public Integer getId() {
+    public String getPolicename() {
+		return policename;
+	}
+
+	public void setPolicename(String policename) {
+		this.policename = policename;
+	}
+
+	public String getPolicesector() {
+		return policesector;
+	}
+
+	public void setPolicesector(String policesector) {
+		this.policesector = policesector;
+	}
+
+	public String getPolicephone() {
+		return policephone;
+	}
+
+	public void setPolicephone(String policephone) {
+		this.policephone = policephone;
+	}
+
+	public Integer getId() {
         return id;
     }
 
