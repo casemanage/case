@@ -56,7 +56,7 @@ public class AssociateController extends BaseController{
 			associate.setSearchName(searchName);
 		}
 		//通过request绑定对象传到前台
-		associate.setPageSize(Constants.DEFAULT_PAGE_SIZE); 
+		associate.setPageSize(Constants.DEFAULT_PAGE_SIZE);
 		if (associate.getPageNo() == null)
 			associate.setPageNo(1);
 		List<Associate> associatelist = new ArrayList<Associate>();
@@ -113,7 +113,7 @@ public class AssociateController extends BaseController{
 				}
 				la = associateService.getAssociateListById(associatePerson);
 				total = associateService.getTotalCount(associatePerson);
-				la = associateService.getAssociatePersonListById(associateId);
+				la = associateService.getAssociatePersonListById(associatePerson);
 				plala = associateService.getAssociatePlanListById(associateId);
 			}catch(Exception ex){
 				ex.printStackTrace();
@@ -439,7 +439,7 @@ public class AssociateController extends BaseController{
 			ap.setAssociateid(associateId);
 			try {
 				associateService.deleteMemberById(ap);
-				la = associateService.getAssociatePersonListById(associateId);
+				la = associateService.getAssociatePersonListById(ap);
 				if(la.size() > 0){
 					js.setList(la);
 				}

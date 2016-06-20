@@ -34,7 +34,7 @@ public interface AssociateService {
 
 	void saveOrUpdateAssociate(Associate associate);
 
-	List<AssociatePerson> getAssociatePersonListById(Integer associateId);
+	List<AssociatePerson> getAssociatePersonListById(AssociatePerson associatePerson);
 
 	List<Associate> getExistAssociate(AssociatePerson a);
 

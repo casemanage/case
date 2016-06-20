@@ -3,6 +3,7 @@ package com.security.manage.controller.app;
  
 import java.util.ArrayList;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Date; 
 import java.util.List;
 
@@ -205,16 +206,27 @@ public class AppController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getPersonList.do", produces = { "text/html;charset=UTF-8" })
 	public AppReturnResult<Person> getPersonList(
-			@RequestParam(value="guid", required = false)String guid,
-			HttpServletRequest request, HttpServletResponse response) {
+			@RequestParam(value="guid", required = true)String guid,
+			@RequestParam(value="page", required = false)Integer page,
+			@RequestParam(value="search", required = false)String searchName,
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		AppReturnResult<Person> js = new AppReturnResult<Person>();
 		js.setCode(201);
 		js.setMessage(Constants.LOAD_FAIL_MESSAGE);	
 		Person person = new Person();
+		if(page != null && page > 0){
+			person.setPageNo(page);
+		}
+		person.setPageSize(Constants.DEFAULT_PAGE_SIZE);
+		if(searchName != null && !"".equals(searchName)){
+			String s = new String(searchName.getBytes("iso8859-1"), "utf-8");
+			person.setSearchName(s);
+		}
 		if(!StringUtil.isEmpty(guid))
 		{ 
 			person.setCreatorname(guid); 
@@ -226,11 +238,9 @@ public class AppController extends BaseController {
 		try {
 			List<Person> personlist = new ArrayList<Person>();
 			personlist = personService.getPersonList(person);
-			 
-				js.setList(personlist);
-				js.setCode(200);
-				js.setMessage(Constants.LOAD_OK_MESSAGE);	
-			 					
+			js.setList(personlist);
+			js.setCode(200);
+			js.setMessage(Constants.LOAD_OK_MESSAGE);	
 			} catch (Exception ex) 
 		{
 				js.setCode(202);
@@ -288,6 +298,8 @@ public class AppController extends BaseController {
 	@RequestMapping(value="/getAssoListByGuid.do")
 	public AppReturnResult <Associate> jsonLoadAssociateListByGuid(
 			@RequestParam(value="guid", required = false)String guid,
+			@RequestParam(value="page", required = false)Integer page,
+			@RequestParam(value="search", required = false)String searchName,
 			HttpServletRequest request, HttpServletResponse response){
 		AppReturnResult <Associate> js = new AppReturnResult<Associate>();
 		Associate associate = new Associate();
@@ -295,17 +307,25 @@ public class AppController extends BaseController {
 		js.setCode(201);
 		js.setMessage(Constants.LOAD_FAIL_MESSAGE);
 		try {
+			if(page != null && page > 0){
+				associate.setPageNo(page);
+			}
+			associate.setPageSize(Constants.DEFAULT_PAGE_SIZE);
+			if(searchName != null && !"".equals(searchName)){
+				String s = new String(searchName.getBytes("iso8859-1"), "utf-8");
+				associate.setSearchName(s);
+			}
 			if(StringUtil.isEmpty(guid)){ 
 				js.setCode(203);
 				js.setMessage(Constants.PARAM_ERROR_MESSAGE);
 				return js;
 			} 
 			associate.setCreatorname(guid);
-			la = associateService.getAssociateListByCreatorname(associate); 
-				js.setCode(200);
-				//js.setObj(associate);
-				js.setList(la);
-				js.setMessage(Constants.LOAD_OK_MESSAGE); 
+			la = associateService.getAssociateList(associate); 
+			js.setCode(200);
+			//js.setObj(associate);
+			js.setList(la);
+			js.setMessage(Constants.LOAD_OK_MESSAGE); 
 		} catch (Exception e) {
 			js.setCode(202);
 			js.setMessage(Constants.INNER_ERROR_MESSAGE);
@@ -315,21 +335,34 @@ public class AppController extends BaseController {
 	}
 	/**
 	 * App获取数据接口---获取社会机构详情
+	 * @throws UnsupportedEncodingException 
 	 */
 	@ResponseBody
 	@RequestMapping(value="/getAssociateById.do")
 	public AppReturnResult<AssociatePerson> getAssociateById(
 			@RequestParam(value="id", required = true)Integer id,
-			HttpServletRequest request, HttpServletResponse response){
+			@RequestParam(value="page", required = false)Integer page,
+			@RequestParam(value="search", required = false)String searchName,
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
 		AppReturnResult<AssociatePerson> js = new AppReturnResult<AssociatePerson>();
 		Associate associate = new Associate();
+		AssociatePerson associatePerson = new AssociatePerson();
+		if(page != null && page > 0){
+			associatePerson.setPageNo(page);
+		}
+		associatePerson.setPageSize(Constants.DEFAULT_PAGE_SIZE);
+		if(searchName != null && !"".equals(searchName)){
+			String s = new String(searchName.getBytes("iso8859-1"), "utf-8");
+			associatePerson.setSearchName(s);
+		}
 		List<AssociatePerson> la = new ArrayList<AssociatePerson>();
 		js.setCode(201);
 		js.setMessage(Constants.LOAD_FAIL_MESSAGE);
 		try {
 			if(id != null){
+				associatePerson.setAssociateid(id);
 				associate = associateService.getAssociateById(id);
-				la = associateService.getAssociatePersonListById(id);
+				la = associateService.getAssociateListById(associatePerson);
 				js.setCode(200);
 				js.setObj(associate);
 				js.setList(la);

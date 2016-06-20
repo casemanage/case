@@ -175,6 +175,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			        	<textarea rows="7" cols="3" name="description"  style="width:354px;height:50px;"  value="${person.description}" >${person.description}</textarea>
 			    		<%-- <input type="text"  class="easyui-validatebox" placeholder="请输入描述" value="${person.description}" name="description"/> --%>
 			    	</div>
+			    	<div style="margin-top:15px;">
+			        	<span class="from-style">警官名称:</span>
+			    		<input type="text"  class="easyui-validatebox" placeholder="请输入警官名称" value="${person.policename}" name="policename"/>
+			    	</div>
+			    	<div style="margin-top:15px;">
+			        	<span class="from-style">看守单位:</span>
+			    		<input type="text"  class="easyui-validatebox" placeholder="请输入看守单位" value="${person.policesector}" name="policesector"/>
+			    	</div>
+			    	<div style="margin-top:15px;">
+			        	<span class="from-style">警官电话:</span>
+			    		<input type="text"  class="easyui-validatebox" placeholder="请输入警官电话" value="${person.policephone}" name="policephone"/>
+			    	</div>
 			        <div style="margin-top:15px;">
 			        	<span class="from-style">上传头像:</span>
 			        	<c:if test="${person.id >0}">

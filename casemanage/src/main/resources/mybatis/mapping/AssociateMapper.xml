@@ -231,8 +231,11 @@
 	      	a.SERIALNO like '%${searchName}%'
 	      )
 	     </if>
+	     <if test="creatorname != null and creatorname != ''">
+	     	and <![CDATA[a.CREATORNAME =#{creatorname} ]]>
+	     </if>
 	     <if test="pageStart != null and pageSize != null and pageStart>-1 and pageSize>-1">
-    		and RowNumber BETWEEN #{pageStart} and #{pageSize}
+    		and RowNumber BETWEEN (#{pageStart} + 1) and (#{pageSize} + #{pageStart})
     	</if>
 	  	 <!-- <if test="pageCount != null and pageCount>-1">
 	        and a.ID >  (

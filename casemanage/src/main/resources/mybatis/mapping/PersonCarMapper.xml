@@ -6,9 +6,12 @@
     <result column="NUMBER" property="number" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="PRO" property="pro" jdbcType="VARCHAR" />
+    <result column="COLOR" property="color" jdbcType="VARCHAR" />
+    <result column="LEVEL" property="level" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, NUMBER, NAME, DESCRIPTION
+    ID, NUMBER, NAME, DESCRIPTION,PRO,COLOR,LEVEL
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +25,10 @@
   </delete>
   <insert id="insert" parameterType="com.security.manage.model.PersonCar" >
     insert into MC_PERSON_CAR ( NUMBER, NAME, 
-      DESCRIPTION)
+      DESCRIPTION,PRO,COLOR,LEVEL)
     values ( #{number,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR})
+      #{description,jdbcType=VARCHAR},#{pro,jdbcType=VARCHAR},
+      #{color,jdbcType=VARCHAR},#{level,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.security.manage.model.PersonCar" >
     insert into MC_PERSON_CAR
@@ -69,6 +73,15 @@
       <if test="description != null" >
         DESCRIPTION = #{description,jdbcType=VARCHAR},
       </if>
+      <if test="level != null" >
+        LEVEL = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        COLOR = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="pro != null" >
+        PRO = #{pro,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
@@ -79,8 +92,6 @@
       DESCRIPTION = #{description,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update> 
-  
-  
      <select id="getPersonCarList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonCar">
   	 select 
   	  *  
@@ -97,12 +108,9 @@
 	      )
 	 </if>
 	 <if test="pageStart != null and pageSize != null and pageStart>-1 and pageSize>-1">
-    		and RowNumber BETWEEN #{pageStart} and #{pageSize}
+    		and RowNumber BETWEEN (#{pageStart} + 1) and (#{pageSize} + #{pageStart})
     	</if>
   </select>
-  
- 
-  
   <select id="getPersonCarTotalCount" resultType="java.lang.Integer" parameterType="com.security.manage.model.PersonCar">
   	 select count(*)
  	from MC_PERSON_CAR 
@@ -116,19 +124,17 @@
 	      	description like '%${searchName}%'
 	      )
 	 </if>
-  	  	    
   </select>
-  
    <select id="getExistPersonCar" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonCar">
   	 select 
   	  <include refid="Base_Column_List" />  
-  	  from MC_PERSON_CAR t
+  	  from MC_PERSON_CAR
   	  where 1=1
     	<if test="number != null" >
-        and  t.number = #{number,jdbcType=VARCHAR}
+        and  number = #{number,jdbcType=VARCHAR}
        </if>  
-       <if test="name != null" >
-        and  t.name = #{name,jdbcType=VARCHAR}
+       <if test="id != null" >
+        and  id != #{id,jdbcType=VARCHAR}
        </if> 
         	  
     </select> 

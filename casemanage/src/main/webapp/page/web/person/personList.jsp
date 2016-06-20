@@ -93,6 +93,9 @@ function pagesearch(){
 					<th>地址</th>
 					<th>事由</th>
 					<th>描述</th>
+					<th>警官名称</th>
+					<th>看守单位</th>
+					<th>警官电话</th>
 					<!-- <th>采集人</th> -->
 					<th>采集时间</th>
 				</tr>
@@ -122,6 +125,9 @@ function pagesearch(){
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.address}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.casecomment}</td>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.description}</td>
+						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.policename}</td>
+						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.policesector}</td>
+						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.policephone}</td>
 						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.creatorname}</td> --%>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.createtimes}</td>
 					</tr>

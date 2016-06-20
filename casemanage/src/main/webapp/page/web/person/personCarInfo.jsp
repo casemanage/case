@@ -34,8 +34,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  			data = $.parseJSON(data);
 		  			if(data.code==0){	  					
 		  				$.messager.alert('保存信息',data.message,'info',function(){
+	  						window.location.href="person/personCarList.do";
 	        			});
-	  					window.location.href="person/personCarList.do";
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error',function(){
 	        			});
@@ -68,6 +68,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">车主姓名:</span>
 	    		<input type="text" name="name"  required="true"  validType="Length[1,30]" class="easyui-validatebox" placeholder="请输入车主姓名" style="width:354px;height:32px;"  value="${PersonCar.name}" />
+	    	</div>
+	    	<div style="margin-top:15px;">
+	        	<span class="from-style">车辆品牌:</span>
+	    		<input type="text" name="pro"  class="easyui-validatebox" placeholder="请输入车辆品牌" style="width:354px;height:32px;"  value="${PersonCar.pro}" />
+	    	</div>
+	    	<div style="margin-top:15px;">
+	        	<span class="from-style">车辆颜色:</span>
+	    		<input type="text" name="color"  class="easyui-validatebox" placeholder="请输入车辆颜色" style="width:354px;height:32px;"  value="${PersonCar.color}" />
+	    	</div>
+	    	<div style="margin-top:15px;">
+	        	<span class="from-style">报警级别:</span>
+	    		<input type="text" name="level"  class="easyui-validatebox" placeholder="请输入报警级别" style="width:354px;height:32px;"  value="${PersonCar.level}" />
 	    	</div>
 	    	 <div style="margin-top:15px;">
 	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述:</span>
