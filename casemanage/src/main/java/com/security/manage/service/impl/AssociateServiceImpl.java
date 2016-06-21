@@ -127,7 +127,11 @@ public class AssociateServiceImpl implements AssociateService{
 	@Override
 	public void updateAssociatePerson(AssociatePerson associatePerson) {
 		// TODO Auto-generated method stub
-		associatePersonMapper.insert(associatePerson); 
+		if(associatePerson.getId()>0){
+			associatePersonMapper.updateByPrimaryKeySelective(associatePerson);
+		}else{
+			associatePersonMapper.insert(associatePerson); 
+		}
 	}
 
 	@Override

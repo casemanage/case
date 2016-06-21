@@ -75,6 +75,26 @@ public class HomeController extends BaseController {
 				 
 			}else if(user.getAccount().equals("admin10")&&user.getPassword().equals("111111")){ 
 				 
+			}else if(user.getAccount().equals("admin11")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin12")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin13")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin14")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin15")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin16")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin17")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin18")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin19")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin20")&&user.getPassword().equals("111111")){ 
+				 
 			}else{
 				json.setMessage("用户名或密码错误");
 				return json;
