@@ -57,7 +57,7 @@ public class AppController extends BaseController {
 	 * App获取数据接口---登录
 	 */
 	@ResponseBody
-	@RequestMapping(value="/login.do", method=RequestMethod.POST)
+	@RequestMapping(value="/login.do", method=RequestMethod.GET)
 	public AppReturnResult<PoliceMan> login(
 			@RequestParam(value="account", required = true)String account,
 			@RequestParam(value="password", required = true)String password,
@@ -75,6 +75,8 @@ public class AppController extends BaseController {
 				json.setMessage("请输入密码");
 				return json;
 			}
+			user.setAccount(account);
+			user.setPassword(password);
 			if(user.getAccount().equals("admin")&&user.getPassword().equals("111111")){ 
 				 
 			}else if(user.getAccount().equals("admin1")&&user.getPassword().equals("111111")){ 
