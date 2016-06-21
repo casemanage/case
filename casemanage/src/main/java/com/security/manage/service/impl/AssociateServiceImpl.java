@@ -197,6 +197,12 @@ public class AssociateServiceImpl implements AssociateService{
 		associatePersonMapper.deleteByPrimaryKey(id);
 	}
 
+	@Override
+	public void deleteAssociateTypeById(Integer id) {
+		// TODO Auto-generated method stub
+		associateTypeMapper.deleteByPrimaryKey(id);
+	}
+
 	
 
 }

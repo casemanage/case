@@ -34,7 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  			data = $.parseJSON(data);
 		  			if(data.code==0){	  					
 		  				$.messager.alert('保存信息',data.message,'info',function(){
-	  						window.location.href="person/personCarList.do";
+	  						window.location.href="<%=basePath%>person/personCarList.do";
 	        			});
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error',function(){
@@ -56,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  <div class="Panel-content">重点人员车辆：${PersonCar.id == 0?"新建重点人员车辆信息":PersonCar.name}</div>              											
         </div>       
     <div class="containner-fluid text-center" >
-		<form id="personCarInfoForm" name="personCarInfoForm" action="person/jsonSaveOrUpdatePersonCar.do" method="post" style="text-align:left">
+		<form id="personCarInfoForm" name="personCarInfoForm" action="<%=basePath%>person/jsonSaveOrUpdatePersonCar.do" method="post" style="text-align:left">
     		<div style="margin-top:15px;width:100%;"> 
 		        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
 		         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePersonCar(this);"> 

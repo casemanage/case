@@ -59,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			var associateId = $("#hid_assoId").val();
 			var pageNumber = $("#pageNumber").val();
 			$.ajax({
-				url : "associate/jsonLoadAssociatePersonList.do?associateId="+associateId+"&&pageNumber="+pageNumber,
+				url : "<%=basePath%>associate/jsonLoadAssociatePersonList.do?associateId="+associateId+"&&pageNumber="+pageNumber,
 				type : "post",  
 				dataType:"json",
 				success : function(data) { 
@@ -88,9 +88,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 											$.messager.alert('保存信息',data.message,'info',
 															function() {
 																if(data.obj !=undefined ||data.obj != null){
-																	window.location.href = "associate/associateInfo.do?associateId="+data.obj;
+																	window.location.href = "<%=basePath%>associate/associateInfo.do?associateId="+data.obj;
 																}else{
-																	window.location.href = "associate/associateInfo.do?associateId="+0;
+																	window.location.href = "<%=basePath%>associate/associateInfo.do?associateId="+0;
 																}
 															});
 										} else {
@@ -109,7 +109,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$.messager.confirm("删除确认","确认删除该成员?",function(r){  
 		    if (r){  
 			$.ajax({
-				url : "associate/jsonDeleteMember.do?associateId="+associateId+"&&Id="+Id,
+				url : "<%=basePath%>associate/jsonDeleteMember.do?associateId="+associateId+"&&Id="+Id,
 				type : "post",  
 				dataType:"json",
 				success : function(data) { 
@@ -137,7 +137,7 @@ function fillMemberList(lst){
 	$("#MemberList").html(html);
 } 
 function back(){
-	window.location.href = "associate/associateList.do";
+	window.location.href = "<%=basePath%>associate/associateList.do";
 } 
 function showName(obj){
 	 if(!(/(?:jpg)$/i.test(obj.value))&&!(/(?:jpeg)$/i.test(obj.value))&&!(/(?:png)$/i.test(obj.value))) {
@@ -166,7 +166,7 @@ function showName(obj){
       <div id="tabInfo" class="easyui-tabs" style="width:100%;border:0;">  
     <div title="基础信息" style="padding:20px;" >  
          <div class="containner-fluid text-center"> 
-			<form id="associsteForm" name="associsteForm" action="associate/jsonSaveOrUpdateAssociate.do" method="post"  enctype="multipart/form-data"  style="text-align:left;">
+			<form id="associsteForm" name="associsteForm" action="<%=basePath%>associate/jsonSaveOrUpdateAssociate.do" method="post"  enctype="multipart/form-data"  style="text-align:left;">
 			<table style="width:100%;">
 				<tr style="height:40px"> 
 					<td rowspan="2" style="width:40%"> 
@@ -195,11 +195,11 @@ function showName(obj){
 				    		</div>
 					        <div style="margin-top:15px;">
 					        	<span class="from-style">坐标经度:</span>
-					    		<input type="text" required="true"  validType="LoctionX"   style="width:354px;height:32px;" class="easyui-validatebox" placeholder="请输入经度" value="${Associate.latitude}" name="latitude"/>
+					    		<input type="text"   style="width:354px;height:32px;" class="easyui-validatebox" placeholder="请输入经度" value="${Associate.latitude}" name="latitude"/>
 					    	</div>
 					        <div style="margin-top:15px;">
 					        	<span class="from-style">坐标纬度:</span>
-					    		<input type="text" required="true"  validType="LoctionY"  style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入纬度" value="${Associate.longitude}" name="longitude"/>
+					    		<input type="text"  style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入纬度" value="${Associate.longitude}" name="longitude"/>
 					    	</div>
 					    	<div style="margin-top:15px;width:100%;">
 					    		<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;平面图:</span> 
@@ -243,7 +243,7 @@ function showName(obj){
 	    <div class="containner-fluid">
 	    	<div class="Panel-content">
 		    	<div style="width:100%;text-align:right">
-					<input type="button" class="btn-add"	onclick="window.location.href='associate/associateMember.do?associateId=${Associate.id}'" value="新增相关人员">
+					<input type="button" class="btn-add"	onclick="window.location.href='<%=basePath%>associate/associateMember.do?associateId=${Associate.id}'" value="新增相关人员">
 					<input type="button" class="btn-back" style="margin-left:25px;margin-right:25px"	onclick="javascript:history.back();" value="返回">
 				</div>
 			</div>

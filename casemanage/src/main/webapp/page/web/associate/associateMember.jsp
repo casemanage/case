@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										if (data.code == 0) {
 											$.messager.alert('保存信息',data.message,'info',
 															function() {
-																window.location.href = "associate/associateInfo.do?associateId="+associateId;
+																window.location.href = "<%=basePath%>associate/associateInfo.do?associateId="+associateId;
 															});
 										} else {
 											$.messager.alert('错误信息',
@@ -93,7 +93,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	</div>
        
     <div class="containner-fluid text-center">
-		<form id="personForm" name="personForm" action="associate/jsonUpdateMember.do" method="post" enctype="multipart/form-data"   style="text-align:left">
+		<form id="personForm" name="personForm" action="<%=basePath%>associate/jsonUpdateMember.do" method="post" enctype="multipart/form-data"   style="text-align:left">
 			<table style="width:100%;">
 				<tr style="height:40px"> 
 					<td rowspan="2" style="width:50%"> 

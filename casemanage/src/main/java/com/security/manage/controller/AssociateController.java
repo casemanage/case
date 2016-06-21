@@ -658,4 +658,24 @@ public class AssociateController extends BaseController{
 			}
 			return js;
 		}
+		@ResponseBody
+		@RequestMapping(value = "/jsonDeleteAssociateType.do", method = RequestMethod.POST)
+		public JsonResult<AssociateType> jsonDeleteAssociateType(
+				@RequestParam(value="associateTypeId", required = false)Integer id,
+				HttpServletRequest request, HttpServletResponse response) {
+			JsonResult<AssociateType> js = new JsonResult<AssociateType>();
+			js.setCode(1);
+			js.setMessage("删除失败!");
+			try {
+				if(id != null){
+					associateService.deleteAssociateTypeById(id);
+				}
+				js.setCode(0);
+				js.setMessage("删除成功!");
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			return js;
+		}
 }

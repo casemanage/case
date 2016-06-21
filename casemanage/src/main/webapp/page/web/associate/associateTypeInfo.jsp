@@ -34,7 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  			data = $.parseJSON(data);
 		  			if(data.code==0){	  					
 		  				$.messager.alert('保存信息',data.message,'info',function(){
-	  						window.location.href="associate/associateTypeList.do";
+	  						window.location.href="<%=basePath%>associate/associateTypeList.do";
 	        			});
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error',function(){
@@ -58,7 +58,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
        
     <div class="containner-fluid text-center">
-		<form id="associateTypeInfoForm" name="associateTypeInfoForm" action="associate/jsonSaveOrUpdateAssociateType.do" method="post" style="text-align:left;">
+		<form id="associateTypeInfoForm" name="associateTypeInfoForm" action="<%=basePath%>associate/jsonSaveOrUpdateAssociateType.do" method="post" style="text-align:left;">
 			<div style="margin-top:15px;width:100%;"> 
 		        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
 		         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveAssociateType(this);"> 

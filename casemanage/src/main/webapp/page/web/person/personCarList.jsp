@@ -62,7 +62,26 @@ function pagesearch(){
 		PersonCarForm.submit();
 	}  
 }
- 
+function deleteByPersonCarId(id){
+	$.messager.confirm("删除确认","确认删除该人员车辆?",function(r){  
+		    if (r){  
+			$.ajax({
+				url : "<%=basePath%>person/jsonDeletePersonCar.do?personCarId="+id,
+				type : "post",  
+				dataType:"json",
+				success : function(data) { 
+		  			if(data.code==0){ 
+		  				$.messager.alert('删除信息',data.message,'info',function(){ 
+							history.go(0);
+		       			});
+		  			}else{
+						$.messager.alert('错误信息',data.message,'error');
+		  			} 
+				}
+			});
+	    }  
+	});
+}
 </script>
   </head>
   
@@ -78,7 +97,7 @@ function pagesearch(){
 								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="搜索" value="${PersonCar.searchName}" /> 
 								<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
 								<input type="hidden" id="pageNumber" name="pageNo" value="${PersonCar.pageNo}" />
-								<input type="button" class="btn-add" style="margin-left:25px" onclick="window.location.href='person/personCarInfo.do?PersonCarId=0'" value="新建重点人员车辆" />
+								<input type="button" class="btn-add" style="margin-left:25px" onclick="window.location.href='<%=basePath%>person/personCarInfo.do?PersonCarId=0'" value="新建重点人员车辆" />
 							</div>   
 					</form>  
                 </div>
@@ -94,18 +113,20 @@ function pagesearch(){
 							<th>颜色</th>
 							<th>报警级别</th>						
 							<th>描述</th> 
+							<th>操作</th>
 						</tr>
                     </thead>
                     <tbody>
                        <c:forEach var="item" items="${PersonCarlist}">
 						<tr>
 							<td align="center" style="display:none">${item.id}</td>
-							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.number}</td>
-							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.name}</td>
-							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.pro}</td>
-							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.color}</td>
-							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.level}</td>
-							<td align="center" ondblclick="window.location.href='person/personCarInfo.do?personCarId=${item.id}'">${item.description}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.number}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.name}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.pro}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.color}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.level}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.description}</td>
+							<td><a href="javascript:void(0);" onclick="deleteByPersonCarId(${item.id});">删除</a></td>
 						</tr>
 					</c:forEach>
                     </tbody>

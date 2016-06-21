@@ -62,7 +62,26 @@ function pagesearch(){
 		PersonTypeForm.submit();
 	}  
 }
- 
+function deleteByPersonTypeId(id){
+	$.messager.confirm("删除确认","确认删除该人员类型?",function(r){  
+		    if (r){  
+			$.ajax({
+				url : "<%=basePath%>person/jsonDeletePersonType.do?personTypeId="+id,
+				type : "post",  
+				dataType:"json",
+				success : function(data) { 
+		  			if(data.code==0){ 
+		  				$.messager.alert('删除信息',data.message,'info',function(){ 
+							history.go(0);
+		       			});
+		  			}else{
+						$.messager.alert('错误信息',data.message,'error');
+		  			} 
+				}
+			});
+	    }  
+	});
+} 
 </script>
   </head>
   
@@ -73,12 +92,12 @@ function pagesearch(){
             	<div class="pannel-header">重点人员类型管理</div>
                 <div class="Panel-content">
 					<form id="PersonTypeForm" name="PersonTypeForm"
-						action="person/personTypeList.do" method="get"> 
+						action="<%=basePath%>person/personTypeList.do" method="get"> 
 							 <div style="width:100%;text-align:right;">
 								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="搜索" value="${PersonType.searchName}" /> 
 								<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
 								<input type="hidden" id="pageNumber" name="pageNo" value="${PersonType.pageNo}" />
-								<input type="button" class="btn-add" style="margin-left:25px;"  onclick="window.location.href='person/personTypeInfo.do?personTypeId=0'" value="新建重点人员类型">
+								<input type="button" class="btn-add" style="margin-left:25px;"  onclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=0'" value="新建重点人员类型">
 							</div>   
 					</form>  
                 </div>
@@ -91,16 +110,17 @@ function pagesearch(){
 							<th>关键字</th>							
 							<th>类型</th>							
 							<th>描述</th> 
+							<th>操作</th>
 						</tr>
                     </thead>
                     <tbody>
                        <c:forEach var="item" items="${PersonTypelist}">
 						<tr>
 							<td align="center" style="display:none">${item.id}</td>
-							<td align="center" ondblclick="window.location.href='person/personTypeInfo.do?personTypeId=${item.id}'">${item.keyword}</td>
-							<td align="center" ondblclick="window.location.href='person/personTypeInfo.do?personTypeId=${item.id}'">${item.name}</td>
-							<td align="center" ondblclick="window.location.href='person/personTypeInfo.do?personTypeId=${item.id}'">${item.description}</td>
-							
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">${item.keyword}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">${item.name}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">${item.description}</td>
+							<td><a href="javascript:void(0);" onclick="deleteByPersonTypeId(${item.id});">删除</a></td>
 						</tr>
 					</c:forEach>
                     </tbody>

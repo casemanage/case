@@ -27,13 +27,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function savePersonLevel(obj){
 	if ($('#personLevelInfoForm').form('validate')) {
 		 $(obj).attr("onclick", ""); 
-		showProcess(true, '温馨提示', '正在提交数据...'); 
 		 $('#personLevelInfoForm').form('submit',{
 		  		success:function(data){ 
 		  			data = $.parseJSON(data);
 		  			if(data.code==0){	  					
 		  				$.messager.alert('保存信息',data.message,'info',function(){
-	  						window.location.href="person/PersonLevelList.do";
+	  						window.location.href="<%=basePath%>person/PersonLevelList.do";
 	        			});
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error',function(){
@@ -58,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
        
     <div class="containner-fluid text-center">
-		<form id="personLevelInfoForm" name="personLevelInfoForm" action="person/jsonSaveOrUpdatePersonLevel.do" method="post" style="text-align:left">
+		<form id="personLevelInfoForm" name="personLevelInfoForm" action="<%=basePath%>person/jsonSaveOrUpdatePersonLevel.do" method="post" style="text-align:left">
     		<div style="margin-top:15px;width:100%;"> 
 		        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
 		         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePersonLevel(this);"> 

@@ -59,6 +59,12 @@ public interface PersonService {
 
 	Person getPersonByCondition(Person person);
 
-	void deletePersonById(Integer id);       
+	void deletePersonById(Integer id);
+
+	void deletePersonCarById(Integer id);
+
+	void deletePersonLevelById(Integer id);
+
+	void deletePersonTypeById(Integer id);       
 
 }

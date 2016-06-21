@@ -109,7 +109,7 @@ function deleteByAssociateId(id){
 			$.messager.confirm("删除确认","确认删除该机构?",function(r){  
 		    if (r){  
 			$.ajax({
-				url : "associate/jsonDeleteAssociate.do?associateId="+id,
+				url : "<%=basePath%>associate/jsonDeleteAssociate.do?associateId="+id,
 				type : "post",  
 				dataType:"json",
 				success : function(data) { 
@@ -133,12 +133,12 @@ function deleteByAssociateId(id){
 	<div class="containner-fluid">
 		<div class="pannel-header">社会机构管理</div>
 		<div class="Panel-content">
-			<form id="AssociateForm" name="AssociateForm" action="associate/associateList.do" method="get">
+			<form id="AssociateForm" name="AssociateForm" action="<%=basePath%>associate/associateList.do" method="get">
 				<div style="width:100%;text-align:right;">
 					<input type="text" name="searchName" validType="SpecialWord" class="easyui-validatebox" placeholder="搜索" value="${associate.searchName}" /> 
 					<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
 					<input type="hidden" id="pageNumber" name="pageNo" value="${associate.pageNo}" /> 
-					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='associate/associateInfo.do?associateId=0'" value="新建社会机构"> 
+					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=0'" value="新建社会机构"> 
 				</div>
 			</form>
 		</div>
@@ -158,6 +158,7 @@ function deleteByAssociateId(id){
 					<th>采集人</th> -->
 					<th>采集时间</th>
 					<th>描述</th>
+					<th>详情</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -165,23 +166,24 @@ function deleteByAssociateId(id){
 				<c:forEach var="item" items="${associatelist}">
 					<tr>
 						<td align="center" style="display:none">${item.id}</td>
-						<td align="center" ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.serialno}</td>
-						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.name}</td>
-						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.typename}</td>
+						<td align="center" ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.serialno}</td>
+						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.name}</td>
+						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.typename}</td>
 						<c:if test="${item.latitude !='' && item.longitude != ''}">
-							<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.latitude}，${item.longitude}</td>
+							<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.latitude}，${item.longitude}</td>
 						</c:if>
 						<c:if test="${item.latitude =='' && item.longitude == ''}">
-							<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'"></td>
+							<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'"></td>
 						</c:if>
-						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.address}</td>
-						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.telephone}</td>
-<%-- 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.organname}</td>
-						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.creatorname}</td> --%>
-						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.createtimes}</td>
-						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.description}</td>
+						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.address}</td>
+						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.telephone}</td>
+<%-- 						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.organname}</td>
+						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.creatorname}</td> --%>
+						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.createtimes}</td>
+						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.description}</td>
+						<td><a href="javascript:void(0);" ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">详情</a></td>
 						<%-- <td><a href="javascript:void(0);" onclick="showdialog(${item.id});">上传平面图</a></td> --%>
-						<td><a href="javascript:void(0);" onclick="deleteByAssociateId(${item.id});">删除</a></td>
+						<td><a href="javascript:void(0);" onclick="<%=basePath%>deleteByAssociateId(${item.id});">删除</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -190,7 +192,7 @@ function deleteByAssociateId(id){
 	</div> 
 	</div>
 	 <div id="planwindow" class="easyui-window" title="上传平面图" style="width:480px;height:300px;overflow:hidden;padding:10px;text-align:center;" iconCls="icon-info" closed="true" modal="true"   resizable="false" collapsible="false" minimizable="false" maximizable="false">
-		<form id="uploadForm" name ="uploadForm" action="associate/jsonupdateplan.do"  method="post" enctype="multipart/form-data"  style="text-align:left;"> 
+		<form id="uploadForm" name ="uploadForm" action="<%=basePath%>associate/jsonupdateplan.do"  method="post" enctype="multipart/form-data"  style="text-align:left;"> 
 		<p style="display:none">
         	<span >id：</span><input name="associateid" id="hid_associateid" type="text"  class="easyui-validatebox"/> 
         </p>

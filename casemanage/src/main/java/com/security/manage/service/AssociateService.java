@@ -58,6 +58,8 @@ public interface AssociateService {
 
 	void deleteAssociatePersonById(Integer id);
 
+	void deleteAssociateTypeById(Integer id);
+
 
 
 

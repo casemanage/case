@@ -342,12 +342,12 @@ public class PersonController extends BaseController{
 				}
 				else
 				{
-					js.setMessage("重点人员类型已存在!");
+					js.setMessage("重点人员级别已存在!");
 				}
 			}
 			else
 			{
-				js.setMessage("重点人员类型名称不能为空!");
+				js.setMessage("重点人员级别名称不能为空!");
 			}
 		}
 		catch(Exception ex)
@@ -426,6 +426,14 @@ public class PersonController extends BaseController{
 		js.setCode(1);
 		js.setMessage("保存失败!");
 		try {
+			if(person.getTypeid() == null){
+				js.setMessage("请选择人员类型!");
+				return js;
+			}
+			if(person.getLevelid() == null){
+				js.setMessage("请选择人员级别!");
+				return js;
+			}
 			if (person.getId() == null || person.getId() == 0) { 
 				User u = this.getLoginUser();
 				person.setCreator(u.getId());
@@ -436,7 +444,7 @@ public class PersonController extends BaseController{
 				person.setSerialno(serialNo); 
 				person.setCreatetime(new Date());
 				person.setId(0);
-			} 
+			}
 			if (person.getIdcard() != null && !"".equals(person.getIdcard())) {
 				Person p = new Person();
 				p.setIdcard(person.getIdcard());
@@ -555,6 +563,66 @@ public class PersonController extends BaseController{
 		try {
 			if(personId != null){
 				personService.deletePersonById(personId);
+			}
+			js.setCode(0);
+			js.setMessage("删除成功!");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return js;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/jsonDeletePersonCar.do", method = RequestMethod.POST)
+	public JsonResult<PersonCar> jsonDeletePersonCar(
+			@RequestParam(value="personCarId", required = false)Integer Id,
+			HttpServletRequest request, HttpServletResponse response) {
+		JsonResult<PersonCar> js = new JsonResult<PersonCar>();
+		js.setCode(1);
+		js.setMessage("删除失败!");
+		try {
+			if(Id != null){
+				personService.deletePersonCarById(Id);
+			}
+			js.setCode(0);
+			js.setMessage("删除成功!");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return js;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/jsonDeletePersonLevel.do", method = RequestMethod.POST)
+	public JsonResult<PersonLevel> jsonDeletePersonLevel(
+			@RequestParam(value="personLevelId", required = false)Integer Id,
+			HttpServletRequest request, HttpServletResponse response) {
+		JsonResult<PersonLevel> js = new JsonResult<PersonLevel>();
+		js.setCode(1);
+		js.setMessage("删除失败!");
+		try {
+			if(Id != null){
+				personService.deletePersonLevelById(Id);
+			}
+			js.setCode(0);
+			js.setMessage("删除成功!");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return js;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/jsonDeletePersonType.do", method = RequestMethod.POST)
+	public JsonResult<PersonType> jsonDeletePersonType(
+			@RequestParam(value="personTypeId", required = false)Integer Id,
+			HttpServletRequest request, HttpServletResponse response) {
+		JsonResult<PersonType> js = new JsonResult<PersonType>();
+		js.setCode(1);
+		js.setMessage("删除失败!");
+		try {
+			if(Id != null){
+				personService.deletePersonTypeById(Id);
 			}
 			js.setCode(0);
 			js.setMessage("删除成功!");

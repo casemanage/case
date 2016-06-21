@@ -62,7 +62,26 @@ function pagesearch(){
 		PersonLevelForm.submit();
 	}  
 }
- 
+function deleteByPersonLevelId(id){
+	$.messager.confirm("删除确认","确认删除该人员级别?",function(r){  
+		    if (r){  
+			$.ajax({
+				url : "<%=basePath%>person/jsonDeletePersonLevel.do?personLevelId="+id,
+				type : "post",  
+				dataType:"json",
+				success : function(data) { 
+		  			if(data.code==0){ 
+		  				$.messager.alert('删除信息',data.message,'info',function(){ 
+							history.go(0);
+		       			});
+		  			}else{
+						$.messager.alert('错误信息',data.message,'error');
+		  			} 
+				}
+			});
+	    }  
+	});
+} 
 </script>
   </head>
   
@@ -78,7 +97,7 @@ function pagesearch(){
 								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="搜索" value="${PersonLevel.searchName}" /> 
 								<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
 								<input type="hidden" id="pageNumber" name="pageNo" value="${PersonLevel.pageNo}" />
-			        			<input type="button" class="btn-add"  style="margin-left:25px;" onclick="window.location.href='person/PersonLevelInfo.do?personLevelId=0'" value="新建重点人员级别">
+			        			<input type="button" class="btn-add"  style="margin-left:25px;" onclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=0'" value="新建重点人员级别">
 							</div>   
 					</form>  
                 </div>
@@ -91,16 +110,17 @@ function pagesearch(){
 							<th>编号</th>							
 							<th>名称</th>							
 							<th>描述</th> 
+							<th>操作</th>
 						</tr>
                     </thead>
                     <tbody>
                        <c:forEach var="item" items="${PersonLevellist}">
 						<tr>
 							<td align="center" style="display:none">${item.id}</td>
-							<td align="center" ondblclick="window.location.href='person/PersonLevelInfo.do?personLevelId=${item.id}'">${item.id}</td>
-							<td align="center" ondblclick="window.location.href='person/PersonLevelInfo.do?personLevelId=${item.id}'">${item.name}</td>
-							<td align="center" ondblclick="window.location.href='person/PersonLevelInfo.do?personLevelId=${item.id}'">${item.description}</td>
-							
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=${item.id}'">${item.id}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=${item.id}'">${item.name}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=${item.id}'">${item.description}</td>
+							<td><a href="javascript:void(0);" onclick="deleteByPersonLevelId(${item.id});">删除</a></td>
 						</tr>
 					</c:forEach>
                     </tbody>

@@ -129,8 +129,8 @@
     	<if test="name != null" >
         and  t.name = #{name,jdbcType=VARCHAR}
        </if>  
-       <if test="keyword != null" >
-        and  t.keyword = #{keyword,jdbcType=VARCHAR}
+       <if test="id != null" >
+        and  t.id != #{id,jdbcType=VARCHAR}
        </if>  
         	  
     </select> 

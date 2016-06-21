@@ -119,8 +119,8 @@
     	<if test="name != null" >
         and  name = #{name,jdbcType=VARCHAR}
        </if>  
-        <if test="keyword != null" >
-        and keyword = #{keyword,jdbcType=VARCHAR}
+        <if test="id != null" >
+        and id != #{id,jdbcType=VARCHAR}
     </if>  	  
   </select>
 </mapper>

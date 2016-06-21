@@ -62,7 +62,26 @@ function pagesearch(){
 		AssociateTypeForm.submit();
 	}  
 }
- 
+function deleteByAssociateTypeId(id){
+	$.messager.confirm("删除确认","确认删除该机构类型?",function(r){  
+		    if (r){  
+			$.ajax({
+				url : "<%=basePath%>associate/jsonDeleteAssociateType.do?associateTypeId="+id,
+				type : "post",  
+				dataType:"json",
+				success : function(data) { 
+		  			if(data.code==0){ 
+		  				$.messager.alert('删除信息',data.message,'info',function(){ 
+							history.go(0);
+		       			});
+		  			}else{
+						$.messager.alert('错误信息',data.message,'error');
+		  			} 
+				}
+			});
+	    }  
+	});
+}
 </script>
   </head>
   
@@ -73,12 +92,12 @@ function pagesearch(){
             	<div class="pannel-header">社会机构类型管理</div>
                 <div class="Panel-content">
 					<form id="AssociateTypeForm" name="AssociateTypeForm"
-						action="associate/associateTypeList.do" method="get"> 
+						action="<%=basePath%>associate/associateTypeList.do" method="get"> 
 							<div style="width:100%;text-align:right;">
 								<input type="text" name="searchName" validType="SpecialWord" class="easyui-validatebox" placeholder="搜索" value="${AssociateType.searchName}" /> 
 								<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
 								<input type="hidden" id="pageNumber" name="pageNo" value="${AssociateType.pageNo}" />
-								<input type="button" class="btn-add"  style="margin-left:25px;" onclick="window.location.href='associate/associateTypeInfo.do?associateTypeId=0'" value="新建社会机构类型">
+								<input type="button" class="btn-add"  style="margin-left:25px;" onclick="window.location.href='<%=basePath%>associate/associateTypeInfo.do?associateTypeId=0'" value="新建社会机构类型">
 							</div> 
 						</form> 
                 </div>
@@ -90,17 +109,18 @@ function pagesearch(){
 							<th width="4%" style="display:none">&nbsp;</th>							
 							<th>关键字</th>
 							<th>类型</th>							
-							<th>描述</th> 
+							<th>描述</th>
+							<th>操作</th> 
 						</tr>
                     </thead>
                     <tbody>
                        <c:forEach var="item" items="${AssociateTypelist}">
 						<tr>
 							<td align="center" style="display:none">${item.id}</td>
-							<td align="center" ondblclick="window.location.href='associate/associateTypeInfo.do?associateTypeId=${item.id}'">${item.keyword}</td>
-							<td align="center" ondblclick="window.location.href='associate/associateTypeInfo.do?associateTypeId=${item.id}'">${item.name}</td>
-							<td align="center" ondblclick="window.location.href='associate/associateTypeInfo.do?associateTypeId=${item.id}'">${item.description}</td>
-							
+							<td align="center" ondblclick="window.location.href='<%=basePath%>associate/associateTypeInfo.do?associateTypeId=${item.id}'">${item.keyword}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>associate/associateTypeInfo.do?associateTypeId=${item.id}'">${item.name}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>associate/associateTypeInfo.do?associateTypeId=${item.id}'">${item.description}</td>
+							<td><a href="javascript:void(0);" onclick="deleteByAssociateTypeId(${item.id});">删除</a></td>
 						</tr>
 					</c:forEach>
                     </tbody>

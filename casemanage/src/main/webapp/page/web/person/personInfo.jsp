@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										if (data.code == 0) {
 											$.messager.alert('保存信息',data.message,'info',
 															function() {
-																window.location.href = "person/personList.do";
+																window.location.href = "<%=basePath%>person/personList.do";
 															});
 										} else {
 											$.messager.alert('错误信息',
@@ -106,7 +106,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	</div>
        
     <div class="containner-fluid text-center"  >
-		<form id="personForm" name="personForm" action="person/jsonSaveOrUpdatePerson.do" method="post"  enctype="multipart/form-data"  style="text-align:left;"> 
+		<form id="personForm" name="personForm" action="<%=basePath%>person/jsonSaveOrUpdatePerson.do" method="post"  enctype="multipart/form-data"  style="text-align:left;"> 
 		<table style="width:100%;">
 			<tr style="height:40px"> 
 				<td rowspan="2" style="width:50%">
@@ -190,10 +190,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			        <div style="margin-top:15px;">
 			        	<span class="from-style">上传头像:</span>
 			        	<c:if test="${person.id >0}">
-			        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" value="${person.photourl}" />
+			        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" value="${person.photourl}"/>
 			        	</c:if>
 			        	<c:if test="${person.id == 0}">
-			        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" />
+			        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename"/>
 			        	</c:if> 
 			        	<input type="file" name="file" id="jfile" onchange="showName(this)" />
 			    	</div>
