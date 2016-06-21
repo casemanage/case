@@ -519,6 +519,7 @@ public class AppController extends BaseController {
 				associate.setId(0);
 			} 
 			associateService.saveOrUpdateAssociate(associate);
+			js.setCode(200);
 			js.setMessage(Constants.SAVE_OK_MESSAGE);
 			
 			List<String> urlList = new ArrayList<String>();
@@ -746,10 +747,10 @@ public class AppController extends BaseController {
 					//}
 					//else {
 		
-		//							targetFile = new File(path+"/userphoto",fileName);  
-		//							if(targetFile.exists()){
-		//								targetFile.delete();
-		//							}
+					//							targetFile = new File(path+"/userphoto",fileName);  
+					//							if(targetFile.exists()){
+					//								targetFile.delete();
+			//							}
 						//js.setMessage("上传头像，不符合公安部要求，请重新选择图片上传!"); 
 					// }
 				 } 
