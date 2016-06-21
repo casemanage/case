@@ -53,7 +53,26 @@ function pagesearch(){
 		PersonForm.submit();
 	}  
 }
- 
+function deleteByPersonId(id){
+	$.messager.confirm("删除确认","确认删除该重点人员?",function(r){  
+		    if (r){  
+			$.ajax({
+				url : "person/jsonDeletePerson.do?personId="+id,
+				type : "post",  
+				dataType:"json",
+				success : function(data) { 
+		  			if(data.code==0){ 
+		  				$.messager.alert('删除信息',data.message,'info',function(){ 
+							history.go(0);
+		       			});
+		  			}else{
+						$.messager.alert('错误信息',data.message,'error');
+		  			} 
+				}
+			});
+	    }  
+	});
+}
 </script>
   </head>
   
@@ -98,6 +117,7 @@ function pagesearch(){
 					<th>警官电话</th> -->
 					<!-- <th>采集人</th> -->
 					<th>采集时间</th>
+					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -130,6 +150,7 @@ function pagesearch(){
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.policephone}</td> --%>
 						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.creatorname}</td> --%>
 						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.createtimes}</td>
+						<td><a href="javascript:void(0);" onclick="deleteByPersonId(${item.id});">删除</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

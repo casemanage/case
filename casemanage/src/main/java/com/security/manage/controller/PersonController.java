@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.security.manage.common.JsonResult; 
+import com.security.manage.model.Associate;
 import com.security.manage.model.Person;
 import com.security.manage.model.PersonCar;
 import com.security.manage.model.PersonLevel; 
@@ -543,6 +544,26 @@ public class PersonController extends BaseController{
 		} 
 		return serialNo;
 	} 
+	@ResponseBody
+	@RequestMapping(value = "/jsonDeletePerson.do", method = RequestMethod.POST)
+	public JsonResult<Person> jsonDeletePerson(
+			@RequestParam(value="personId", required = false)Integer personId,
+			HttpServletRequest request, HttpServletResponse response) {
+		JsonResult<Person> js = new JsonResult<Person>();
+		js.setCode(1);
+		js.setMessage("删除失败!");
+		try {
+			if(personId != null){
+				personService.deletePersonById(personId);
+			}
+			js.setCode(0);
+			js.setMessage("删除成功!");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return js;
+	}
 }
 
 

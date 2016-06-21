@@ -105,6 +105,26 @@ function showdialog(itemId){
          } else obj.value="";//for FF,Chrome,Safari
      } 
 }
+function deleteByAssociateId(id){
+			$.messager.confirm("删除确认","确认删除该机构?",function(r){  
+		    if (r){  
+			$.ajax({
+				url : "associate/jsonDeleteAssociate.do?associateId="+id,
+				type : "post",  
+				dataType:"json",
+				success : function(data) { 
+		  			if(data.code==0){ 
+		  				$.messager.alert('删除信息',data.message,'info',function(){ 
+							history.go(0);
+		       			});
+		  			}else{
+						$.messager.alert('错误信息',data.message,'error');
+		  			} 
+				}
+			});
+	    }  
+	});
+}
 </script>
   </head>
   
@@ -138,7 +158,7 @@ function showdialog(itemId){
 					<th>采集人</th> -->
 					<th>采集时间</th>
 					<th>描述</th>
-					<!-- <th>操作</th> -->
+					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -161,6 +181,7 @@ function showdialog(itemId){
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.createtimes}</td>
 						<td	ondblclick="window.location.href='associate/associateInfo.do?associateId=${item.id}'">${item.description}</td>
 						<%-- <td><a href="javascript:void(0);" onclick="showdialog(${item.id});">上传平面图</a></td> --%>
+						<td><a href="javascript:void(0);" onclick="deleteByAssociateId(${item.id});">删除</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
