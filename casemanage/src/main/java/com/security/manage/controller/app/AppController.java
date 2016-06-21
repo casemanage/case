@@ -57,7 +57,7 @@ public class AppController extends BaseController {
 	 * App获取数据接口---登录
 	 */
 	@ResponseBody
-	@RequestMapping(value="/login.do", method=RequestMethod.POST)
+	@RequestMapping(value="/login.do", method=RequestMethod.GET)
 	public AppReturnResult<PoliceMan> login(
 			@RequestParam(value="account", required = true)String account,
 			@RequestParam(value="password", required = true)String password,
