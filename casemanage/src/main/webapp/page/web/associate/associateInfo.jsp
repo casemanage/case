@@ -199,14 +199,14 @@ function showName(obj){
 				    		</div>
 					        <div style="margin-top:15px;">
 					        	<span class="from-style">坐标经度:</span>
-					    		<input type="text"   style="width:354px;height:32px;" class="easyui-validatebox" placeholder="请输入经度" value="${Associate.latitude}" name="latitude"/>
+					    		<input type="text" style="width:354px;height:32px;" class="easyui-numberbox" precision="1" min="1.0" placeholder="请输入经度" value="${Associate.latitude}" name="latitude"/>
 					    	</div>
 					        <div style="margin-top:15px;">
 					        	<span class="from-style">坐标纬度:</span>
-					    		<input type="text"  style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入纬度" value="${Associate.longitude}" name="longitude"/>
+					    		<input type="text"  style="width:354px;height:32px;"  class="easyui-numberbox" precision="1" min="1.0" placeholder="请输入纬度" value="${Associate.longitude}" name="longitude"/>
 					    	</div>
 					    	<div style="margin-top:15px;width:100%;">
-					    		<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;平面图:</span> 
+					    		<span class="from-style">平&nbsp;&nbsp;面&nbsp;&nbsp;图:</span> 
 					        	<c:if test="${Associate.id >0}">
 					        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" value="${AssociateUrl}" />
 					        	</c:if>

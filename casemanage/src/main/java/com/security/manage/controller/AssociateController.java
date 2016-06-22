@@ -280,11 +280,14 @@ public class AssociateController extends BaseController{
 				associate.setId(0);
 			}
 			if(associate.getTelephone() != null && !"".equals(associate.getTelephone())){
-				String telephone = associate.getTelephone();
+				String telephone = associate.getTelephone().trim();
+				System.out.println(telephone);
 				Boolean  b = StringUtil.isMobileNumber(telephone);
 				if(!b){
 					js.setMessage("手机格式不正确!");
 					return js;
+				}else{
+					associate.setTelephone(telephone);
 				}
 			}
 			if(associate.getName() != null && !"".equals(associate.getName())){

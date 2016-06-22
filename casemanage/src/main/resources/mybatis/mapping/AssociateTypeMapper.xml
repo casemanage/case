@@ -107,7 +107,6 @@
 	      	NAME like '%${searchName}%'
 	      	OR
 	      	keyword like '%${searchName}%'
-	      	 
 	      )
 	  </if>
   </select>

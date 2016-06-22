@@ -135,7 +135,7 @@ function deleteByAssociateId(id){
 		<div class="Panel-content">
 			<form id="AssociateForm" name="AssociateForm" action="<%=basePath%>associate/associateList.do" method="get">
 				<div style="width:100%;text-align:right;">
-					<input type="text" name="searchName" validType="SpecialWord" class="easyui-validatebox" placeholder="搜索" value="${associate.searchName}" /> 
+					<input type="text" name="searchName" validType="SpecialWord" class="easyui-validatebox" placeholder="按名称或地址搜索" value="${associate.searchName}" /> 
 					<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
 					<input type="hidden" id="pageNumber" name="pageNo" value="${associate.pageNo}" /> 
 					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=0'" value="新建社会机构"> 

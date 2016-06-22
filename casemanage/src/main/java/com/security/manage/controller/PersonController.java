@@ -28,6 +28,7 @@ import com.security.manage.model.PersonType;
 import com.security.manage.model.User;
 import com.security.manage.service.PersonService;
 import com.security.manage.util.Constants;
+import com.security.manage.util.DateUtil;
 import com.security.manage.util.StringUtil;
  
 @Scope("prototype")
@@ -433,11 +434,13 @@ public class PersonController extends BaseController{
 				return js;
 			}
 			if(person.getTelephone() != null && !"".equals(person.getTelephone())){
-				String telephone = person.getTelephone();
+				String telephone = person.getTelephone().trim();
 				Boolean  b = StringUtil.isMobileNumber(telephone);
 				if(!b){
 					js.setMessage("手机格式不正确!");
 					return js;
+				}else{
+					person.setTelephone(telephone);
 				}
 			}
 			if (person.getId() == null || person.getId() == 0) { 
@@ -461,7 +464,15 @@ public class PersonController extends BaseController{
 					js.setMessage("身份证号已存在!");
 					return js;
 				}
-			}  
+			} 
+			if(person.getBirth() != null && !"".equals(person.getBirth())){
+				 String birth = person.getBirth();
+				 String result = DateUtil.validate(birth);
+				 if(!"".equals(result)){
+					 js.setMessage("身份证号有误，请确认!");
+					 return js;
+				 }
+			 }
 			 if(file.getSize()>0){
 				String path = request.getSession().getServletContext().getRealPath("uploadsource");
 				String tempName = file.getOriginalFilename();    //这里不用原文件名称 

@@ -94,7 +94,7 @@ function deleteByPersonCarId(id){
 					<form id="PersonCarForm" name="PersonCarForm"
 						action="person/personCarList.do" method="get"> 
 							 <div style="width:100%;text-align:right;">
-								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="搜索" value="${PersonCar.searchName}" /> 
+								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="按牌号或姓名搜索" value="${PersonCar.searchName}" /> 
 								<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
 								<input type="hidden" id="pageNumber" name="pageNo" value="${PersonCar.pageNo}" />
 								<input type="button" class="btn-add" style="margin-left:25px" onclick="window.location.href='<%=basePath%>person/personCarInfo.do?PersonCarId=0'" value="新建重点人员车辆" />

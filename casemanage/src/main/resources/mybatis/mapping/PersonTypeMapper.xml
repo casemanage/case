@@ -97,8 +97,6 @@
 		      	a.NAME like '%${searchName}%'
 		      	OR 
 		      	a.KEYWORD like '%${searchName}%'
-		      	OR 
-		      	a.DESCRIPTION like '%${searchName}%'
 		      )
 		 </if>
 		<if test="pageStart != null and pageSize != null and pageStart>-1 and pageSize>-1">
