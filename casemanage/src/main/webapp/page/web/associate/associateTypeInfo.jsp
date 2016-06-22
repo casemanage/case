@@ -45,7 +45,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  	 });  
 	}
 }  
-
+function getKeyword(){
+	var keyword = $("#key").val();
+	$("#keyword").val(keyword);
+}
 	</script> 
   </head>
   
@@ -61,19 +64,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<form id="associateTypeInfoForm" name="associateTypeInfoForm" action="<%=basePath%>associate/jsonSaveOrUpdateAssociateType.do" method="post" style="text-align:left;">
 			<div style="margin-top:15px;width:100%;"> 
 		        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
-		         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveAssociateType(this);"> 
+		         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveAssociateType(this);">
+		         <input id="keyword" name="keyword" value="${AssociateType.keyword}" type="hidden" /> 
 			</div> 
-		    	<div style="margin-top:15px;width:100%;">
-	        	<span class="from-style">&nbsp;&nbsp;关键字:</span>
+			<c:if test="${AssociateType.id > 0 }">
+		    <div style="margin-top:15px;width:100%;">
+	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;关键字:</span>
 	    		<input name="id" value="${AssociateType.id}" type="hidden" />
-	    		<input type="text" name="keyword" required="true"  validType="Length[1,20]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入关键字" value="${AssociateType.keyword}" />
+	    		<input  type="text" disabled="disabled" required="true"  validType="Length[1,20]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入关键字" value="${AssociateType.keyword}" />
 	    	</div>
+	    	</c:if>
+	    	<c:if test="${AssociateType.id == 0 }">
+		    <div style="margin-top:15px;width:100%;">
+	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;关键字:</span>
+	    		<input name="id" value="${AssociateType.id}" type="hidden" />
+	    		<input id="key" type="text" onchange="getKeyword();" required="true"  validType="Length[1,20]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入关键字"/>
+	    	</div>
+	    	</c:if>
 		    	<div style="margin-top:15px;width:100%;">
 	        	<span class="from-style">类型名称:</span>
 	    		<input type="text" name="name" required="true"  validType="Length[1,20]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入类型" value="${AssociateType.name}" />
 	    	</div>
 		    	<div style="margin-top:15px;width:100%;">
-	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述:</span>
+	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述:</span>
 	    		<input type="text" name="description"  validType="Length[1,100]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入描述信息" value="${AssociateType.description}" />
 	    	</div>   
 		</form>

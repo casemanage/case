@@ -109,7 +109,8 @@ function deleteByPersonTypeId(id){
 							<th width="4%" style="display:none">&nbsp;</th>
 							<th>关键字</th>							
 							<th>类型</th>							
-							<th>描述</th> 
+							<th>描述</th>
+							<th>详情</th> 
 							<th>操作</th>
 						</tr>
                     </thead>
@@ -120,6 +121,7 @@ function deleteByPersonTypeId(id){
 							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">${item.keyword}</td>
 							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">${item.name}</td>
 							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">${item.description}</td>
+							<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">详情</a></td>
 							<td><a href="javascript:void(0);" onclick="deleteByPersonTypeId(${item.id});">删除</a></td>
 						</tr>
 					</c:forEach>

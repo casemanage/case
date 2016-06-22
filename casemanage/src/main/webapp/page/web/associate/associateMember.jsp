@@ -45,6 +45,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		function savePerson(obj){
 			var associateId = $("#associateId").val();
+			var idNum = $("#IdCard").val();
+			if(idNum != null && idNum != ""){
+				if(idNum.length != 18){
+					if(idNum.length != 15){
+						$.messager.alert("操作提示","身份证格式不正确","error");
+						return;
+					}
+				}
+			}
 			if ($('#personForm').form('validate')) {
 				$(obj).attr("onclick", "");
 				$('#personForm').form('submit',{
@@ -104,7 +113,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    	</div>
 				    	<div style="margin-top:15px;">
 				        	<span class="from-style">身份证号:</span>
-				    		<input type="text" required="true"  onblur="validatationBirth(this);"  validType="idcard" class="easyui-validatebox" style="width:354px;height:32px;"  placeholder="请输入身份证号" value="${person.idcard}" name="idcard"/>
+				    		<input id="IdCard" type="text" onchange="validatationBirth(this);"   class="easyui-validatebox" style="width:354px;height:32px;"  placeholder="请输入身份证号" value="${person.idcard}" name="idcard"/>
 				    	</div> 
 				    	<div style="margin-top:15px;">
 				        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别:</span>
@@ -119,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    	</div> 
 				    	<div style="margin-top:15px;">
 				        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址:</span>
-				    		<input type="text"  required="true"  class="easyui-validatebox" placeholder="请输入地址"  style="width:354px;height:32px;" value="${person.address}" name="address"/>
+				    		<input type="text"  placeholder="请输入地址"  style="width:354px;height:32px;" value="${person.address}" name="address"/>
 				    	</div> 
 				    	<div style="margin-top:15px;">
 				        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述:</span>

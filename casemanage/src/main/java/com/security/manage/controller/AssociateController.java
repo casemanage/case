@@ -225,10 +225,10 @@ public class AssociateController extends BaseController{
 			{
 				associateType.setId(0);	
 			}
-			if (associateType.getName() != null) {
+			if (associateType.getKeyword() != null) {
 				AssociateType p = new AssociateType();
-				String name = associateType.getName();
-				p.setName(name);
+				String key = associateType.getKeyword();
+				p.setKeyword(key);
 				if (associateType.getId() > 0) {
 					p.setId(associateType.getId());
 				}				
@@ -241,10 +241,7 @@ public class AssociateController extends BaseController{
 				{
 					js.setMessage("社会组织类型已存在!");;
 				}									
-			} else {
-				js.setMessage("社会组织类型名称不能为空!");
-			}
-
+			} 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -259,12 +256,17 @@ public class AssociateController extends BaseController{
 		js.setCode(1);
 		js.setMessage("保存失败!");
 		try {
+			if(associate.getTypeid() == null){
+				js.setMessage("机构类型不能为空!");
+				return js;
+			}
 			if(associate.getId() == null ||associate.getId() == 0){
 				User u = this.getLoginUser();
 				associate.setCreator(u.getId());
 				associate.setCreatorname(u.getName());
 				associate.setOrganname(u.getOrganName()); 
 				associate.setCreatetime(new Date());
+				associate.setGuid(u.getGuid());
 				/*String serialNo = getAssoSerialNo(associate.getTypeid()); 
 				associate.setSerialno(serialNo); 
 				associate.setId(0);*/
@@ -276,10 +278,6 @@ public class AssociateController extends BaseController{
 				associate.setSerialno(serialNo); 
 				associate.setId(0);
 			}
-			if(associate.getTypeid() == null){
-				js.setMessage("机构类型不能为空!");
-				return js;
-			}
 			if(associate.getName() != null && !"".equals(associate.getName())){
 				Associate a = new Associate();
 				a.setName(associate.getName());
@@ -289,13 +287,11 @@ public class AssociateController extends BaseController{
 				List<Associate> la = new ArrayList<Associate>();
 				la = associateService.getExistAssociate(a);
 				if(la.size() == 0){
-
 					List<String> urlList = new ArrayList<String>();
 					String path = request.getSession().getServletContext().getRealPath("uploadsource");
 					File targetFile = new File(path);
 					String filePath = "";
 					String fileName = "";
-
 					if(file1.getSize()>0){ 
 						String tempName = file1.getOriginalFilename();  
 						String fileType = tempName.split("\\.")[1];
@@ -316,7 +312,6 @@ public class AssociateController extends BaseController{
 						file1.transferTo(targetFile);
 						urlList.add(filePath);
 					}
-					
 					associateService.saveOrUpdateAssociate(associate);
 					if(urlList.size()>0){
 						associateService.saveOrUpdateAssociatePlan(urlList,associate.getId());
@@ -329,8 +324,6 @@ public class AssociateController extends BaseController{
 				}else{
 					js.setMessage("机构名已存在!");
 				}
-			}else{
-				js.setMessage("机构名不能为空!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -399,10 +392,15 @@ public class AssociateController extends BaseController{
 			User u = this.getLoginUser();
 			associatePerson.setCreator(u.getId());
 			associatePerson.setCreatorname(u.getName());
-			associatePerson.setOrganname(u.getOrganName());   
+			associatePerson.setOrganname(u.getOrganName()); 
+			associatePerson.setGuid(u.getGuid());
+			associatePerson.setId(0);
 			if(associatePerson.getName() != null){
 				AssociatePerson a = new AssociatePerson();
 				a.setName(associatePerson.getName());
+				if(associatePerson.getAssociateid() != null){
+					a.setAssociateid(associatePerson.getAssociateid());
+				}
 				List<Associate> la = new ArrayList<Associate>();
 				la = associateService.getExistAssociate(a);
 				if(la.size() == 0){
@@ -437,9 +435,6 @@ public class AssociateController extends BaseController{
 						//if(filePath 上传头像验证成功){
 							file.transferTo(targetFile);	
 							associatePerson.setPhotourl(filePath); 
-							associateService.updateAssociatePerson(associatePerson);
-							js.setCode(0);
-							js.setMessage("保存成功!");
 						//}
 						//else {
 
@@ -449,10 +444,10 @@ public class AssociateController extends BaseController{
 //							}
 							//js.setMessage("上传头像，不符合公安部要求，请重新选择图片上传!"); 
 						// }
-					 }else{
-						js.setMessage("请选择头像文件进行上传！");
-						return js;
 					 }
+					associateService.updateAssociatePerson(associatePerson);
+					js.setCode(0);
+					js.setMessage("保存成功!");
 				}else{
 					js.setMessage("人员名已存在!");
 				}

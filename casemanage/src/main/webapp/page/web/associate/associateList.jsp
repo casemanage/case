@@ -177,11 +177,11 @@ function deleteByAssociateId(id){
 						</c:if>
 						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.address}</td>
 						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.telephone}</td>
-<%-- 						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.organname}</td>
+						<%--<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.organname}</td>
 						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.creatorname}</td> --%>
 						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.createtimes}</td>
 						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.description}</td>
-						<td><a href="javascript:void(0);" ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">详情</a></td>
+						<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">详情</a></td>
 						<%-- <td><a href="javascript:void(0);" onclick="showdialog(${item.id});">上传平面图</a></td> --%>
 						<td><a href="javascript:void(0);" onclick="<%=basePath%>deleteByAssociateId(${item.id});">删除</a></td>
 					</tr>

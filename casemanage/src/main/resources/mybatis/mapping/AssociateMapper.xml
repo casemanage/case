@@ -16,6 +16,7 @@
     <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" /> 
     <result column="createTime" property="createtime" jdbcType="DATE"/>
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="GUID" property="guid" jdbcType="VARCHAR"/>
   </resultMap>  
   <resultMap id="StatisticResultMap" type="com.security.manage.model.TypeStatistic" >
     <id column="totalCount" property="totalCount" jdbcType="INTEGER" />
@@ -26,7 +27,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     a.ID, a.NAME, a.TYPEID, a.SERIALNO, a.LATITUDE, a.LONGITUDE, a.ADDRESS, a.CREATOR, a.CREATORNAME, a.ORGANNAME, 
-    a.DESCRIPTION,a.createTime,a.telephone
+    a.DESCRIPTION,a.createTime,a.telephone,a.GUID
   </sql>
   <sql id="Blob_Column_List" > 
     a.TIMESPAN  
@@ -50,13 +51,13 @@
     insert into MC_ASSOCIATE (NAME, TYPEID, 
       SERIALNO, LATITUDE, LONGITUDE, 
       ADDRESS, CREATOR, CREATORNAME, 
-      ORGANNAME, DESCRIPTION,createTime,telephone
+      ORGANNAME, DESCRIPTION,createTime,telephone,GUID
       )
     values (#{name,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, 
       #{serialno,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{creator,jdbcType=INTEGER}, #{creatorname,jdbcType=VARCHAR}, 
       #{organname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
-      #{createtime,jdbcType=DATE}, #{telephone,jdbcType=VARCHAR}
+      #{createtime,jdbcType=DATE}, #{telephone,jdbcType=VARCHAR},#{guid,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.security.manage.model.Associate" >
@@ -177,8 +178,11 @@
       <if test="createtime != null" >
         createTime = #{createtime,jdbcType=DATE},
       </if>
-      <if test="description != null" >
+      <if test="telephone != null" >
         telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="guid != null" >
+        GUID = #{guid,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}

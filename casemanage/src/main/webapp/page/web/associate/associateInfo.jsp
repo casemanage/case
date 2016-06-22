@@ -79,6 +79,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			});
 		}
 		function saveAssociste(obj){
+		
+			var typeId = $("#typeid").val();
+			if(typeId.length == 0 || typeId ==""){
+				$.messager.alert("操作提示","请选择机构类型","error");
+				return;
+			}
+		
 			if ($('#associsteForm').form('validate')) {
 				$(obj).attr("onclick", "");
 				$('#associsteForm').form('submit',{
@@ -178,7 +185,7 @@ function showName(obj){
 					        <div style="margin-top:15px;">
 					        	<span class="from-style">机构类型:</span>
 								<input id="typeid" type="hidden"  name="typeid"   value="${Associate.typeid}" />
-								<select id="cmb_type" class="easyui-combobox"  data-options="editable:false,required:true,onSelect:function(record){$('#typeid').val(record.value);}"  style="width:354px;height:35px;">  
+								<select id="cmb_type" class="easyui-combobox"  data-options="required:true,editable:false,onSelect:function(record){$('#typeid').val(record.value);}"  style="width:354px;height:35px;">  
 									 <option value="">=请选择机构类型=</option>
 									 <c:forEach var="item" items="${assoType }">
 									 	<option value="${item.id}">${item.name }</option> 
@@ -191,7 +198,7 @@ function showName(obj){
 					    	</div>
 					    	<div style="margin-top:15px;">
 					        	<span class="from-style">联系方式:</span>
-					    		<input type="text" required="true"  validType="phone"  class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入联系方式" value="${Associate.telephone}" name="telephone"/>
+					    		<input type="text"  class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入联系方式" value="${Associate.telephone}" name="telephone"/>
 				    		</div>
 					        <div style="margin-top:15px;">
 					        	<span class="from-style">坐标经度:</span>

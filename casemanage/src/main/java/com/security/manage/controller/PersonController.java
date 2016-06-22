@@ -245,10 +245,10 @@ public class PersonController extends BaseController{
 			{
 				personType.setId(0);	
 			}
-			if (personType.getName() != null) {
+			if (personType.getKeyword() != null) {
 				PersonType p = new PersonType();
-				String name = personType.getName();
-				p.setName(name);
+				String key = personType.getKeyword();
+				p.setKeyword(key);
 				if (personType.getId() > 0) {
 					p.setId(personType.getId());
 				}				
@@ -259,12 +259,9 @@ public class PersonController extends BaseController{
 					js.setMessage("保存成功!");
 				}else
 				{
-					js.setMessage("重点人员类型已存在!");
+					js.setMessage("重点人员关键字已存在!");
 				}									
-			} else {
-				js.setMessage("重点人员类型名称不能为空!");
-			}
-
+			} 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

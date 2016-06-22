@@ -44,6 +44,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  		}
 		  	 });  
 	}
+}
+function getKeyword(){
+	var keyword = $("#key").val();
+	$("#keyword").val(keyword);
 }     
 	</script> 
   </head>
@@ -60,12 +64,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div style="margin-top:15px;width:100%;"> 
 		        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
 		         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePersonType(this);"> 
-			</div> 
+		         <input id="keyword" name="keyword" value="${PersonType.keyword}" type="hidden" />
+			</div>
+			<c:if test="${PersonType.id > 0 }">
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;关键字:</span>
 	    		<input name="id" value="${PersonType.id}" type="hidden" />
-	    		<input type="text" name="keyword"  required="true" validType="Length[1,10]" style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入关键字" value="${PersonType.keyword}" />
+	    		<input type="text" disabled="disabled" required="true" validType="Length[1,10]" style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入关键字" value="${PersonType.keyword}" />
 	    	</div>
+	    	</c:if> 
+	    	<c:if test="${PersonType.id == 0 }">
+	    	<div style="margin-top:15px;">
+	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;关键字:</span>
+	    		<input name="id" value="${PersonType.id}" type="hidden" />
+	    		<input id="key" onchange="getKeyword();" type="text"  required="true" validType="Length[1,10]" style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入关键字" value="${PersonType.keyword}" />
+	    	</div>
+	    	</c:if> 
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">类型名称:</span>
 	    		<input type="text" name="name"  required="true" validType="Length[1,50]" style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入类型" value="${PersonType.name}" />

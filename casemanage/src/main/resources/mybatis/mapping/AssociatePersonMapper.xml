@@ -16,13 +16,14 @@
     <result column="CHARACTER" property="character" jdbcType="VARCHAR" />
     <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
     <result column="ISLEADER" property="isleader" jdbcType="INTEGER" />
+    <result column="GUID" property="guid" jdbcType="VARCHAR"/>
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.security.manage.model.AssociatePerson" extends="BaseResultMap" >
     <result column="TIMESPAN" property="timespan" jdbcType="BINARY" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, NAME, SEX, BIRTH, PHOTOURL, IDCARD, ADDRESS, ASSOCIATEID, CREATOR, CREATORNAME, 
-    ORGANNAME, CHARACTER, DESCRIPTION, ISLEADER
+    ORGANNAME, CHARACTER, DESCRIPTION, ISLEADER,GUID
   </sql>
   <sql id="Blob_Column_List" >
     TIMESPAN
@@ -44,13 +45,13 @@
       BIRTH, PHOTOURL, IDCARD, 
       ADDRESS, ASSOCIATEID, CREATOR, 
       CREATORNAME, ORGANNAME, CHARACTER, 
-      DESCRIPTION, ISLEADER
+      DESCRIPTION, ISLEADER,GUID
       )
     values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
-      #{birth,jdbcType=NVARCHAR}, #{photourl,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, 
+      #{birth,jdbcType=VARCHAR}, #{photourl,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{associateid,jdbcType=INTEGER}, #{creator,jdbcType=INTEGER}, 
       #{creatorname,jdbcType=VARCHAR}, #{organname,jdbcType=VARCHAR}, #{character,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{isleader,jdbcType=INTEGER}
+      #{description,jdbcType=VARCHAR}, #{isleader,jdbcType=INTEGER},#{guid,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.security.manage.model.AssociatePerson" >
@@ -101,52 +102,58 @@
       <if test="timespan != null" >
         TIMESPAN,
       </if>
+      <if test="guid != null">
+      	GUID,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+      <if test="id != null and id !=''" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
+      <if test="name != null and name !=''" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null" >
+      <if test="sex != null and sex !=''" >
         #{sex,jdbcType=INTEGER},
       </if>
-      <if test="birth != null" >
+      <if test="birth != null and birth !=''" >
         #{birth,jdbcType=NVARCHAR},
       </if>
-      <if test="photourl != null" >
+      <if test="photourl != null and photourl !=''" >
         #{photourl,jdbcType=VARCHAR},
       </if>
-      <if test="idcard != null" >
+      <if test="idcard != null and idcard !=''" >
         #{idcard,jdbcType=VARCHAR},
       </if>
-      <if test="address != null" >
+      <if test="address != null and address !=''" >
         #{address,jdbcType=VARCHAR},
       </if>
-      <if test="associateid != null" >
+      <if test="associateid != null and associateid !=''" >
         #{associateid,jdbcType=INTEGER},
       </if>
-      <if test="creator != null" >
+      <if test="creator != null and creator !=''" >
         #{creator,jdbcType=INTEGER},
       </if>
-      <if test="creatorname != null" >
+      <if test="creatorname != null and creatorname !=''" >
         #{creatorname,jdbcType=VARCHAR},
       </if>
-      <if test="organname != null" >
+      <if test="organname != null and organname !=''" >
         #{organname,jdbcType=VARCHAR},
       </if>
-      <if test="character != null" >
+      <if test="character != null and character !=''" >
         #{character,jdbcType=VARCHAR},
       </if>
-      <if test="description != null" >
+      <if test="description != null and description !=''" >
         #{description,jdbcType=VARCHAR},
       </if>
-      <if test="isleader != null" >
+      <if test="isleader != null and isleader !=''" >
         #{isleader,jdbcType=INTEGER},
       </if>
-      <if test="timespan != null" >
+      <if test="timespan != null and timespan !=''" >
         #{timespan,jdbcType=BINARY},
+      </if>
+      <if test="guid != null and guid !=''" >
+        #{guid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -194,6 +201,9 @@
       </if>
       <if test="timespan != null" >
         TIMESPAN = #{timespan,jdbcType=BINARY},
+      </if>
+      <if test="guid != null" >
+        GUID = #{guid,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
@@ -259,7 +269,10 @@
   	from MC_ASSOCIATE_PERSON
   	where 1=1
   	<if test="name != null">
-  		and name = #{name,jdbcType=VARCHAR}
+  		and <![CDATA[NAME=#{name}]]>
+  	</if>
+  	<if test="associateid != null">
+  		and ASSOCIATEID = #{associateid,jdbcType=INTEGER}
   	</if>
   </select>
   <update id="updateById" parameterType="java.lang.Integer">

@@ -126,8 +126,8 @@
   	  <include refid="Base_Column_List" />  
   	  from MC_PERSON_TYPE t
   	  where 1=1
-    	<if test="name != null" >
-        and  t.name = #{name,jdbcType=VARCHAR}
+    	<if test="keyword != null" >
+        and  t.keyword = #{keyword,jdbcType=VARCHAR}
        </if>  
        <if test="id != null" >
         and  t.id != #{id,jdbcType=VARCHAR}

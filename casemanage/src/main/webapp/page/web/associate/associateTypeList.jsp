@@ -110,6 +110,7 @@ function deleteByAssociateTypeId(id){
 							<th>关键字</th>
 							<th>类型</th>							
 							<th>描述</th>
+							<th>详情</th>
 							<th>操作</th> 
 						</tr>
                     </thead>
@@ -120,6 +121,7 @@ function deleteByAssociateTypeId(id){
 							<td align="center" ondblclick="window.location.href='<%=basePath%>associate/associateTypeInfo.do?associateTypeId=${item.id}'">${item.keyword}</td>
 							<td align="center" ondblclick="window.location.href='<%=basePath%>associate/associateTypeInfo.do?associateTypeId=${item.id}'">${item.name}</td>
 							<td align="center" ondblclick="window.location.href='<%=basePath%>associate/associateTypeInfo.do?associateTypeId=${item.id}'">${item.description}</td>
+							<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>associate/associateTypeInfo.do?associateTypeId=${item.id}'">编辑</a></td>
 							<td><a href="javascript:void(0);" onclick="deleteByAssociateTypeId(${item.id});">删除</a></td>
 						</tr>
 					</c:forEach>

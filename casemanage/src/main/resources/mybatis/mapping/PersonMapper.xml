@@ -25,6 +25,7 @@
     <result column="POLICENAME" property="policename" jdbcType="VARCHAR" />
     <result column="POLICESECTOR" property="policesector" jdbcType="VARCHAR" />
     <result column="POLICEPHONE" property="policephone" jdbcType="VARCHAR" />
+    <result column="GUID" property="guid" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="StatisticResultMap" type="com.security.manage.model.TypeStatistic" >
     <id column="totalCount" property="totalCount" jdbcType="INTEGER" />
@@ -36,7 +37,7 @@
   <sql id="Base_Column_List" >
     p.ID, p.NAME, p.TYPEID, p.LEVELID, p.SEX, p.BIRTH, p.PHOTOURL, p.IDCARD, p.ADDRESS, p.SERIALNO, p.CASECOMMENT, 
     p.DESCRIPTION, p.CREATOR, p.CREATORNAME, p.ORGANNAME, p.MACADDRESS,p.createTime,p.telephone,
-    p.POLICENAME,p.POLICESECTOR,p.POLICEPHONE
+    p.POLICENAME,p.POLICESECTOR,p.POLICEPHONE,p.GUID
   </sql>
   <sql id="Blob_Column_List" >
     p.TIMESPAN
@@ -60,14 +61,14 @@
       SERIALNO, CASECOMMENT, DESCRIPTION, 
       CREATOR, CREATORNAME, ORGANNAME, 
       MACADDRESS,createTime,telephone,
-      POLICENAME,POLICESECTOR,POLICEPHONE)
+      POLICENAME,POLICESECTOR,POLICEPHONE,GUID)
     values (#{name,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, 
       #{levelid,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{birth,jdbcType=NVARCHAR}, 
       #{photourl,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{serialno,jdbcType=VARCHAR}, #{casecomment,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{creator,jdbcType=INTEGER}, #{creatorname,jdbcType=VARCHAR}, #{organname,jdbcType=VARCHAR}, 
       #{macaddress,jdbcType=VARCHAR},#{createtime,jdbcType=DATE}, #{telephone,jdbcType=VARCHAR},
-      #{policename,jdbcType=VARCHAR},#{policesector,jdbcType=VARCHAR},#{policephone,jdbcType=VARCHAR})
+      #{policename,jdbcType=VARCHAR},#{policesector,jdbcType=VARCHAR},#{policephone,jdbcType=VARCHAR},#{guid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.security.manage.model.Person" >
     insert into MC_PERSON
@@ -243,6 +244,9 @@
       </if>
       <if test="policephone != null" >
         POLICEPHONE = #{policephone,jdbcType=VARCHAR},
+      </if>
+      <if test="guid != null" >
+        GUID = #{guid,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
