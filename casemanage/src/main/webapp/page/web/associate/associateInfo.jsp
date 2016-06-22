@@ -252,7 +252,7 @@ function showName(obj){
 		    	<div style="width:100%;text-align:right">
 					<input type="button" class="btn-add"	onclick="window.location.href='<%=basePath%>associate/associateMember.do?associateId=${Associate.id}'" value="新增相关人员">
 					<input type="button" class="btn-back" style="margin-left:25px;margin-right:25px"	onclick="javascript:history.back();" value="返回">
-					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/社会机构相关人员数据采集模板.xls'" value="下载导入模板"/>
+					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/AssociatePersonDataModel.xls'" value="下载导入模板"/>
 				</div>
 			</div>
 			</div>   
