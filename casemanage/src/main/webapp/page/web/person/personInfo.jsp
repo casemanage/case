@@ -173,7 +173,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    		  style="width:354px;height:32px;"  placeholder="请输入身份证号" value="${person.idcard}" name="idcard" />
 			    	</div>  
 					<div style="margin-top:15px;width:100%;">
-				        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别:</span>
+				        	<span class="from-style">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</span>
 				        	<input id="sex" type="hidden"  name="sex" id="sex"  value="${person.sex == null ?1:person.sex}" />
 				    		<input type="radio" name="sex1" id="radio1" value="1" checked="checked" onchange='setSex();' />男
 							<input type="radio" name="sex1" id="radio2" value="0" onchange='setSex();' />女 
@@ -193,18 +193,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    		<input  type="text" style="width:354px;height:32px;" placeholder="请输入联系方式" value="${person.telephone}" name="telephone"/>
 			    	</div> 
 				    	<div style="margin-top:15px;width:100%;">
-			        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址:</span>
+			        	<span class="from-style">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:</span>
 			        	<%-- <textarea rows="4" cols="3" name="address"  style="width:354px;height:32px;"  value="${person.address}" >${person.address}</textarea> --%>
 			    		<input type="text"  class="easyui-validatebox" placeholder="请输入地址"  style="width:354px;height:32px;" value="${person.address}" name="address"/>
 			    	</div> 
 			    	<div style="margin-top:15px;">
 			    		<!-- <input class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;事由:</input> -->
-			        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;事由:</span>
+			        	<span class="from-style">事&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由:</span>
 			        	<textarea rows="7" cols="3" name="casecomment"  style="width:354px;height:50px;"  value="${person.casecomment}" >${person.casecomment}</textarea>
 			    		<%-- <input type="text" style="width:300px"  validType="SpecialWord" class="easyui-validatebox" placeholder="请输入是由" value="${person.casecomment}" name="casecomment"/> --%>
 			    	</div> 
 			        <div style="margin-top:15px;">
-			        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述:</span>
+			        	<span class="from-style">描&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述:</span>
 			        	<textarea rows="7" cols="3" name="description"  style="width:354px;height:50px;"  value="${person.description}" >${person.description}</textarea>
 			    		<%-- <input type="text"  class="easyui-validatebox" placeholder="请输入描述" value="${person.description}" name="description"/> --%>
 			    	</div>
