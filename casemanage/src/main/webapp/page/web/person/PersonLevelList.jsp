@@ -107,20 +107,22 @@ function deleteByPersonLevelId(id){
                     <thead>
 						<tr style="background-color:#D6D3D3;font-weight: bold;">
 							<th width="4%" style="display:none">&nbsp;</th>
-							<th>编号</th>							
+													
 							<th>名称</th>							
 							<th>描述</th> 
 							<th>操作</th>
+							<th>详情</th>
 						</tr>
                     </thead>
                     <tbody>
                        <c:forEach var="item" items="${PersonLevellist}">
 						<tr>
 							<td align="center" style="display:none">${item.id}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=${item.id}'">${item.id}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=${item.id}'">${item.name}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=${item.id}'">${item.description}</td>
+						
+							<td align="center">${item.name}</td>
+							<td align="center">${item.description}</td>
 							<td><a href="javascript:void(0);" onclick="deleteByPersonLevelId(${item.id});">删除</a></td>
+							<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=${item.id}'">详情</a></td>
 						</tr>
 					</c:forEach>
                     </tbody>

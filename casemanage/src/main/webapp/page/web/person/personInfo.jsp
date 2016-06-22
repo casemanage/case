@@ -44,28 +44,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		function setSex(){
 			var value = $('input:radio:checked').val();
 			$("#sex").val(value);
-		}   
-		function savePerson(obj){
+		} 
+		
+		function savePerson(obj){	
+		var idcard = $("#idcard").val();
+			if(idcard != null && idcard != ""){
+				if(idcard.length != 18){
+					if(idcard.length != 15){
+						$.messager.alert("操作提示","身份证格式不正确","error");
+						return;
+					}
+				}
+			}							   
 			if ($('#personForm').form('validate')) {
 				$(obj).attr("onclick", "");
-				$('#personForm').form('submit',{
-									success : function(data) {
-										data = $.parseJSON(data);
-										if (data.code == 0) {
-											$.messager.alert('保存信息',data.message,'info',
-															function() {
-																window.location.href = "<%=basePath%>person/personList.do";
-															});
-										} else {
-											$.messager.alert('错误信息',
-													data.message, 'error',
-													function() {
-													});
-											$(obj).attr("onclick",
-													"savePerson(this);");
-										}
+				    $('#personForm').form('submit',{
+								success : function(data) {
+									data = $.parseJSON(data);
+									if (data.code == 0) {
+										$.messager.alert('保存信息',data.message,'info',
+														function() {
+															window.location.href = "<%=basePath%>person/personList.do";
+														});
+									} else {
+										$.messager.alert('错误信息',
+												data.message, 'error',
+												function() {
+												});
+										$(obj).attr("onclick",
+												"savePerson(this);");
 									}
-								});
+								}
+							});			
 			}
 		}
 		function sDateSelect(date){
@@ -77,7 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			if(day<10){
 				day = "0"+ day;
 			}
-			$("#hid_birth").val(date.getFullYear()+"-"+month+"-"+day);
+			$("#id_birth").val(date.getFullYear()+"-"+month+"-"+day);
 		}
 		function showName(obj){
 			 if(!(/(?:jpg)$/i.test(obj.value))&&!(/(?:jpeg)$/i.test(obj.value))&&!(/(?:png)$/i.test(obj.value))) {
@@ -93,7 +103,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$("#filename").val(obj.value); 
 				$("#photourl").val(obj.value);
 			}
+		}	
+/* 	function birthCheck(){
+		var idCardNo = $("#idcard").val();		
+		var birthStr = "";
+	var sexStr = "";
+	if(idCardNo.length>0){
+		 if(idCardNo.length == 15){ 
+			
+			tmpStr = idCardNo.substring(6, 12);
+		    tmpStr = "19" + tmpStr;
+		    tmpStr = tmpStr.substring(0, 4) + "-" + tmpStr.substring(4, 6) + "-" + tmpStr.substring(6);
+		    $("#hid_birth").val(tmpStr);
+		   
+		}else if(idCardNo.length == 18){
+		
+			tmpStr = idCardNo.substring(6, 14);
+	        tmpStr = tmpStr.substring(0, 4) + "-" + tmpStr.substring(4, 6) + "-" + tmpStr.substring(6);
+	      
+		    $("#hid_birth").val(tmpStr);
+		    
 		}
+	}
+}
+
+}	  */
 	</script>
   </head>
   
@@ -138,7 +172,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    	</div>
 				    <div style="margin-top:15px;width:100%;">
 			        	<span class="from-style">身份证号:</span>
-			    		<input type="text" validType="idcard" class="easyui-validatebox"  onblur="validatationBirth(this);"  style="width:354px;height:32px;"  placeholder="请输入身份证号" value="${person.idcard}" name="idcard" />
+			    		<input id="idcard" type="text" validType="number" onchang="birthCheck()"  class="easyui-validatebox"
+			    		  style="width:354px;height:32px;"  placeholder="请输入身份证号" value="${person.idcard}" name="idcard" />
 			    	</div>  
 					<div style="margin-top:15px;width:100%;">
 				        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别:</span>
@@ -158,12 +193,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    	</div>
 			    	 <div style="margin-top:15px;">
 			        	<span class="from-style">联系方式:</span>
-			    		<input type="text" validType="phone" class="easyui-validatebox" style="width:354px;height:32px;" placeholder="请输入联系方式" value="${person.telephone}" name="telephone"/>
+			    		<input  type="text" validType="number" class="easyui-validatebox" style="width:354px;height:32px;" placeholder="请输入联系方式" value="${person.telephone}" name="telephone"/>
 			    	</div> 
 				    	<div style="margin-top:15px;width:100%;">
 			        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址:</span>
 			        	<%-- <textarea rows="4" cols="3" name="address"  style="width:354px;height:32px;"  value="${person.address}" >${person.address}</textarea> --%>
-			    		<input type="text" validType="Lenth[1,50]" class="easyui-validatebox" placeholder="请输入地址"  style="width:354px;height:32px;" value="${person.address}" name="address"/>
+			    		<input type="text"  class="easyui-validatebox" placeholder="请输入地址"  style="width:354px;height:32px;" value="${person.address}" name="address"/>
 			    	</div> 
 			    	<div style="margin-top:15px;">
 			        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;事由:</span>

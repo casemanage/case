@@ -419,7 +419,7 @@ public class PersonController extends BaseController{
 	}
 	@ResponseBody
 	@RequestMapping(value = "/jsonSaveOrUpdatePerson.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
-	public JsonResult<Person> jsonSaveOrUpdatePerson(Person person,
+	public JsonResult<Person> SaveOrUpdatePerson(Person person,
             @RequestParam(value = "file", required = true) CommonsMultipartFile file,
 			HttpServletRequest request, HttpServletResponse response){
 		JsonResult<Person> js = new JsonResult<Person>();
@@ -439,10 +439,8 @@ public class PersonController extends BaseController{
 				person.setCreator(u.getId());
 				person.setCreatorname(u.getName());
 				person.setOrganname(u.getOrganName());   
-				person.setCreatetime(new Date());
 				String serialNo = getPersonSerialNo(person.getTypeid()); 
-				person.setSerialno(serialNo); 
-				person.setCreatetime(new Date());
+				person.setSerialno(serialNo); 				
 				person.setId(0);
 			}
 			if (person.getIdcard() != null && !"".equals(person.getIdcard())) {
@@ -501,6 +499,7 @@ public class PersonController extends BaseController{
 				js.setMessage("请选择头像文件进行上传！");
 				return js;
 			 }*/
+			 person.setCreatetime(new Date());
 			personService.saveOrUpdatePerson(person);
 						 
 			js.setCode(new Integer(0));

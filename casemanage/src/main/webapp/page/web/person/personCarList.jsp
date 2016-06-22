@@ -114,19 +114,21 @@ function deleteByPersonCarId(id){
 							<th>报警级别</th>						
 							<th>描述</th> 
 							<th>操作</th>
+							<th>详情</th>
 						</tr>
                     </thead>
                     <tbody>
                        <c:forEach var="item" items="${PersonCarlist}">
 						<tr>
 							<td align="center" style="display:none">${item.id}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.number}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.name}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.pro}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.color}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.level}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.description}</td>
+							<td align="center">${item.number}</td>
+							<td align="center">${item.name}</td>
+							<td align="center">${item.pro}</td>
+							<td align="center">${item.color}</td>
+							<td align="center">${item.level}</td>
+							<td align="center">${item.description}</td>
 							<td><a href="javascript:void(0);" onclick="deleteByPersonCarId(${item.id});">删除</a></td>
+						    <td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">详情</a></td>
 						</tr>
 					</c:forEach>
                     </tbody>

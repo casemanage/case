@@ -152,6 +152,7 @@ function excelChange(file){
 					<!-- <th>采集人</th> -->
 					<th>采集时间</th>
 					<th>操作</th>
+					<th>详情</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -161,30 +162,31 @@ function excelChange(file){
 						<td	align="center">
 							<img alt="头像" src="<%=basePath %>${item.photourl}" style="width:35px;height:35px">
 						</td>
-						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.serialno}</td> --%>
-						<td	align="center" ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.name}</td>
-						<td ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.typeName}</td>
-						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.levelName}</td>
+						<%-- <td>${item.serialno}</td> --%>
+						<td	align="center">${item.name}</td>
+						<td>${item.typeName}</td>
+						<td>${item.levelName}</td>
 						<c:if test="${item.sex == 1}">
-							<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">男</td>
+							<td>男</td>
 						</c:if>
 						<c:if test="${item.sex == 0}">
-							<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">女</td>
+							<td>女</td>
 						</c:if>
-						<%-- <td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.birth}</td> --%>
-						<%-- <td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.photourl}</td> --%>
-						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.idcard}</td>
-						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.telephone}</td>
-						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.macaddress}</td>
-						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.address}</td>
-						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.casecomment}</td>
-						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.description}</td>
-						<%-- <td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.policename}</td>
-						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.policesector}</td>
-						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.policephone}</td> --%>
-						<%-- <td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.creatorname}</td> --%>
-						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.createtimes}</td>
+						<%-- <td>${item.birth}</td> --%>
+						<%-- <td>${item.photourl}</td> --%>
+						<td>${item.idcard}</td>
+						<td>${item.telephone}</td>
+						<td>${item.macaddress}</td>
+						<td>${item.address}</td>
+						<td>${item.casecomment}</td>
+						<td>${item.description}</td>
+						<%-- <td>${item.policename}</td>
+						<td>${item.policesector}</td>
+						<td>${item.policephone}</td> --%>
+						<%-- <td>${item.creatorname}</td> --%>
+						<td>${item.createtimes}</td>
 						<td><a href="javascript:void(0);" onclick="deleteByPersonId(${item.id});">删除</a></td>
+						<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">详情</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
