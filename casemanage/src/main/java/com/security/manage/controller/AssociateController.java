@@ -27,6 +27,8 @@ import com.security.manage.model.Person;
 import com.security.manage.model.User;
 import com.security.manage.service.AssociateService;  
 import com.security.manage.util.Constants; 
+import com.security.manage.util.DateUtil;
+import com.security.manage.util.StringUtil;
 import com.security.manage.common.JsonResult;
 
 
@@ -277,6 +279,14 @@ public class AssociateController extends BaseController{
 				associate.setSerialno(serialNo); 
 				associate.setId(0);
 			}
+			if(associate.getTelephone() != null && !"".equals(associate.getTelephone())){
+				String telephone = associate.getTelephone();
+				Boolean  b = StringUtil.isMobileNumber(telephone);
+				if(!b){
+					js.setMessage("手机格式不正确!");
+					return js;
+				}
+			}
 			if(associate.getName() != null && !"".equals(associate.getName())){
 				Associate a = new Associate();
 				a.setName(associate.getName());
@@ -444,6 +454,26 @@ public class AssociateController extends BaseController{
 //							}
 							//js.setMessage("上传头像，不符合公安部要求，请重新选择图片上传!"); 
 						// }
+					 }
+					 if (associatePerson.getIdcard() != null && !"".equals(associatePerson.getIdcard())) {
+						 	AssociatePerson p = new AssociatePerson();
+							p.setIdcard(associatePerson.getIdcard());
+							if (associatePerson.getId() > 0) {
+								p.setId(associatePerson.getId());
+							}
+							List<AssociatePerson> lc = associateService.getExistPersonList(p);
+							if (lc.size() > 0) {
+								js.setMessage("身份证号已存在!");
+								return js;
+							}
+						} 
+					 if(associatePerson.getBirth() != null && !"".equals(associatePerson.getBirth())){
+						 String birth = associatePerson.getBirth();
+						 String result = DateUtil.validate(birth);
+						 if(!"".equals(result)){
+							 js.setMessage("身份证号有误，请确认!");
+							 return js;
+						 }
 					 }
 					associateService.updateAssociatePerson(associatePerson);
 					js.setCode(0);

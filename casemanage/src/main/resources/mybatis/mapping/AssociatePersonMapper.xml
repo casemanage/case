@@ -293,4 +293,15 @@
   	from MC_ASSOCIATE_PERSON
   	where ASSOCIATEID = #{associateid,jdbcType=INTEGER}
   </select>
+  <select id="getExistPersonList" parameterType="com.security.manage.model.AssociatePerson" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from MC_ASSOCIATE_PERSON
+  	where 1=1
+  	<if test="id != null">
+  		and id = #{id,jdbcType=INTEGER}
+  	</if>
+  	<if test="idcard != null">
+  		and IDCARD = #{idcard,jdbcType=VARCHAR}
+  	</if>
+  </select>
 </mapper>

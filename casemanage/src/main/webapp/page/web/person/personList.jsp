@@ -141,7 +141,7 @@ function excelChange(file){
 					<!-- <th>出生年月</th> -->
 					<!-- <th>照片</th> -->
 					<th>身份证号</th>
-					<th>联系方式</th>
+					<th>手机号码</th>
 					<th>mac地址</th>
 					<th>地址</th>
 					<th>事由</th>

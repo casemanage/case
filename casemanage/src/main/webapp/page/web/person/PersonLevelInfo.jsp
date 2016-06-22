@@ -26,7 +26,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   
 	function savePersonLevel(obj){
 	if ($('#personLevelInfoForm').form('validate')) {
-		 $(obj).attr("onclick", ""); 
 		 $('#personLevelInfoForm').form('submit',{
 		  		success:function(data){ 
 		  			data = $.parseJSON(data);
@@ -37,7 +36,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error',function(){
 	        			});
-						$(obj).attr("onclick", "savePersonLevel(this);"); 						
 		  			}
 		  		}
 		  	 });  

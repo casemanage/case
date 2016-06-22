@@ -118,9 +118,9 @@ function deleteByPersonTypeId(id){
                        <c:forEach var="item" items="${PersonTypelist}">
 						<tr>
 							<td align="center" style="display:none">${item.id}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">${item.keyword}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">${item.name}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">${item.description}</td>
+							<td align="center">${item.keyword}</td>
+							<td align="center">${item.name}</td>
+							<td align="center">${item.description}</td>
 							<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">编辑</a></td>
 							<td><a href="javascript:void(0);" onclick="deleteByPersonTypeId(${item.id});">删除</a></td>
 						</tr>

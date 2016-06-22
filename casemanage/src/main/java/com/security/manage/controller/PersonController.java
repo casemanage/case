@@ -28,6 +28,7 @@ import com.security.manage.model.PersonType;
 import com.security.manage.model.User;
 import com.security.manage.service.PersonService;
 import com.security.manage.util.Constants;
+import com.security.manage.util.StringUtil;
  
 @Scope("prototype")
 @Controller
@@ -430,6 +431,14 @@ public class PersonController extends BaseController{
 			if(person.getLevelid() == null){
 				js.setMessage("请选择人员级别!");
 				return js;
+			}
+			if(person.getTelephone() != null && !"".equals(person.getTelephone())){
+				String telephone = person.getTelephone();
+				Boolean  b = StringUtil.isMobileNumber(telephone);
+				if(!b){
+					js.setMessage("手机格式不正确!");
+					return js;
+				}
 			}
 			if (person.getId() == null || person.getId() == 0) { 
 				User u = this.getLoginUser();

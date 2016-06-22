@@ -87,7 +87,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 		
 			if ($('#associsteForm').form('validate')) {
-				$(obj).attr("onclick", "");
 				$('#associsteForm').form('submit',{
 									success : function(data) {
 										data = $.parseJSON(data);
@@ -105,8 +104,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 													data.message, 'error',
 													function() {
 													});
-											$(obj).attr("onclick",
-													"saveAssociste(this);");
 										}
 									}
 								});
@@ -197,8 +194,8 @@ function showName(obj){
 					    		<input type="text" required="true"  validType="Length[1,150]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入地址" value="${Associate.address}" name="address"/>
 					    	</div>
 					    	<div style="margin-top:15px;">
-					        	<span class="from-style">联系方式:</span>
-					    		<input type="text"  class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入联系方式" value="${Associate.telephone}" name="telephone"/>
+					        	<span class="from-style">手机号码:</span>
+					    		<input type="text"  style="width:354px;height:32px;"  placeholder="请输入联系方式" value="${Associate.telephone}" name="telephone"/>
 				    		</div>
 					        <div style="margin-top:15px;">
 					        	<span class="from-style">坐标经度:</span>
@@ -251,7 +248,7 @@ function showName(obj){
 	    	<div class="Panel-content">
 		    	<div style="width:100%;text-align:right">
 					<input type="button" class="btn-add"	onclick="window.location.href='<%=basePath%>associate/associateMember.do?associateId=${Associate.id}'" value="新增相关人员">
-					<input type="button" class="btn-back" style="margin-left:25px;margin-right:25px"	onclick="javascript:history.back();" value="返回">
+					<input type="button" class="btn-back" style="margin-left:25px;margin-right:25px"	onclick="window.location.href='<%=basePath%>associate/associateList.do'" value="返回">
 					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/AssociatePersonDataModel.xls'" value="下载导入模板"/>
 				</div>
 			</div>

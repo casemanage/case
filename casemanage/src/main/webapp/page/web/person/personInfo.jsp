@@ -57,7 +57,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			}							   
 			if ($('#personForm').form('validate')) {
-				$(obj).attr("onclick", "");
 				    $('#personForm').form('submit',{
 								success : function(data) {
 									data = $.parseJSON(data);
@@ -71,8 +70,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 												data.message, 'error',
 												function() {
 												});
-										$(obj).attr("onclick",
-												"savePerson(this);");
 									}
 								}
 							});			
@@ -178,8 +175,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div style="margin-top:15px;width:100%;">
 				        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别:</span>
 				        	<input id="sex" type="hidden"  name="sex" id="sex"  value="${person.sex == null ?1:person.sex}" />
-				    		<input type="radio" name="radio" id="radio1" value="1" checked="checked" onchange='setSex();' />男
-							<input type="radio" name="radio" id="radio2" value="0" onchange='setSex();' />女 
+				    		<input type="radio" name="sex1" id="radio1" value="1" checked="checked" onchange='setSex();' />男
+							<input type="radio" name="sex1" id="radio2" value="0" onchange='setSex();' />女 
 				   </div>
 				   <div style="margin-top:15px;width:100%;">
 				        	<span class="from-style">出生年月:</span>
@@ -192,8 +189,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    		<input type="text" validType="macAddress" class="easyui-validatebox"  style="width:354px;height:32px;" placeholder="请输入mac地址" value="${person.macaddress}" name="macaddress"/>
 			    	</div>
 			    	 <div style="margin-top:15px;">
-			        	<span class="from-style">联系方式:</span>
-			    		<input  type="text" validType="number" class="easyui-validatebox" style="width:354px;height:32px;" placeholder="请输入联系方式" value="${person.telephone}" name="telephone"/>
+			        	<span class="from-style">手机号码:</span>
+			    		<input  type="text" style="width:354px;height:32px;" placeholder="请输入联系方式" value="${person.telephone}" name="telephone"/>
 			    	</div> 
 				    	<div style="margin-top:15px;width:100%;">
 			        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址:</span>
@@ -201,6 +198,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    		<input type="text"  class="easyui-validatebox" placeholder="请输入地址"  style="width:354px;height:32px;" value="${person.address}" name="address"/>
 			    	</div> 
 			    	<div style="margin-top:15px;">
+			    		<!-- <input class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;事由:</input> -->
 			        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;事由:</span>
 			        	<textarea rows="7" cols="3" name="casecomment"  style="width:354px;height:50px;"  value="${person.casecomment}" >${person.casecomment}</textarea>
 			    		<%-- <input type="text" style="width:300px"  validType="SpecialWord" class="easyui-validatebox" placeholder="请输入是由" value="${person.casecomment}" name="casecomment"/> --%>

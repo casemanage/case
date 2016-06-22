@@ -154,7 +154,7 @@ function deleteByAssociateId(id){
 					<th>类型</th>
 					<th>经纬度</th>
 					<th>地址</th>
-					<th>联系方式</th>
+					<th>手机号码</th>
 					<!-- <th>采集单位</th>
 					<th>采集人</th> -->
 					<th>采集时间</th>
@@ -167,24 +167,24 @@ function deleteByAssociateId(id){
 				<c:forEach var="item" items="${associatelist}">
 					<tr>
 						<td align="center" style="display:none">${item.id}</td>
-						<td align="center" ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.serialno}</td>
-						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.name}</td>
-						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.typename}</td>
+						<td align="center">${item.serialno}</td>
+						<td>${item.name}</td>
+						<td>${item.typename}</td>
 						<c:if test="${item.latitude !='' && item.longitude != ''}">
-							<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.latitude}，${item.longitude}</td>
+							<td>${item.latitude}，${item.longitude}</td>
 						</c:if>
-						<c:if test="${item.latitude =='' && item.longitude == ''}">
-							<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'"></td>
+						<c:if test="${item.latitude =='' || item.longitude == ''}">
+							<td></td>
 						</c:if>
-						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.address}</td>
-						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.telephone}</td>
+						<td>${item.address}</td>
+						<td>${item.telephone}</td>
 						<%--<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.organname}</td>
 						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.creatorname}</td> --%>
-						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.createtimes}</td>
-						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.description}</td>
+						<td>${item.createtimes}</td>
+						<td>${item.description}</td>
 						<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">编辑</a></td>
 						<%-- <td><a href="javascript:void(0);" onclick="showdialog(${item.id});">上传平面图</a></td> --%>
-						<td><a href="javascript:void(0);" onclick="<%=basePath%>deleteByAssociateId(${item.id});">删除</a></td>
+						<td><a href="javascript:void(0);" onclick="deleteByAssociateId(${item.id});">删除</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

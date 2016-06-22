@@ -22,9 +22,9 @@ public class UploadFileController extends BaseController {
 //					"utf-8");
 //			String filePath = request.getRealPath("/") + moduleName;
 			String filePath = request.getRealPath("/") + filepath;
-			filePath = new String(filePath.getBytes("ISO-8859-1"), "utf-8");
+			//filePath = new String(filePath.getBytes("ISO-8859-1"), "utf-8");
 			String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
-			fileName = new String(fileName.getBytes("ISO-8859-1"), "utf-8");
+			//fileName = new String(fileName.getBytes("ISO-8859-1"), "utf-8");
 			response.reset();
 			response.setContentType("APPLICATION/OCTET-STREAM; charset=UTF-8");
 			response.setHeader("Content-disposition", "attachment;filename=\""

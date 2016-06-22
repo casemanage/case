@@ -55,7 +55,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			}
 			if ($('#personForm').form('validate')) {
-				$(obj).attr("onclick", "");
 				$('#personForm').form('submit',{
 									success : function(data) {
 										data = $.parseJSON(data);
@@ -69,8 +68,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 													data.message, 'error',
 													function() {
 													});
-											$(obj).attr("onclick",
-													"savePerson(this);");
 										}
 									}
 								});
