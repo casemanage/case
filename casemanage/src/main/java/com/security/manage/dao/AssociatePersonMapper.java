@@ -2,7 +2,6 @@ package com.security.manage.dao;
 
 import java.util.List;
 
-import com.security.manage.model.Associate;
 import com.security.manage.model.AssociatePerson;
 
 public interface AssociatePersonMapper {
@@ -21,8 +20,8 @@ public interface AssociatePersonMapper {
     int updateByPrimaryKey(AssociatePerson record);
 
 	List<AssociatePerson> getAssociatePersonListById(AssociatePerson associatePerson);
-
-	List<Associate> getExistAssociate(AssociatePerson a);
+	
+	List<AssociatePerson> getExistAssociatePerson(AssociatePerson associatePerson);
 
 	void updateById(AssociatePerson associatePerson);
 
@@ -30,5 +29,4 @@ public interface AssociatePersonMapper {
 
 	int getTotalCount(AssociatePerson associatePerson);
 
-	List<AssociatePerson> getExistPersonList(AssociatePerson p);
 }

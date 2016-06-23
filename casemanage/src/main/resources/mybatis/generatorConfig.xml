@@ -88,6 +88,12 @@
 	       enableDeleteByExample="false"
 	       enableCountByExample="false"
 	       enableUpdateByExample="false"/>  
+	       
+	       <table tableName="MC_AREA" domainObjectName="Area"
+           enableSelectByExample="false"
+	       enableDeleteByExample="false"
+	       enableCountByExample="false"
+	       enableUpdateByExample="false"/> 
 	        
     </context>  
 </generatorConfiguration>  

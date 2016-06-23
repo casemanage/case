@@ -264,12 +264,12 @@
     	and RowNumber BETWEEN (#{pageStart} + 1) and (#{pageSize} + #{pageStart})
     </if>
   </select>
-  <select id="getExistAssociate" parameterType="com.security.manage.model.AssociatePerson" resultMap="BaseResultMap">
+  <select id="getExistAssociatePerson" parameterType="com.security.manage.model.AssociatePerson" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List"/>
   	from MC_ASSOCIATE_PERSON
   	where 1=1
-  	<if test="name != null">
-  		and <![CDATA[NAME=#{name}]]>
+  	<if test="idcard != null">
+  		and IDCARD = #{idcard,jdbcType=VARCHAR}
   	</if>
   	<if test="associateid != null">
   		and ASSOCIATEID = #{associateid,jdbcType=INTEGER}
@@ -293,15 +293,6 @@
   	from MC_ASSOCIATE_PERSON
   	where ASSOCIATEID = #{associateid,jdbcType=INTEGER}
   </select>
-  <select id="getExistPersonList" parameterType="com.security.manage.model.AssociatePerson" resultMap="BaseResultMap">
-  	select <include refid="Base_Column_List"/>
-  	from MC_ASSOCIATE_PERSON
-  	where 1=1
-  	<if test="id != null">
-  		and id = #{id,jdbcType=INTEGER}
-  	</if>
-  	<if test="idcard != null">
-  		and IDCARD = #{idcard,jdbcType=VARCHAR}
-  	</if>
-  </select>
+ 
+
 </mapper>
