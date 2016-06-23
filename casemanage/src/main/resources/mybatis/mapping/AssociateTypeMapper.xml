@@ -122,4 +122,9 @@
         and id != #{id,jdbcType=VARCHAR}
     </if>  	  
   </select>
+  <select id="getAssociateTypeAllList" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from MC_ASSOCIATE_TYPE 
+  </select>
 </mapper>

@@ -125,13 +125,52 @@ function deleteByAssociateId(id){
 	    }  
 	});
 }
+function excelChange(file){
+	  if(!(/(?:xls)$/i.test(file.value)) && !(/(?:xlsx)$/i.test(file.value)) ) {
+	        $.messager.alert('错误', "只允许上传xl或xlsx的文档", 'error'); 
+	        if(window.ActiveXObject) {//for IE
+	            file.select();//select the file ,and clear selection
+	            document.selection.clear();
+	        } else if(window.opera) {//for opera
+	            file.type="text";file.type="file";
+	        } else file.value="";//for FF,Chrome,Safari
+	    } else {	
+			showProcess(true, '温馨提示', '正在提交数据...'); 
+	   		fileForms.submit();
+	    	/* $('#fileForms').form('submit',{
+				success : function(data) {
+					data = $.parseJSON(data);
+					if (data.code == 0) {
+						$.messager.alert('保存信息', data.message, 'info',function(){
+							search();
+						});
+						
+					} else {
+						$.messager.alert('错误信息', data.message, 'error');
+					}  
+				}
+			});	  */
+	    }
+}
+function chooseFile(){
+	return $("#file").click();
+}
 </script>
   </head>
   
   <body style="background:#fff;">
   <div id="contentRight" class="contentRight">
 	<div class="containner-fluid">
-		<div class="pannel-header">社会机构管理</div>
+		<div class="pannel-header">
+			<span>社会机构管理</span>
+			<input type ="button" class="hey-btn hey-btn-default" onclick="chooseFile();" value="导入社会机构">
+			</input>
+			<div style="display: none">
+				<form id="fileForms" name="fileForms" action="<%=basePath%>fileUpload/uploadAssociateExcel.do"  enctype="multipart/form-data" method="post" style="margin:0;padding:0;">
+			       	<input id="file" type="file" name="file" id="jfile" class="yw-upload-file" onChange="excelChange(this);">
+				</form>
+			</div>	
+		</div>
 		<div class="Panel-content">
 			<form id="AssociateForm" name="AssociateForm" action="<%=basePath%>associate/associateList.do" method="get">
 				<div style="width:100%;text-align:right;">
@@ -139,7 +178,7 @@ function deleteByAssociateId(id){
 					<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
 					<input type="hidden" id="pageNumber" name="pageNo" value="${associate.pageNo}" /> 
 					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=0'" value="新建社会机构"> 
-					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/AssociateDataModel.xls'" value="下载导入模板"/>
+					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/社会机构数据采集模板.xls'" value="下载导入模板"/>
 				</div>
 			</form>
 		</div>

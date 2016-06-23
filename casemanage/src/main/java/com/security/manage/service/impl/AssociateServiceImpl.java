@@ -210,6 +210,11 @@ public class AssociateServiceImpl implements AssociateService{
 		return associatePersonMapper.getExistPersonList(p);
 	}
 
+	public List<AssociateType> getAssociateTypeAllList() {
+		// TODO Auto-generated method stub
+		return associateTypeMapper.getAssociateTypeAllList();
+	}
+
 	
 
 }
