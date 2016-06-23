@@ -157,17 +157,57 @@ function showName(obj){
 				$("#filename").val(obj.value);  
 			}
 }
+function excelChange(file){
+	  if(!(/(?:xls)$/i.test(file.value)) && !(/(?:xlsx)$/i.test(file.value)) ) {
+	        $.messager.alert('错误', "只允许上传xls或xlsx的文档", 'error'); 
+	        if(window.ActiveXObject) {//for IE
+	            file.select();//select the file ,and clear selection
+	            document.selection.clear();
+	        } else if(window.opera) {//for opera
+	            file.type="text";file.type="file";
+	        } else file.value="";//for FF,Chrome,Safari
+	    } else {	
+			showProcess(true, '温馨提示', '正在提交数据...'); 
+	   		fileForms.submit();
+	    	/* $('#fileForms').form('submit',{
+				success : function(data) {
+					data = $.parseJSON(data);
+					if (data.code == 0) {
+						$.messager.alert('保存信息', data.message, 'info',function(){
+							search();
+						});
+						
+					} else {
+						$.messager.alert('错误信息', data.message, 'error');
+					}  
+				}
+			});	  */
+	    }
+}
+function chooseFile(){
+	return $("#file").click();
+}
 	</script>
   </head>
   
  <body style="background:#fff;">
 	
   <div id="contentRight" class="contentRight">
-     	<div class="containner-fluid">
-         	<div class="pannel-header">社会机构信息</div> 
-               <div class="Panel-content">社会机构信息：${Associate.id == 0?"新建社会机构信息":Associate.name}</div>
-      </div>
-      <div id="tabInfo" class="easyui-tabs" style="width:100%;border:0;">  
+     <div class="containner-fluid">    	
+     	<div class="pannel-header">
+			<span>社会机构信息</span>
+			<div class="Panel-content">社会机构信息：${Associate.id == 0?"新建社会机构信息":Associate.name}</div>
+			<input type ="button" class="hey-btn hey-btn-default" onclick="chooseFile();" value="导入社会机构相关人员">
+			</input>
+			<div style="display: none">
+				<form id="fileForms" name="fileForms" action="<%=basePath%>fileUpload/uploadAssociateMemberExcel.do"  enctype="multipart/form-data" method="post" style="margin:0;padding:0;">
+			       	<input id="file" type="file" name="file" id="jfile" class="yw-upload-file" onChange="excelChange(this);">
+				<input id="associateid" type="hidden" name="associateid" value="${Associate.id}" />
+				</form>
+			</div>	
+		</div>
+
+     <div id="tabInfo" class="easyui-tabs" style="width:100%;border:0;">  
     <div title="基础信息" style="padding:20px;" >  
          <div class="containner-fluid text-center"> 
 			<form id="associsteForm" name="associsteForm" action="<%=basePath%>associate/jsonSaveOrUpdateAssociate.do" method="post"  enctype="multipart/form-data"  style="text-align:left;">
@@ -249,7 +289,7 @@ function showName(obj){
 		    	<div style="width:100%;text-align:right">
 					<input type="button" class="btn-add"	onclick="window.location.href='<%=basePath%>associate/associateMember.do?associateId=${Associate.id}'" value="新增相关人员">
 					<input type="button" class="btn-back" style="margin-left:25px;margin-right:25px"	onclick="window.location.href='<%=basePath%>associate/associateList.do'" value="返回">
-					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/AssociatePersonDataModel.xls'" value="下载导入模板"/>
+					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/社会机构相关人员数据采集模板.xls'" value="下载导入模板"/>	
 				</div>
 			</div>
 			</div>   

@@ -14,7 +14,6 @@ import com.security.manage.model.Associate;
 import com.security.manage.model.AssociatePerson;
 import com.security.manage.model.AssociatePlan;
 import com.security.manage.model.AssociateType;
-import com.security.manage.model.Person;
 import com.security.manage.model.TypeStatistic;
 import com.security.manage.service.AssociateService; 
 
@@ -118,11 +117,11 @@ public class AssociateServiceImpl implements AssociateService{
 		// TODO Auto-generated method stub
 		return associatePersonMapper.getAssociatePersonListById(associatePerson);
 	}
-
+    
 	@Override
-	public List<Associate> getExistAssociate(AssociatePerson a) {
+	public List<AssociatePerson> getExistAssociatePerson(AssociatePerson associatePerson) {
 		// TODO Auto-generated method stub
-		return associatePersonMapper.getExistAssociate(a);
+		return associatePersonMapper.getExistAssociatePerson(associatePerson);
 	}
 
 	@Override
@@ -204,12 +203,7 @@ public class AssociateServiceImpl implements AssociateService{
 		associateTypeMapper.deleteByPrimaryKey(id);
 	}
 
-	@Override
-	public List<AssociatePerson> getExistPersonList(AssociatePerson p) {
-		// TODO Auto-generated method stub
-		return associatePersonMapper.getExistPersonList(p);
-	}
 
-	
+
 
 }

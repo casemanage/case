@@ -23,7 +23,6 @@ import com.security.manage.model.Associate;
 import com.security.manage.model.AssociatePerson;
 import com.security.manage.model.AssociatePlan;
 import com.security.manage.model.AssociateType;
-import com.security.manage.model.Person;
 import com.security.manage.model.User;
 import com.security.manage.service.AssociateService;  
 import com.security.manage.util.Constants; 
@@ -414,8 +413,8 @@ public class AssociateController extends BaseController{
 				if(associatePerson.getAssociateid() != null){
 					a.setAssociateid(associatePerson.getAssociateid());
 				}
-				List<Associate> la = new ArrayList<Associate>();
-				la = associateService.getExistAssociate(a);
+				List<AssociatePerson> la = new ArrayList<AssociatePerson>();
+				la = associateService.getExistAssociatePerson(a);
 				if(la.size() == 0){
 					 if(file.getSize()>0){
 						String path = request.getSession().getServletContext().getRealPath("uploadsource");
@@ -461,10 +460,10 @@ public class AssociateController extends BaseController{
 					 if (associatePerson.getIdcard() != null && !"".equals(associatePerson.getIdcard())) {
 						 	AssociatePerson p = new AssociatePerson();
 							p.setIdcard(associatePerson.getIdcard());
-							if (associatePerson.getId() > 0) {
-								p.setId(associatePerson.getId());
+							if (associatePerson.getAssociateid() > 0) {
+								p.setId(associatePerson.getAssociateid());
 							}
-							List<AssociatePerson> lc = associateService.getExistPersonList(p);
+							List<AssociatePerson> lc = associateService.getExistAssociatePerson(p);
 							if (lc.size() > 0) {
 								js.setMessage("身份证号已存在!");
 								return js;

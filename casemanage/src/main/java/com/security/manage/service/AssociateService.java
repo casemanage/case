@@ -6,7 +6,6 @@ import com.security.manage.model.Associate;
 import com.security.manage.model.AssociatePerson;
 import com.security.manage.model.AssociatePlan;
 import com.security.manage.model.AssociateType;
-import com.security.manage.model.Person;
 import com.security.manage.model.TypeStatistic;
 
 public interface AssociateService {
@@ -37,8 +36,6 @@ public interface AssociateService {
 
 	List<AssociatePerson> getAssociatePersonListById(AssociatePerson associatePerson);
 
-	List<Associate> getExistAssociate(AssociatePerson a);
-
 	void updateAssociatePerson(AssociatePerson associatePerson); 
 
 	void deleteMemberById(AssociatePerson ap);
@@ -61,7 +58,7 @@ public interface AssociateService {
 
 	void deleteAssociateTypeById(Integer id);
 
-	List<AssociatePerson> getExistPersonList(AssociatePerson p);
+	List<AssociatePerson> getExistAssociatePerson(AssociatePerson associatePerson);
 
 
 

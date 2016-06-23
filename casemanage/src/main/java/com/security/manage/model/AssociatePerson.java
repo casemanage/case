@@ -194,4 +194,5 @@ public class AssociatePerson extends Page  {
 	public void setCreatetimes(String createtimes) {
 		this.createtimes = createtimes;
 	}
+
 }
