@@ -39,55 +39,6 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.security.manage.dao" targetProject="src\main\java">  
             <property name="enableSubPackages" value="true"/>  
         </javaClientGenerator>  
-          
-     
-        <table tableName="MC_ASSOCIATE" domainObjectName="Associate"
-           enableSelectByExample="false"
-	       enableDeleteByExample="false"
-	       enableCountByExample="false"
-	       enableUpdateByExample="false"/>  
-     
-        <table tableName="MC_ASSOCIATE_PERSON" domainObjectName="AssociatePerson"
-           enableSelectByExample="false"
-	       enableDeleteByExample="false"
-	       enableCountByExample="false"
-	       enableUpdateByExample="false"/>  
-     
-        <table tableName="MC_ASSOCIATE_PLAN" domainObjectName="AssociatePlan"
-           enableSelectByExample="false"
-	       enableDeleteByExample="false"
-	       enableCountByExample="false"
-	       enableUpdateByExample="false"/>   	
-     
-        <table tableName="MC_ASSOCIATE_TYPE" domainObjectName="AssociateType"
-           enableSelectByExample="false"
-	       enableDeleteByExample="false"
-	       enableCountByExample="false"
-	       enableUpdateByExample="false"/>   	
-     
-        <table tableName="MC_PERSON" domainObjectName="Person"
-           enableSelectByExample="false"
-	       enableDeleteByExample="false"
-	       enableCountByExample="false"
-	       enableUpdateByExample="false"/>  
-     
-        <table tableName="MC_PERSON_TYPE" domainObjectName="PersonType"
-           enableSelectByExample="false"
-	       enableDeleteByExample="false"
-	       enableCountByExample="false"
-	       enableUpdateByExample="false"/>  
-     
-        <table tableName="MC_PERSON_LEVEL" domainObjectName="PersonLevel"
-           enableSelectByExample="false"
-	       enableDeleteByExample="false"
-	       enableCountByExample="false"
-	       enableUpdateByExample="false"/>  
-	       
-	       <table tableName="MC_PERSON_CAR" domainObjectName="PersonCar"
-           enableSelectByExample="false"
-	       enableDeleteByExample="false"
-	       enableCountByExample="false"
-	       enableUpdateByExample="false"/>  
 	       
 	       <table tableName="MC_AREA" domainObjectName="Area"
            enableSelectByExample="false"
