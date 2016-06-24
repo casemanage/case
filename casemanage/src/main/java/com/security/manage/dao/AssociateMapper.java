@@ -32,5 +32,7 @@ public interface AssociateMapper {
 
 	List<Associate> getAssociateListByCreatorname(Associate associate);
 
+	List<Associate> getAreaListByAreaId(Associate a);
+
 
 }

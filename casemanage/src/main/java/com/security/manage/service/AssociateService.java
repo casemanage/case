@@ -66,6 +66,8 @@ public interface AssociateService {
 
 	List<AssociateType> getAssociateTypeAllList();
 
+	List<Associate> getAreaListByAreaId(Associate a);
+
 
 
 
