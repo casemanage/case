@@ -20,7 +20,8 @@
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+    (select x.name from MC_AREA as x where x.id = a.parentId) as PARENT_NAME
     from MC_AREA a
     where a.id = #{id,jdbcType=INTEGER}
     and a.flag = 0
