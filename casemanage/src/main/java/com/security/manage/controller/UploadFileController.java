@@ -87,7 +87,7 @@ public class UploadFileController extends BaseController {
 		}
 	}
 	/**
-	 * 导入社会机构导入成功后，跳转到导入结果临时页面
+	 * 导入社会机构
 	 * 
 	 * @param request
 	 * @param response
