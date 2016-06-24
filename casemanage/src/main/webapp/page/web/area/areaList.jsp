@@ -203,7 +203,7 @@ function deleteAreaById(id){
 							</c:if>
 							<td>${item.description}</td>
 							<td><a href="javascript:void(0);"
-								onclick="window.location.href='<%=basePath%>person/personInfo.do?areaId=${item.id}'">编辑</a></td>
+								onclick="window.location.href='<%=basePath%>area/areaInfo.do?areaId=${item.id}'">编辑</a></td>
 							<td><a href="javascript:void(0);"
 								onclick="deleteAreaById(${item.id});">删除</a></td>
 						</tr>

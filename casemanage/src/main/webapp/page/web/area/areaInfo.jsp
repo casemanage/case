@@ -23,6 +23,76 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	--> 
 	 <script type="text/javascript">
+	$(document).ready(function(){ 
+			//setShowStates();
+			var de = $("#description").val();
+			$("#textarea").val(de);
+			 $("#cmbParentArea").combotree({
+				 url: '<%=basePath%>area/jsonLoadAreaTreeList.do',  
+   				 required: false,
+   				 onBeforeExpand:function(node){
+   				 	$('#cmbParentArea').combotree('tree').tree('options').url = '<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+ node.id;
+   				 },
+   				 onSelect:function(record){
+   				 	 var areaId = $("#areaId").val();
+   				 	 if(areaId != undefined && areaId != 0 && areaId !="" && areaId != null){
+   				 	 if(record!=null){
+		   				 	 if(areaId == record.id){
+		   				 	 	$.messager.alert('错误信息',"不能选择当前区域为所属区域",'error',function(){
+			        			});
+		   				 	 	$("#cmbParentArea").combotree("clear");
+	   				 	 		$("#cmbParentArea").combotree("reload",'<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+0);
+		   				 	 	$("#cmbParentArea").combotree("setText","=请选择所属区域=");
+		   				 	 }else{
+			   				 	 var parId = $("#parentId").val();
+			   				 	 if(record.id  == parId){
+			   				 	 	//$("#cmbParentCompany").combotree("setValue",0);
+			   				 	 	$("#cmbParentArea").combotree("clear");
+			   				 	 	$("#parentId").val(0);
+		   				 	 		$("#cmbParentArea").combotree("reload",'<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+0);
+			   				 	 	$("#cmbParentArea").combotree("setText","=请选择所属区域=");
+			   				 	 }else{  
+			   				 	 	$("#parentId").val(record.id);
+			   				 	 }   
+		   				 	 }
+	   				 } else{
+   				 	 	$("#cmbParentArea").combotree("clear");
+   				 	 	$("#parentId").val(0);
+  				 	 	$("#cmbParentArea").combotree("reload",'<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+0);
+   				 	 	$("#cmbParentArea").combotree("setText","=请选择所属区域=");
+	   				 } 
+					 //appendParentNode();
+					 }else{
+	   				 	 var parId = $("#parentId").val();
+	   				 	 if(record.id  == parId){
+	   				 	 	//$("#cmbParentCompany").combotree("setValue",0);
+	   				 	 	$("#cmbParentArea").combotree("clear");
+	   				 	 	$("#parentId").val(0);
+   				 	 		$("#cmbParentArea").combotree("reload",'<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+0);
+	   				 	 	$("#cmbParentArea").combotree("setText","=请选择所属区域=");
+	   				 	 }else{  
+	   				 	 	$("#parentId").val(record.id);
+	   				 	 }   
+   				 	 }
+   				 },
+   				 onLoadSuccess:function(){
+					//$("#cmbParentArea").combotree("disable",true);
+					var parentId = $("#parentId").val();
+					alert(parentId);
+					var parentName = $("#parentName").val();
+					if(parentId==0){
+   				 		$("#cmbParentArea").combotree("setText","=请选择所属区域=");
+					}else{
+						//appendParentNode();
+						$("#cmbParentArea").combotree("setValue",parentId);
+						$("#cmbParentArea").combotree("setText",parentName);
+					}
+   				 }
+			}); 
+		});	
+	
+	
+	
 	
 	function saveAssociateType(obj){
 	if ($('#associateTypeInfoForm').form('validate')) {
@@ -55,38 +125,39 @@ function getKeyword(){
   <div id="contentRight" class="contentRight">
        	<div class="containner-fluid">
            	<div class="pannel-header">区域信息</div>          
-                 <div class="Panel-content">区域信息：${area.id == 0?"新建社会机构类型信息":AssociateType.name}</div>                       
-        </div>
+                 <div class="Panel-content">区域信息：${area.id == 0?"新建社会机构类型信息":area.name}</div>                       
+        	</div>
        
     <div class="containner-fluid text-center">
-		<form id="associateTypeInfoForm" name="associateTypeInfoForm" action="<%=basePath%>associate/jsonSaveOrUpdateAssociateType.do" method="post" style="text-align:left;">
+		<form id="areaInfoForm" name="areaInfoForm" action="<%=basePath%>area/jsonSaveOrUpdateArea.do" method="post" style="text-align:left;">
 			<div style="margin-top:15px;width:100%;"> 
 		        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
-		         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveAssociateType(this);">
-		         <input id="keyword" name="keyword" value="${AssociateType.keyword}" type="hidden" /> 
+		        <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveArea(this);">
+				<input name="id" value="${area.id}" type="hidden" />
+				<input id="parentId" name="parentid" value="${area.parentid}" type="hidden"/>
+				<input id="parentName" name="parentName" value="${area.parentName}" type="hidden" />
 			</div> 
-			<c:if test="${AssociateType.id > 0 }">
 		    <div style="margin-top:15px;width:100%;">
-	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;关键字:</span>
-	    		<input name="id" value="${AssociateType.id}" type="hidden" />
-	    		<input  type="text" disabled="disabled" required="true"  validType="Length[1,20]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入关键字" value="${AssociateType.keyword}" />
+	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;区域名称:</span>
+	    		<input type="text" required="true"  validType="Length[1,20]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入区域名称" value="${area.name}" name="name"/>
 	    	</div>
-	    	</c:if>
-	    	<c:if test="${AssociateType.id == 0 }">
 		    <div style="margin-top:15px;width:100%;">
-	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;关键字:</span>
-	    		<input name="id" value="${AssociateType.id}" type="hidden" />
-	    		<input id="key" type="text" onchange="getKeyword();" required="true"  validType="Length[1,20]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入关键字"/>
+	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;所属区域:</span>
+	    		<input id="cmbParentArea" class="easyui-combotree"  style="width:254px;height:32px;" />
 	    	</div>
-	    	</c:if>
-		    	<div style="margin-top:15px;width:100%;">
-	        	<span class="from-style">类型名称:</span>
-	    		<input type="text" name="name" required="true"  validType="Length[1,20]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入类型" value="${AssociateType.name}" />
+		    <div style="margin-top:15px;width:100%;">
+	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;经&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:</span>
+	    		<input type="text" style="width:354px;height:32px;" class="easyui-numberbox" precision="1" min="1.0" placeholder="请输入经度" value="${area.latitude}" name="latitude"/>
 	    	</div>
-		    	<div style="margin-top:15px;width:100%;">
-	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述:</span>
-	    		<input type="text" name="description"  validType="Length[1,100]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入描述信息" value="${AssociateType.description}" />
-	    	</div>   
+		    <div style="margin-top:15px;width:100%;">
+	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;纬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:</span>
+	    		<input type="text"  style="width:354px;height:32px;"  class="easyui-numberbox" precision="1" min="1.0" placeholder="请输入纬度" value="${area.longtiude}" name="longtiude"/>
+	    	</div>
+	    	<div style="margin-top:15px;">
+	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;备注描述:</span>
+	        	<input type="hidden" id="description" value="${area.description}"/>
+	        	<textarea id="textarea" rows="4" cols="3"   style="width:354px;"   name="description" ></textarea>
+	    	</div>    
 		</form>
     </div>
 </div>
