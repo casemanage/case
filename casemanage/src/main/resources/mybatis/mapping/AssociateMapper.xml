@@ -43,7 +43,7 @@
     ar.name as AREANAME
     from MC_ASSOCIATE a
     left join MC_ASSOCIATE_TYPE at on a.TYPEID = at.ID
-    left join MC_AREA ar at on ar.ID = a.AREAID
+    left join MC_AREA ar  on ar.ID = a.AREAID
     where a.ID = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -251,7 +251,7 @@
 	     </if>
   	  ) as a
   	  left join MC_ASSOCIATE_TYPE at on a.TYPEID = at.ID
-  	  left join MC_AREA AR at on AR.ID = a.AREAID
+  	  left join MC_AREA  ar on ar.ID = a.AREAID
   	   where 1=1 
 	     <if test="pageStart != null and pageSize != null and pageStart>-1 and pageSize>-1">
     		and RowNumber BETWEEN (#{pageStart} + 1) and (#{pageSize} + #{pageStart})
@@ -286,9 +286,8 @@
 	     </if>
   </select> 
   <select id="getAssociateTypeCountList" resultMap="StatisticResultMap" >
-  	select COUNT(*) as totalCount,at.name as typeName,ar.NAME AS AREANAME from MC_ASSOCIATE a
+  	select COUNT(*) as totalCount,at.name as typeName from MC_ASSOCIATE a
 		left join MC_ASSOCIATE_TYPE at on a.typeId = at.id
-		left join MC_AREA AR at on AR.ID = a.AREAID
 		group by at.name
     </select>
   <select id="getAssociateStationCountList" resultMap="StatisticResultMap" >
