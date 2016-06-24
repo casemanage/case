@@ -8,8 +8,6 @@ package com.security.manage.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.security.manage.model.ResultList;
-
 /**
  * @author ftd
  * @param <E>

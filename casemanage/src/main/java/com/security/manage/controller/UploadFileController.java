@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -32,11 +30,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.security.manage.common.JsonResult;
 import com.security.manage.model.Associate;
 import com.security.manage.model.AssociateType;
 import com.security.manage.model.User;
 import com.security.manage.service.AssociateService;
-import com.security.manage.util.Constants;
 import com.security.manage.model.AssociatePerson;
 
 @Scope("prototype")
@@ -55,6 +54,7 @@ public class UploadFileController extends BaseController {
 //			String moduleName = new String(filepath.getBytes("iso8859-1"),
 //					"utf-8");
 //			String filePath = request.getRealPath("/") + moduleName;
+			@SuppressWarnings("deprecation")
 			String filePath = request.getRealPath("/") + filepath;
 			String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
 			fileName = new String(fileName.getBytes("ISO-8859-1"), "utf-8");
@@ -95,17 +95,18 @@ public class UploadFileController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/uploadAssociateExcel.do")
-	public String uploadAssociateExcel(HttpServletRequest request,
+	public JsonResult<Associate> uploadAssociateExcel(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
-		// 导入总记录数
-		List<Associate> defaultlist = new ArrayList<Associate>();
-		// 导入成功记录数
+		JsonResult<Associate> js = new JsonResult<Associate>();
+		js.setCode(1);
+		js.setMessage("导入数据失败！");		
+		List<Associate> associatelist = new ArrayList<Associate>();
 		List<Associate> list = new ArrayList<Associate>();
-		// 导入失败记录
 		List<Associate> nulllist = new ArrayList<Associate>();
-		// 导入总数
 		int totalCount = 0;
+		int rightCount = 0;
+		int faultCount = 0;
 		try {
 			// 项目在容器中的实际发布运行的upload路径
 			String path = request.getSession().getServletContext()
@@ -121,6 +122,7 @@ public class UploadFileController extends BaseController {
 				File f = new File(targetFile.getPath());
 				if (f.exists()) {
 					f.delete();
+					
 				}
 				// 把MultipartFile转换成File类型,MultipartFile自带的transferTo
 				file.transferTo(targetFile);
@@ -131,18 +133,22 @@ public class UploadFileController extends BaseController {
 				try {
 					stream = new FileInputStream(targetFile.getPath());
 					wb = new XSSFWorkbook(stream);
-					defaultlist = getXSSFResult(wb);
+					associatelist = getAssociateXSSFResult(wb);
 				} catch (Exception ex) {
 					stream = new FileInputStream(targetFile.getPath());
 					wb = new HSSFWorkbook(stream);
-					defaultlist = getHSSFResult(wb);
+					associatelist = getAssociateHSSFResult(wb);
 				}
-				for (Associate associate : defaultlist) {
+				for (Associate associate : associatelist) {
 					// 把刚获取的列存入list,判断获取的对象是否按照规则
 					if (associate.getName() == null
 						|| "".equals(associate.getName())
 						|| associate.getTypeid() == null
 						|| "".equals(associate.getTypeid())
+						|| associate.getAddress() == null
+						|| "".equals(associate.getAddress())
+						|| associate.getTelephone() == null
+						|| "".equals(associate.getTelephone())
 					){
 						nulllist.add(associate);
 					} else {
@@ -150,72 +156,27 @@ public class UploadFileController extends BaseController {
 					}
 				}
 				// stream.close();
-				IOUtils.closeQuietly(stream);
-				//totalCount = list.size() + nulllist.size();
-				if (list.size() > 0) {
-					insertListToDatabase(list);
-					/*File files = new File(targetFile.getPath());
-					if (files.exists()) {
-						files.delete();
-					}*/
-				}
+				IOUtils.closeQuietly(stream);				
+				totalCount = associatelist.size();
+				rightCount = list.size();
+				faultCount = nulllist.size();
+				String message = "导入成功，共计"+totalCount+"条:其中成功"+rightCount+"条,失败"+faultCount+"条。";
+				if (rightCount > 0) {
+					associateService.importAssociateList(list);
+					js.setCode(0);
+					js.setMessage(message);
+				}				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Associate associate = new Associate();
-		associate.setPageNo(1);
-		associate.setPageSize(Constants.DEFAULT_PAGE_SIZE);
-		List<Associate> associatelist = new ArrayList<Associate>();
-		int countTotal = 0;
-		try { 
-			associatelist = associateService.getAssociateList(associate);  
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			for(Associate a:associatelist){
-				Date d = a.getCreatetime();
-				if(d != null){
-					String s = sdf.format(d);
-					a.setCreatetimes(s);
-				}
-			}
-			countTotal = associateService.getTotalCount(associate);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		associate.setTotalCount(countTotal);
-		request.setAttribute("associate", associate);
-		request.setAttribute("associatelist",associatelist);
-		/*request.setAttribute("pointlist", nulllist);
-		request.setAttribute("totalCount", totalCount);
-		request.setAttribute("rightCount", rightCount);
-		request.setAttribute("subCount", subCount);*/
+		return js;
+	}
 
-		return "web/associate/associateList";
-	}
-	/**
-	 * 插入机构到数据库
-	 * 
-	 * @param list
-	 * @return
-	 */
-	private void insertListToDatabase(List<Associate> list) {
-		try {
-			for (Associate associate : list) {
-				associate.setId(0);
-				try {
-					associateService.saveOrUpdateAssociate(associate);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
 	// 解析excel文件
-		private List<Associate> getXSSFResult(Workbook wb) {
+		private List<Associate> getAssociateXSSFResult(Workbook wb) {
 			// TODO Auto-generated method stub
 			List<Associate> result = new ArrayList<Associate>();
 			List<AssociateType> associateTypeList = new ArrayList<AssociateType>();
@@ -233,7 +194,6 @@ public class UploadFileController extends BaseController {
 					associate.setCreator(u.getId());
 					associate.setCreatorname(u.getName());
 					associate.setOrganname(u.getOrganName()); 
-					associate.setCreatetime(new Date());
 					associate.setGuid(u.getGuid());
 					XSSFCell cell0 = row.getCell(0);
 					if (cell0 != null || "".equals(cell0)) {
@@ -276,7 +236,7 @@ public class UploadFileController extends BaseController {
 			return result;
 		}
 
-		private List<Associate> getHSSFResult(Workbook wb) {
+		private List<Associate> getAssociateHSSFResult(Workbook wb) {
 			// TODO Auto-generated method stub
 			List<Associate> result = new ArrayList<Associate>();
 			List<AssociateType> associateTypeList = new ArrayList<AssociateType>();
@@ -294,7 +254,6 @@ public class UploadFileController extends BaseController {
 					associate.setCreator(u.getId());
 					associate.setCreatorname(u.getName());
 					associate.setOrganname(u.getOrganName()); 
-					associate.setCreatetime(new Date());
 					associate.setGuid(u.getGuid());
 					HSSFCell cell0 = row.getCell(0);
 					if (cell0 != null || "".equals(cell0)) {
@@ -386,27 +345,24 @@ public class UploadFileController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/uploadAssociateMemberExcel.do", method = RequestMethod.POST)
-	public String uploadAssociateMemberExcelFile(HttpServletRequest request,
+	public JsonResult<AssociatePerson> uploadAssociateMemberExcel(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = "associateid" , required = false) Integer associateid,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
-		
+		JsonResult<AssociatePerson> js = new JsonResult<AssociatePerson>();
+		js.setCode(1);
+		js.setMessage("导入数据失败！");		  
 		if(associateid == null || associateid == 0)
 		{
-			return "未指定公司名称";
+			js.setMessage("未指定社会机构！");
+			return js;			
 		}
-		// 导入总记录数
 		List<AssociatePerson> associatePersonlist = new ArrayList<AssociatePerson>();
-		// 导入成功记录数
 		List<AssociatePerson> associatePersonSuccesslist = new ArrayList<AssociatePerson>();
-		// 导入失败记录
 		List<AssociatePerson> associatePersonFaultlist = new ArrayList<AssociatePerson>();
-		// 导入总数
 		int totalCount = 0;
-		// 导入成功数
-//		int rightCount = 0;
-		// 导入失败数
-//		int faultCount = 0;
+		int rightCount = 0;
+		int faultCount = 0;
 
 		try {
 			// 项目在容器中的实际发布运行的upload路径
@@ -433,13 +389,13 @@ public class UploadFileController extends BaseController {
 				try {
 					stream = new FileInputStream(targetFile.getPath());
 					wb = new XSSFWorkbook(stream);
-					associatePersonFaultlist = getXSSFResult1(wb);
+					associatePersonlist = getAssociatePersonXSSFResult(wb);
+					
 				} catch (Exception ex) {
 					stream = new FileInputStream(targetFile.getPath());
 					wb = new HSSFWorkbook(stream);
-					associatePersonlist = getHSSFResult1(wb);
+					associatePersonlist = getAssociatePersonHSSFResult(wb);
 				}
-				User u = this.getLoginUser();
 				for (AssociatePerson p : associatePersonlist) {
 					//格式转换
 					
@@ -455,58 +411,35 @@ public class UploadFileController extends BaseController {
 							&& p.getBirth() != null
 							&& !"".equals(p.getBirth()) 
 							&& p.getIdcard() != null
-							&& !"".equals(p.getIdcard()))
-					{						
-						if(p.getIsleader() == null || "".equals(p.getIsleader()))
-							p.setIsleader(0);
-						p.setGuid(u.getGuid());
-						p.setCreatetime(new Date());
-						p.setOrganname(u.getOrganName());
-						p.setCreator(u.getId());
-						p.setCreatorname(u.getName());
+							&& !"".equals(p.getIdcard())
+					    ){			
 						p.setAssociateid(associateid);
-						p.setId(0);
 						if(p.getIdcard().length() == 18 || p.getIdcard().length() == 15){							
-							associatePersonSuccesslist.add(p);
-							
-						}						
-					} else {
-						associatePersonFaultlist.add(p);
+							associatePersonSuccesslist.add(p);							
+						}else{
+							associatePersonFaultlist.add(p);
+						}
 					}
 				}
 				// stream.close();
 				IOUtils.closeQuietly(stream);
-				totalCount = associatePersonSuccesslist.size() + associatePersonFaultlist.size();
+				totalCount = associatePersonlist.size();
+				rightCount = associatePersonSuccesslist.size();
+				faultCount = associatePersonFaultlist.size();
+				String message = "导入成功，共计"+totalCount+"条:其中成功"+rightCount+"条,失败"+faultCount+"条。";
 				if (totalCount > 0) {
-					List<AssociatePerson> lst = insertListToDatabase1(associatePersonSuccesslist);
-//					rightCount = associatePersonSuccesslist.size() - lst.size();
-//					faultCount = totalCount - rightCount;
-//					if (lst.size() > 0) {
-//						for (AssociatePerson d : lst) {
-//							associatePersonFaultlist.add(d);
-//						}
-					}
-					File files = new File(targetFile.getPath());
-					if (files.exists()) {
-						files.delete();
-					}
-				//}
+					associateService.importAssociatePersonList(associatePersonSuccesslist);
+					js.setCode(0);
+					js.setMessage(message);										
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//	    request.setAttribute("associatePersonFaultlist", associatePersonFaultlist);
-//		request.setAttribute("totalCount", totalCount);
-//		request.setAttribute("rightCount", rightCount);
-//		request.setAttribute("faultCount", faultCount);
-
-		Associate associate = new Associate();
-		associate = associateService.getAssociateById(associateid);
-		request.setAttribute("associate", associate);
-		
-		return "web/associate/associateInfo";
+   
+		return js;
 	}
 	
 	/**
@@ -514,7 +447,7 @@ public class UploadFileController extends BaseController {
 	 * @param wb
 	 * @return
 	 */
-	private List<AssociatePerson> getHSSFResult1(Workbook wb) {		
+	private List<AssociatePerson> getAssociatePersonHSSFResult(Workbook wb) {		
 			List<AssociatePerson> result = new ArrayList<AssociatePerson>();
 			for (int sheetIndex = 0; sheetIndex < wb.getNumberOfSheets(); sheetIndex++) {
 				HSSFSheet st = (HSSFSheet) wb.getSheetAt(sheetIndex);
@@ -525,6 +458,12 @@ public class UploadFileController extends BaseController {
 						continue;
 					}
 					AssociatePerson p = new AssociatePerson();
+					User u = this.getLoginUser();
+					p.setGuid(u.getGuid());
+					p.setOrganname(u.getOrganName());
+					p.setCreator(u.getId());
+					p.setCreatorname(u.getName());
+					
 					HSSFCell cell0 = row.getCell(0);
 					if (cell0 != null || "".equals(cell0)) {
 						p.setName(cell0.getStringCellValue());
@@ -575,9 +514,15 @@ public class UploadFileController extends BaseController {
 	 * @param wb
 	 * @return
 	 */
-	private List<AssociatePerson> getXSSFResult1(Workbook wb) {
+	private List<AssociatePerson> getAssociatePersonXSSFResult(Workbook wb) {
 		// TODO Auto-generated method stub
 		List<AssociatePerson> result = new ArrayList<AssociatePerson>();
+		AssociatePerson p = new AssociatePerson();
+		User u = this.getLoginUser();
+		p.setGuid(u.getGuid());
+		p.setOrganname(u.getOrganName());
+		p.setCreator(u.getId());
+		p.setCreatorname(u.getName());
 		for (int sheetIndex = 0; sheetIndex < wb.getNumberOfSheets(); sheetIndex++) {
 			XSSFSheet st = (XSSFSheet) wb.getSheetAt(sheetIndex);
 			// 第一行为标题，不取
@@ -586,7 +531,7 @@ public class UploadFileController extends BaseController {
 				if (row == null) {
 					continue;
 				}
-				AssociatePerson p = new AssociatePerson();
+				
 				XSSFCell cell0 = row.getCell(0);
 				if (cell0 != null || "".equals(cell0)) {
 					p.setName(cell0.getStringCellValue());
@@ -625,38 +570,11 @@ public class UploadFileController extends BaseController {
 						ex.printStackTrace();
 					}
 				}
-				result.add(p);
+		     result.add(p);
 			}
 		}
 		return result;
 	}
 		
-	/**
-	 * 插入相关人员到数据库
-	 * 
-	 * @param list
-	 * @return
-	 */
-	private List<AssociatePerson> insertListToDatabase1(List<AssociatePerson> list) {
-		// TODO Auto-generated method stub
-		List<AssociatePerson> lst = new ArrayList<AssociatePerson>();
-		List<AssociatePerson> lc = new ArrayList<AssociatePerson>();
-		try {
-			for (AssociatePerson m : list) {
-			//	lc = associateService.getExistAssociatePerson(m);
-			//	if(lc.size() == 0)
-			//	{
-					try {
-						associateService.updateAssociatePerson(m);
-					} catch (Exception ex) {
-						lst.add(m);
-						ex.printStackTrace();
-			//		}
-				}
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return lst;
-	}
+
 }

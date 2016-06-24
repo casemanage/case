@@ -136,8 +136,8 @@ function excelChange(file){
 	        } else file.value="";//for FF,Chrome,Safari
 	    } else {	
 			showProcess(true, '温馨提示', '正在提交数据...'); 
-	   		fileForms.submit();
-	    	/* $('#fileForms').form('submit',{
+	   		//fileForms.submit();
+	    	 $('#fileForms').form('submit',{
 				success : function(data) {
 					data = $.parseJSON(data);
 					if (data.code == 0) {
@@ -149,7 +149,7 @@ function excelChange(file){
 						$.messager.alert('错误信息', data.message, 'error');
 					}  
 				}
-			});	  */
+			});	  
 	    }
 }
 function chooseFile(){
@@ -194,6 +194,7 @@ function chooseFile(){
 					<th>经纬度</th>
 					<th>地址</th>
 					<th>手机号码</th>
+					<td>区域名称</td>
 					<!-- <th>采集单位</th>
 					<th>采集人</th> -->
 					<th>采集时间</th>
@@ -217,6 +218,7 @@ function chooseFile(){
 						</c:if>
 						<td>${item.address}</td>
 						<td>${item.telephone}</td>
+						<td>${item.areaName}</td>
 						<%--<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.organname}</td>
 						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.creatorname}</td> --%>
 						<td>${item.createtimes}</td>

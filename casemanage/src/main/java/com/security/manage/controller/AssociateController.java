@@ -645,6 +645,8 @@ public class AssociateController extends BaseController{
 			int total = 0;
 			if(pageNumber != null){
 				ap.setPageNo(pageNumber);
+			}else{
+				ap.setPageNo(1);
 			}
 			ap.setPageSize(Constants.DEFAULT_PAGE_SIZE);
 			if(associateId != null){
