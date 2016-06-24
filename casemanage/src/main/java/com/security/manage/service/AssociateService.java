@@ -11,6 +11,10 @@ import com.security.manage.model.TypeStatistic;
 public interface AssociateService {
 
 	List<Associate> getAssociateList(Associate associate);
+	
+	 void importAssociateList(List<Associate> list);
+	
+	 void importAssociatePersonList(List<AssociatePerson> list);
 
 	int getTotalCount(Associate associate);
 

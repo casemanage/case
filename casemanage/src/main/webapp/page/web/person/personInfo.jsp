@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>重要人员信息</title>
+    <title>重点人员信息</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -101,30 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$("#photourl").val(obj.value);
 			}
 		}	
-/* 	function birthCheck(){
-		var idCardNo = $("#idcard").val();		
-		var birthStr = "";
-	var sexStr = "";
-	if(idCardNo.length>0){
-		 if(idCardNo.length == 15){ 
-			
-			tmpStr = idCardNo.substring(6, 12);
-		    tmpStr = "19" + tmpStr;
-		    tmpStr = tmpStr.substring(0, 4) + "-" + tmpStr.substring(4, 6) + "-" + tmpStr.substring(6);
-		    $("#hid_birth").val(tmpStr);
-		   
-		}else if(idCardNo.length == 18){
-		
-			tmpStr = idCardNo.substring(6, 14);
-	        tmpStr = tmpStr.substring(0, 4) + "-" + tmpStr.substring(4, 6) + "-" + tmpStr.substring(6);
-	      
-		    $("#hid_birth").val(tmpStr);
-		    
-		}
-	}
-}
 
-}	  */
 	</script>
   </head>
   
@@ -132,8 +109,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
   <div id="contentRight" class="contentRight">
        	<div class="containner-fluid">
-           	<div class="pannel-header">重要人员信息</div> 
-                 <div class="Panel-content">重要人员信息：${person.id == 0?"新建重要人员信息":person.name}</div>
+           	<div class="pannel-header">重点人员信息</div> 
+                 <div class="Panel-content">重点人员信息：${person.id == 0?"新建重点人员信息":person.name}</div>
         	</div>
        
     <div class="containner-fluid text-center"  >
