@@ -208,4 +208,10 @@ public class AssociateServiceImpl implements AssociateService{
 		// TODO Auto-generated method stub
 		return associateTypeMapper.getAssociateTypeAllList();
 	}
+
+	@Override
+	public List<Associate> getAreaListByAreaId(Associate a) {
+		// TODO Auto-generated method stub
+		return associateMapper.getAreaListByAreaId(a);
+	}
 }

@@ -4,7 +4,8 @@
      <mapping path="/associate/*" decorator="/page/decorators/main.jsp" /> 
      <mapping path="/Home/*" decorator="/page/decorators/main.jsp" /> 
      <mapping path="/person/*" decorator="/page/decorators/main.jsp" />
-     <mapping path="/fileUpload/*" decorator="/page/decorators/main.jsp" />  
+     <mapping path="/fileUpload/*" decorator="/page/decorators/main.jsp" />
+     <mapping path="/area/*" decorator="/page/decorators/main.jsp" />   
      <!-- 指明满足“/exclude.jsp*”的页面，将被排除，不被装饰 --> 
      <mapping path="**/source/**" exclue="true" />  
      <mapping path="**/source/**" exclue="true" />  

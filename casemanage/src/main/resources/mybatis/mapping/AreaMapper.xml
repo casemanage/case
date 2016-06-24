@@ -12,18 +12,21 @@
     <result column="longtiude" property="longtiude" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="flag" property="flag" jdbcType="INTEGER" />
+    <result column="acount" property="childrenCount" jdbcType="INTEGER" />
+    <result column="PARENT_NAME" property="parentName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, parentId, level, code, isleaf, latitude, longtiude, description, flag
+    a.id, a.name, a.parentId, a.level, a.code,a.isleaf, a.latitude, a.longtiude, a.description, a.flag
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from MC_AREA
-    where id = #{id,jdbcType=INTEGER}
+    from MC_AREA a
+    where a.id = #{id,jdbcType=INTEGER}
+    and a.flag = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from MC_AREA
+    delete from MC_AREA 
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.security.manage.model.Area" >
@@ -149,4 +152,49 @@
       flag = #{flag,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getAreaAllList" parameterType="com.security.manage.model.Area" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />,
+  	(select x.name from MC_AREA as x where x.id = a.parentId) as PARENT_NAME
+  	from 
+  	(select *, ROW_NUMBER() OVER(Order by b.ID) AS RowNumber from MC_AREA as b where 1=1
+		  <if test="searchName != null and searchName !=''" >
+	  	   	and b.NAME like '%${searchName}%'
+	      </if>
+  	  ) a
+  	 where a.flag = 0 
+  	 <if test="parentid != 0">
+    	and a.parentId = #{parentid,jdbcType=INTEGER}
+    </if>
+     <if test="pageStart != null and pageSize != null and pageStart>-1 and pageSize>-1">
+   		and RowNumber BETWEEN (#{pageStart} + 1) and (#{pageSize} + #{pageStart})
+   	</if>
+  </select>
+  <select id="getAreaList" parameterType="com.security.manage.model.Area" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />,
+  	(SELECT count(*) from MC_AREA t2 where t2.parentId = a.id and t2.flag = 0) as acount
+  	from MC_AREA a
+  	where a.flag=0 and a.parentId = #{parentid,jdbcType=INTEGER}
+  	<if test="searchName != null and searchName !=''" >
+	   	and a.NAME like '%${searchName}%'
+    </if>
+    <!-- <if test="parentid != null and parentid !=''">
+    	and a.parentId=#{parentid}
+    </if> -->
+  </select>
+  <select id="getTotalCount" parameterType="com.security.manage.model.Area" resultType="java.lang.Integer">
+  	select count(*)
+  	from MC_AREA
+  	where flag = 0 
+  	<if test="searchName != null and searchName !=''" >
+	   	and NAME like '%${searchName}%'
+    </if>
+  </select>
+  <select id="getTotalCountByParentId" parameterType="com.security.manage.model.Area" resultType="java.lang.Integer">
+  	select count(*)
+  	from MC_AREA
+  	where flag = 0 and parentId = #{parentid,jdbcType=INTEGER}
+  	<if test="searchName != null and searchName !=''" >
+	   	and NAME like '%${searchName}%'
+    </if>
+  </select>
 </mapper>

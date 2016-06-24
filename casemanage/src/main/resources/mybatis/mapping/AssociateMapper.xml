@@ -311,4 +311,10 @@
   	where 
   	<![CDATA[a.CREATORNAME =#{creatorname} ]]>
   </select>
+  <select id="getAreaListByAreaId" parameterType="com.security.manage.model.Associate" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	from MC_ASSOCIATE a
+  	where 
+  	a.AREAID = #{areaId,jdbcType=INTEGER}
+  </select>
 </mapper>

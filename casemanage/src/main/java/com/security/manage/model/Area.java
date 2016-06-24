@@ -1,6 +1,10 @@
 package com.security.manage.model;
 
-public class Area {
+import java.util.List;
+
+import com.security.manage.util.Page;
+
+public class Area extends Page{
     private Integer id;
 
     private String name;
@@ -21,6 +25,16 @@ public class Area {
 
     private Integer flag;
 
+    private String text;
+    
+    private Integer childrenCount;
+    
+    private String state;
+    
+    private List<Area> children;
+    
+    private String parentName;
+    
     public Integer getId() {
         return id;
     }
@@ -100,4 +114,45 @@ public class Area {
     public void setFlag(Integer flag) {
         this.flag = flag;
     }
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public Integer getChildrenCount() {
+		return childrenCount;
+	}
+
+	public void setChildrenCount(Integer childrenCount) {
+		this.childrenCount = childrenCount;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public List<Area> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Area> children) {
+		this.children = children;
+	}
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
+
 }
