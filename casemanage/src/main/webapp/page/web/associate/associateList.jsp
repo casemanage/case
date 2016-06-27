@@ -4,7 +4,6 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -39,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}
 			}); */
 			  
-		});
+		})
 		
 PageClick = function(pageclickednumber) {
 	$("#pager").pager({
@@ -137,20 +136,28 @@ function excelChange(file){
 	    } else {	
 			showProcess(true, '温馨提示', '正在提交数据...'); 
 	   		//fileForms.submit();
-	    	 $('#fileForms').form('submit',{
-				success : function(data) {
-					data = $.parseJSON(data);
-					if (data.code == 0) {
-						$.messager.alert('保存信息', data.message, 'info',function(){
+	   		fileFormSubmit();
+	    }
+}
+function fileFormSubmit(){
+	var file = $("#file").val();
+	$.ajax({
+				url : "<%=basePath%>fileUpload/jsonLoadAssociateExcel.do?file="+file,
+				type : "post",  
+				dataType:"json",
+				success : function(data) { 
+		  			if(data.code==0){ 
+		  				$.messager.alert('保存信息', data.message, 'info',function(){
 							search();
 						});
-						
-					} else {
-						$.messager.alert('错误信息', data.message, 'error');
-					}  
+		  			}else{
+						$.messager.alert('错误信息', data.message, 'error',function(){
+							search();
+						});
+		  			} 
 				}
-			});	  
-	    }
+			});
+
 }
 function chooseFile(){
 	return $("#file").click();
@@ -166,7 +173,7 @@ function chooseFile(){
 			<input type ="button" class="hey-btn hey-btn-default" onclick="chooseFile();" value="导入社会机构">
 			</input>
 			<div style="display: none">
-				<form id="fileForms" name="fileForms" action="<%=basePath%>fileUpload/uploadAssociateExcel.do"  enctype="multipart/form-data" method="post" style="margin:0;padding:0;">
+				<form id="fileForms" name="fileForms" action="<%=basePath%>fileUpload/jsonLoadAssociateExcel.do"  enctype="multipart/form-data" method="post" style="margin:0;padding:0;">
 			       	<input id="file" type="file" name="file" id="jfile" class="yw-upload-file" onChange="excelChange(this);">
 				</form>
 			</div>	
