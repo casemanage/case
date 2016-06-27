@@ -31,11 +31,11 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.security.manage.model.Area" >
-    insert into MC_AREA (id, name, parentId, 
+    insert into MC_AREA (name, parentId, 
       level, code, isleaf, 
       latitude, longtiude, description, 
       flag)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER}, 
+    values (#{name,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER}, 
       #{level,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{isleaf,jdbcType=INTEGER}, 
       #{latitude,jdbcType=VARCHAR}, #{longtiude,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{flag,jdbcType=INTEGER})
@@ -213,5 +213,13 @@
     <!-- <if test="parentid != null and parentid !=''">
     	and a.parentId=#{parentid}
     </if> -->
+  </select>
+   <select id="getAreaListByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />,
+    (select x.name from MC_AREA as x where x.id = a.parentId) as PARENT_NAME
+    from MC_AREA a
+    where a.parentId = #{parentid,jdbcType=INTEGER}
+    and a.flag = 0
   </select>
 </mapper>

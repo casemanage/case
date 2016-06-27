@@ -5,7 +5,8 @@ import java.util.List;
 import com.security.manage.model.Area;
 
 public interface AreaMapper {
-    int deleteByPrimaryKey(Integer id);
+   
+	int deleteByPrimaryKey(Integer id);
 
     int insert(Area record);
 

@@ -104,8 +104,11 @@ public class AreaController {
 			area.setParentid(id);
 		} 
 		try{
-			List<Area> lc = areaService.getAreaAllList(area);
+			List<Area> lc = areaService.getAreaListByParentId(area);
 			int totalCount = areaService.getTotalCountByParentId(area);
+			Area ar = new Area();
+			ar = areaService.getAreaById(id);
+			lc.add(ar);
 			area.setTotalCount(totalCount);
 			request.setAttribute("Area", area);
 			js.setObj(area); 
@@ -205,14 +208,15 @@ public class AreaController {
 					if(area.getParentid() != null && area.getParentid() != 0)					
 					{
 						int parentId = area.getParentid();
-						Area la = areaService.getAreaById(parentId);
-						if(old.getParentid() != parentId)
+						Area la = areaService.getAreaById(parentId);					
+						if(old.getParentid() != null && old.getParentid() != parentId && old.getParentid() != 0)
 						{
-							List<Area> lp = areaService.getAreaAllList(old);
+							Area la1 = areaService.getAreaById(old.getParentid());
+							List<Area> lp = areaService.getAreaListByParentId(old);
 							if(lp.size() == 1)
 							{
-								old.setIsleaf(0);
-								areaService.updateArea(old); 
+								la1.setIsleaf(0);
+								areaService.updateArea(la1); 
 							}
 						}
 						if(la.getId() != null)
@@ -229,14 +233,14 @@ public class AreaController {
 					area.setLevel(level);
 					area.setIsleaf(0);
 					areaService.saveOrUpdateArea(area); 
-					js.setCode(new Integer(0));											
+					js.setCode(0);											
 					js.setMessage("保存成功!");
 				}else
 				{
 					js.setMessage("该区域已存在!");
 				}									
 			} 
-		} catch (Exception ex) {
+		} catch (Exception ex){
 			ex.printStackTrace();
 		}
 		return js;
