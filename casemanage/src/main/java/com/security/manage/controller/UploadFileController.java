@@ -422,6 +422,8 @@ public class UploadFileController extends BaseController {
 						}else{
 							associatePersonFaultlist.add(p);
 						}
+					}else{
+						associatePersonFaultlist.add(p);
 					}
 				}
 				// stream.close();
@@ -471,11 +473,14 @@ public class UploadFileController extends BaseController {
 					if (cell0 != null || "".equals(cell0)) {
 						p.setName(cell0.getStringCellValue());
 					}
-					HSSFCell cell1 = row.getCell(1);
+					HSSFCell cell1 = row.getCell(1);					
 					if (cell1 != null || "".equals(cell1)) {
-						int sex = Integer.parseInt(cell1.getStringCellValue());
-						p.setSex(sex);
-					}
+						String sex = cell1.getStringCellValue();
+						if(sex.equals("男") || sex.equals("1"))
+						    p.setSex(1);
+						if(sex.equals("女") || sex.equals("0"))
+							p.setSex(0);
+					}					
 					HSSFCell cell2 = row.getCell(2);
 					if (cell2 != null || "".equals(cell2)) {
 						p.setBirth(cell2.getStringCellValue());
@@ -498,9 +503,10 @@ public class UploadFileController extends BaseController {
 					}
 					HSSFCell cell7 = row.getCell(7);
 					if (cell7 != null || "".equals(cell7)) {
-						try {													
-							Integer i = Integer.valueOf(cell7.getStringCellValue());
-							p.setIsleader(i);
+						try {	
+							String isleader = cell7.getStringCellValue();
+							if(isleader.equals("是") || isleader.equals("1"))
+								p.setIsleader(1);
 						} catch (Exception ex) {
 							ex.printStackTrace();
 						}
@@ -541,8 +547,11 @@ public class UploadFileController extends BaseController {
 				}
 				XSSFCell cell1 = row.getCell(1);
 				if (cell1 != null || "".equals(cell1)) {
-					int sex = Integer.parseInt(cell1.getStringCellValue());
-					p.setSex(sex);
+					String sex = cell1.getStringCellValue();
+					if(sex.equals("男") || sex.equals("1"))
+					    p.setSex(1);
+					if(sex.equals("女") || sex.equals("0"))
+						p.setSex(0);
 				}
 				XSSFCell cell2 = row.getCell(2);
 				if (cell2 != null || "".equals(cell2)) {
@@ -566,9 +575,10 @@ public class UploadFileController extends BaseController {
 				}
 				XSSFCell cell7 = row.getCell(7);
 				if (cell7 != null || "".equals(cell7)) {
-					try {													
-						Integer i = Integer.valueOf(cell7.getStringCellValue());
-						p.setIsleader(i);
+					try {	
+						String isleader = cell7.getStringCellValue();
+						if(isleader.equals("是") || isleader.equals("1"))
+							p.setIsleader(1);
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}

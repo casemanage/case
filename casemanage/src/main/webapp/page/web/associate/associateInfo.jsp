@@ -190,8 +190,9 @@ function excelChange(file){
 	            file.type="text";file.type="file";
 	        } else file.value="";//for FF,Chrome,Safari
 	    } else {	
-			showProcess(true, '温馨提示', '正在提交数据...'); 
+			//showProcess(true, '温馨提示', '正在提交数据...'); 
 	   		//fileForms.submit();
+	   		//alert(data);
 	    	 $('#fileForms').form('submit',{
 				success : function(data) {
 					data = $.parseJSON(data);

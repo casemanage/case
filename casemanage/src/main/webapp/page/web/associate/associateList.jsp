@@ -134,9 +134,19 @@ function excelChange(file){
 	            file.type="text";file.type="file";
 	        } else file.value="";//for FF,Chrome,Safari
 	    } else {	
-			showProcess(true, '温馨提示', '正在提交数据...'); 
-	   		//fileForms.submit();
-	   		fileFormSubmit();
+		 $('#fileForms').form('submit',{
+				success : function(data) {
+					data = $.parseJSON(data);
+					if (data.code == 0) {
+						$.messager.alert('保存信息', data.message, 'info',function(){
+							search();
+						});
+						
+					} else {
+						$.messager.alert('错误信息', data.message, 'error');
+					}  
+				}
+			});	 
 	    }
 }
 function fileFormSubmit(){
@@ -173,8 +183,12 @@ function chooseFile(){
 			<input type ="button" class="hey-btn hey-btn-default" onclick="chooseFile();" value="导入社会机构">
 			</input>
 			<div style="display: none">
-				<form id="fileForms" name="fileForms" action="<%=basePath%>fileUpload/jsonLoadAssociateExcel.do"  enctype="multipart/form-data" method="post" style="margin:0;padding:0;">
-			       	<input id="file" type="file" name="file" id="jfile" class="yw-upload-file" onChange="excelChange(this);">
+				<form id="fileForms" name="fileForms"
+				 action="<%=basePath%>fileUpload/jsonLoadAssociateExcel.do" 
+				  enctype="multipart/form-data" method="post" 
+				  style="margin:0;padding:0;">
+			       	<input id="file" type="file" name="file" id="jfile"
+			       	 class="yw-upload-file" onChange="excelChange(this);">
 				</form>
 			</div>	
 		</div>
