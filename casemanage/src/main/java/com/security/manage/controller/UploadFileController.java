@@ -94,8 +94,9 @@ public class UploadFileController extends BaseController {
 	 * @param file
 	 * @return
 	 */
-	@RequestMapping(value = "/uploadAssociateExcel.do")
-	public JsonResult<Associate> uploadAssociateExcel(HttpServletRequest request,
+	@ResponseBody
+	@RequestMapping(value = "/jsonLoadAssociateExcel.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
+	public JsonResult<Associate> jsonLoadAssociateExcel(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
 		JsonResult<Associate> js = new JsonResult<Associate>();
@@ -122,7 +123,6 @@ public class UploadFileController extends BaseController {
 				File f = new File(targetFile.getPath());
 				if (f.exists()) {
 					f.delete();
-					
 				}
 				// 把MultipartFile转换成File类型,MultipartFile自带的transferTo
 				file.transferTo(targetFile);
@@ -344,8 +344,9 @@ public class UploadFileController extends BaseController {
 	 * @param file
 	 * @return
 	 */
-	@RequestMapping(value = "/uploadAssociateMemberExcel.do", method = RequestMethod.POST)
-	public JsonResult<AssociatePerson> uploadAssociateMemberExcel(HttpServletRequest request,
+	@ResponseBody
+	@RequestMapping(value = "/jsonLoadAssociateMemberExcel.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
+	public JsonResult<AssociatePerson> jsonLoadAssociateMemberExcel(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = "associateid" , required = false) Integer associateid,
 			@RequestParam(value = "file", required = false) MultipartFile file) {

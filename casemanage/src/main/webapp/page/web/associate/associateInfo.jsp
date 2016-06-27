@@ -220,9 +220,7 @@ function chooseFile(){
      	<div class="pannel-header">
 			<span>社会机构信息</span>
 			<div class="Panel-content">社会机构信息：${Associate.id == 0?"新建社会机构信息":Associate.name}</div>
-			
 		</div>
-
      <div id="tabInfo" class="easyui-tabs" style="width:100%;border:0;">  
     <div title="基础信息" style="padding:20px;" >  
          <div class="containner-fluid text-center"> 
@@ -302,23 +300,29 @@ function chooseFile(){
  </div>
  </div> 
     <c:if test="${Associate.id>0}">
-	    <div title="相关人员" style="padding:20px;" >
-	      <div class="Panel-content">
-		   <div style="width:100%;text-align:right">
-			<input type="button" class="btn-add"	onclick="window.location.href='<%=basePath%>associate/associateMember.do?associateId=${Associate.id}'" value="新增相关人员">
-			<input type="button" class="btn-back" style="margin-left:25px;margin-right:25px"	onclick="window.location.href='<%=basePath%>associate/associateList.do'" value="返回">
-			<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/社会机构相关人员数据采集模板.xls'" value="下载导入模板"/>	
-		    <input type ="button" class="hey-btn hey-btn-default" onclick="chooseFile();" value="导入社会机构相关人员"/>
-		      <div style="display: none">
-				<form id="fileForms" name="fileForms" action="<%=basePath%>fileUpload/uploadAssociateMemberExcel.do"  enctype="multipart/form-data" method="post" style="margin:0;padding:0;">
-			    <input id="file" type="file" name="file" id="jfile" class="yw-upload-file" onChange="excelChange(this);">
-				<input id="associateid" type="hidden" name="associateid" value="${Associate.id}" />
-			 	 </form> 
-			   </div>	
+		<div title="相关人员" style="padding:20px;">
+			<div class="Panel-content">
+				<div style="width:100%;text-align:right">
+					<input type="button" style="margin-bottom:10px;" class="btn-import" onclick="chooseFile();" value="导入机构人员" />
+				</div>
+				<div style="width:100%;text-align:right">
+					<input type="button" class="btn-back" style="margin-left:25px;margin-right:25px" onclick="window.location.href='<%=basePath%>associate/associateList.do'"	value="返回"> 
+					<input type="button" class="btn-add"  style="margin-left:25px;"	onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/社会机构相关人员数据采集模板.xls'"	value="下载导入模板" />
+					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>associate/associateMember.do?associateId=${Associate.id}'"	value="新增相关人员"> 
+					<div style="display: none">
+						<form id="fileForms" name="fileForms"
+							action="<%=basePath%>fileUpload/jsonLoadAssociateMemberExcel.do"
+							enctype="multipart/form-data" method="post"
+							style="margin:0;padding:0;">
+							<input id="file" type="file" name="file" id="jfile"
+								class="yw-upload-file" onChange="excelChange(this);">
+							<input id="associateid" type="hidden" name="associateid"
+								value="${Associate.id}" />
+						</form>
+					</div>
+				</div>
 			</div>
-			</div>
-		</div>   
-   	<div class="containner-fluid">
+	<div class="containner-fluid">
 		<table cellpadding="10" cellspacing="0" width="100%" class="list-info">
 			<thead>
 				<tr style="background-color:#D6D3D3;font-weight: bold;">
@@ -372,8 +376,9 @@ function chooseFile(){
 		<input type="hidden" id="pageNumber" name="pageNo" value="${associatePerson.pageNo}" /> 
 	 	<div class="page" id="pager"></div>
 	</div>
-   </div> 
+	</div>
     </c:if>  
+   </div> 
 </div> 
    
 </div> 

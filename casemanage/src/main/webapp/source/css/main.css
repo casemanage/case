@@ -36,7 +36,9 @@ a{ text-decoration:none;}
 .btn-sm{ font-size:12px; padding:8px 25px; background:#228FCC; border:0px; color:#fff; border-radius:3px; font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;}
 .btn-back{ font-size:12px; padding:8px 25px; background:#D24343; border:0px; color:#fff; border-radius:3px; font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;}
 .btn-add{ font-size:12px; padding:8px 25px; background:#25A02F; border:0px; color:#fff; border-radius:3px; font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;}
-.hey-btn-default { font-size:15px;background-color: #ff8600; color: #ffffff;padding:8px 25px;width:160px; height:30px; border:0; float:right;line-height:50%;}
+.hey-btn-default { font-size:15px;background-color: #ff8600; color: #ffffff;padding:8px 25px;width:155px; height:30px; border:0; float:right;line-height:50%;}
+.hey-btn-person { font-size:15px;background-color: #ff8600; color: #ffffff;padding:8px 25px;width:155px; height:30px; border:0; float:right;line-height:50%;}
+.btn-import{ font-size:12px; padding:8px 25px;background-color: #ff8600; color: #ffffff;border:0px;border-radius:3px; font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;}
 
 .logn-logo{ width:100%; height:auto; text-align:center;}
 .login-panel{ width:350px; height:auto; overflow:hidden; margin:0 auto;}
