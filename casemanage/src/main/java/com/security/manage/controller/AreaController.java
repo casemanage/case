@@ -171,4 +171,54 @@ public class AreaController {
 		request.setAttribute("area", a);
 		return "web/area/areaInfo";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/jsonSaveOrUpdateArea.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
+	public JsonResult<Area> SaveOrUpdateArea(Area area,
+			HttpServletRequest request, HttpServletResponse response) {
+		JsonResult<Area> js = new JsonResult<Area>();
+		js.setCode(new Integer(1));
+		js.setMessage("保存失败!");
+		Area p = new Area();
+		try {
+			if (area.getId() == null || area.getId() == 0)
+			{
+				area.setId(0);	
+			}
+			if (area.getName() != null) {
+				int level = 1;
+				
+				String name = area.getName();				
+				p.setName(name);
+				List<Area> lc = areaService.getAreaListByName(p);
+				if (lc.size() == 0) {
+					if(area.getParentid() != null)					
+					{
+						int parentId = area.getParentid();
+						Area la = areaService.getAreaById(parentId);
+						if(la.getId() != null)
+						{							
+							level += la.getLevel();
+							if(la.getIsleaf() != 1)
+							{
+								la.setIsleaf(1);
+								areaService.updateArea(la); 
+							}									
+						}
+					}
+					area.setFlag(0);
+					area.setLevel(level);
+					areaService.saveOrUpdateArea(area); 
+					js.setCode(new Integer(0));											
+					js.setMessage("保存成功!");
+				}else
+				{
+					js.setMessage("该区域已存在!");
+				}									
+			} 
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return js;
+	}
 }

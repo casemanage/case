@@ -207,6 +207,7 @@ public class UploadFileController extends BaseController {
 								associate.setTypeid(a.getId());
 								String serialNo = getAssoSerialNo(associate.getTypeid()); 
 								associate.setSerialno(serialNo);
+								continue ;
 							}
 						}
 					}
@@ -267,6 +268,7 @@ public class UploadFileController extends BaseController {
 								associate.setTypeid(a.getId());
 								String serialNo = getAssoSerialNo(associate.getTypeid()); 
 								associate.setSerialno(serialNo);
+								continue ;
 							}
 						}
 					}

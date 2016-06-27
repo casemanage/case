@@ -7,9 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.security.manage.dao.AreaMapper;
-import com.security.manage.dao.AssociateMapper;
 import com.security.manage.model.Area;
-import com.security.manage.model.Associate;
 import com.security.manage.service.AreaService;
 
 @Service("areaService")
@@ -57,6 +55,27 @@ public class AreaServiceImpl implements AreaService{
 	public Area getAreaById(Integer areaId) {
 		// TODO Auto-generated method stub
 		return areaMapper.selectByPrimaryKey(areaId);
+	}
+
+	@Override
+	public List<Area> getAreaListByName(Area area) {
+		// TODO Auto-generated method stub
+		return areaMapper.getAreaListByName(area);
+	}
+
+	@Override
+	public void updateArea(Area area) {
+		// TODO Auto-generated method stub
+		areaMapper.updateByPrimaryKeySelective(area);
+	}
+
+	@Override
+	public void saveOrUpdateArea(Area area) {
+		if(area.getId() > 0)
+		{
+			areaMapper.updateByPrimaryKey(area);
+		}else
+			areaMapper.insert(area);		
 	}
 
 }

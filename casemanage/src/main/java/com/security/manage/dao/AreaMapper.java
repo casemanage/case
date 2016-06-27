@@ -26,4 +26,6 @@ public interface AreaMapper {
 	List<Area> getAreaListByParentId(Area area);
 
 	int getTotalCountByParentId(Area area);
+	
+	List<Area> getAreaListByName(Area area);
 }

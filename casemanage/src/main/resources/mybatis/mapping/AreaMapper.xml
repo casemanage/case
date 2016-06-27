@@ -198,4 +198,18 @@
 	   	and NAME like '%${searchName}%'
     </if>
   </select>
+  <select id="getAreaListByName" parameterType="com.security.manage.model.Area" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	from MC_AREA
+  	where  1=1
+  	and flag=0
+  <!-- 	and 
+  	a.parentId = #{parentid,jdbcType=INTEGER} -->
+  	<if test="name != null and name !=''" >
+	   	and name = #{name,jdbcType=VARCHAR}
+    </if>
+    <!-- <if test="parentid != null and parentid !=''">
+    	and a.parentId=#{parentid}
+    </if> -->
+  </select>
 </mapper>

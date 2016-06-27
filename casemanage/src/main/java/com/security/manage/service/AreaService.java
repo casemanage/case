@@ -3,7 +3,6 @@ package com.security.manage.service;
 import java.util.List;
 
 import com.security.manage.model.Area;
-import com.security.manage.model.Associate;
 
 public interface AreaService {
 
@@ -20,5 +19,11 @@ public interface AreaService {
 	void deleteAreaById(Area area);
 
 	Area getAreaById(Integer areaId);
+
+	List<Area> getAreaListByName(Area area);
+
+	void updateArea(Area la);
+
+	void saveOrUpdateArea(Area area);
 	
 }

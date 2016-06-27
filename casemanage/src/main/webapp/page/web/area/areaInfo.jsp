@@ -22,88 +22,84 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	--> 
-	 <script type="text/javascript">
-	$(document).ready(function(){ 
-			//setShowStates();
-			var de = $("#description").val();
-			$("#textarea").val(de);
-			 $("#cmbParentArea").combotree({
-				 url: '<%=basePath%>area/jsonLoadAreaTreeList.do',  
-   				 required: false,
-   				 onBeforeExpand:function(node){
-   				 	$('#cmbParentArea').combotree('tree').tree('options').url = '<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+ node.id;
-   				 },
-   				 onSelect:function(record){
-   				 	 var areaId = $("#areaId").val();
-   				 	 if(areaId != undefined && areaId != 0 && areaId !="" && areaId != null){
-   				 	 if(record!=null){
-		   				 	 if(areaId == record.id){
-		   				 	 	$.messager.alert('错误信息',"不能选择当前区域为所属区域",'error',function(){
-			        			});
-		   				 	 	$("#cmbParentArea").combotree("clear");
-	   				 	 		$("#cmbParentArea").combotree("reload",'<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+0);
-		   				 	 	$("#cmbParentArea").combotree("setText","=请选择所属区域=");
-		   				 	 }else{
-			   				 	 var parId = $("#parentId").val();
-			   				 	 if(record.id  == parId){
-			   				 	 	//$("#cmbParentCompany").combotree("setValue",0);
-			   				 	 	$("#cmbParentArea").combotree("clear");
-			   				 	 	$("#parentId").val(0);
-		   				 	 		$("#cmbParentArea").combotree("reload",'<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+0);
-			   				 	 	$("#cmbParentArea").combotree("setText","=请选择所属区域=");
-			   				 	 }else{  
-			   				 	 	$("#parentId").val(record.id);
-			   				 	 }   
-		   				 	 }
-	   				 } else{
-   				 	 	$("#cmbParentArea").combotree("clear");
-   				 	 	$("#parentId").val(0);
-  				 	 	$("#cmbParentArea").combotree("reload",'<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+0);
-   				 	 	$("#cmbParentArea").combotree("setText","=请选择所属区域=");
-	   				 } 
-					 //appendParentNode();
-					 }else{
-	   				 	 var parId = $("#parentId").val();
-	   				 	 if(record.id  == parId){
-	   				 	 	//$("#cmbParentCompany").combotree("setValue",0);
+ <script type="text/javascript">
+$(document).ready(function(){ 
+		//setShowStates();
+		var de = $("#description").val();
+		$("#textarea").val(de);
+		 $("#cmbParentArea").combotree({
+			 url: '<%=basePath%>area/jsonLoadAreaTreeList.do',  
+  				 required: false,
+  				 onBeforeExpand:function(node){
+  				 	$('#cmbParentArea').combotree('tree').tree('options').url = '<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+ node.id;
+  				 },
+  				 onSelect:function(record){
+  				 	 var areaId = $("#areaId").val();
+  				 	 if(areaId != undefined && areaId != 0 && areaId !="" && areaId != null){
+  				 	 if(record!=null){
+	   				 	 if(areaId == record.id){
+	   				 	 	$.messager.alert('错误信息',"不能选择当前区域为所属区域",'error',function(){
+		        			});
 	   				 	 	$("#cmbParentArea").combotree("clear");
-	   				 	 	$("#parentId").val(0);
    				 	 		$("#cmbParentArea").combotree("reload",'<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+0);
 	   				 	 	$("#cmbParentArea").combotree("setText","=请选择所属区域=");
-	   				 	 }else{  
-	   				 	 	$("#parentId").val(record.id);
-	   				 	 }   
-   				 	 }
-   				 },
-   				 onLoadSuccess:function(){
-					//$("#cmbParentArea").combotree("disable",true);
-					var parentId = $("#parentId").val();
-					alert(parentId);
-					var parentName = $("#parentName").val();
-					if(parentId==0){
-   				 		$("#cmbParentArea").combotree("setText","=请选择所属区域=");
-					}else{
-						//appendParentNode();
-						$("#cmbParentArea").combotree("setValue",parentId);
-						$("#cmbParentArea").combotree("setText",parentName);
-					}
-   				 }
-			}); 
-		});	
-	
-	
-	
-	
-	function saveAssociateType(obj){
-	if ($('#associateTypeInfoForm').form('validate')) {
-		showProcess(true, '温馨提示', '正在提交数据...'); 
-		 $('#associateTypeInfoForm').form('submit',{
-		  		success:function(data){ 
-					showProcess(false);
-		  			data = $.parseJSON(data);
-		  			if(data.code==0){	  					
-		  				$.messager.alert('保存信息',data.message,'info',function(){
-	  						window.location.href="<%=basePath%>associate/associateTypeList.do";
+	   				 	 }else{
+		   				 	 var parId = $("#parentId").val();
+		   				 	 if(record.id  == parId){
+		   				 	 	//$("#cmbParentCompany").combotree("setValue",0);
+		   				 	 	$("#cmbParentArea").combotree("clear");
+		   				 	 	$("#parentId").val(0);
+	   				 	 		$("#cmbParentArea").combotree("reload",'<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+0);
+		   				 	 	$("#cmbParentArea").combotree("setText","=请选择所属区域=");
+		   				 	 }else{  
+		   				 	 	$("#parentId").val(record.id);
+		   				 	 }   
+	   				 	 }
+   				 } else{
+  				 	 	$("#cmbParentArea").combotree("clear");
+  				 	 	$("#parentId").val(0);
+ 				 	 	$("#cmbParentArea").combotree("reload",'<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+0);
+  				 	 	$("#cmbParentArea").combotree("setText","=请选择所属区域=");
+   				 } 
+				 //appendParentNode();
+				 }else{
+   				 	 var parId = $("#parentId").val();
+   				 	 if(record.id  == parId){
+   				 	 	//$("#cmbParentCompany").combotree("setValue",0);
+   				 	 	$("#cmbParentArea").combotree("clear");
+   				 	 	$("#parentId").val(0);
+  				 	 		$("#cmbParentArea").combotree("reload",'<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+0);
+   				 	 	$("#cmbParentArea").combotree("setText","=请选择所属区域=");
+   				 	 }else{  
+   				 	 	$("#parentId").val(record.id);
+   				 	 }   
+  				 	 }
+  				 },
+  				 onLoadSuccess:function(){
+				//$("#cmbParentArea").combotree("disable",true);
+				var parentId = $("#parentId").val();
+				var parentName = $("#parentName").val();
+				if(parentId==0){
+  				 		$("#cmbParentArea").combotree("setText","=请选择所属区域=");
+				}else{
+					//appendParentNode();
+					$("#cmbParentArea").combotree("setValue",parentId);
+					$("#cmbParentArea").combotree("setText",parentName);
+				}
+  				 }
+		}); 
+	});	
+
+function saveArea(obj){
+if ($('#areaInfoForm').form('validate')) {
+	showProcess(true, '温馨提示', '正在提交数据...'); 
+	 $('#areaInfoForm').form('submit',{
+	  		success:function(data){ 
+				showProcess(false);
+	  			data = $.parseJSON(data);
+	  			if(data.code==0){	  					
+	  				$.messager.alert('保存信息',data.message,'info',function(){
+  						window.location.href="<%=basePath%>area/areaList.do";
 	        			});
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error',function(){
@@ -117,6 +113,7 @@ function getKeyword(){
 	var keyword = $("#key").val();
 	$("#keyword").val(keyword);
 }
+
 	</script> 
   </head>
   
