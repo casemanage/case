@@ -54,7 +54,8 @@ public class AreaServiceImpl implements AreaService{
 	@Override
 	public Area getAreaById(Integer areaId) {
 		// TODO Auto-generated method stub
-		return areaMapper.selectByPrimaryKey(areaId);
+		Area area = areaMapper.selectByPrimaryKey(areaId);
+		return area;
 	}
 
 	@Override
@@ -75,7 +76,7 @@ public class AreaServiceImpl implements AreaService{
 		{
 			areaMapper.updateByPrimaryKey(area);
 		}else
-			areaMapper.insert(area);		
+			areaMapper.insert(area);
 	}
 
 }

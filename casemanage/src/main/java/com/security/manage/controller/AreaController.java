@@ -180,19 +180,29 @@ public class AreaController {
 		js.setCode(new Integer(1));
 		js.setMessage("保存失败!");
 		Area p = new Area();
+		Area old = new Area();
 		try {
-			if (area.getId() == null || area.getId() == 0)
+			/*if (area.getId() == null || area.getId() == 0)
 			{
 				area.setId(0);	
+			}*/
+			if(area.getId() > 0)
+			{
+				old = areaService.getAreaById(area.getId());
+				if(old.getIsleaf() == 1 && old.getParentid() != area.getParentid())
+				{
+					js.setMessage("该区域存在子节点，不可迁移!");
+					return js;
+				}
 			}
 			if (area.getName() != null) {
-				int level = 1;
-				
+				int level = 1;				
 				String name = area.getName();				
 				p.setName(name);
+				p.setId(area.getId());
 				List<Area> lc = areaService.getAreaListByName(p);
 				if (lc.size() == 0) {
-					if(area.getParentid() != null)					
+					if(area.getParentid() != null && area.getParentid() != 0)					
 					{
 						int parentId = area.getParentid();
 						Area la = areaService.getAreaById(parentId);
