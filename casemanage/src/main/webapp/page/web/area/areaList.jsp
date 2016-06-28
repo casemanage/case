@@ -112,7 +112,7 @@ function fillAreaList(lst){
 	var html = "";
 	for(var i = 0; i<lst.length;i++){
 		html += "<tr>";
-		html += "<td align='center' style='display:none'>"+lst[i].id+"</td><td	align='center'>"+(lst[i].name == null ? "":lst[i].name)+"</td><td align='center'>"+(lst[i].parentName == null ? "":lst[i].parentName)+"</td><td align='center'>"+(lst[i].latitude == null || lst[i].longtiude == null ? "":(lst[i].latitude,lst[i].longtiude))+"</td>";
+		html += "<td align='center' style='display:none'>"+lst[i].id+"</td><td	align='center'>"+(lst[i].name == null ? "":lst[i].name)+"</td><td align='center'>"+(lst[i].parentName == null ? "":lst[i].parentName)+"</td><td align='center'>"+(lst[i].latitude == null || lst[i].longtiude == null ? "":(lst[i].latitude+","+lst[i].longtiude))+"</td>";
 		html += "<td align='center'>"+(lst[i].description == null ? "":lst[i].description)+"</td>";
 		html += "<td><a href='javascript:void(0);' onclick=window.location.href='<%=basePath%>area/areaInfo.do?areaId="+lst[i].id+"'>"+ "编辑" + "</a></td>";
 		html += "<td><a href='javascript:void(0);' onclick='deleteAreaById("+lst[i].associateid+","+lst[i].id+");'>"+"删除"+"</a></td>";

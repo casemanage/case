@@ -25,5 +25,6 @@ public interface AreaService {
 	void updateArea(Area la);
 
 	void saveOrUpdateArea(Area area);
+
 	
 }

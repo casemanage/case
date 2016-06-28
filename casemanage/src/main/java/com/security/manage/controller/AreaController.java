@@ -184,6 +184,8 @@ public class AreaController {
 		js.setMessage("保存失败!");
 		Area p = new Area();
 		Area old = new Area();
+		Area newPArea = new Area();
+		Area oldPArea = new Area();
 		try {
 			if (area.getId() == null || area.getId() == 0)
 			{
@@ -208,24 +210,24 @@ public class AreaController {
 					if(area.getParentid() != null && area.getParentid() != 0)					
 					{
 						int parentId = area.getParentid();
-						Area la = areaService.getAreaById(parentId);					
+						newPArea = areaService.getAreaById(parentId);					
 						if(old.getParentid() != null && old.getParentid() != parentId && old.getParentid() != 0)
 						{
-							Area la1 = areaService.getAreaById(old.getParentid());
-							List<Area> lp = areaService.getAreaListByParentId(old);
-							if(lp.size() == 1)
+							oldPArea = areaService.getAreaById(old.getParentid());
+							int lp = areaService.getTotalCountByParentId(old);
+							if(lp == 1)
 							{
-								la1.setIsleaf(0);
-								areaService.updateArea(la1); 
+								oldPArea.setIsleaf(0);
+								areaService.updateArea(oldPArea); 
 							}
 						}
-						if(la.getId() != null)
+						if(newPArea.getId() != null)
 						{							
-							level += la.getLevel();
-							if(la.getIsleaf() != 1)
+							level += newPArea.getLevel();
+							if(newPArea.getIsleaf() != 1)
 							{
-								la.setIsleaf(1);
-								areaService.updateArea(la); 
+								newPArea.setIsleaf(1);
+								areaService.updateArea(newPArea); 
 							}									
 						}
 					}
