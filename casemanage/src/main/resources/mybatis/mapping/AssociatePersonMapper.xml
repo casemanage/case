@@ -274,6 +274,9 @@
   	<if test="associateid != null">
   		and ASSOCIATEID = #{associateid,jdbcType=INTEGER}
   	</if>
+  	<if test="name != null">
+  		and NAME = #{name,jdbcType=VARCHAR}
+  	</if>
   </select>
   <update id="updateById" parameterType="java.lang.Integer">
   	update MC_ASSOCIATE_PERSON
