@@ -106,9 +106,9 @@ public class AreaController {
 		try{
 			List<Area> lc = areaService.getAreaListByParentId(area);
 			int totalCount = areaService.getTotalCountByParentId(area);
-			Area ar = new Area();
-			ar = areaService.getAreaById(id);
-			lc.add(ar);
+//			Area ar = new Area();
+//			ar = areaService.getAreaById(id);
+//			lc.add(ar);
 			area.setTotalCount(totalCount);
 			request.setAttribute("Area", area);
 			js.setObj(area); 
