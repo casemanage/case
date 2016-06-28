@@ -222,4 +222,9 @@
     where a.parentId = #{parentid,jdbcType=INTEGER}
     and a.flag = 0
   </select>
+  <select id="getAreaAlList" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+    from MC_AREA a
+    where a.flag = 0
+  </select>
 </mapper>

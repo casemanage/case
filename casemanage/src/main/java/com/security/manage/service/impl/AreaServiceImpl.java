@@ -81,4 +81,10 @@ public class AreaServiceImpl implements AreaService{
 			
 	}
 
+	@Override
+	public List<Area> getAreaAlList() {
+		// TODO Auto-generated method stub
+		return areaMapper.getAreaAlList();
+	}
+
 }

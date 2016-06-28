@@ -180,7 +180,7 @@ function chooseFile(){
 	<div class="containner-fluid">
 		<div class="pannel-header">
 			<span>社会机构管理</span>
-			<input type ="button" class="hey-btn hey-btn-default" onclick="chooseFile();" value="导入社会机构">
+			<input type ="button" class="hey-btn-default" onclick="chooseFile();" value="导入社会机构">
 			</input>
 			<div style="display: none">
 				<form id="fileForms" name="fileForms"
@@ -215,7 +215,7 @@ function chooseFile(){
 					<th>经纬度</th>
 					<th>地址</th>
 					<th>手机号码</th>
-					<td>区域名称</td>
+					<td align="center">区域名称</td>
 					<!-- <th>采集单位</th>
 					<th>采集人</th> -->
 					<th>采集时间</th>

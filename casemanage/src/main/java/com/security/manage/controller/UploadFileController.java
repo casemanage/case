@@ -32,9 +32,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.security.manage.common.JsonResult;
+import com.security.manage.model.Area;
 import com.security.manage.model.Associate;
 import com.security.manage.model.AssociateType;
 import com.security.manage.model.User;
+import com.security.manage.service.AreaService;
 import com.security.manage.service.AssociateService;
 import com.security.manage.model.AssociatePerson;
 
@@ -45,6 +47,9 @@ public class UploadFileController extends BaseController {
 	
 	@Resource(name = "associateService")
 	private AssociateService associateService;
+	@Resource(name = "areaService")
+	private AreaService areaService;
+	
 	@ResponseBody
 	@RequestMapping(value = "/downfile.do")
 	public void downFile(HttpServletRequest request,
@@ -181,6 +186,7 @@ public class UploadFileController extends BaseController {
 			List<Associate> result = new ArrayList<Associate>();
 			List<AssociateType> associateTypeList = new ArrayList<AssociateType>();
 			associateTypeList = associateService.getAssociateTypeAllList();
+			List<Area> areaList = areaService.getAreaAlList();
 			for (int sheetIndex = 0; sheetIndex < wb.getNumberOfSheets(); sheetIndex++) {
 				XSSFSheet st = (XSSFSheet) wb.getSheetAt(sheetIndex);
 				// 第一行为标题，不取
@@ -207,7 +213,7 @@ public class UploadFileController extends BaseController {
 								associate.setTypeid(a.getId());
 								String serialNo = getAssoSerialNo(associate.getTypeid()); 
 								associate.setSerialno(serialNo);
-								continue ;
+								break;
 							}
 						}
 					}
@@ -221,15 +227,25 @@ public class UploadFileController extends BaseController {
 					}
 					XSSFCell cell4 = row.getCell(4);
 					if (cell4 != null || "".equals(cell4)) {
-						associate.setLatitude(cell4.getStringCellValue());
+						for(Area a : areaList){
+							String name = a.getName();
+							if(name.equals(cell4.getStringCellValue())){
+								associate.setAreaId(a.getId());
+								break;
+							}
+						}
 					}
 					XSSFCell cell5 = row.getCell(5);
 					if (cell5 != null || "".equals(cell5)) {
-						associate.setLongitude(cell5.getStringCellValue());
+						associate.setLatitude(cell5.getStringCellValue());
 					}
 					XSSFCell cell6 = row.getCell(6);
 					if (cell6 != null || "".equals(cell6)) {
-						associate.setDescription(cell6.getStringCellValue());
+						associate.setLongitude(cell6.getStringCellValue());
+					}
+					XSSFCell cell7 = row.getCell(7);
+					if (cell7 != null || "".equals(cell7)) {
+						associate.setDescription(cell7.getStringCellValue());
 					}
 					result.add(associate);
 				}
@@ -242,6 +258,7 @@ public class UploadFileController extends BaseController {
 			List<Associate> result = new ArrayList<Associate>();
 			List<AssociateType> associateTypeList = new ArrayList<AssociateType>();
 			associateTypeList = associateService.getAssociateTypeAllList();
+			List<Area> areaList = areaService.getAreaAlList();
 			for (int sheetIndex = 0; sheetIndex < wb.getNumberOfSheets(); sheetIndex++) {
 				HSSFSheet st = (HSSFSheet) wb.getSheetAt(sheetIndex);
 				// 第一行为标题，不取
@@ -282,15 +299,25 @@ public class UploadFileController extends BaseController {
 					}
 					HSSFCell cell4 = row.getCell(4);
 					if (cell4 != null || "".equals(cell4)) {
-						associate.setLatitude(cell4.getStringCellValue());
+						for(Area a : areaList){
+							String name = a.getName();
+							if(name.equals(cell4.getStringCellValue())){
+								associate.setAreaId(a.getId());
+								break;
+							}
+						}
 					}
 					HSSFCell cell5 = row.getCell(5);
 					if (cell5 != null || "".equals(cell5)) {
-						associate.setLongitude(cell5.getStringCellValue());
+						associate.setLatitude(cell5.getStringCellValue());
 					}
 					HSSFCell cell6 = row.getCell(6);
 					if (cell6 != null || "".equals(cell6)) {
-						associate.setDescription(cell6.getStringCellValue());
+						associate.setLongitude(cell6.getStringCellValue());
+					}
+					HSSFCell cell7 = row.getCell(7);
+					if (cell7 != null || "".equals(cell7)) {
+						associate.setDescription(cell7.getStringCellValue());
 					}
 					result.add(associate);
 				}
