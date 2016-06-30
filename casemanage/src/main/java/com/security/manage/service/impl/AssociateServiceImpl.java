@@ -236,4 +236,11 @@ public class AssociateServiceImpl implements AssociateService{
 		// TODO Auto-generated method stub
 		return associateMapper.getAreaListByAreaId(a);
 	}
+
+	@Override
+	public int getTotalCountByTypeId(Integer id) {
+		// TODO Auto-generated method stub
+		return associateMapper.getTotalCountByTypeId(id);
+	}
+
 }

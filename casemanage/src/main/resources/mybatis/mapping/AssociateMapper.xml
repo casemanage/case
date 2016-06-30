@@ -317,4 +317,9 @@
   	where 
   	a.AREAID = #{areaId,jdbcType=INTEGER}
   </select>
+   <select id="getTotalCountByTypeId" parameterType="java.lang.Integer" resultMap="java.lang.Integer">
+  	select count(*)
+  	from MC_ASSOCIATE a
+  	where  a.TYPEID = #{id,jdbcType=INTEGER} 
+  </select>
 </mapper>

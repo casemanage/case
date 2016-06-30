@@ -219,7 +219,7 @@ function chooseFile(){
 					<!-- <th>采集单位</th>
 					<th>采集人</th> -->
 					<th>采集时间</th>
-					<th>描述</th>
+					<th width="10%">描述</th>
 					<th>详情</th>
 					<th>操作</th>
 				</tr>

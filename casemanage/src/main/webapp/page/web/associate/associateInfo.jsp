@@ -54,7 +54,9 @@ $(document).ready(function() {
 			 	
 			 	if(associateid>0){
 			 		var pId = $("#areaId").val();
+			 		var pName = $("#areaName").val();
 			 		$("#cmbParentArea").combotree("setValue",pId);
+			 		$("#cmbParentArea").combotree("setText",pName);
 			 		
 			 	}else{
 		//$("#cmbParentArea").combotree("disable",true);
@@ -255,7 +257,8 @@ function chooseFile(){
 	    		<div style="margin-top:15px;">
 	    		<span class="from-style">区域选择:</span>
 	    		<input id ="areaId" name = "areaId" type="hidden" value="${Associate.areaId}"/>
-				<input  id ="cmbParentArea" name="areaName"   type="text"  class="easyui-combotree" required="true" style="width:254px;height:28px;" />
+	    		<input id ="areaName" name = "areaName" type="hidden" value="${Associate.areaName}"/>
+				<input  id ="cmbParentArea" name="areaTreeName" type="text"  class="easyui-combotree" required="true" style="width:254px;height:28px;" />
 				 
 				</div>
 		        <div style="margin-top:15px;">
@@ -278,7 +281,8 @@ function chooseFile(){
 		    	</div>
 		        <div style="margin-top:15px;">
 		        	<span class="from-style">备注描述:</span>
-		        	<textarea rows="4" cols="3"   style="width:354px;"  value="${Associate.description}" name="description" ></textarea>
+		        	<!-- rows="4" cols="3" --> 
+		        	<textarea   style="width:354px;height:100px;"  value="${Associate.description}" name="description" >${Associate.description}</textarea>
 		    		<!-- <input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入描述信息"/> -->
 		    	</div> 
 				</td>

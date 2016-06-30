@@ -68,6 +68,9 @@ public interface AssociateService {
 
 	List<Associate> getAreaListByAreaId(Associate a);
 
+	int getTotalCountByTypeId(Integer id);
+
+
 
 
 

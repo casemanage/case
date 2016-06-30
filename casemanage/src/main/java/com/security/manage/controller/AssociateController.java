@@ -112,7 +112,7 @@ public class AssociateController extends BaseController{
 					String s = sdf.format(d);
 					associate.setCreatetimes(s);
 				}
-				la = associateService.getAssociateListById(associatePerson);
+				//la = associateService.getAssociateListById(associatePerson);
 				total = associateService.getTotalCount(associatePerson);
 				la = associateService.getAssociatePersonListById(associatePerson);
 				plala = associateService.getAssociatePlanListById(associateId);
@@ -695,8 +695,15 @@ public class AssociateController extends BaseController{
 			JsonResult<AssociateType> js = new JsonResult<AssociateType>();
 			js.setCode(1);
 			js.setMessage("删除失败!");
+			int typeCount = 0;
 			try {
 				if(id != null){
+					typeCount = associateService.getTotalCountByTypeId(id);
+					if(typeCount != 0)
+					{
+						js.setMessage("删除失败！当前已有社会机构属于该机构类型！");
+						return js;
+					}
 					associateService.deleteAssociateTypeById(id);
 				}
 				js.setCode(0);
