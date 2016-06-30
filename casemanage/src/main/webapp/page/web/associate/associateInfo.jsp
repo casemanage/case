@@ -227,6 +227,10 @@ function chooseFile(){
      <div id="tabInfo" class="easyui-tabs" style="width:100%;border:0;">  
     <div title="基础信息" style="padding:20px;" >  
          <div class="containner-fluid text-center"> 
+         	<div style="margin-top:15px;width:100%;"> 
+	        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="back();"> 
+	        <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveAssociste(this);"> 
+		</div>
 			<form id="associsteForm" name="associsteForm" action="<%=basePath%>associate/jsonSaveOrUpdateAssociate.do" method="post"  enctype="multipart/form-data"  style="text-align:left;">
 			<table style="width:100%;">
 			<tr style="height:40px"> 
@@ -252,13 +256,13 @@ function chooseFile(){
 		    	</div>
 		    	<div style="margin-top:15px;">
 		        	<span class="from-style">手机号码:</span>
-		    		<input type="text"  style="width:354px;height:32px;"  placeholder="请输入联系方式" value="${Associate.telephone}" name="telephone"/>
+		    		<input type="text"  style="width:354px;height:32px;"  placeholder="请输入联系方式" class="easyui-validatebox" value="${Associate.telephone}" name="telephone"/>
 	    		</div>
 	    		<div style="margin-top:15px;">
 	    		<span class="from-style">区域选择:</span>
 	    		<input id ="areaId" name = "areaId" type="hidden" value="${Associate.areaId}"/>
 	    		<input id ="areaName" name = "areaName" type="hidden" value="${Associate.areaName}"/>
-				<input  id ="cmbParentArea" name="areaTreeName" type="text"  class="easyui-combotree" required="true" style="width:254px;height:28px;" />
+				<input  id ="cmbParentArea" name="areaTreeName" type="text"  class="easyui-combotree" required="true" style="width:354px;height:35px;" />
 				 
 				</div>
 		        <div style="margin-top:15px;">
@@ -282,7 +286,7 @@ function chooseFile(){
 		        <div style="margin-top:15px;">
 		        	<span class="from-style">备注描述:</span>
 		        	<!-- rows="4" cols="3" --> 
-		        	<textarea   style="width:354px;height:100px;"  value="${Associate.description}" name="description" >${Associate.description}</textarea>
+		        	<textarea  placeholder="请输入备注描述" style="width:354px;height:100px;"  value="${Associate.description}" name="description" class="textarea easyui-validatebox">${Associate.description}</textarea>
 		    		<!-- <input type="text" validType="SpecialWord" class="easyui-validatebox" placeholder="请输入描述信息"/> -->
 		    	</div> 
 				</td>
@@ -293,12 +297,6 @@ function chooseFile(){
 					</c:forEach>
 					</td> 
 				</c:if>
-				<td style="width:20%">
-					<div style="margin-top:15px;width:100%;"> 
-				        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="back();"> 
-				         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveAssociste(this);"> 
-					</div>
-				</td>
 			</tr> 
 		</table>
 	</form>
