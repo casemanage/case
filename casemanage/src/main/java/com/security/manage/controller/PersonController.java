@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.security.manage.common.JsonResult; 
-import com.security.manage.model.Associate;
 import com.security.manage.model.Person;
 import com.security.manage.model.PersonCar;
 import com.security.manage.model.PersonLevel; 
@@ -617,8 +616,15 @@ public class PersonController extends BaseController{
 		JsonResult<PersonLevel> js = new JsonResult<PersonLevel>();
 		js.setCode(1);
 		js.setMessage("删除失败!");
+		int typeCount = 0;
 		try {
 			if(Id != null){
+				typeCount = personService.getTotalCountByLevelId(Id);
+				if(typeCount != 0)
+				{
+					js.setMessage("删除失败！当前已有重点人员属于该人员级别！");
+					return js;
+				}
 				personService.deletePersonLevelById(Id);
 			}
 			js.setCode(0);
@@ -637,8 +643,15 @@ public class PersonController extends BaseController{
 		JsonResult<PersonType> js = new JsonResult<PersonType>();
 		js.setCode(1);
 		js.setMessage("删除失败!");
+		int typeCount = 0;
 		try {
 			if(Id != null){
+				typeCount = personService.getTotalCountByTypeId(Id);
+				if(typeCount != 0)
+				{
+					js.setMessage("删除失败！当前已有重点人员属于该人员类型！");
+					return js;
+				}
 				personService.deletePersonTypeById(Id);
 			}
 			js.setCode(0);
