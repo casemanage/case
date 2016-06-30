@@ -248,6 +248,20 @@ public class PersonController extends BaseController{
 			}
 			if (personType.getKeyword() != null) {
 				PersonType p = new PersonType();
+				if(personType.getName() != null)
+				{
+					p.setName(personType.getName());
+					List<PersonType> lc = personService.getExistPersonType(p);
+					if(lc.size() != 0)
+					{
+						js.setMessage("重点人员类型已存在!");
+						return js;
+					}
+				}else
+				{
+					js.setMessage("类型名称不能为空!");
+					return js;
+				}
 				String key = personType.getKeyword();
 				p.setKeyword(key);
 				if (personType.getId() > 0) {
@@ -262,7 +276,9 @@ public class PersonController extends BaseController{
 				{
 					js.setMessage("重点人员关键字已存在!");
 				}									
-			} 
+			}else{
+				js.setMessage("关键字不能为空!");
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -342,7 +358,7 @@ public class PersonController extends BaseController{
 				{
 					js.setMessage("重点人员级别已存在!");
 				}
-			}
+			}				
 			else
 			{
 				js.setMessage("重点人员级别名称不能为空!");
@@ -437,6 +453,16 @@ public class PersonController extends BaseController{
 				Boolean  b = StringUtil.isMobileNumber(telephone);
 				if(!b){
 					js.setMessage("手机格式不正确!");
+					return js;
+				}else{
+					person.setTelephone(telephone);
+				}
+			}
+			if(person.getPolicephone() != null && !"".equals(person.getPolicephone())){
+				String telephone = person.getPolicephone().trim();
+				Boolean  b = StringUtil.isMobileNumber(telephone);
+				if(!b){
+					js.setMessage("警官手机格式不正确!");
 					return js;
 				}else{
 					person.setTelephone(telephone);

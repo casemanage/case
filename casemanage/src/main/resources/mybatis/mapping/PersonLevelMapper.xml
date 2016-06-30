@@ -87,13 +87,15 @@
   </select>
   <select id="getPersonLevelList" resultMap="BaseResultMap" parameterType="com.security.manage.model.PersonType">
   	select
-  	*
+  	<include refid="Base_Column_List"/>
   	from 
   	(select *, ROW_NUMBER() OVER(Order by b.ID) AS RowNumber from MC_PERSON_LEVEL as b) as a
   	where 1=1
     <if test="searchName != null and searchName !=''" >
 	     and(
 		    a.name like '%${searchName}%'
+		    or
+		    a.description like '%${searchName}%'
 	     )
    </if>
    <if test="pageStart != null and pageSize != null and pageStart>-1 and pageSize>-1">
@@ -107,6 +109,8 @@
   	<if test="searchName != null and searchName !=''" >
 	     and(
 		     name like '%${searchName}%'
+		     or
+		     description like '%${searchName}%'
 	     )
    </if>
   </select>	

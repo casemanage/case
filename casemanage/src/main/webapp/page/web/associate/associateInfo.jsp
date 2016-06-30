@@ -159,7 +159,7 @@ function fillMemberList(lst){
 	for(var i = 0; i<lst.length;i++){
 		html += "<tr>";
 		html += "<td align='center' style='display:none'>"+lst[i].id+"</td><td	align='center'><img alt='头像' src='<%=basePath %>"+(lst[i].photourl == null ? "":lst[i].photourl)+"style='width:35px;height:35px'></td><td align='center'>"+(lst[i].name == null ? "":lst[i].name)+"<td align='center'>"+(lst[i].sex == 0 ? "女":"男")+"</td>";
-		html += "<td align='center'>"+(lst[i].birth == null ? "":lst[i].birth)+"</td><td align='center'>"+(lst[i].idcard == null ? "":lst[i].idcard)+"</td>"+"<td align='center'>"+(lst[i].address == null ? "" : lst[i].address)+"</td><td align='center'>"+(lst[i].description == null ? "" : lst[i].description)+"</td>"+"<td align='center'>"+(lst[i].isleader == 0 ?"普通人员":"负责人")+"</td>";
+		html += "<td align='center'>"+(lst[i].birth == null ? "":lst[i].birth)+"</td><td align='center'>"+(lst[i].idcard == null ? "":lst[i].idcard)+"</td><td align='center'>"+(lst[i].address == null ? "" : lst[i].address)+"</td><td align='center'>"+(lst[i].description == null ? "" : lst[i].description)+"</td>"+"<td align='center'>"+(lst[i].isleader == 0 ?"普通人员":"负责人")+"</td>";
 		html += "<td align='center'>"+(lst[i].creatorname == null ? "":lst[i].creatorname)+"</td><td align='center'>"+(lst[i].organname == null ? "":lst[i].organname)+"</td>"+"<td><a href='javascript:void(0);' onclick='deleteByAssociateId("+lst[i].associateid+","+lst[i].id+");'>"+"删除"+"</a>";
 		html += "</tr>";
 	}
@@ -337,7 +337,7 @@ function chooseFile(){
 					<th align="center">性别</th>
 					<th align="center">出生年月</th>
 					<!-- <th>照片</th> -->
-					<th align="center">身份证号</th>
+					<th align="center">身份证号</th> 
 					<th align="center">地址</th>
 					<th align="center">备注</th>
 					<th align="center">人员职位</th>

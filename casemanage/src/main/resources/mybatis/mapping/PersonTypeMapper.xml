@@ -126,7 +126,10 @@
   	  where 1=1
     	<if test="keyword != null" >
         and  t.keyword = #{keyword,jdbcType=VARCHAR}
-       </if>  
+       </if> 
+       <if test="name != null" >
+        or  t.name = #{name,jdbcType=VARCHAR}
+       </if> 
        <if test="id != null" >
         and  t.id != #{id,jdbcType=VARCHAR}
        </if>  

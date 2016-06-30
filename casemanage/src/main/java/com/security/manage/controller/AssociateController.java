@@ -226,10 +226,11 @@ public class AssociateController extends BaseController{
 			{
 				associateType.setId(0);	
 			}
-			if (associateType.getKeyword() != null) {
+			if (associateType.getKeyword() != null && associateType.getName() != null) {
 				AssociateType p = new AssociateType();
 				String key = associateType.getKeyword();
 				p.setKeyword(key);
+				p.setName(associateType.getName());
 				if (associateType.getId() > 0) {
 					p.setId(associateType.getId());
 				}				

@@ -17,6 +17,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -223,6 +224,7 @@ public class UploadFileController extends BaseController {
 					}
 					XSSFCell cell3 = row.getCell(3);
 					if (cell3 != null || "".equals(cell3)) {
+						cell3.setCellType(Cell.CELL_TYPE_STRING);
 						associate.setTelephone(cell3.getStringCellValue());
 					}
 					XSSFCell cell4 = row.getCell(4);
@@ -237,10 +239,12 @@ public class UploadFileController extends BaseController {
 					}
 					XSSFCell cell5 = row.getCell(5);
 					if (cell5 != null || "".equals(cell5)) {
+						cell5.setCellType(Cell.CELL_TYPE_STRING);
 						associate.setLatitude(cell5.getStringCellValue());
 					}
 					XSSFCell cell6 = row.getCell(6);
 					if (cell6 != null || "".equals(cell6)) {
+						cell6.setCellType(Cell.CELL_TYPE_STRING);
 						associate.setLongitude(cell6.getStringCellValue());
 					}
 					XSSFCell cell7 = row.getCell(7);
@@ -265,7 +269,7 @@ public class UploadFileController extends BaseController {
 				for (int rowIndex = 1; rowIndex <= st.getLastRowNum(); rowIndex++) {
 					HSSFRow row = st.getRow(rowIndex);
 					if (row == null) {
-						continue;
+						break;
 					}
 					Associate associate = new Associate();
 					User u = this.getLoginUser();
@@ -285,7 +289,7 @@ public class UploadFileController extends BaseController {
 								associate.setTypeid(a.getId());
 								String serialNo = getAssoSerialNo(associate.getTypeid()); 
 								associate.setSerialno(serialNo);
-								continue ;
+								break ;
 							}
 						}
 					}
@@ -295,6 +299,7 @@ public class UploadFileController extends BaseController {
 					}
 					HSSFCell cell3 = row.getCell(3);
 					if (cell3 != null || "".equals(cell3)) {
+						cell3.setCellType(Cell.CELL_TYPE_STRING);
 						associate.setTelephone(cell3.getStringCellValue());
 					}
 					HSSFCell cell4 = row.getCell(4);
@@ -309,10 +314,12 @@ public class UploadFileController extends BaseController {
 					}
 					HSSFCell cell5 = row.getCell(5);
 					if (cell5 != null || "".equals(cell5)) {
+						cell5.setCellType(Cell.CELL_TYPE_STRING);
 						associate.setLatitude(cell5.getStringCellValue());
 					}
 					HSSFCell cell6 = row.getCell(6);
 					if (cell6 != null || "".equals(cell6)) {
+						cell6.setCellType(Cell.CELL_TYPE_STRING);
 						associate.setLongitude(cell6.getStringCellValue());
 					}
 					HSSFCell cell7 = row.getCell(7);
@@ -510,10 +517,12 @@ public class UploadFileController extends BaseController {
 					}					
 					HSSFCell cell2 = row.getCell(2);
 					if (cell2 != null || "".equals(cell2)) {
+						cell2.setCellType(Cell.CELL_TYPE_STRING);
 						p.setBirth(cell2.getStringCellValue());
 					}
 					HSSFCell cell3 = row.getCell(3);
 					if (cell3 != null || "".equals(cell3)) {
+						cell3.setCellType(Cell.CELL_TYPE_STRING);
 						p.setIdcard(cell3.getStringCellValue());
 					}
 					HSSFCell cell4 = row.getCell(4);
@@ -582,10 +591,12 @@ public class UploadFileController extends BaseController {
 				}
 				XSSFCell cell2 = row.getCell(2);
 				if (cell2 != null || "".equals(cell2)) {
+					cell2.setCellType(Cell.CELL_TYPE_STRING);
 					p.setBirth(cell2.getStringCellValue());
 				}
 				XSSFCell cell3 = row.getCell(3);
 				if (cell3 != null || "".equals(cell3)) {
+					cell3.setCellType(Cell.CELL_TYPE_STRING);
 					p.setIdcard(cell3.getStringCellValue());
 				}
 				XSSFCell cell4 = row.getCell(4);
