@@ -227,10 +227,6 @@ function chooseFile(){
      <div id="tabInfo" class="easyui-tabs" style="width:100%;border:0;">  
     <div title="基础信息" style="padding:20px;" >  
          <div class="containner-fluid text-center"> 
-         	<div style="margin-top:15px;width:100%;"> 
-	        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="back();"> 
-	        <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveAssociste(this);"> 
-		</div>
 			<form id="associsteForm" name="associsteForm" action="<%=basePath%>associate/jsonSaveOrUpdateAssociate.do" method="post"  enctype="multipart/form-data"  style="text-align:left;">
 			<table style="width:100%;">
 			<tr style="height:40px"> 
@@ -297,7 +293,16 @@ function chooseFile(){
 					</c:forEach>
 					</td> 
 				</c:if>
+				<td>
+					<div style="margin-top:15px;width:100%;"> 
+				        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="back();"> 
+				        <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveAssociste(this);"> 
+					</div>
+				</td>
 			</tr> 
+			<tr>
+				<td></td>
+			</tr>
 		</table>
 	</form>
  </div>
@@ -309,7 +314,7 @@ function chooseFile(){
 					<input type="button" style="margin-bottom:10px;" class="btn-import" onclick="chooseFile();" value="导入机构人员" />
 				</div>
 				<div style="width:100%;text-align:right">
-					<input type="button" class="btn-back" style="margin-left:25px;margin-right:25px" onclick="window.location.href='<%=basePath%>associate/associateList.do'"	value="返回"> 
+					<input type="button" class="btn-back" style="margin-left:25px" onclick="window.location.href='<%=basePath%>associate/associateList.do'"	value="返回"> 
 					<input type="button" class="btn-add"  style="margin-left:25px;"	onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/社会机构相关人员数据采集模板.xls'"	value="下载导入模板" />
 					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>associate/associateMember.do?associateId=${Associate.id}'"	value="新增相关人员"> 
 					<div style="display: none">
