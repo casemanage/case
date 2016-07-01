@@ -115,12 +115,13 @@
   	  <include refid="Base_Column_List" />  
   	  from MC_ASSOCIATE_TYPE 
   	  where 1=1
-    	<if test="keyword != null" >
-        and  KEYWORD = #{keyword,jdbcType=VARCHAR}
+    	<if test="keyword != null or name != null" >
+        and (KEYWORD = #{keyword,jdbcType=VARCHAR}
+        or NAME = #{name,jdbcType=VARCHAR}) 
        </if>
-       <if test="name != null" >
+     <!--   <if test="name != null" >
         or  NAME = #{name,jdbcType=VARCHAR}
-       </if>  
+       </if>   -->
         <if test="id != null" >
         and id != #{id,jdbcType=VARCHAR}
     </if>  	  

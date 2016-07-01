@@ -230,6 +230,8 @@ public class AreaController {
 								areaService.updateArea(newPArea); 
 							}									
 						}
+					}else{
+						area.setParentid(0);
 					}
 					area.setFlag(0);
 					area.setLevel(level);

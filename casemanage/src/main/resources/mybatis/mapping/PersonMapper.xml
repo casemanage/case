@@ -405,6 +405,6 @@
   <select id="getTotalCountByLevelId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
   	select count(*)
   	from MC_PERSON a
-  	where  a.TYPEID = #{id,jdbcType=INTEGER} 
+  	where  a.LEVELID = #{id,jdbcType=INTEGER} 
   </select>
 </mapper>

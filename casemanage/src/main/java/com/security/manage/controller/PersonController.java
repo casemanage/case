@@ -251,6 +251,9 @@ public class PersonController extends BaseController{
 				if(personType.getName() != null)
 				{
 					p.setName(personType.getName());
+					if(personType.getId() > 0){
+						p.setId(personType.getId());
+					}					
 					List<PersonType> lc = personService.getExistPersonType(p);
 					if(lc.size() != 0)
 					{
@@ -263,10 +266,7 @@ public class PersonController extends BaseController{
 					return js;
 				}
 				String key = personType.getKeyword();
-				p.setKeyword(key);
-				if (personType.getId() > 0) {
-					p.setId(personType.getId());
-				}				
+				p.setKeyword(key);							
 				List<PersonType> lc = personService.getExistPersonType(p);
 				if (lc.size() == 0) {
 					personService.saveOrUpdatePersonType(personType); 

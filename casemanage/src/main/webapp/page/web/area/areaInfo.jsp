@@ -144,11 +144,11 @@ function getKeyword(){
 	    	</div>
 		    <div style="margin-top:15px;width:100%;">
 	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;经&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:</span>
-	    		<input type="text" style="width:354px;height:32px;" class="easyui-numberbox" precision="1" min="1.0" placeholder="请输入经度" value="${area.latitude}" name="latitude"/>
+	    		<input type="text" style="width:354px;height:32px;" class="easyui-numberbox" precision="1" min="0.0" placeholder="请输入经度" value="${area.latitude}" name="latitude"/>
 	    	</div>
 		    <div style="margin-top:15px;width:100%;">
 	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;纬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:</span>
-	    		<input type="text"  style="width:354px;height:32px;"  class="easyui-numberbox" precision="1" min="1.0" placeholder="请输入纬度" value="${area.longtiude}" name="longtiude"/>
+	    		<input type="text"  style="width:354px;height:32px;"  class="easyui-numberbox" precision="1" min="0.0" placeholder="请输入纬度" value="${area.longtiude}" name="longtiude"/>
 	    	</div>
 	    	<div style="margin-top:15px;">
 	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;备注描述:</span>
