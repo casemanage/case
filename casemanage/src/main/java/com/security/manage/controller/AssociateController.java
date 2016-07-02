@@ -266,33 +266,28 @@ public class AssociateController extends BaseController{
 				associate.setSerialno(serialNO);
 			}
 			if(associate.getId() == null ||associate.getId() == 0){
-				User u = this.getLoginUser();
-				associate.setCreator(u.getId());
-				associate.setCreatorname(u.getName());
-				associate.setOrganname(u.getOrganName()); 
-				associate.setCreatetime(new Date());
-				associate.setGuid(u.getGuid());
+				User u = this.getLoginUser(); 
+				if(u!=null){
+					associate.setCreator(u.getId());
+					associate.setCreatorname(u.getGuid());
+					associate.setOrganname(u.getOrganName()); 
+					associate.setGuid(u.getGuid());
+				}else{
+					js.setMessage("Session已过期，请重新登录!");
+					return js;
+				}
 				/*String serialNo = getAssoSerialNo(associate.getTypeid()); 
 				associate.setSerialno(serialNo); 
 				associate.setId(0);*/
 //				associate.setCreator(1);
 //				associate.setCreatorname("张三");
 //				associate.setOrganname("派出所"); 
+				associate.setCreatetime(new Date());
 				String serialNo = getAssoSerialNo(associate.getTypeid()); 
 				associate.setSerialno(serialNo); 
 				associate.setId(0);
 			}
-			if(associate.getTelephone() != null && !"".equals(associate.getTelephone())){
-				String telephone = associate.getTelephone().trim();
-				System.out.println(telephone);
-				Boolean  b = StringUtil.isMobileNumber(telephone);
-				if(!b){
-					js.setMessage("手机格式不正确!");
-					return js;
-				}else{
-					associate.setTelephone(telephone);
-				}
-			}
+			 
 			if(associate.getName() != null && !"".equals(associate.getName())){
 				Associate a = new Associate();
 				a.setName(associate.getName());
@@ -406,10 +401,15 @@ public class AssociateController extends BaseController{
 		js.setMessage("保存失败!");
 		try { 
 			User u = this.getLoginUser();
-			associatePerson.setCreator(u.getId());
-			associatePerson.setCreatorname(u.getName());
-			associatePerson.setOrganname(u.getOrganName()); 
-			associatePerson.setGuid(u.getGuid());
+			if(u!= null){
+				associatePerson.setCreator(u.getId());
+				associatePerson.setCreatorname(u.getGuid());
+				associatePerson.setOrganname(u.getOrganName()); 
+				associatePerson.setGuid(u.getGuid());
+			}else{
+				js.setMessage("Session已过期，请重新登录!");
+				return js;
+			}
 			associatePerson.setId(0);
 			if(associatePerson.getName() != null){
 				AssociatePerson a = new AssociatePerson();

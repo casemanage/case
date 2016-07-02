@@ -23,7 +23,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	--> 
 	<script type="text/javascript">
- 
+		 $(document).ready(function() {
+			var aId = Number($("#hid_assoId").val());
+			if(aId > 0){ 
+				var birth = $("#hid_birth").val();
+				$("#dtb_birth").datebox("setValue",birth); 
+			}
+			var sex = $("#sex").val();
+			if(sex == 1 && sex != ""){
+				$("#radio1").attr("checked",'checked');
+			}else if(sex == 0 && sex != ""){
+				$("#radio2").attr("checked",'checked');
+			}else{
+			}
+			var isleader = $("#isleader").val();
+			if(isleader == 1 && isleader != ""){
+				$("#radio3").attr("checked",'checked');
+			}else if(isleader == 0 && isleader != ""){
+				$("#radio4").attr("checked",'checked');
+			}else{
+			}
+		});
 		function setSex(){
 			var value = $("input[name='sex1']:checked").val();
 			$("#sex").val(value);
@@ -44,30 +64,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#hid_birth").val(date.getFullYear()+"-"+month+"-"+day);
 		}
 		function savePerson(obj){
-			var associateId = $("#associateId").val();
-			var idNum = $("#IdCard").val();
-			if(idNum != null && idNum != ""){
-				if(idNum.length != 18){
-					if(idNum.length != 15){
-						$.messager.alert("操作提示","身份证格式不正确","error");
-						return;
-					}
+			var idcard = $("#txt_idCard").val();
+			if(idcard.length>0){
+				if(idcard.length != 18 && idcard.length != 15 ){
+					$.messger.alert("操作提示","请输入正确的15位或18位身份证号码","error");
+					return;
 				}
 			}
+			var associateId = $("#associateId").val();
 			if ($('#personForm').form('validate')) {
+				$(obj).attr("onclick", "");
 				$('#personForm').form('submit',{
 									success : function(data) {
 										data = $.parseJSON(data);
 										if (data.code == 0) {
 											$.messager.alert('保存信息',data.message,'info',
 															function() {
-																window.location.href = "<%=basePath%>associate/associateInfo.do?associateId="+associateId;
+																window.location.href = "<%=basePath%>associate/associateInfo.do?typeKey=1&associateId="+associateId;
 															});
 										} else {
 											$.messager.alert('错误信息',
 													data.message, 'error',
 													function() {
 													});
+											$(obj).attr("onclick",
+													"savePerson(this);");
 										}
 									}
 								});
@@ -95,76 +116,78 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div id="contentRight" class="contentRight">
        	<div class="containner-fluid">
            	<div class="pannel-header">机构人员信息</div> 
-                 <div class="Panel-content">机构名称：${Associate.name}</div>
+                 <div class="Panel-content" style="float:left;">机构名称：${Associate.name}</div>
+                 
+						<div style="float;right; margin-top:5px;">  
+					        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
+					         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePerson(this);">  
+						</div>
         	</div>
        
-  <div class="containner-fluid text-center">
-<form id="personForm" name="personForm" action="<%=basePath%>associate/jsonUpdateMember.do" method="post" enctype="multipart/form-data"   style="text-align:left">
-	<table style="width:100%;">
-		<tr style="height:40px"> 
-			<td rowspan="2" style="width:50%"> 
-		    	<div style="margin-top:15px;">
-		    		<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名:</span>
-		    		<input type="hidden" id="associateId" name="associateid" value="${Associate.id}" />
-		    		<input type="text" required="true"  validType="Length[1,30]" required="true" style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入人员姓名" name="name"/>
-		    	</div>
-		    	<div style="margin-top:15px;">
-		        	<span class="from-style">身份证号:</span>
-		    		<input id="IdCard" type="text" onchange="validatationBirth(this);"   class="easyui-validatebox" style="width:354px;height:32px;"  placeholder="请输入身份证号" value="${person.idcard}" name="idcard"/>
-		    	</div> 
-		    	<div style="margin-top:15px;">
-		        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别:</span>
-		        	<input id="sex" type="hidden"  name="sex" id="sex"  value="${person.sex == null ?1:person.sex}"  />
-		    		<input type="radio" name="sex1" id="radio1" checked="checked"  value="1" onchange='setSex();'>男
-					<input type="radio" name="sex1" id="radio2" value="0" onchange='setSex();'>女 
-		    	</div>
-		    	<div style="margin-top:15px;">
-		        	<span class="from-style">出生年月:</span>
-		        	<input type="text" id="dtb_birth" class="easyui-datebox" data-options="editable:false,panelWidth:354,require:true,onSelect:sDateSelect" style="width:354px;height:32px;" /> 
-		    		<input type="hidden" id="hid_birth" value="${person.birth}" name="birth"/> 
-		    	</div> 
-		    	<div style="margin-top:15px;">
-		        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址:</span>
-		    		<input type="text"  placeholder="请输入地址"  style="width:354px;height:32px;" value="${person.address}" name="address"/>
-		    	</div> 
-		    	<div style="margin-top:15px;">
-		        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述:</span>
-		    		<input type="text"  class="easyui-validatebox" placeholder="请输入描述" style="width:354px;height:32px;"  value="${person.description}" name="description"/>
-		    	</div>
-		    	<div style="margin-top:15px;">
-		        	<span class="from-style">是否负责人:</span>
-		        	<input id="isleader" type="hidden"  name="isleader" id="isleader" value="1"/>
-		    		<input type="radio" name="leader" id="radio3" value="1" checked="checked" onchange='setLeader();'>是
-					<input type="radio" name="leader" id="radio4" value="0" onchange='setLeader();'>否 
-		    	</div>
-		        <div style="margin-top:15px;">
-		        	<span class="from-style">上传头像:</span>
-		        	<c:if test="${person.id >0}">
-		        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" value="${person.photourl}" />
-		        	</c:if>
-		        	<c:if test="${person.id == 0}">
-		        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" placeholder="请选择头像文件进行上传"  />
-		        	</c:if> 
-		        	<input type="file" name="file" id="jfile" onchange="showName(this)" />
-		    	</div>
-			</td>
-			<c:if test="${person.id >0}">
-				<td rowspan="2" style="vertical-align: top;"> 
-					<img alt="头像" src="<%=basePath %>${person.photourl}" style="width:300px;height:300px">
-				</td> 
-			</c:if>
-			<td>
-				<div style="margin-top:15px;width:100%;">  
-			        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
-			         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePerson(this);">  
-				</div>
-			</td>
-		</tr> 
-		<tr>
-			<td></td>
-		</tr>
-	</table>
-</form>
+    <div class="containner-fluid text-center">
+		<form id="personForm" name="personForm" action="<%=basePath%>associate/jsonUpdateMember.do" method="post" enctype="multipart/form-data"   style="text-align:left">
+			<table style="width:100%;">
+				<tr style="height:40px"> 
+					<td rowspan="2" style="width:70%"> 
+				    	<div style="margin-top:15px;">
+				    		<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名:</span>
+				    		<input type="hidden" id="associateId" name="associateid" value="${Associate.id}" />
+				    		<input type="hidden" id="hid_assoId" name="id" value="${Person.id}" />
+				    		<input type="text" required="true"  validType="Length[1,30]" required="true" style="width:354px;height:32px;"  value="${Person.name}"  class="easyui-validatebox" placeholder="请输入人员姓名" name="name"/>
+				    	</div>
+				    	<div style="margin-top:15px;">
+				        	<span class="from-style">身份证号:</span>
+				    		<input type="text" id="txt_idCard" required="true"  onblur="validatationBirth(this);"  validType="Length[1,18]"    class="easyui-validatebox" style="width:354px;height:32px;"  placeholder="请输入身份证号" value="${Person.idcard}" name="idcard"/>
+				    	</div> 
+				    	<div style="margin-top:15px;">
+				        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别:</span>
+				        	<input id="sex" type="hidden"  name="sex" id="sex"  value="${Person.sex == null ?1:Person.sex}"  />
+				    		<input type="radio" name="sex1" id="radio1" checked="checked"  value="1" onchange='setSex();'>男
+							<input type="radio" name="sex1" id="radio2" value="0" onchange='setSex();'>女 
+				    	</div>
+				    	<div style="margin-top:15px;">
+				        	<span class="from-style">出生年月:</span>
+				        	<input type="text" id="dtb_birth" class="easyui-datebox" data-options="editable:false,panelWidth:354,require:true,onSelect:sDateSelect" style="width:354px;height:32px;" /> 
+				    		<input type="hidden" id="hid_birth" value="${Person.birth}" name="birth"/> 
+				    	</div> 
+				    	<div style="margin-top:15px;">
+				        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址:</span>
+				    		<input type="text"  class="easyui-validatebox" placeholder="请输入地址"  style="width:354px;height:32px;" value="${Person.address}" name="address"/>
+				    	</div> 
+				    	<div style="margin-top:15px;">
+				        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述:</span>
+				    		<input type="text"  class="easyui-validatebox" placeholder="请输入描述" style="width:354px;height:32px;"  value="${Person.description}" name="description"/>
+				    	</div>
+				    	<div style="margin-top:15px;">
+				        	<span class="from-style">是否负责人:</span>
+				        	<input id="isleader" type="hidden"  name="isleader" id="isleader" value="1"/>
+				    		<input type="radio" name="leader" id="radio3" value="1" checked="checked" onchange='setLeader();'>是
+							<input type="radio" name="leader" id="radio4" value="0" onchange='setLeader();'>否 
+				    	</div>
+				        <div style="margin-top:15px;">
+				        	<span class="from-style">上传头像:</span>
+				        	<c:if test="${Person.id >0}">
+				        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" value="${Person.photourl}" />
+				        	</c:if>
+				        	<c:if test="${Person.id == 0}">
+				        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" placeholder="请选择头像文件进行上传"  />
+				        	</c:if> 
+				        	<input type="file" name="file" id="jfile" onchange="showName(this)" />
+				    	</div>
+					</td>
+					<c:if test="${Person.id >0}">
+						<td rowspan="2" style="vertical-align: top;"> 
+							<img alt="头像" src="<%=basePath %>${Person.photourl}" style="width:300px;height:300px">
+						</td> 
+					</c:if>
+					<td>
+					</td>
+				</tr> 
+				<tr>
+					<td></td>
+				</tr>
+			</table>
+		</form>
     </div>
    </div>
 </body>

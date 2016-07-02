@@ -27,6 +27,7 @@ import com.security.manage.model.AssociatePlan;
 import com.security.manage.model.AssociateType;
 import com.security.manage.model.LoginResult;
 import com.security.manage.model.Person;
+import com.security.manage.model.PersonCar;
 import com.security.manage.model.PersonLevel; 
 import com.security.manage.model.Associate;
 import com.security.manage.model.AssociatePerson;
@@ -119,17 +120,18 @@ public class AppController extends BaseController {
 				 
 			}else if(user.getAccount().equals("admin20")&&user.getPassword().equals("111111")){ 
 				 
+			}else if(user.getAccount().equals("admin21")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin22")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin23")&&user.getPassword().equals("111111")){ 
+				 
+			}else if(user.getAccount().equals("admin24")&&user.getPassword().equals("111111")){ 
+				 
 			}else{
 				json.setMessage("用户名或密码错误");
 				return json;
-			} 
-			user.setGuid("111111");
-			user.setName("张三");
-			user.setDeptGuid("111111");
-			user.setId(1);
-			user.setKeyWords("111111");
-			user.setOrganName("111111");
-			//json.setObj(loginResult.getPoliceman());
+			}  
 			json.setCode(200); 
 			json.setMessage("登录成功");
 //			LoginResult loginResult = UserLogin.login(account,password);
@@ -217,7 +219,44 @@ public class AppController extends BaseController {
 		}
 		return js;
 	}
-	
+
+	/**
+	 * 重点人员类型列表加载
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getPersonCar.do", produces = { "text/html;charset=UTF-8" })
+	public AppReturnResult<PersonCar> getPersonCar(
+			@RequestParam(value="number", required = false)String number,
+			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		AppReturnResult<PersonCar> js = new AppReturnResult<PersonCar>();
+		js.setCode(201);
+		js.setMessage(Constants.LOAD_FAIL_MESSAGE);
+
+		List<PersonCar> personcarlist = new ArrayList<PersonCar>();
+		PersonCar personCar = new PersonCar();
+		if(number != null && !"".equals(number)){
+			String s = new String(number.getBytes("iso8859-1"), "utf-8");
+			personCar.setSearchName(s);
+		}
+		try {
+			personcarlist = personService.getPersonCarList(personCar);
+			 
+				js.setList(personcarlist);
+				js.setCode(200);
+				js.setMessage(Constants.LOAD_OK_MESSAGE);	 
+					
+			} catch (Exception ex)
+		{
+			js.setCode(202);
+			js.setMessage(Constants.INNER_ERROR_MESSAGE);	
+			ex.printStackTrace();
+		}
+		return js;
+	}
 	/**
 	 * 重点人员级别列表加载
 	 * @param request
@@ -277,7 +316,9 @@ public class AppController extends BaseController {
 		}
 		if(!StringUtil.isEmpty(guid))
 		{ 
-			person.setCreatorname(guid); 
+			if(!guid.equals("admin")){
+				person.setCreatorname(guid); 
+			}
 		}else{
 			js.setCode(203);
 			js.setMessage(Constants.PARAM_ERROR_MESSAGE);	
@@ -379,11 +420,11 @@ public class AppController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="/getAssoListByGuid.do")
 	public AppReturnResult <Associate> jsonLoadAssociateListByGuid(
-			@RequestParam(value="guid", required = true)String guid,
+			@RequestParam(value="guid", required = false)String guid,
 			@RequestParam(value="page", required = false)Integer page,
 			@RequestParam(value="search", required = false)String searchName,
 			HttpServletRequest request, HttpServletResponse response){
-		AppReturnResult <Associate> js = new AppReturnResult<Associate>();
+		AppReturnResult<Associate> js = new AppReturnResult<Associate>();
 		Associate associate = new Associate();
 		List<Associate> la = new ArrayList<Associate>();
 		int count = 0;
@@ -403,7 +444,9 @@ public class AppController extends BaseController {
 				js.setMessage(Constants.PARAM_ERROR_MESSAGE);
 				return js;
 			} 
-			associate.setCreatorname(guid); 
+			if(!guid.equals("admin")){
+				associate.setCreatorname(guid); 
+			}
 			la = associateService.getAssociateList(associate); 
 			count = associateService.getTotalCount(associate);
 			js.setTotalCount(count);
@@ -710,6 +753,8 @@ public class AppController extends BaseController {
 //				associatePerson.setCreator(u.getId());
 //				associatePerson.setCreatorname(u.getName());
 				associatePerson.setCreatorname(associatePerson.getGuid());
+				associatePerson.setCreatetime(new Date());
+				associatePerson.setId(0); 
 //				associatePerson.setOrganname(u.getOrganName());  
 			}
 			if(file != null){

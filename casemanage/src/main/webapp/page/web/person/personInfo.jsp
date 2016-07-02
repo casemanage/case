@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>重点人员信息</title>
+    <title>重要人员信息</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -44,35 +44,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		function setSex(){
 			var value = $('input:radio:checked').val();
 			$("#sex").val(value);
-		} 
-		
-		function savePerson(obj){	
-		var idcard = $("#idcard").val();
-			if(idcard != null && idcard != ""){
-				if(idcard.length != 18){
-					if(idcard.length != 15){
-						$.messager.alert("操作提示","身份证格式不正确","error");
-						return;
-					}
+		}   
+		function savePerson(obj){
+			var idcard = $("#txt_idCard").val();
+			if(idcard.length>0){
+				if(idcard.length != 18 && idcard.length != 15 ){
+					$.messger.alert("操作提示","请输入正确的15位或18位身份证号码","error");
+					return;
 				}
-			}							   
+			}
 			if ($('#personForm').form('validate')) {
-				    $('#personForm').form('submit',{
-								success : function(data) {
-									data = $.parseJSON(data);
-									if (data.code == 0) {
-										$.messager.alert('保存信息',data.message,'info',
-														function() {
-															window.location.href = "<%=basePath%>person/personList.do";
-														});
-									} else {
-										$.messager.alert('错误信息',
-												data.message, 'error',
-												function() {
-												});
+				$(obj).attr("onclick", "");
+				$('#personForm').form('submit',{
+									success : function(data) {
+										data = $.parseJSON(data);
+										if (data.code == 0) {
+											$.messager.alert('保存信息',data.message,'info',
+															function() {
+																window.location.href = "<%=basePath%>person/personList.do";
+															});
+										} else {
+											$.messager.alert('错误信息',
+													data.message, 'error',
+													function() {
+													});
+											$(obj).attr("onclick",
+													"savePerson(this);");
+										}
 									}
-								}
-							});			
+								});
 			}
 		}
 		function sDateSelect(date){
@@ -84,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			if(day<10){
 				day = "0"+ day;
 			}
-			$("#id_birth").val(date.getFullYear()+"-"+month+"-"+day);
+			$("#hid_birth").val(date.getFullYear()+"-"+month+"-"+day);
 		}
 		function showName(obj){
 			 if(!(/(?:jpg)$/i.test(obj.value))&&!(/(?:jpeg)$/i.test(obj.value))&&!(/(?:png)$/i.test(obj.value))) {
@@ -100,8 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$("#filename").val(obj.value); 
 				$("#photourl").val(obj.value);
 			}
-		}	
-
+		}
 	</script>
   </head>
   
@@ -109,8 +108,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
   <div id="contentRight" class="contentRight">
        	<div class="containner-fluid">
-           	<div class="pannel-header">重点人员信息</div> 
-                 <div class="Panel-content">重点人员信息：${person.id == 0?"新建重点人员信息":person.name}</div>
+           	<div class="pannel-header">重要人员信息</div> 
+                 <div class="Panel-content" style="float:left;">重要人员信息：${person.id == 0?"新建重要人员信息":person.name}</div>          
+                       
+						<div style="float;right; margin-top:5px;">  
+					        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
+					         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePerson(this);">  
+						</div>  
         	</div>
        
     <div class="containner-fluid text-center"  >
@@ -145,15 +149,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</select>  
 			    	</div>
 				    <div style="margin-top:15px;width:100%;">
-			        	<span class="from-style">身份证号:</span>
-			    		<input id="idcard" type="text" validType="number" onchange="validatationBirth(this);"  class="easyui-validatebox"
-			    		  style="width:354px;height:32px;"  placeholder="请输入身份证号" value="${person.idcard}" name="idcard" />
+			        	<span class="from-style">身份证号:</span> <!-- validType="idcard" --> 
+			    		<input type="text" id="txt_idCard" validType="Length[1,18]"   class="easyui-validatebox"  onblur="validatationBirth(this);"  style="width:354px;height:32px;"  placeholder="请输入身份证号" value="${person.idcard}" name="idcard" />
 			    	</div>  
 					<div style="margin-top:15px;width:100%;">
-				        	<span class="from-style">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</span>
+				        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;性别:</span>
 				        	<input id="sex" type="hidden"  name="sex" id="sex"  value="${person.sex == null ?1:person.sex}" />
-				    		<input type="radio" name="sex1" id="radio1" value="1" checked="checked" onchange='setSex();' />男
-							<input type="radio" name="sex1" id="radio2" value="0" onchange='setSex();' />女 
+				    		<input type="radio" name="radio" id="radio1" value="1" checked="checked" onchange='setSex();' />男
+							<input type="radio" name="radio" id="radio2" value="0" onchange='setSex();' />女 
 				   </div>
 				   <div style="margin-top:15px;width:100%;">
 				        	<span class="from-style">出生年月:</span>
@@ -166,22 +169,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    		<input type="text" validType="macAddress" class="easyui-validatebox"  style="width:354px;height:32px;" placeholder="请输入mac地址" value="${person.macaddress}" name="macaddress"/>
 			    	</div>
 			    	 <div style="margin-top:15px;">
-			        	<span class="from-style">手机号码:</span>
-			    		<input  type="text" style="width:354px;height:32px;" placeholder="请输入联系方式" value="${person.telephone}" name="telephone"/>
+			        	<span class="from-style">联系方式:</span>
+			    		<input type="text" validType="phone" class="easyui-validatebox" style="width:354px;height:32px;" placeholder="请输入联系方式" value="${person.telephone}" name="telephone"/>
 			    	</div> 
 				    	<div style="margin-top:15px;width:100%;">
-			        	<span class="from-style">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:</span>
+			        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址:</span>
 			        	<%-- <textarea rows="4" cols="3" name="address"  style="width:354px;height:32px;"  value="${person.address}" >${person.address}</textarea> --%>
-			    		<input type="text"  class="easyui-validatebox" placeholder="请输入地址"  style="width:354px;height:32px;" value="${person.address}" name="address"/>
+			    		<input type="text" validType="Lenth[1,50]" class="easyui-validatebox" placeholder="请输入地址"  style="width:354px;height:32px;" value="${person.address}" name="address"/>
 			    	</div> 
 			    	<div style="margin-top:15px;">
-			    		<!-- <input class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;事由:</input> -->
-			        	<span class="from-style">事&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由:</span>
+			        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;事由:</span>
 			        	<textarea rows="7" cols="3" name="casecomment"  style="width:354px;height:50px;"  value="${person.casecomment}" >${person.casecomment}</textarea>
 			    		<%-- <input type="text" style="width:300px"  validType="SpecialWord" class="easyui-validatebox" placeholder="请输入是由" value="${person.casecomment}" name="casecomment"/> --%>
 			    	</div> 
 			        <div style="margin-top:15px;">
-			        	<span class="from-style">描&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述:</span>
+			        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述:</span>
 			        	<textarea rows="7" cols="3" name="description"  style="width:354px;height:50px;"  value="${person.description}" >${person.description}</textarea>
 			    		<%-- <input type="text"  class="easyui-validatebox" placeholder="请输入描述" value="${person.description}" name="description"/> --%>
 			    	</div>
@@ -200,25 +202,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			        <div style="margin-top:15px;">
 			        	<span class="from-style">上传头像:</span>
 			        	<c:if test="${person.id >0}">
-			        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" value="${person.photourl}"/>
+			        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" value="${person.photourl}" />
 			        	</c:if>
 			        	<c:if test="${person.id == 0}">
-			        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename"/>
+			        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" />
 			        	</c:if> 
 			        	<input type="file" name="file" id="jfile" onchange="showName(this)" />
 			    	</div>
 				</td>
 				<c:if test="${person.id >0}">
 					<td rowspan="2" style="vertical-align: top;"> 
-						<img alt="头像" src="<%=basePath %>${person.photourl}" style="width:300px;height:300px">
+						<img alt="头像" src="<%=basePath %>${person.photourl}" style="width:150px;height:150px">
 					</td> 
 				</c:if>
-				<td>
+			<!-- 	<td>
 					<div style="margin-top:15px;width:100%;">  
 				        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
 				         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePerson(this);"> 
 					</div>
-				</td>
+				</td> -->
 			</tr> 
 			<tr>
 				<td></td>

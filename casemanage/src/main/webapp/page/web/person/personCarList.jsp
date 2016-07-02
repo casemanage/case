@@ -62,11 +62,13 @@ function pagesearch(){
 		PersonCarForm.submit();
 	}  
 }
-function deleteByPersonCarId(id){
-	$.messager.confirm("删除确认","确认删除该人员车辆?",function(r){  
+ 
+ 
+ function deleteById(id){
+ 	$.messager.confirm("删除确认","确认删除该重点车辆?",function(r){  
 		    if (r){  
 			$.ajax({
-				url : "<%=basePath%>person/jsonDeletePersonCar.do?personCarId="+id,
+				url : "<%=basePath%>person/jsonDeleteCarById.do?id="+id,
 				type : "post",  
 				dataType:"json",
 				success : function(data) { 
@@ -81,7 +83,7 @@ function deleteByPersonCarId(id){
 			});
 	    }  
 	});
-}
+ }
 </script>
   </head>
   
@@ -92,12 +94,12 @@ function deleteByPersonCarId(id){
             	<div class="pannel-header">重点人员车辆管理</div>
                 <div class="Panel-content">
 					<form id="PersonCarForm" name="PersonCarForm"
-						action="person/personCarList.do" method="get"> 
+						action="<%=basePath%>person/personCarList.do" method="get"> 
 							 <div style="width:100%;text-align:right;">
-								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="按牌号、姓名或描述搜索" value="${PersonCar.searchName}" /> 
-								<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
+								<%-- <input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="搜索" value="${PersonCar.searchName}" /> 
+								<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  --%> 
 								<input type="hidden" id="pageNumber" name="pageNo" value="${PersonCar.pageNo}" />
-								<input type="button" class="btn-add" style="margin-left:25px" onclick="window.location.href='<%=basePath%>person/personCarInfo.do?PersonCarId=0'" value="新建重点人员车辆" />
+								<input type="button" class="btn-add" style="margin-left:25px" onclick="window.location.href='<%=basePath%>person/personCarInfo.do?PersonCarId=0'" value="新建重点车辆" />
 							</div>   
 					</form>  
                 </div>
@@ -112,23 +114,24 @@ function deleteByPersonCarId(id){
 							<th>品牌</th>	
 							<th>颜色</th>
 							<th>报警级别</th>						
-							<th>描述</th> 
-							<th>详情</th>
-							<th>操作</th>
+							<th>描述</th> 				
+							<th>操作</th> 
 						</tr>
                     </thead>
                     <tbody>
                        <c:forEach var="item" items="${PersonCarlist}">
 						<tr>
 							<td align="center" style="display:none">${item.id}</td>
-							<td align="center">${item.number}</td>
-							<td align="center">${item.name}</td>
-							<td align="center">${item.pro}</td>
-							<td align="center">${item.color}</td>
-							<td align="center">${item.level}</td>
-							<td align="center">${item.description}</td>
-						    <td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">编辑</a></td>
-							<td><a href="javascript:void(0);" onclick="deleteByPersonCarId(${item.id});">删除</a></td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.number}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.name}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.pro}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.color}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.level}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">${item.description}</td>
+							<td>
+								<a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>person/personCarInfo.do?personCarId=${item.id}'">详情</a>
+								<a style="margin-left:15px" href="javascript:void(0);" onclick="deleteById(${item.id});">删除</a>
+							</td>
 						</tr>
 					</c:forEach>
                     </tbody>
