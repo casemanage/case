@@ -26,7 +26,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   
 	function savePersonLevel(obj){
 	if ($('#personLevelInfoForm').form('validate')) {
-		 $(obj).attr("onclick", ""); 
 		 $('#personLevelInfoForm').form('submit',{
 		  		success:function(data){ 
 		  			data = $.parseJSON(data);
@@ -37,7 +36,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error',function(){
 	        			});
-						$(obj).attr("onclick", "savePersonLevel(this);"); 						
 		  			}
 		  		}
 		  	 });  
@@ -51,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div id="contentRight" class="contentRight">
        	<div class="containner-fluid">
            	<div class="pannel-header">重点人员级别信息</div> 
-           	<div class="fl">
+           	<div class="containner-fluid">
                  <div class="Panel-content">重点人员级别信息：${PersonLevel.id == 0?"新建重点人员级别信息":PersonLevel.name}</div>
                </div>   
         </div>

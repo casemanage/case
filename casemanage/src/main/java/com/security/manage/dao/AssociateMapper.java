@@ -26,9 +26,16 @@ public interface AssociateMapper {
  
 	List<TypeStatistic> getAssociateTypeCountList();
 
+
 	List<TypeStatistic> getAssociateStationCountList(); 
 	
 	List<Associate> getExistAssociate(Associate a);
 
-	List<Associate> getAssociateListByCreatorname(Associate associate); 
+	List<Associate> getAssociateListByCreatorname(Associate associate);
+
+	List<Associate> getAreaListByAreaId(Associate a);
+
+	int getTotalCountByTypeId(Integer id);
+
+
 }

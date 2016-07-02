@@ -31,4 +31,8 @@ public interface PersonMapper {
 	List<TypeStatistic> getPersonStationCountList();
 
 	Person getPersonByCondition(Person person);
+	
+	int getTotalCountByTypeId(Integer id);
+	
+	int getTotalCountByLevelId(Integer id);
 }

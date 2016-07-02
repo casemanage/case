@@ -94,7 +94,7 @@ function deleteByPersonTypeId(id){
 					<form id="PersonTypeForm" name="PersonTypeForm"
 						action="<%=basePath%>person/personTypeList.do" method="get"> 
 							 <div style="width:100%;text-align:right;">
-								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="搜索" value="${PersonType.searchName}" /> 
+								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="按关键字或类型搜索" value="${PersonType.searchName}" /> 
 								<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
 								<input type="hidden" id="pageNumber" name="pageNo" value="${PersonType.pageNo}" />
 								<input type="button" class="btn-add" style="margin-left:25px;"  onclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=0'" value="新建重点人员类型">
@@ -118,9 +118,9 @@ function deleteByPersonTypeId(id){
                        <c:forEach var="item" items="${PersonTypelist}">
 						<tr>
 							<td align="center" style="display:none">${item.id}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">${item.keyword}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">${item.name}</td>
-							<td align="center" ondblclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">${item.description}</td>
+							<td align="center">${item.keyword}</td>
+							<td align="center">${item.name}</td>
+							<td align="center">${item.description}</td>
 							<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>person/personTypeInfo.do?personTypeId=${item.id}'">编辑</a></td>
 							<td><a href="javascript:void(0);" onclick="deleteByPersonTypeId(${item.id});">删除</a></td>
 						</tr>

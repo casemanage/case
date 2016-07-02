@@ -117,7 +117,7 @@ function excelChange(file){
 			<form id="PersonForm" name="PersonForm"
 				action="person/personList.do" method="get">
 				<div style="width:100%;text-align:right;">
-					<input type="text" name="searchName" validType="SpecialWord" class="easyui-validatebox" placeholder="搜索" value="${Person.searchName}" />
+					<input type="text" name="searchName" validType="SpecialWord" class="easyui-validatebox" placeholder="按姓名或地址搜索" value="${Person.searchName}" />
 					<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
 				    <input type="hidden" id="pageNumber" name="pageNo" value="${Person.pageNo}" />
 					<input type="button" class="btn-add" style="margin-left:25px;"  onclick="window.location.href='<%=basePath%>person/personInfo.do?personId=0'" value="新建重点人员">
@@ -141,7 +141,7 @@ function excelChange(file){
 					<!-- <th>出生年月</th> -->
 					<!-- <th>照片</th> -->
 					<th>身份证号</th>
-					<th>联系方式</th>
+					<th>手机号码</th>
 					<th>mac地址</th>
 					<th>地址</th>
 					<th>事由</th>

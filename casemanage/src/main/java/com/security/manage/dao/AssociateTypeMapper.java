@@ -22,4 +22,6 @@ public interface AssociateTypeMapper {
 	int getAssociateTypeTotalCount(AssociateType associateType);
 
 	List<AssociateType> getExistAssociateType(AssociateType associateType);
+
+	List<AssociateType> getAssociateTypeAllList();
 }

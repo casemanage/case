@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.security.manage.common.JsonResult; 
-import com.security.manage.model.Associate;
 import com.security.manage.model.Person;
 import com.security.manage.model.PersonCar;
 import com.security.manage.model.PersonLevel; 
@@ -28,6 +27,8 @@ import com.security.manage.model.PersonType;
 import com.security.manage.model.User;
 import com.security.manage.service.PersonService;
 import com.security.manage.util.Constants;
+import com.security.manage.util.DateUtil;
+import com.security.manage.util.StringUtil;
  
 @Scope("prototype")
 @Controller
@@ -247,11 +248,25 @@ public class PersonController extends BaseController{
 			}
 			if (personType.getKeyword() != null) {
 				PersonType p = new PersonType();
+				if(personType.getName() != null)
+				{
+					p.setName(personType.getName());
+					if(personType.getId() > 0){
+						p.setId(personType.getId());
+					}					
+					List<PersonType> lc = personService.getExistPersonType(p);
+					if(lc.size() != 0)
+					{
+						js.setMessage("重点人员类型已存在!");
+						return js;
+					}
+				}else
+				{
+					js.setMessage("类型名称不能为空!");
+					return js;
+				}
 				String key = personType.getKeyword();
-				p.setKeyword(key);
-				if (personType.getId() > 0) {
-					p.setId(personType.getId());
-				}				
+				p.setKeyword(key);							
 				List<PersonType> lc = personService.getExistPersonType(p);
 				if (lc.size() == 0) {
 					personService.saveOrUpdatePersonType(personType); 
@@ -261,7 +276,9 @@ public class PersonController extends BaseController{
 				{
 					js.setMessage("重点人员关键字已存在!");
 				}									
-			} 
+			}else{
+				js.setMessage("关键字不能为空!");
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -341,7 +358,7 @@ public class PersonController extends BaseController{
 				{
 					js.setMessage("重点人员级别已存在!");
 				}
-			}
+			}				
 			else
 			{
 				js.setMessage("重点人员级别名称不能为空!");
@@ -431,6 +448,26 @@ public class PersonController extends BaseController{
 				js.setMessage("请选择人员级别!");
 				return js;
 			}
+			if(person.getTelephone() != null && !"".equals(person.getTelephone())){
+				String telephone = person.getTelephone().trim();
+				Boolean  b = StringUtil.isMobileNumber(telephone);
+				if(!b){
+					js.setMessage("手机格式不正确!");
+					return js;
+				}else{
+					person.setTelephone(telephone);
+				}
+			}
+			if(person.getPolicephone() != null && !"".equals(person.getPolicephone())){
+				String telephone = person.getPolicephone().trim();
+				Boolean  b = StringUtil.isMobileNumber(telephone);
+				if(!b){
+					js.setMessage("警官手机格式不正确!");
+					return js;
+				}else{
+					person.setTelephone(telephone);
+				}
+			}
 			if (person.getId() == null || person.getId() == 0) { 
 				User u = this.getLoginUser();
 				person.setCreator(u.getId());
@@ -452,7 +489,15 @@ public class PersonController extends BaseController{
 					js.setMessage("身份证号已存在!");
 					return js;
 				}
-			}  
+			} 
+			if(person.getBirth() != null && !"".equals(person.getBirth())){
+				 String birth = person.getBirth();
+				 String result = DateUtil.validate(birth);
+				 if(!"".equals(result)){
+					 js.setMessage("身份证号有误，请确认!");
+					 return js;
+				 }
+			 }
 			 if(file.getSize()>0){
 				String path = request.getSession().getServletContext().getRealPath("uploadsource");
 				String tempName = file.getOriginalFilename();    //这里不用原文件名称 
@@ -597,8 +642,15 @@ public class PersonController extends BaseController{
 		JsonResult<PersonLevel> js = new JsonResult<PersonLevel>();
 		js.setCode(1);
 		js.setMessage("删除失败!");
+		int typeCount = 0;
 		try {
 			if(Id != null){
+				typeCount = personService.getTotalCountByLevelId(Id);
+				if(typeCount != 0)
+				{
+					js.setMessage("删除失败！当前已有重点人员属于该人员级别！");
+					return js;
+				}
 				personService.deletePersonLevelById(Id);
 			}
 			js.setCode(0);
@@ -617,8 +669,15 @@ public class PersonController extends BaseController{
 		JsonResult<PersonType> js = new JsonResult<PersonType>();
 		js.setCode(1);
 		js.setMessage("删除失败!");
+		int typeCount = 0;
 		try {
 			if(Id != null){
+				typeCount = personService.getTotalCountByTypeId(Id);
+				if(typeCount != 0)
+				{
+					js.setMessage("删除失败！当前已有重点人员属于该人员类型！");
+					return js;
+				}
 				personService.deletePersonTypeById(Id);
 			}
 			js.setCode(0);

@@ -1,7 +1,6 @@
 package com.security.manage.model;
 
 import java.util.Date;
-import java.util.List;
 
 import com.security.manage.util.Page;
 
@@ -39,6 +38,10 @@ public class Associate extends Page {
     private String telephone;
     
     private PlanPicture picture;
+    
+    private int areaId;
+    
+    private String areaName;
     
     public PlanPicture getPicture() {
 		return picture;
@@ -195,5 +198,21 @@ public class Associate extends Page {
 
 	public void setCreatetimes(String createtimes) {
 		this.createtimes = createtimes;
+	}
+
+	public String getAreaName() {
+		return areaName;
+	}
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
+
+	public int getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(int areaId) {
+		this.areaId = areaId;
 	}
 }

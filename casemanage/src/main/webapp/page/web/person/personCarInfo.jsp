@@ -26,7 +26,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 	
 	function savePersonCar(obj){
 	if ($('#personCarInfoForm').form('validate')) {
-		 $(obj).attr("onclick", ""); 
 		showProcess(true, '温馨提示', '正在提交数据...'); 
 		 $('#personCarInfoForm').form('submit',{
 		  		success:function(data){ 
@@ -39,7 +38,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error',function(){
 	        			});
-						$(obj).attr("onclick", "savePersonCar(this);"); 						
 		  			}
 		  		}
 		  	 });  

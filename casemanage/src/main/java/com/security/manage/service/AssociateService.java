@@ -11,6 +11,10 @@ import com.security.manage.model.TypeStatistic;
 public interface AssociateService {
 
 	List<Associate> getAssociateList(Associate associate);
+	
+	 void importAssociateList(List<Associate> list);
+	
+	 void importAssociatePersonList(List<AssociatePerson> list);
 
 	int getTotalCount(Associate associate);
 
@@ -36,8 +40,6 @@ public interface AssociateService {
 
 	List<AssociatePerson> getAssociatePersonListById(AssociatePerson associatePerson);
 
-	List<Associate> getExistAssociate(AssociatePerson a);
-
 	void updateAssociatePerson(AssociatePerson associatePerson); 
 
 	void deleteMemberById(AssociatePerson ap);
@@ -59,6 +61,15 @@ public interface AssociateService {
 	void deleteAssociatePersonById(Integer id);
 
 	void deleteAssociateTypeById(Integer id);
+
+	List<AssociatePerson> getExistAssociatePerson(AssociatePerson associatePerson);
+
+	List<AssociateType> getAssociateTypeAllList();
+
+	List<Associate> getAreaListByAreaId(Associate a);
+
+	int getTotalCountByTypeId(Integer id);
+
 
 
 

@@ -23,10 +23,11 @@ import com.security.manage.model.Associate;
 import com.security.manage.model.AssociatePerson;
 import com.security.manage.model.AssociatePlan;
 import com.security.manage.model.AssociateType;
-import com.security.manage.model.Person;
 import com.security.manage.model.User;
 import com.security.manage.service.AssociateService;  
 import com.security.manage.util.Constants; 
+import com.security.manage.util.DateUtil;
+import com.security.manage.util.StringUtil;
 import com.security.manage.common.JsonResult;
 
 
@@ -111,7 +112,7 @@ public class AssociateController extends BaseController{
 					String s = sdf.format(d);
 					associate.setCreatetimes(s);
 				}
-				la = associateService.getAssociateListById(associatePerson);
+				//la = associateService.getAssociateListById(associatePerson);
 				total = associateService.getTotalCount(associatePerson);
 				la = associateService.getAssociatePersonListById(associatePerson);
 				plala = associateService.getAssociatePlanListById(associateId);
@@ -225,10 +226,11 @@ public class AssociateController extends BaseController{
 			{
 				associateType.setId(0);	
 			}
-			if (associateType.getKeyword() != null) {
+			if (associateType.getKeyword() != null && associateType.getName() != null) {
 				AssociateType p = new AssociateType();
 				String key = associateType.getKeyword();
 				p.setKeyword(key);
+				p.setName(associateType.getName());
 				if (associateType.getId() > 0) {
 					p.setId(associateType.getId());
 				}				
@@ -276,6 +278,17 @@ public class AssociateController extends BaseController{
 				String serialNo = getAssoSerialNo(associate.getTypeid()); 
 				associate.setSerialno(serialNo); 
 				associate.setId(0);
+			}
+			if(associate.getTelephone() != null && !"".equals(associate.getTelephone())){
+				String telephone = associate.getTelephone().trim();
+				System.out.println(telephone);
+				Boolean  b = StringUtil.isMobileNumber(telephone);
+				if(!b){
+					js.setMessage("手机格式不正确!");
+					return js;
+				}else{
+					associate.setTelephone(telephone);
+				}
 			}
 			if(associate.getName() != null && !"".equals(associate.getName())){
 				Associate a = new Associate();
@@ -401,8 +414,8 @@ public class AssociateController extends BaseController{
 				if(associatePerson.getAssociateid() != null){
 					a.setAssociateid(associatePerson.getAssociateid());
 				}
-				List<Associate> la = new ArrayList<Associate>();
-				la = associateService.getExistAssociate(a);
+				List<AssociatePerson> la = new ArrayList<AssociatePerson>();
+				la = associateService.getExistAssociatePerson(a);
 				if(la.size() == 0){
 					 if(file.getSize()>0){
 						String path = request.getSession().getServletContext().getRealPath("uploadsource");
@@ -444,6 +457,26 @@ public class AssociateController extends BaseController{
 //							}
 							//js.setMessage("上传头像，不符合公安部要求，请重新选择图片上传!"); 
 						// }
+					 }
+					 if (associatePerson.getIdcard() != null && !"".equals(associatePerson.getIdcard())) {
+						 	AssociatePerson p = new AssociatePerson();
+							p.setIdcard(associatePerson.getIdcard());
+							if (associatePerson.getAssociateid() > 0) {
+								p.setId(associatePerson.getAssociateid());
+							}
+							List<AssociatePerson> lc = associateService.getExistAssociatePerson(p);
+							if (lc.size() > 0) {
+								js.setMessage("身份证号已存在!");
+								return js;
+							}
+						} 
+					 if(associatePerson.getBirth() != null && !"".equals(associatePerson.getBirth())){
+						 String birth = associatePerson.getBirth();
+						 String result = DateUtil.validate(birth);
+						 if(!"".equals(result)){
+							 js.setMessage("身份证号有误，请确认!");
+							 return js;
+						 }
 					 }
 					associateService.updateAssociatePerson(associatePerson);
 					js.setCode(0);
@@ -613,6 +646,8 @@ public class AssociateController extends BaseController{
 			int total = 0;
 			if(pageNumber != null){
 				ap.setPageNo(pageNumber);
+			}else{
+				ap.setPageNo(1);
 			}
 			ap.setPageSize(Constants.DEFAULT_PAGE_SIZE);
 			if(associateId != null){
@@ -661,8 +696,15 @@ public class AssociateController extends BaseController{
 			JsonResult<AssociateType> js = new JsonResult<AssociateType>();
 			js.setCode(1);
 			js.setMessage("删除失败!");
+			int typeCount = 0;
 			try {
 				if(id != null){
+					typeCount = associateService.getTotalCountByTypeId(id);
+					if(typeCount != 0)
+					{
+						js.setMessage("删除失败！当前已有社会机构属于该机构类型！");
+						return js;
+					}
 					associateService.deleteAssociateTypeById(id);
 				}
 				js.setCode(0);

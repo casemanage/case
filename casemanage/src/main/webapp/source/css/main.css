@@ -36,7 +36,9 @@ a{ text-decoration:none;}
 .btn-sm{ font-size:12px; padding:8px 25px; background:#228FCC; border:0px; color:#fff; border-radius:3px; font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;}
 .btn-back{ font-size:12px; padding:8px 25px; background:#D24343; border:0px; color:#fff; border-radius:3px; font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;}
 .btn-add{ font-size:12px; padding:8px 25px; background:#25A02F; border:0px; color:#fff; border-radius:3px; font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;}
-
+.hey-btn-default{ float:right; font-size:12px; padding:8px 25px;background-color: #ff8600; color: #ffffff; border:0px;border-radius:3px; font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;line-height:100%;}
+.hey-btn-person { font-size:15px;background-color: #ff8600; color: #ffffff;padding:8px 25px;width:155px; height:30px; border:0; float:right;line-height:50%;}
+.btn-import{ font-size:12px; padding:8px 25px;background-color: #ff8600; color: #ffffff;border:0px;border-radius:3px; font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;}
 
 .logn-logo{ width:100%; height:auto; text-align:center;}
 .login-panel{ width:350px; height:auto; overflow:hidden; margin:0 auto;}
@@ -48,6 +50,53 @@ a{ text-decoration:none;}
 .link-inner{height:40px !important; linr-height:40px !important;}
 .contentRight{width:73%;height:99%;float:left;background:#fff;margin-left:15px;}
 
+.yw-cm-title {
+    width: 100%;
+    height: 49px;
+    line-height: 49px;
+    background-color: #F5F5F5;
+    border-bottom: 1px solid #E2E2E2;
+    color: #4b5159;
+}
+.fl {
+    float: left !important;
+}
+.yw-lump {
+    width: 100%;
+    height: auto;
+    background-color: #FFF;
+    border-bottom: 1px solid #D2D7DC;
+}
+.wid250 {
+    width: 248px !important;
+}
 
- 
+.yw-tree-list {
+    width: 230px;
+    height: 100%;
+    padding: 10px;
+    border-right: 1px solid #E2E2E2;
+    font-size: 14px;
+    overflow: auto;
+}
+ .wid-atuo {
+    width: auto !important;
+}
+.ml260 {
+    margin-left: 250px;
+}
+.yw-center {
+    text-align: center;
+}
+.yw-cm-table {
+    width: 100%;
+    height: auto;
+    border: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+    background-color: #FFF;
+}
+
+.yw-bg-hover tr:first-child:hover{background-color:#fff;}
  

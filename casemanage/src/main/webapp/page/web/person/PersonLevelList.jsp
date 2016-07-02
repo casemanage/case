@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    <title>重点人员类型管理</title>
+    <title>重点人员级别管理</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -94,7 +94,7 @@ function deleteByPersonLevelId(id){
 					<form id="PersonLevelForm" name="PersonLevelForm"
 						action="person/PersonLevelList.do" method="get"> 
 							 <div style="width:100%;text-align:right;">
-								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="搜索" value="${PersonLevel.searchName}" /> 
+								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="按名称或描述搜索" value="${PersonLevel.searchName}" /> 
 								<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
 								<input type="hidden" id="pageNumber" name="pageNo" value="${PersonLevel.pageNo}" />
 			        			<input type="button" class="btn-add"  style="margin-left:25px;" onclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=0'" value="新建重点人员级别">

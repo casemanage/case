@@ -224,5 +224,17 @@ public class PersonServiceImpl implements PersonService {
 	public void deletePersonTypeById(Integer id) {
 		// TODO Auto-generated method stub
 		personTypeMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public int getTotalCountByTypeId(Integer id) {
+		// TODO Auto-generated method stub
+		return personMapper.getTotalCountByTypeId(id);
+	}
+
+	@Override
+	public int getTotalCountByLevelId(Integer id) {
+		// TODO Auto-generated method stub
+		return personMapper.getTotalCountByLevelId(id);
 	} 
 }

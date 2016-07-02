@@ -107,7 +107,6 @@
 	      	NAME like '%${searchName}%'
 	      	OR
 	      	keyword like '%${searchName}%'
-	      	 
 	      )
 	  </if>
   </select>
@@ -116,11 +115,20 @@
   	  <include refid="Base_Column_List" />  
   	  from MC_ASSOCIATE_TYPE 
   	  where 1=1
-    	<if test="keyword != null" >
-        and  KEYWORD = #{keyword,jdbcType=VARCHAR}
-       </if>  
+    	<if test="keyword != null or name != null" >
+        and (KEYWORD = #{keyword,jdbcType=VARCHAR}
+        or NAME = #{name,jdbcType=VARCHAR}) 
+       </if>
+     <!--   <if test="name != null" >
+        or  NAME = #{name,jdbcType=VARCHAR}
+       </if>   -->
         <if test="id != null" >
         and id != #{id,jdbcType=VARCHAR}
     </if>  	  
+  </select>
+  <select id="getAssociateTypeAllList" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from MC_ASSOCIATE_TYPE 
   </select>
 </mapper>

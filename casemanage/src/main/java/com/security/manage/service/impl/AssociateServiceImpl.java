@@ -1,5 +1,6 @@
 package com.security.manage.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -19,7 +20,6 @@ import com.security.manage.service.AssociateService;
 
 @Service("associateService")
 public class AssociateServiceImpl implements AssociateService{
-
 	
 	@Resource
 	private AssociateMapper associateMapper;
@@ -29,7 +29,7 @@ public class AssociateServiceImpl implements AssociateService{
 	private AssociatePersonMapper associatePersonMapper;
 	@Resource
 	private AssociatePlanMapper associatePlanMapper;
-	
+
 	@Override
 	public List<Associate> getAssociateList(Associate associate) {
 		// TODO Auto-generated method stub
@@ -117,11 +117,11 @@ public class AssociateServiceImpl implements AssociateService{
 		// TODO Auto-generated method stub
 		return associatePersonMapper.getAssociatePersonListById(associatePerson);
 	}
-
+    
 	@Override
-	public List<Associate> getExistAssociate(AssociatePerson a) {
+	public List<AssociatePerson> getExistAssociatePerson(AssociatePerson associatePerson) {
 		// TODO Auto-generated method stub
-		return associatePersonMapper.getExistAssociate(a);
+		return associatePersonMapper.getExistAssociatePerson(associatePerson);
 	}
 
 	@Override
@@ -203,6 +203,44 @@ public class AssociateServiceImpl implements AssociateService{
 		associateTypeMapper.deleteByPrimaryKey(id);
 	}
 
-	
+
+	public List<AssociateType> getAssociateTypeAllList() {
+		// TODO Auto-generated method stub
+		return associateTypeMapper.getAssociateTypeAllList();
+	}
+
+	@Override
+	public void importAssociateList(List<Associate> list) {
+		// TODO Auto-generated method stub
+		for(Associate a :list)
+		{
+			a.setId(0);
+			a.setCreatetime(new Date());
+			associateMapper.insert(a);
+		}		
+	}
+
+	@Override
+	public void importAssociatePersonList(List<AssociatePerson> list) {
+		// TODO Auto-generated method stub
+		for(AssociatePerson ap:list)
+		{
+			if(ap.getIsleader() == null || "".equals(ap.getIsleader()))
+				ap.setIsleader(0);
+			ap.setId(0);
+			ap.setCreatetime(new Date());
+			associatePersonMapper.insert(ap);
+		}
+	}
+	public List<Associate> getAreaListByAreaId(Associate a) {
+		// TODO Auto-generated method stub
+		return associateMapper.getAreaListByAreaId(a);
+	}
+
+	@Override
+	public int getTotalCountByTypeId(Integer id) {
+		// TODO Auto-generated method stub
+		return associateMapper.getTotalCountByTypeId(id);
+	}
 
 }

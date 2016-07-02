@@ -120,8 +120,6 @@
 	      	NAME like '%${searchName}%'
 	      	OR 
 	      	number like '%${searchName}%'
-	      	OR 
-	      	description like '%${searchName}%'
 	      )
 	 </if>
   </select>

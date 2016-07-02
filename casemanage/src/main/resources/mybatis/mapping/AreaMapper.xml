@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.security.manage.dao.AreaMapper" >
+  <resultMap id="BaseResultMap" type="com.security.manage.model.Area" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="parentId" property="parentid" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="isleaf" property="isleaf" jdbcType="INTEGER" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="longtiude" property="longtiude" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="INTEGER" />
+    <result column="acount" property="childrenCount" jdbcType="INTEGER" />
+    <result column="PARENT_NAME" property="parentName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    a.id, a.name, a.parentId, a.level, a.code,a.isleaf, a.latitude, a.longtiude, a.description, a.flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />,
+    (select x.name from MC_AREA as x where x.id = a.parentId) as PARENT_NAME
+    from MC_AREA a
+    where a.id = #{id,jdbcType=INTEGER}
+    and a.flag = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from MC_AREA 
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.security.manage.model.Area" >
+    insert into MC_AREA (name, parentId, 
+      level, code, isleaf, 
+      latitude, longtiude, description, 
+      flag)
+    values (#{name,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER}, 
+      #{level,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{isleaf,jdbcType=INTEGER}, 
+      #{latitude,jdbcType=VARCHAR}, #{longtiude,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{flag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.security.manage.model.Area" >
+    insert into MC_AREA
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="isleaf != null" >
+        isleaf,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="longtiude != null" >
+        longtiude,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="isleaf != null" >
+        #{isleaf,jdbcType=INTEGER},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="longtiude != null" >
+        #{longtiude,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.security.manage.model.Area" >
+    update MC_AREA
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="isleaf != null" >
+        isleaf = #{isleaf,jdbcType=INTEGER},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="longtiude != null" >
+        longtiude = #{longtiude,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.security.manage.model.Area" >
+    update MC_AREA
+    set name = #{name,jdbcType=VARCHAR},
+      parentId = #{parentid,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      isleaf = #{isleaf,jdbcType=INTEGER},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      longtiude = #{longtiude,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getAreaAllList" parameterType="com.security.manage.model.Area" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />,
+  	(select x.name from MC_AREA as x where x.id = a.parentId) as PARENT_NAME
+  	from 
+  	(select *, ROW_NUMBER() OVER(Order by b.ID) AS RowNumber from MC_AREA as b where 1=1
+		  <if test="searchName != null and searchName !=''" >
+	  	   	and b.NAME like '%${searchName}%'
+	      </if>
+  	  ) a
+  	 where a.flag = 0 
+  	 <if test="parentid != 0">
+    	and a.parentId = #{parentid,jdbcType=INTEGER}
+    </if>
+     <if test="pageStart != null and pageSize != null and pageStart>-1 and pageSize>-1">
+   		and RowNumber BETWEEN (#{pageStart} + 1) and (#{pageSize} + #{pageStart})
+   	</if>
+  </select>
+  <select id="getAreaList" parameterType="com.security.manage.model.Area" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />,
+  	(SELECT count(*) from MC_AREA t2 where t2.parentId = a.id and t2.flag = 0) as acount
+  	from MC_AREA a
+  	where a.flag=0 and a.parentId = #{parentid,jdbcType=INTEGER}
+  	<if test="searchName != null and searchName !=''" >
+	   	and a.NAME like '%${searchName}%'
+    </if>
+    <!-- <if test="parentid != null and parentid !=''">
+    	and a.parentId=#{parentid}
+    </if> -->
+  </select>
+  <select id="getTotalCount" parameterType="com.security.manage.model.Area" resultType="java.lang.Integer">
+  	select count(*)
+  	from MC_AREA
+  	where flag = 0 
+  	<if test="searchName != null and searchName !=''" >
+	   	and NAME like '%${searchName}%'
+    </if>
+  </select>
+  <select id="getTotalCountByParentId" parameterType="com.security.manage.model.Area" resultType="java.lang.Integer">
+  	select count(*)
+  	from MC_AREA
+  	where flag = 0 and parentId = #{parentid,jdbcType=INTEGER}
+  	<if test="searchName != null and searchName !=''" >
+	   	and NAME like '%${searchName}%'
+    </if>
+  </select>
+  <select id="getAreaListByName" parameterType="com.security.manage.model.Area" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	from MC_AREA a
+  	where   a.flag = 0
+  <!-- 	and 
+  	a.parentId = #{parentid,jdbcType=INTEGER} -->
+  	<if test="name != null and name !=''" >
+	   	and a.name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="id != null and id !=''" >
+	   	and a.id != #{id,jdbcType=INTEGER}
+    </if>
+    <!-- <if test="parentid != null and parentid !=''">
+    	and a.parentId=#{parentid}
+    </if> -->
+  </select>
+   <select id="getAreaListByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />,
+    (select x.name from MC_AREA as x where x.id = a.parentId) as PARENT_NAME
+    from MC_AREA a
+    where a.parentId = #{parentid,jdbcType=INTEGER}
+    and a.flag = 0
+  </select>
+  <select id="getAreaAlList" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+    from MC_AREA a
+    where a.flag = 0
+  </select>
+</mapper>
