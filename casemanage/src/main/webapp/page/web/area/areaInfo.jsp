@@ -140,7 +140,7 @@ function getKeyword(){
 	    	</div>
 		    <div style="margin-top:15px;width:100%;">
 	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;所属区域:</span>
-	    		<input id="cmbParentArea" class="easyui-combotree"  style="width:254px;height:32px;" />
+	    		<input id="cmbParentArea" class="easyui-combotree"  style="width:354px;height:32px;" />
 	    	</div>
 		    <div style="margin-top:15px;width:100%;">
 	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;经&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:</span>
@@ -153,7 +153,7 @@ function getKeyword(){
 	    	<div style="margin-top:15px;">
 	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;备注描述:</span>
 	        	<input type="hidden" id="description" value="${area.description}"/>
-	        	<textarea id="textarea" rows="4" cols="3"   style="width:354px;"   name="description" ></textarea>
+	        	<textarea id="textarea" rows="4" cols="3"  class="textarea easyui-validatebox" placeholder="请输入备注描述" style="width:350px;height:100px;"   name="description" ></textarea>
 	    	</div>    
 		</form>
     </div>
