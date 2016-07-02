@@ -154,6 +154,17 @@ function deleteByAssociateId(associateId,Id){
     }  
 });
 }
+function getClickTab(title,index){
+	if(index == 0){
+		$("#btn_newInfo").attr("style","float:right;margin-left:25px;display:none;");
+		$("#btn_download").attr("style","float:right;margin-left:25px;display:none;");
+		$("#btn_saveInfo").attr("style","float:right;margin-left:25px;");
+	}else{
+		$("#btn_saveInfo").attr("style","float:right;margin-left:25px;display:none;");
+		$("#btn_download").attr("style","float:right;margin-left:25px;");
+		$("#btn_newInfo").attr("style","float:right;margin-left:25px;");
+	}
+} 
 function fillMemberList(lst){
 	var html = "";
 	for(var i = 0; i<lst.length;i++){
@@ -220,17 +231,26 @@ function chooseFile(){
 	
   <div id="contentRight" class="contentRight">
      <div class="containner-fluid">    	
-     	<div class="pannel-header">
-			<span>社会机构信息</span>
-			<div class="Panel-content">社会机构信息：${Associate.id == 0?"新建社会机构信息":Associate.name}</div>
+         	<div class="pannel-header">社会机构信息</div> 
+         	<input type="hidden" id="keyType" value="${keyType}"/>
+               <div class="Panel-content" style="float:left;">社会机构信息：${Associate.id == 0?"新建社会机构信息":Associate.name}</div>
+       			<div id="inof_tool" style="float;right; margin-top:5px;">  
+			       <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="back();"> 
+			       <c:if test="${Associate.id > 0}">
+			       		<input id="btn_newInfo"  type="button" class="btn-add" style="float:right;margin-left:25px; display:none;"  	onclick="window.location.href='<%=basePath%>associate/associateMember.do?associateId=${Associate.id}&id=0'" value="新增相关人员" />
+			       		<input id="btn_download" type="button" class="btn-add"  style="float:right;margin-left:25px; display:none;" 	onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/社会机构相关人员数据采集模板.xls'"	value="下载导入模板" />
+			       </c:if>
+		         
+		         <input id="btn_saveInfo" type="button" class="btn-sm" value="保存机构" style="float:right;margin-left:25px;" onclick="saveAssociste(this);"> 
+			</div>
 		</div>
-     <div id="tabInfo" class="easyui-tabs" style="width:100%;border:0;">  
-    <div title="基础信息" style="padding:20px;" >  
+     <div id="tabInfo" class="easyui-tabs"  data-options="onSelect:getClickTab"  style="width:100%;border:0;">  
+    <div title="基础信息" style="padding:3px;" >  
          <div class="containner-fluid text-center"> 
 			<form id="associsteForm" name="associsteForm" action="<%=basePath%>associate/jsonSaveOrUpdateAssociate.do" method="post"  enctype="multipart/form-data"  style="text-align:left;">
 			<table style="width:100%;">
 			<tr style="height:40px"> 
-				<td rowspan="2" style="width:40%"> 
+				<td rowspan="2" style="width:70%"> 
 		    	<div style="margin-top:15px;width:100%;">
 		    		<span class="from-style">机构名称:</span>
 		    		<input type="hidden" id="hid_assoId" name="id" value="${Associate.id}" />
@@ -289,16 +309,16 @@ function chooseFile(){
 				<c:if test="${Associate.id >0}">
 					<td rowspan="2" style="vertical-align: top;"> 
 					<c:forEach var="item" items="${associateplanList}">
-						<img alt="平面图" title="平面图" src="<%=basePath %>${item.planurl}" style="width:400px;height:120px">
+						<img alt="平面图" title="平面图" src="<%=basePath %>${item.planurl}" style="width:400px;height:250px">
 					</c:forEach>
 					</td> 
 				</c:if>
-				<td>
+				<!-- <td>
 					<div style="margin-top:15px;width:100%;"> 
 				        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="back();"> 
 				        <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveAssociste(this);"> 
 					</div>
-				</td>
+				</td> -->
 			</tr> 
 			<tr>
 				<td></td>
@@ -308,15 +328,13 @@ function chooseFile(){
  </div>
  </div> 
     <c:if test="${Associate.id>0}">
-		<div title="相关人员" style="padding:20px;">
+		<div title="从业人员" style="padding:3px;">
 			<div class="Panel-content">
 				<div style="width:100%;text-align:right">
 					<input type="button" style="margin-bottom:10px;" class="btn-import" onclick="chooseFile();" value="导入机构人员" />
 				</div>
-				<div style="width:100%;text-align:right">
-					<input type="button" class="btn-back" style="margin-left:25px" onclick="window.location.href='<%=basePath%>associate/associateList.do'"	value="返回"> 
-					<input type="button" class="btn-add"  style="margin-left:25px;"	onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/社会机构相关人员数据采集模板.xls'"	value="下载导入模板" />
-					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>associate/associateMember.do?associateId=${Associate.id}'"	value="新增相关人员"> 
+				<div style="width:100%;text-align:right"> 
+				 
 					<div style="display: none">
 						<form id="fileForms" name="fileForms"
 							action="<%=basePath%>fileUpload/jsonLoadAssociateMemberExcel.do"

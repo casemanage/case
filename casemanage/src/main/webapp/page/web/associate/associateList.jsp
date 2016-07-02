@@ -219,8 +219,7 @@ function chooseFile(){
 					<!-- <th>采集单位</th>
 					<th>采集人</th> -->
 					<th>采集时间</th>
-					<th width="10%">描述</th>
-					<th>详情</th>
+					<th width="10%">描述</th> 
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -243,47 +242,16 @@ function chooseFile(){
 						<%--<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.organname}</td>
 						<td	ondblclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">${item.creatorname}</td> --%>
 						<td>${item.createtimes}</td>
-						<td>${item.description}</td>
-						<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">编辑</a></td>
+						<td>${item.description}</td> 
 						<%-- <td><a href="javascript:void(0);" onclick="showdialog(${item.id});">上传平面图</a></td> --%>
-						<td><a href="javascript:void(0);" onclick="deleteByAssociateId(${item.id});">删除</a></td>
+						<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">编辑</a>
+						<a style="margin-left:15px"  href="javascript:void(0);" onclick="deleteByAssociateId(${item.id});">删除</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	  <div class="page" id="pager"></div>
 	</div> 
-	</div>
-	 <div id="planwindow" class="easyui-window" title="上传平面图" style="width:480px;height:300px;overflow:hidden;padding:10px;text-align:center;" iconCls="icon-info" closed="true" modal="true"   resizable="false" collapsible="false" minimizable="false" maximizable="false">
-		<form id="uploadForm" name ="uploadForm" action="<%=basePath%>associate/jsonupdateplan.do"  method="post" enctype="multipart/form-data"  style="text-align:left;"> 
-		<p style="display:none">
-        	<span >id：</span><input name="associateid" id="hid_associateid" type="text"  class="easyui-validatebox"/> 
-        </p>
-    	<div style="margin-top:15px;width:100%;">
-    		<span class="from-style">平面图1:</span> 
-    		<input type="file" name="file1" id="jfile1" onchange="showName(this)" />
-    	</div>
-    	<div style="margin-top:15px;width:100%;">
-    		<span class="from-style">平面图2:</span> 
-    		<input type="file" name="file2" id="jfile2" onchange="showName(this)" />
-    	</div>
-    	<div style="margin-top:15px;width:100%;">
-    		<span class="from-style">平面图3:</span> 
-    		<input type="file" name="file3" id="jfile3" onchange="showName(this)" />
-    	</div>
-    	<div style="margin-top:15px;width:100%;">
-    		<span class="from-style">平面图4:</span> 
-    		<input type="file" name="file4" id="jfile4" onchange="showName(this)" />
-    	</div>
-    	<div style="margin-top:15px;width:100%;">
-    		<span class="from-style">平面图5:</span> 
-    		<input type="file" name="file5" id="jfile5" onchange="showName(this)" />
-    	</div> 
-		<div style="margin-top:15px;width:100%;"> 
-	        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="$('#planwindow input[type=file]').val('');$('#planwindow').window('close');"> 
-	         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="uploadPlan(this);"> 
-		</div>
-        </form>
-	</div>
+	</div> 
 </body>
 </html>

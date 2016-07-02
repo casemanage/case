@@ -26,6 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 	
 	function savePersonType(obj){
 	if ($('#personTypeInfoForm').form('validate')) {
+		 $(obj).attr("onclick", ""); 
 		showProcess(true, '温馨提示', '正在提交数据...'); 
 		 $('#personTypeInfoForm').form('submit',{
 		  		success:function(data){ 
@@ -33,19 +34,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  			data = $.parseJSON(data);
 		  			if(data.code==0){	  					
 		  				$.messager.alert('保存信息',data.message,'info',function(){
-	  						window.location.href="<%=basePath%>person/personTypeList.do";
 	        			});
+	  					window.location.href="<%=basePath%>person/personTypeList.do";
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error',function(){
 	        			});
+						$(obj).attr("onclick", "savePersonType(this);"); 						
 		  			}
 		  		}
 		  	 });  
 	}
-}
-function getKeyword(){
-	var keyword = $("#key").val();
-	$("#keyword").val(keyword);
 }     
 	</script> 
   </head>
@@ -55,33 +53,39 @@ function getKeyword(){
   <div id="contentRight" class="contentRight">
        	<div class="containner-fluid">
            	<div class="pannel-header">重点人员类型信息</div>       
-                 <div class="Panel-content">重点人员类型：${PersonType.id == 0?"新建重点人员类型信息":PersonType.name}</div>				
+                 <div class="Panel-content" style="float: left;">重点人员类型：${PersonType.id == 0?"新建重点人员类型信息":PersonType.name}</div>		
+                 
+           		<div style="float;right; margin-top:5px;">  
+			        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
+			         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePersonType(this);">  
+				</div>  		
         </div>       
     <div class="containner-fluid text-center" >
 		<form id="personTypeInfoForm" name="personTypeInfoForm" action="<%=basePath%>person/jsonSaveOrUpdatePersonType.do" method="post" style="text-align:left;">
-			<div style="margin-top:15px;width:100%;"> 
+			<!-- <div style="margin-top:15px;width:100%;"> 
 		        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
 		         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePersonType(this);"> 
-		         <input id="keyword" name="keyword" value="${PersonType.keyword}" type="hidden" />
-			</div>
-			<c:if test="${PersonType.id > 0 }">
-	        <div style="margin-top:15px;">
-	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;关键字:</span>
-	    		<input name="id" value="${PersonType.id}" type="hidden" />
-	    		<input type="text" disabled="disabled" required="true" validType="Length[1,10]" style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入关键字" value="${PersonType.keyword}" />
-	    	</div>
-	    	</c:if> 
-	    	<c:if test="${PersonType.id == 0 }">
-	    	<div style="margin-top:15px;">
-	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;关键字:</span>
-	    		<input name="id" value="${PersonType.id}" type="hidden" />
-	    		<input id="key" onchange="getKeyword();" type="text"  required="true" validType="Length[1,10]" style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入关键字" value="${PersonType.keyword}" />
-	    	</div>
-	    	</c:if> 
+			</div>  -->
+			<c:if test="${PersonType.id == 0 }">
+		        <div style="margin-top:55px;">
+		        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;关键字:</span>
+		    		<input type="text" name="keyword"  required="true" validType="Length[1,10]" style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入关键字" value="${PersonType.keyword}" />
+		    	</div>
+	    	</c:if>
+			<c:if test="${PersonType.id == 0 }">
 	        <div style="margin-top:15px;">
 	        	<span class="from-style">类型名称:</span>
+		    		<input name="id" value="${PersonType.id}" type="hidden" />
 	    		<input type="text" name="name"  required="true" validType="Length[1,50]" style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入类型" value="${PersonType.name}" />
 	    	</div>
+	    	</c:if>
+			<c:if test="${PersonType.id > 0 }">
+	        <div style="margin-top:55px;">
+	        	<span class="from-style">类型名称:</span>
+		    		<input name="id" value="${PersonType.id}" type="hidden" />
+	    		<input type="text" name="name"  required="true" validType="Length[1,50]" style="width:354px;height:32px;"  class="easyui-validatebox" placeholder="请输入类型" value="${PersonType.name}" />
+	    	</div>
+	    	</c:if>
 	    	 <div style="margin-top:15px;">
 	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述:</span>
 	    		<input type="text" name="description" validType="SpecialWord" style="width:354px;height:32px;"   class="easyui-validatebox" placeholder="请输入类型" value="${PersonType.description}" />

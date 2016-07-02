@@ -26,6 +26,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   
 	function savePersonLevel(obj){
 	if ($('#personLevelInfoForm').form('validate')) {
+		 $(obj).attr("onclick", ""); 
+		showProcess(true, '温馨提示', '正在提交数据...'); 
 		 $('#personLevelInfoForm').form('submit',{
 		  		success:function(data){ 
 		  			data = $.parseJSON(data);
@@ -36,6 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  			}else{
 						$.messager.alert('错误信息',data.message,'error',function(){
 	        			});
+						$(obj).attr("onclick", "savePersonLevel(this);"); 						
 		  			}
 		  		}
 		  	 });  
@@ -49,18 +52,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div id="contentRight" class="contentRight">
        	<div class="containner-fluid">
            	<div class="pannel-header">重点人员级别信息</div> 
-           	<div class="containner-fluid">
-                 <div class="Panel-content">重点人员级别信息：${PersonLevel.id == 0?"新建重点人员级别信息":PersonLevel.name}</div>
+           	<div class="fl">
+                 <div class="Panel-content" style="float:left;">重点人员级别信息：${PersonLevel.id == 0?"新建重点人员级别信息":PersonLevel.name}</div>
+                 
+           		<div style="float;right; margin-top:5px;">  
+			        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
+			         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePersonLevel(this);">  
+				</div>  
                </div>   
         </div>
        
     <div class="containner-fluid text-center">
 		<form id="personLevelInfoForm" name="personLevelInfoForm" action="<%=basePath%>person/jsonSaveOrUpdatePersonLevel.do" method="post" style="text-align:left">
-    		<div style="margin-top:15px;width:100%;"> 
+    		<!-- <div style="margin-top:15px;width:100%;"> 
 		        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
 		         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePersonLevel(this);"> 
-			</div> 
-	        <div style="margin-top:15px;">
+			</div>  -->
+	        <div style="margin-top:55px;">
 	        	<span class="from-style">人员级别:</span>
 	        	<input type="hidden" id="hid_levelId" name="id" value="${PersonLevel.id}" />
 	    		<input type="text" required="true" validType="Length[1,30]" class="easyui-validatebox" placeholder="请输入级别" style="width:354px;height:32px;" value="${PersonLevel.name}" name="name"/>

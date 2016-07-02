@@ -470,10 +470,15 @@ public class PersonController extends BaseController{
 			}
 			if (person.getId() == null || person.getId() == 0) { 
 				User u = this.getLoginUser();
-				person.setCreator(u.getId());
-				person.setCreatorname(u.getName());
-				person.setOrganname(u.getOrganName()); 
-				person.setGuid(u.getGuid());
+				if(u!= null){
+					person.setCreator(u.getId());
+					person.setCreatorname(u.getGuid());
+					person.setOrganname(u.getOrganName()); 
+					person.setGuid(u.getGuid());
+				}else{
+					js.setMessage("Session已过期，请重新登录!");
+					return js;
+				}
 				String serialNo = getPersonSerialNo(person.getTypeid()); 
 				person.setSerialno(serialNo); 				
 				person.setId(0);

@@ -73,33 +73,6 @@ function deleteByPersonId(id){
 	    }  
 	});
 }
-function excelChange(file){
-	  if(!(/(?:xls)$/i.test(file.value)) && !(/(?:xlsx)$/i.test(file.value)) ) {
-	        $.messager.alert('错误', "只允许上传xl或xlsx的文档", 'error'); 
-	        if(window.ActiveXObject) {//for IE
-	            file.select();//select the file ,and clear selection
-	            document.selection.clear();
-	        } else if(window.opera) {//for opera
-	            file.type="text";file.type="file";
-	        } else file.value="";//for FF,Chrome,Safari
-	    } else {	
-			showProcess(true, '温馨提示', '正在提交数据...'); 
-	   		fileForms.submit();
-	    	/* $('#fileForms').form('submit',{
-				success : function(data) {
-					data = $.parseJSON(data);
-					if (data.code == 0) {
-						$.messager.alert('保存信息', data.message, 'info',function(){
-							search();
-						});
-						
-					} else {
-						$.messager.alert('错误信息', data.message, 'error');
-					}  
-				}
-			});	  */
-	    }
-}
 </script>
   </head>
   
@@ -107,25 +80,18 @@ function excelChange(file){
   
   <div id="contentRight"  class="contentRight"	>
 	<div class="containner-fluid">
-		<div class="pannel-header"></i><span>重点人员管理</span>
-			<%-- <form id="fileForms" name="fileForms" action="<%=basePath%>fileUpload/uploadPersonExcel.do"  enctype="multipart/form-data" method="post" style="margin:0;padding:0;">
-		       	<input type="file" name="file" id="jfile" onChange="excelChange(this);">
-			</form>
-			<input type="button" class="btn-add" style="margin-left:25px;" value="导入重点人员"> --%>
-		</div>
+		<div class="pannel-header">重点人员管理</div>
 		<div class="Panel-content">
 			<form id="PersonForm" name="PersonForm"
-				action="person/personList.do" method="get">
+				action="<%=basePath%>person/personList.do" method="get">
 				<div style="width:100%;text-align:right;">
-					<input type="text" name="searchName" validType="SpecialWord" class="easyui-validatebox" placeholder="按姓名或地址搜索" value="${Person.searchName}" />
-					<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
+					<%-- <input type="text" name="searchName" validType="SpecialWord" class="easyui-validatebox" placeholder="搜索" value="${Person.searchName}" />
+					<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">   --%>
 				    <input type="hidden" id="pageNumber" name="pageNo" value="${Person.pageNo}" />
 					<input type="button" class="btn-add" style="margin-left:25px;"  onclick="window.location.href='<%=basePath%>person/personInfo.do?personId=0'" value="新建重点人员">
-					<%-- <input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/t1.xls'" value="下载导入模板"/> --%>
 				</div> 
 			</form> 
 		</div>
-		
 	</div>
 	<div class="containner-fluid">
 		<table cellpadding="10" cellspacing="0" width="100%" class="list-info">
@@ -135,14 +101,13 @@ function excelChange(file){
 					<th>照片</th>
 					<!-- <th>编号</th> -->
 					<th>姓名</th>
-					<th>人员类型</th>
-					<th>人员级别</th>
+					<th>类型</th>
+					<th>级别</th>
 					<th>性别</th>
 					<!-- <th>出生年月</th> -->
 					<!-- <th>照片</th> -->
-					<th>身份证号</th>
-					<th>手机号码</th>
-					<th>mac地址</th>
+					<th>身份证</th>
+					<th>联系方式</th>
 					<th>地址</th>
 					<th>事由</th>
 					<th>描述</th>
@@ -150,8 +115,8 @@ function excelChange(file){
 					<th>看守单位</th>
 					<th>警官电话</th> -->
 					<!-- <th>采集人</th> -->
-					<th>采集时间</th>
-					<th>详情</th>
+					<th>mac地址</th>
+					<!-- <th>采集时间</th> -->
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -162,31 +127,32 @@ function excelChange(file){
 						<td	align="center">
 							<img alt="头像" src="<%=basePath %>${item.photourl}" style="width:35px;height:35px">
 						</td>
-						<%-- <td>${item.serialno}</td> --%>
-						<td	align="center">${item.name}</td>
-						<td>${item.typeName}</td>
-						<td>${item.levelName}</td>
+						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.serialno}</td> --%>
+						<td	align="center" ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.name}</td>
+						<td ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.typeName}</td>
+						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.levelName}</td>
 						<c:if test="${item.sex == 1}">
-							<td>男</td>
+							<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">男</td>
 						</c:if>
 						<c:if test="${item.sex == 0}">
-							<td>女</td>
+							<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">女</td>
 						</c:if>
-						<%-- <td>${item.birth}</td> --%>
-						<%-- <td>${item.photourl}</td> --%>
-						<td>${item.idcard}</td>
-						<td>${item.telephone}</td>
-						<td>${item.macaddress}</td>
-						<td>${item.address}</td>
-						<td>${item.casecomment}</td>
-						<td>${item.description}</td>
-						<%-- <td>${item.policename}</td>
-						<td>${item.policesector}</td>
-						<td>${item.policephone}</td> --%>
-						<%-- <td>${item.creatorname}</td> --%>
-						<td>${item.createtimes}</td>
-						<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">编辑</a></td>
-						<td><a href="javascript:void(0);" onclick="deleteByPersonId(${item.id});">删除</a></td>
+						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.birth}</td> --%>
+						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.photourl}</td> --%>
+						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.idcard}</td>
+						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.telephone}</td>
+						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.address}</td>
+						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.casecomment}</td>
+						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.description}</td>
+						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.policename}</td>
+						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.policesector}</td>
+						<td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.policephone}</td> --%>
+						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.creatorname}</td> --%>
+						<%-- <td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.createtimes}</td> --%>
+						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.macaddress}</td>
+						<td>
+							<a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">详情</a>
+						<a href="javascript:void(0);" onclick="deleteByPersonId(${item.id});">删除</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

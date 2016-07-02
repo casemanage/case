@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    <title>重点人员级别管理</title>
+    <title>重点人员类型管理</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -62,11 +62,12 @@ function pagesearch(){
 		PersonLevelForm.submit();
 	}  
 }
-function deleteByPersonLevelId(id){
-	$.messager.confirm("删除确认","确认删除该人员级别?",function(r){  
+ 
+ function deleteById(id){
+ 	$.messager.confirm("删除确认","确认删除该人员级别?",function(r){  
 		    if (r){  
 			$.ajax({
-				url : "<%=basePath%>person/jsonDeletePersonLevel.do?personLevelId="+id,
+				url : "<%=basePath%>person/jsonDeleteLevelById.do?id="+id,
 				type : "post",  
 				dataType:"json",
 				success : function(data) { 
@@ -81,7 +82,7 @@ function deleteByPersonLevelId(id){
 			});
 	    }  
 	});
-} 
+ }
 </script>
   </head>
   
@@ -92,10 +93,10 @@ function deleteByPersonLevelId(id){
             	<div class="pannel-header">重点人员级别管理</div>
                 <div class="Panel-content">
 					<form id="PersonLevelForm" name="PersonLevelForm"
-						action="person/PersonLevelList.do" method="get"> 
+						action="<%=basePath%>person/PersonLevelList.do" method="get"> 
 							 <div style="width:100%;text-align:right;">
-								<input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="按名称或描述搜索" value="${PersonLevel.searchName}" /> 
-								<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
+								<%-- <input type="text" name="searchName"   validType="SpecialWord" class="easyui-validatebox"  placeholder="搜索" value="${PersonLevel.searchName}" /> 
+								<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">   --%>
 								<input type="hidden" id="pageNumber" name="pageNo" value="${PersonLevel.pageNo}" />
 			        			<input type="button" class="btn-add"  style="margin-left:25px;" onclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=0'" value="新建重点人员级别">
 							</div>   
@@ -107,21 +108,23 @@ function deleteByPersonLevelId(id){
                     <thead>
 						<tr style="background-color:#D6D3D3;font-weight: bold;">
 							<th width="4%" style="display:none">&nbsp;</th>
-													
+							<!-- <th>编号</th> -->							
 							<th>名称</th>							
-							<th>描述</th> 
-							<th>详情</th>
-							<th>操作</th>
+							<th>描述</th> 				
+							<th>操作</th> 
 						</tr>
                     </thead>
                     <tbody>
                        <c:forEach var="item" items="${PersonLevellist}">
 						<tr>
 							<td align="center" style="display:none">${item.id}</td>
-							<td align="center">${item.name}</td>
-							<td align="center">${item.description}</td>
-							<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=${item.id}'">编辑</a></td>
-							<td><a href="javascript:void(0);" onclick="deleteByPersonLevelId(${item.id});">删除</a></td>
+							<%-- <td align="center" ondblclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=${item.id}'">${item.id}</td> --%>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=${item.id}'">${item.name}</td>
+							<td align="center" ondblclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=${item.id}'">${item.description}</td>
+														<td>
+								<a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>person/PersonLevelInfo.do?personLevelId=${item.id}'">详情</a>
+								<a style="margin-left:15px" href="javascript:void(0);" onclick="deleteById(${item.id});">删除</a>
+							</td>
 						</tr>
 					</c:forEach>
                     </tbody>
