@@ -261,6 +261,9 @@ public class AssociateController extends BaseController{
 			if(associate.getTypeid() == null){
 				js.setMessage("机构类型不能为空!");
 				return js;
+			}else{
+				String serialNO = getAssoSerialNo(associate.getTypeid());
+				associate.setSerialno(serialNO);
 			}
 			if(associate.getId() == null ||associate.getId() == 0){
 				User u = this.getLoginUser();
