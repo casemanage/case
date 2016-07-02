@@ -76,7 +76,8 @@ $(document).ready(function(){
   				 	 }
   				 },
   				 onLoadSuccess:function(){
-				//$("#cmbParentArea").combotree("disable",true);
+				//$("#cmbParentArea").combotree("disable",true); 
+   				   
 				var parentId = $("#parentId").val();
 				var parentName = $("#parentName").val();
 				if(parentId==0){
@@ -121,20 +122,21 @@ function getKeyword(){
 	
   <div id="contentRight" class="contentRight">
        	<div class="containner-fluid">
-           	<div class="pannel-header">区域信息</div>          
-                 <div class="Panel-content">区域信息：${area.id == 0?"新建社会机构类型信息":area.name}</div>                       
-        	</div>
-       
+           		<div class="pannel-header">区域信息</div>         
+                 <div class="Panel-content" style="float:left;">区域信息：${area.id == 0?"新建社会机构类型信息":area.name}</div>
+						<div style="float:right; margin-top:5px;">  
+					        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
+	        				<input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveArea(this);">
+				</div>      
+				</div>
+        
     <div class="containner-fluid text-center">
 		<form id="areaInfoForm" name="areaInfoForm" action="<%=basePath%>area/jsonSaveOrUpdateArea.do" method="post" style="text-align:left;">
-			<div style="margin-top:15px;width:100%;"> 
-		        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
-		        <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveArea(this);">
+
+		    <div style="margin-top:55px;width:100%;">
 				<input name="id" value="${area.id}" type="hidden" />
 				<input id="parentId" name="parentid" value="${area.parentid}" type="hidden"/>
 				<input id="parentName" name="parentName" value="${area.parentName}" type="hidden" />
-			</div> 
-		    <div style="margin-top:15px;width:100%;">
 	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;区域名称:</span>
 	    		<input type="text" required="true"  validType="Length[1,20]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入区域名称" value="${area.name}" name="name"/>
 	    	</div>
@@ -143,12 +145,12 @@ function getKeyword(){
 	    		<input id="cmbParentArea" class="easyui-combotree"  style="width:354px;height:32px;" />
 	    	</div>
 		    <div style="margin-top:15px;width:100%;">
-	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;经&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:</span>
-	    		<input type="text" style="width:354px;height:32px;" class="easyui-numberbox" precision="1" min="0.0" placeholder="请输入经度" value="${area.latitude}" name="latitude"/>
+	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;经&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:</span>
+	    		<input type="text" style="width:354px;height:32px;" validType="LoctionX"  class="easyui-validatebox"  placeholder="请输入经度" value="${area.latitude}" name="latitude"/>
 	    	</div>
 		    <div style="margin-top:15px;width:100%;">
-	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;纬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:</span>
-	    		<input type="text"  style="width:354px;height:32px;"  class="easyui-numberbox" precision="1" min="0.0" placeholder="请输入纬度" value="${area.longtiude}" name="longtiude"/>
+	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;纬&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:</span>
+	    		<input type="text"  style="width:354px;height:32px;" validType="LoctionY"  class="easyui-validatebox"  placeholder="请输入纬度" value="${area.longtiude}" name="longtiude"/>
 	    	</div>
 	    	<div style="margin-top:15px;">
 	        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;备注描述:</span>

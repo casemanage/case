@@ -49,16 +49,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
  <body style="background:#fff;">	
- 
+     
   <div id="contentRight" class="contentRight">
        	<div class="containner-fluid">
-           	<div class="pannel-header">重点人员类型信息</div>       
-                 <div class="Panel-content" style="float: left;">重点人员类型：${PersonType.id == 0?"新建重点人员类型信息":PersonType.name}</div>		
-                 
-           		<div style="float;right; margin-top:5px;">  
-			        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
-			         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePersonType(this);">  
-				</div>  		
+           	<div class="pannel-header">重点人员类型信息</div>          
+                 <div class="Panel-content" style="float: left;">重点人员类型：${PersonType.id == 0?"新建重点人员类型信息":PersonType.name}</div>
+						<div style="float:right; margin-top:5px;">  
+					        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
+			         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePersonType(this);">
+						</div>                    
         </div>       
     <div class="containner-fluid text-center" >
 		<form id="personTypeInfoForm" name="personTypeInfoForm" action="<%=basePath%>person/jsonSaveOrUpdatePersonType.do" method="post" style="text-align:left;">

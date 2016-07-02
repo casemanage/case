@@ -210,13 +210,16 @@ public class UploadFileController extends BaseController {
 					XSSFCell cell1 = row.getCell(1);
 					if (cell1 != null || "".equals(cell1)) {
 						cell1.setCellType(Cell.CELL_TYPE_STRING);
-						associate.setTypeid(2);
+						//associate.setTypeid(2);
 						for(AssociateType a : associateTypeList){
 							String name = a.getName();
 							if(name.equals(cell1.getStringCellValue())){
 								associate.setTypeid(a.getId());
 								break;
 							}
+						}
+						if(associate.getTypeid()==null){
+							associate.setTypeid(associateTypeList.get(0).getId());
 						}
 						String serialNo = getAssoSerialNo(associate.getTypeid()); 
 						associate.setSerialno(serialNo);
@@ -234,13 +237,16 @@ public class UploadFileController extends BaseController {
 					XSSFCell cell4 = row.getCell(4);
 					if (cell4 != null || "".equals(cell4)) {
 						cell4.setCellType(Cell.CELL_TYPE_STRING);
-						associate.setAreaId(2);
+						associate.setAreaId(0);
 						for(Area a : areaList){
 							String name = a.getName();
 							if(name.equals(cell4.getStringCellValue())){
 								associate.setAreaId(a.getId());
 								break;
 							}
+						}
+						if(associate.getAreaId() == 0){
+							associate.setAreaId(areaList.get(0).getId());
 						}
 					}
 					XSSFCell cell5 = row.getCell(5);
@@ -292,13 +298,15 @@ public class UploadFileController extends BaseController {
 					HSSFCell cell1 = row.getCell(1);
 					if (cell1 != null || "".equals(cell1)) {
 						cell1.setCellType(Cell.CELL_TYPE_STRING);
-						associate.setTypeid(2);
 						for(AssociateType a : associateTypeList){
 							String name = a.getName();
 							if(name.equals(cell1.getStringCellValue())){
 								associate.setTypeid(a.getId());
 								break ;
 							}
+						}
+						if(associate.getTypeid() == null){
+							associate.setTypeid(associateTypeList.get(0).getId());
 						}
 						String serialNo = getAssoSerialNo(associate.getTypeid()); 
 						associate.setSerialno(serialNo);
@@ -316,13 +324,16 @@ public class UploadFileController extends BaseController {
 					HSSFCell cell4 = row.getCell(4);
 					if (cell4 != null || "".equals(cell4)) {
 						cell4.setCellType(Cell.CELL_TYPE_STRING);
-						associate.setAreaId(1);
+						associate.setAreaId(0);
 						for(Area a : areaList){
 							String name = a.getName();
 							if(name.equals(cell4.getStringCellValue())){
 								associate.setAreaId(a.getId());
 								break;
 							}
+						}
+						if(associate.getAreaId() == 0){
+							associate.setAreaId(areaList.get(0).getId());
 						}
 					}
 					HSSFCell cell5 = row.getCell(5);
@@ -559,6 +570,7 @@ public class UploadFileController extends BaseController {
 					HSSFCell cell7 = row.getCell(7);
 					if (cell7 != null || "".equals(cell7)) {
 						cell7.setCellType(Cell.CELL_TYPE_STRING);
+						p.setIsleader(0);
 						try {	
 							String isleader = cell7.getStringCellValue();
 							if(isleader.equals("是") || isleader.equals("1"))
@@ -639,6 +651,7 @@ public class UploadFileController extends BaseController {
 				XSSFCell cell7 = row.getCell(7);
 				if (cell7 != null || "".equals(cell7)) {
 					cell7.setCellType(Cell.CELL_TYPE_STRING);
+					p.setIsleader(0);
 					try {	
 						String isleader = cell7.getStringCellValue();
 						if(isleader.equals("是") || isleader.equals("1"))

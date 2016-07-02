@@ -226,24 +226,10 @@ public class AssociateController extends BaseController{
 			{
 				associateType.setId(0);	
 			}
-			if (associateType.getKeyword() != null && associateType.getName() != null) {
-				AssociateType p = new AssociateType();
-				String key = associateType.getKeyword();
-				p.setKeyword(key);
-				p.setName(associateType.getName());
-				if (associateType.getId() > 0) {
-					p.setId(associateType.getId());
-				}				
-				List<AssociateType> lc = associateService.getExistAssociateType(p);
-				if (lc.size() == 0) {
-					associateService.saveOrUpdateAssociateType(associateType); 
-					js.setCode(new Integer(0));											
-					js.setMessage("保存成功!");
-				}else
-				{
-					js.setMessage("社会组织类型已存在!");;
-				}									
-			} 
+			 
+			associateService.saveOrUpdateAssociateType(associateType); 
+			js.setCode(new Integer(0));											
+			js.setMessage("保存成功!"); 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -384,13 +370,23 @@ public class AssociateController extends BaseController{
 	@RequestMapping(value = "/associateMember.do")
 	public String associateMember(
 			@RequestParam(value="associateId", required = false)Integer associateId,
+			@RequestParam(value="id", required = false)Integer id,
 			HttpServletRequest request, HttpServletResponse response){
 		Associate associate = new Associate();
-		associate.setId(associateId);
+		associate.setId(associateId); 
+		AssociatePerson person = new AssociatePerson();
+		associate.setId(associateId); 
+		if(id!= null&& id>0){
+			person = associateService.getAssociateMemberById(id);
+		}else{
+			person.setId(0);
+		}
 		associate = associateService.getAssociateById(associateId);
 		request.setAttribute("Associate",associate);
+		request.setAttribute("Person",person);
 		return "web/associate/associateMember";
 	}
+
 	@ResponseBody
 	@RequestMapping(value = "/jsonUpdateMember.do", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8" })
 	public JsonResult<AssociatePerson> jsonUpdateMember(AssociatePerson associatePerson,
@@ -718,4 +714,26 @@ public class AssociateController extends BaseController{
 			}
 			return js;
 		}
+		
+		@ResponseBody
+		@RequestMapping(value = "/jsonDeleteTypeById.do", method = RequestMethod.POST)
+		public JsonResult<Associate> jsonDeleteTypeById(
+				@RequestParam(value="id", required = false)Integer id,
+				HttpServletRequest request, HttpServletResponse response) {
+			JsonResult<Associate> js = new JsonResult<Associate>();
+			js.setCode(1);
+			js.setMessage("删除失败!");
+			try {
+				if(id != null){
+					associateService.deleteTypeById(id);
+				}
+				js.setCode(0);
+				js.setMessage("删除成功!");
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			return js;
+		}
+
 }

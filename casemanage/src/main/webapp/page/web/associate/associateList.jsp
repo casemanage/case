@@ -244,7 +244,7 @@ function chooseFile(){
 						<td>${item.createtimes}</td>
 						<td>${item.description}</td> 
 						<%-- <td><a href="javascript:void(0);" onclick="showdialog(${item.id});">上传平面图</a></td> --%>
-						<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">编辑</a>
+						<td><a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=${item.id}'">详情</a>
 						<a style="margin-left:15px"  href="javascript:void(0);" onclick="deleteByAssociateId(${item.id});">删除</a></td>
 					</tr>
 				</c:forEach>

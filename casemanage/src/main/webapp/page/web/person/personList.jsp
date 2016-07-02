@@ -152,7 +152,7 @@ function deleteByPersonId(id){
 						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.macaddress}</td>
 						<td>
 							<a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">详情</a>
-						<a href="javascript:void(0);" onclick="deleteByPersonId(${item.id});">删除</a></td>
+						<a style="margin-left:15px;" href="javascript:void(0);" onclick="deleteByPersonId(${item.id});">删除</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

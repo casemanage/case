@@ -69,6 +69,12 @@ public interface PersonService {
 
 	int getTotalCountByTypeId(Integer id);
 
-	int getTotalCountByLevelId(Integer id);       
+	int getTotalCountByLevelId(Integer id);    
+	
+	void deleteTypeById(Integer id);
+
+	void deletelevelById(Integer id);
+
+	void deleteCarById(Integer id);   
 
 }

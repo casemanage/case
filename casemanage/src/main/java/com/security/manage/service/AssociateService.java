@@ -70,6 +70,8 @@ public interface AssociateService {
 
 	int getTotalCountByTypeId(Integer id);
 
+	void deleteTypeById(Integer id);
+
 
 
 

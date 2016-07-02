@@ -27,7 +27,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function savePersonLevel(obj){
 	if ($('#personLevelInfoForm').form('validate')) {
 		 $(obj).attr("onclick", ""); 
-		showProcess(true, '温馨提示', '正在提交数据...'); 
 		 $('#personLevelInfoForm').form('submit',{
 		  		success:function(data){ 
 		  			data = $.parseJSON(data);
@@ -51,16 +50,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
   <div id="contentRight" class="contentRight">
        	<div class="containner-fluid">
-           	<div class="pannel-header">重点人员级别信息</div> 
-           	<div class="fl">
+           	<div class="pannel-header">重点人员级别信息</div>          
                  <div class="Panel-content" style="float:left;">重点人员级别信息：${PersonLevel.id == 0?"新建重点人员级别信息":PersonLevel.name}</div>
-                 
-           		<div style="float;right; margin-top:5px;">  
+						
+           		<div style="float:right; margin-top:5px;">  
 			        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
 			         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePersonLevel(this);">  
-				</div>  
-               </div>   
-        </div>
+				</div>                   
+        </div>  
        
     <div class="containner-fluid text-center">
 		<form id="personLevelInfoForm" name="personLevelInfoForm" action="<%=basePath%>person/jsonSaveOrUpdatePersonLevel.do" method="post" style="text-align:left">

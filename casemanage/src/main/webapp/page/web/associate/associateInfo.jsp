@@ -106,8 +106,13 @@ function getAssociatePersonList(){
 function saveAssociste(obj){
 
 	var typeId = $("#typeid").val();
-	if(typeId.length == 0 || typeId ==""){
+	if(typeId.length == 0 || typeId == 0 || typeId =="" || typeId =="0"){
 		$.messager.alert("操作提示","请选择机构类型","error");
+		return;
+	}
+	var areaId = $("#areaId").val();
+	if(areaId.length == 0 ||areaId == 0 || areaId =="" || areaId =="0"){
+		$.messager.alert("操作提示","请选择所属区域","error");
 		return;
 	}
 
@@ -158,11 +163,13 @@ function getClickTab(title,index){
 	if(index == 0){
 		$("#btn_newInfo").attr("style","float:right;margin-left:25px;display:none;");
 		$("#btn_download").attr("style","float:right;margin-left:25px;display:none;");
+		$("#btn_uploadload").attr("style","float:right;margin-left:25px;display:none;");
 		$("#btn_saveInfo").attr("style","float:right;margin-left:25px;");
 	}else{
 		$("#btn_saveInfo").attr("style","float:right;margin-left:25px;display:none;");
 		$("#btn_download").attr("style","float:right;margin-left:25px;");
 		$("#btn_newInfo").attr("style","float:right;margin-left:25px;");
+		$("#btn_uploadload").attr("style","float:right;margin-left:25px;");
 	}
 } 
 function fillMemberList(lst){
@@ -238,6 +245,7 @@ function chooseFile(){
 			       <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="back();"> 
 			       <c:if test="${Associate.id > 0}">
 			       		<input id="btn_newInfo"  type="button" class="btn-add" style="float:right;margin-left:25px; display:none;"  	onclick="window.location.href='<%=basePath%>associate/associateMember.do?associateId=${Associate.id}&id=0'" value="新增相关人员" />
+			       		<input id="btn_uploadload" type="button" class="btn-add"  style="float:right;margin-left:25px; display:none;" 	onclick="javascript:$('#btn_import').click();"	value="导入" />
 			       		<input id="btn_download" type="button" class="btn-add"  style="float:right;margin-left:25px; display:none;" 	onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/社会机构相关人员数据采集模板.xls'"	value="下载导入模板" />
 			       </c:if>
 		         
@@ -266,6 +274,13 @@ function chooseFile(){
 				 </c:forEach>
 				</select>  
 		    	</div>
+		    	<div style="margin-top:15px;">
+	    		<span class="from-style">区域选择:</span>
+	    		<input id ="areaId" name = "areaId" type="hidden" value="${Associate.areaId}"/>
+	    		<input id ="areaName" name = "areaName" type="hidden" value="${Associate.areaName}"/>
+				<input  id ="cmbParentArea" name="areaTreeName" type="text"  class="easyui-combotree" required="true" style="width:354px;height:35px;" />
+				 
+				</div>
 		        <div style="margin-top:15px;">
 		        	<span class="from-style">机构地址:</span>
 		    		<input type="text" required="true"  validType="Length[1,150]" class="easyui-validatebox"  style="width:354px;height:32px;"  placeholder="请输入地址" value="${Associate.address}" name="address"/>
@@ -274,20 +289,13 @@ function chooseFile(){
 		        	<span class="from-style">手机号码:</span>
 		    		<input type="text"  style="width:354px;height:32px;"  placeholder="请输入联系方式" class="easyui-validatebox" value="${Associate.telephone}" name="telephone"/>
 	    		</div>
-	    		<div style="margin-top:15px;">
-	    		<span class="from-style">区域选择:</span>
-	    		<input id ="areaId" name = "areaId" type="hidden" value="${Associate.areaId}"/>
-	    		<input id ="areaName" name = "areaName" type="hidden" value="${Associate.areaName}"/>
-				<input  id ="cmbParentArea" name="areaTreeName" type="text"  class="easyui-combotree" required="true" style="width:354px;height:35px;" />
-				 
-				</div>
 		        <div style="margin-top:15px;">
 		        	<span class="from-style">坐标经度:</span>
-		    		<input type="text" style="width:354px;height:32px;" class="easyui-numberbox" precision="1" min="1.0" placeholder="请输入经度" value="${Associate.latitude}" name="latitude"/>
+		    		<input type="text" style="width:354px;height:32px;" validType="LoctionX"  class="easyui-validatebox" placeholder="请输入经度" value="${Associate.latitude}" name="latitude"/>
 		    	</div>
 		        <div style="margin-top:15px;">
 		        	<span class="from-style">坐标纬度:</span>
-		    		<input type="text"  style="width:354px;height:32px;"  class="easyui-numberbox" precision="1" min="1.0" placeholder="请输入纬度" value="${Associate.longitude}" name="longitude"/>
+		    		<input type="text"  style="width:354px;height:32px;"  validType="LoctionY"  class="easyui-validatebox" placeholder="请输入纬度" value="${Associate.longitude}" name="longitude"/>
 		    	</div>
 		    	<div style="margin-top:15px;width:100%;">
 		    		<span class="from-style">平&nbsp;&nbsp;面&nbsp;&nbsp;图:</span> 
@@ -330,8 +338,8 @@ function chooseFile(){
     <c:if test="${Associate.id>0}">
 		<div title="从业人员" style="padding:3px;">
 			<div class="Panel-content">
-				<div style="width:100%;text-align:right">
-					<input type="button" style="margin-bottom:10px;" class="btn-import" onclick="chooseFile();" value="导入机构人员" />
+				<div style="width:100%;text-align:right;display:none ">
+					<input id="btn_import" type="button" style="margin-bottom:10px;margin-right:30px;" class="btn-import" onclick="chooseFile();" value="导入机构人员" />
 				</div>
 				<div style="width:100%;text-align:right"> 
 				 
@@ -394,7 +402,9 @@ function chooseFile(){
 					</c:if>
 					<td>${item.creatorname}</td>
 					<td>${item.organname}</td>
-					<td><a href="javascript:void(0);" onclick="deleteByAssociateId(${Associate.id},${item.id});">删除</a></td>
+					<td>
+					<a href="javascript:void(0);" onclick="window.location.href='<%=basePath%>associate/associateMember.do?associateId=${Associate.id}&id=${item.id}'">详情</a>
+					<a href="javascript:void(0);" style="margin-left:15px;" onclick="deleteByAssociateId(${Associate.id},${item.id});">删除</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

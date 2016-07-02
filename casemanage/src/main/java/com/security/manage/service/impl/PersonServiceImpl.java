@@ -237,4 +237,22 @@ public class PersonServiceImpl implements PersonService {
 		// TODO Auto-generated method stub
 		return personMapper.getTotalCountByLevelId(id);
 	} 
+	@Override
+	public void deleteTypeById(Integer id) {
+		// TODO Auto-generated method stub
+		personTypeMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public void deletelevelById(Integer id) {
+		// TODO Auto-generated method stub
+		personLevelMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public void deleteCarById(Integer id) {
+		// TODO Auto-generated method stub
+		personCarMapper.deleteByPrimaryKey(id);
+	} 
+
 }

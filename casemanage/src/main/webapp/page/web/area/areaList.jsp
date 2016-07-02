@@ -37,15 +37,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    				 },
    				 onBeforeExpand:function(node){
    				 	$('#treeList').tree('options').url = '<%=basePath%>area/jsonLoadAreaTreeList.do?pid='+ node.id;
-   				 }
-   				 /* onLoadSuccess:function(){
+   				 },
+   				 onLoadSuccess:function(){
 					showProcess(false); 
-   				    var aId = $.trim($("#hid_areaId").val());
-   				 	if(aId.length>0){
-   				 		var node = $("#treeList").tree("find",aId); 
-						$('#treeList').tree("select", node.target);
+   				    var root = $("#treeList").tree("getRoot");
+   				 	if(root!= null){
+   				 		$("#treeList").tree("expand",root.target);
    				 	} 
-   				 } */
+   				 } 
 			});  
 		});
 function getAreaListById(id){
@@ -114,8 +113,7 @@ function fillAreaList(lst){
 		html += "<tr>";
 		html += "<td align='center' style='display:none'>"+lst[i].id+"</td><td	align='center'>"+(lst[i].name == null ? "":lst[i].name)+"</td><td align='center'>"+(lst[i].parentName == null ? "":lst[i].parentName)+"</td><td align='center'>"+(lst[i].latitude == null || lst[i].longtiude == null ? "":(lst[i].latitude+","+lst[i].longtiude))+"</td>";
 		html += "<td align='center'>"+(lst[i].description == null ? "":lst[i].description)+"</td>";
-		html += "<td><a href='javascript:void(0);' onclick=window.location.href='<%=basePath%>area/areaInfo.do?areaId="+lst[i].id+"'>"+ "编辑" + "</a></td>";
-		html += "<td><a href='javascript:void(0);' onclick='deleteAreaById("+lst[i].associateid+","+lst[i].id+");'>"+"删除"+"</a></td>";
+		html += "<td><a href='javascript:void(0);' onclick=window.location.href='<%=basePath%>area/areaInfo.do?areaId="+lst[i].id+"'>编辑</a><a style='margin-left:15px;' href='javascript:void(0);' onclick='deleteAreaById("+lst[i].associateid+","+lst[i].id+");'>删除</a></td>";
 		html += "</tr>";
 	}
 	$("#areainfoList").html(html);
@@ -153,8 +151,8 @@ function deleteAreaById(id){
 			<form id="AreaForm" name="AreaForm"
 				action="area/areaList.do" method="get">
 				<div style="width:100%;text-align:right;">
-					<input type="text" name="searchName" validType="SpecialWord" class="easyui-validatebox" placeholder="按区域名称搜索" value="${area.searchName}" />
-					<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
+					<%-- <input type="text" name="searchName" validType="SpecialWord" class="easyui-validatebox" placeholder="按区域名称搜索" value="${area.searchName}" />
+					<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">   --%>
 				    <input type="hidden" id="pageNumber" name="pageNo" value="${area.pageNo}" />
 					<input type="button" class="btn-add" style="margin-left:25px;"  onclick="window.location.href='<%=basePath%>area/areaInfo.do?areaId=0'" value="新建区域">
 					<input type="hidden" id="areaId"/>
@@ -184,8 +182,7 @@ function deleteAreaById(id){
 							<th>区域名称</th>
 							<th>所属区域</th>
 							<th>经纬度</th>
-							<th>备注</th>
-							<th>详情</th>
+							<th>备注</th> 
 							<th>操作</th>
 						</tr>
 					</thead>
@@ -201,10 +198,11 @@ function deleteAreaById(id){
 							<c:if test="${item.latitude =='' || item.latitude == null || item.longtiude == '' || item.longtiude == null}">
 								<td></td>
 							</c:if>
-							<td>${item.description}</td>
-							<td><a href="javascript:void(0);"
-								onclick="window.location.href='<%=basePath%>area/areaInfo.do?areaId=${item.id}'">编辑</a></td>
-							<td><a href="javascript:void(0);"
+							<td>${item.description}</td> 
+							<td>
+							<a href="javascript:void(0);"
+								onclick="window.location.href='<%=basePath%>area/areaInfo.do?areaId=${item.id}'">详情</a>
+							<a href="javascript:void(0);" style="margin-left:15px"
 								onclick="deleteAreaById(${item.id});">删除</a></td>
 						</tr>
 					</c:forEach>

@@ -245,40 +245,10 @@ public class PersonController extends BaseController{
 			if (personType.getId() == null || personType.getId() == 0)
 			{
 				personType.setId(0);	
-			}
-			if (personType.getKeyword() != null) {
-				PersonType p = new PersonType();
-				if(personType.getName() != null)
-				{
-					p.setName(personType.getName());
-					if(personType.getId() > 0){
-						p.setId(personType.getId());
-					}					
-					List<PersonType> lc = personService.getExistPersonType(p);
-					if(lc.size() != 0)
-					{
-						js.setMessage("重点人员类型已存在!");
-						return js;
-					}
-				}else
-				{
-					js.setMessage("类型名称不能为空!");
-					return js;
-				}
-				String key = personType.getKeyword();
-				p.setKeyword(key);							
-				List<PersonType> lc = personService.getExistPersonType(p);
-				if (lc.size() == 0) {
-					personService.saveOrUpdatePersonType(personType); 
-					js.setCode(new Integer(0));											
-					js.setMessage("保存成功!");
-				}else
-				{
-					js.setMessage("重点人员关键字已存在!");
-				}									
-			}else{
-				js.setMessage("关键字不能为空!");
-			}
+			} 
+			personService.saveOrUpdatePersonType(personType); 
+			js.setCode(new Integer(0));											
+			js.setMessage("保存成功!"); 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -304,24 +274,10 @@ public class PersonController extends BaseController{
 			if (personCar.getId() == null || personCar.getId() == 0)
 			{
 				personCar.setId(0);	
-			}
-			if (personCar.getNumber() != null) {
-				PersonCar p = new PersonCar();
-				String number = personCar.getNumber();
-				p.setNumber(number);
-				if (personCar.getId() > 0) {
-					p.setId(personCar.getId());
-				}				
-				List<PersonCar> lc = personService.getExistPersonCar(p);
-				if (lc.size() == 0) {
-					personService.saveOrUpdatePersonCar(personCar); 
-					js.setCode(new Integer(0));											
-					js.setMessage("保存成功!");
-				}else
-				{
-					js.setMessage("该重点人员车辆已存在!");
-				}									
-			} 
+			}  
+			personService.saveOrUpdatePersonCar(personCar); 
+			js.setCode(new Integer(0));											
+			js.setMessage("保存成功!");  
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -341,23 +297,10 @@ public class PersonController extends BaseController{
 			{
 				personLevel.setId(0);	
 			}
-			if (personLevel.getName() != null){
-				PersonLevel p = new PersonLevel();
-				String name = personLevel.getName();
-				p.setName(name);
-				if (personLevel.getId() > 0) {
-					p.setId(personLevel.getId());
-				}
-				List<PersonLevel> lc = personService.getExistPersonLevel(p);
-				if (lc.size() == 0) {
-					personService.saveOrUpdatePersonLevel(personLevel); 
-					js.setCode(new Integer(0));											
-					js.setMessage("保存成功!");
-				}
-				else
-				{
-					js.setMessage("重点人员级别已存在!");
-				}
+			if (personLevel.getName() != null){ 
+				personService.saveOrUpdatePersonLevel(personLevel); 
+				js.setCode(new Integer(0));											
+				js.setMessage("保存成功!"); 
 			}				
 			else
 			{
@@ -693,6 +636,70 @@ public class PersonController extends BaseController{
 		}
 		return js;
 	}
+	@ResponseBody
+	@RequestMapping(value = "/jsonDeleteTypeById.do", method = RequestMethod.POST)
+	public JsonResult<Person> jsonDeleteTypeById(
+			@RequestParam(value="id", required = false)Integer id,
+			HttpServletRequest request, HttpServletResponse response) {
+		JsonResult<Person> js = new JsonResult<Person>();
+		js.setCode(1);
+		js.setMessage("删除失败!");
+		try {
+			if(id != null){
+				personService.deleteTypeById(id);
+			}
+			js.setCode(0);
+			js.setMessage("删除成功!");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return js;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/jsonDeleteLevelById.do", method = RequestMethod.POST)
+	public JsonResult<Person> jsonDeleteLevelById(
+			@RequestParam(value="id", required = false)Integer id,
+			HttpServletRequest request, HttpServletResponse response) {
+		JsonResult<Person> js = new JsonResult<Person>();
+		js.setCode(1);
+		js.setMessage("删除失败!");
+		try {
+			if(id != null){
+				personService.deletelevelById(id);
+			}
+			js.setCode(0);
+			js.setMessage("删除成功!");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return js;
+	}
+
+
+	@ResponseBody
+	@RequestMapping(value = "/jsonDeleteCarById.do", method = RequestMethod.POST)
+	public JsonResult<Person> jsonDeleteCarById(
+			@RequestParam(value="id", required = false)Integer id,
+			HttpServletRequest request, HttpServletResponse response) {
+		JsonResult<Person> js = new JsonResult<Person>();
+		js.setCode(1);
+		js.setMessage("删除失败!");
+		try {
+			if(id != null){
+				personService.deleteCarById(id);
+			}
+			js.setCode(0);
+			js.setMessage("删除成功!");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return js;
+	}
+
 }
 
 

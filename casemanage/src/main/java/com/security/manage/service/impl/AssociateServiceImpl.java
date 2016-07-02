@@ -243,4 +243,10 @@ public class AssociateServiceImpl implements AssociateService{
 		return associateMapper.getTotalCountByTypeId(id);
 	}
 
+	@Override
+	public void deleteTypeById(Integer id) {
+		// TODO Auto-generated method stub
+		associateTypeMapper.deleteByPrimaryKey(id);
+	}
+
 }

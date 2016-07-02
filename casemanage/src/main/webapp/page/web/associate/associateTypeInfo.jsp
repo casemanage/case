@@ -55,7 +55,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        	<div class="containner-fluid">
            	<div class="pannel-header">社会机构类型信息</div>          
                  <div class="Panel-content" style="float:left;">社会机构类型：${AssociateType.id == 0?"新建社会机构类型信息":AssociateType.name}</div>  
-						<div style="float;right; margin-top:5px;">  
+						<div style="float:right; margin-top:5px;">  
 					        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
 					         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="saveAssociateType(this);">  
 						</div>                    

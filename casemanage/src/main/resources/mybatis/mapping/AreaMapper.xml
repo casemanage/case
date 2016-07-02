@@ -221,6 +221,7 @@
     from MC_AREA a
     where a.parentId = #{parentid,jdbcType=INTEGER}
     and a.flag = 0
+    or a.id = #{parentid,jdbcType=INTEGER}
   </select>
   <select id="getAreaAlList" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List" />
