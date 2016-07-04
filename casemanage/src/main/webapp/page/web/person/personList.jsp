@@ -137,6 +137,9 @@ function deleteByPersonId(id){
 						<c:if test="${item.sex == 0}">
 							<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">女</td>
 						</c:if>
+						<c:if test="${item.sex == null}">
+							<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'"></td>
+						</c:if>
 						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.birth}</td> --%>
 						<%-- <td	ondblclick="window.location.href='person/personInfo.do?personId=${item.id}'">${item.photourl}</td> --%>
 						<td	ondblclick="window.location.href='<%=basePath%>person/personInfo.do?personId=${item.id}'">${item.idcard}</td>
