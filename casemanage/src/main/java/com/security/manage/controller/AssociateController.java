@@ -271,48 +271,42 @@ public class AssociateController extends BaseController{
 				a.setName(associate.getName());
 				if(associate.getId() > 0){
 					a.setId(associate.getId());
+				} 
+				List<String> urlList = new ArrayList<String>();
+				String path = request.getSession().getServletContext().getRealPath("uploadsource");
+				File targetFile = new File(path);
+				String filePath = "";
+				String fileName = "";
+				if(file1.getSize()>0){ 
+					String tempName = file1.getOriginalFilename();  
+					String fileType = tempName.split("\\.")[1];
+					fileName = associate.getSerialno()+"."+fileType;
+					
+					if (!targetFile.exists()) {
+						targetFile.mkdirs();
+					}
+					targetFile = new File(path+"/associateplan");
+					if (!targetFile.exists()) {
+						targetFile.mkdirs();
+					}
+					targetFile = new File(path+"/associateplan",fileName);  
+					if(targetFile.exists()){
+						targetFile.delete();
+					}
+					filePath ="uploadsource/associateplan/"+fileName;
+					file1.transferTo(targetFile);
+					urlList.add(filePath);
 				}
-				List<Associate> la = new ArrayList<Associate>();
-				la = associateService.getExistAssociate(a);
-				if(la.size() == 0){
-					List<String> urlList = new ArrayList<String>();
-					String path = request.getSession().getServletContext().getRealPath("uploadsource");
-					File targetFile = new File(path);
-					String filePath = "";
-					String fileName = "";
-					if(file1.getSize()>0){ 
-						String tempName = file1.getOriginalFilename();  
-						String fileType = tempName.split("\\.")[1];
-						fileName = associate.getSerialno()+"."+fileType;
-						
-						if (!targetFile.exists()) {
-							targetFile.mkdirs();
-						}
-						targetFile = new File(path+"/associateplan");
-						if (!targetFile.exists()) {
-							targetFile.mkdirs();
-						}
-						targetFile = new File(path+"/associateplan",fileName);  
-						if(targetFile.exists()){
-							targetFile.delete();
-						}
-						filePath ="uploadsource/associateplan/"+fileName;
-						file1.transferTo(targetFile);
-						urlList.add(filePath);
-					}
-					associate.setCreatetime(new Date());
-					associateService.saveOrUpdateAssociate(associate);
-					if(urlList.size()>0){
-						associateService.saveOrUpdateAssociatePlan(urlList,associate.getId());
-						js.setCode(0);
-						js.setMessage("上传成功!");
-					}
+				associate.setCreatetime(new Date());
+				associateService.saveOrUpdateAssociate(associate);
+				if(urlList.size()>0){
+					associateService.saveOrUpdateAssociatePlan(urlList,associate.getId());
 					js.setCode(0);
-					js.setMessage("保存成功!");
-					js.setObj(associate.getId());
-				}else{
-					js.setMessage("机构名已存在!");
+					js.setMessage("上传成功!");
 				}
+				js.setCode(0);
+				js.setMessage("保存成功!");
+				js.setObj(associate.getId()); 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -409,85 +403,58 @@ public class AssociateController extends BaseController{
 				}
 				if(associatePerson.getId() > 0){
 					a.setId(associatePerson.getId());
-				}
-				List<AssociatePerson> la = new ArrayList<AssociatePerson>();
-				la = associateService.getExistAssociatePerson(a);
-				if(la.size() == 0){
-					 if(file.getSize()>0){
-						String path = request.getSession().getServletContext().getRealPath("uploadsource");
-						//String fileName = file.getOriginalFilename();    //这里不用原文件名称 
-						String tempName = file.getOriginalFilename();    //这里不用原文件名称 
-						String fileType = tempName.split("\\.")[1];
-						String fileName = associatePerson.getIdcard()+"."+fileType;
-						//String fileName = file.getOriginalFilename();    //这里不用原文件名称 
-						//String fileType = tempName.split("\\.")[1];
-						//String fileName = associatePerson.getSerialno()+"."+fileType;
-						File targetFile = new File(path);
-						if (!targetFile.exists()) {
-							targetFile.mkdirs();
-						}
-						targetFile = new File(path+"/associateuserphoto");
-						if (!targetFile.exists()) {
-							targetFile.mkdirs();
-						}
-						targetFile = new File(path+"/associateuserphoto",fileName);  
-						if(targetFile.exists()){
-							targetFile.delete();
-						}
-						String filePath ="uploadsource/associateuserphoto/"+fileName;
-						/*BufferedInputStream in = new BufferedInputStream(file.getInputStream());
-						BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(path+"/userphoto/"+fileName));
-						int i;
-						while((i=in.read())!=-1){
-							out.write(i);
-						}
-						out.flush(); 
-						out.close();
-						in.close();*/
-						//调用公安内部图像审核接口，是否符合要求
-						//if(filePath 上传头像验证成功){
-							file.transferTo(targetFile);	
-							associatePerson.setPhotourl(filePath); 
-						//}
-						//else {
+				} 
+				 if(file.getSize()>0){
+					String path = request.getSession().getServletContext().getRealPath("uploadsource");
+					String fileName = file.getOriginalFilename();    //这里不用原文件名称 
+					String tempName = file.getOriginalFilename();    //这里不用原文件名称 
+					String fileType = tempName.split("\\.")[1];
+					if(associatePerson.getIdcard()!= null){
+						fileName = associatePerson.getIdcard()+"."+fileType;
+					}
+					//String fileName = file.getOriginalFilename();    //这里不用原文件名称 
+					//String fileType = tempName.split("\\.")[1];
+					//String fileName = associatePerson.getSerialno()+"."+fileType;
+					File targetFile = new File(path);
+					if (!targetFile.exists()) {
+						targetFile.mkdirs();
+					}
+					targetFile = new File(path+"/associateuserphoto");
+					if (!targetFile.exists()) {
+						targetFile.mkdirs();
+					}
+					targetFile = new File(path+"/associateuserphoto",fileName);  
+					if(targetFile.exists()){
+						targetFile.delete();
+					}
+					String filePath ="uploadsource/associateuserphoto/"+fileName;
+					/*BufferedInputStream in = new BufferedInputStream(file.getInputStream());
+					BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(path+"/userphoto/"+fileName));
+					int i;
+					while((i=in.read())!=-1){
+						out.write(i);
+					}
+					out.flush(); 
+					out.close();
+					in.close();*/
+					//调用公安内部图像审核接口，是否符合要求
+					//if(filePath 上传头像验证成功){
+						file.transferTo(targetFile);	
+						associatePerson.setPhotourl(filePath); 
+					//}
+					//else {
 
 //							targetFile = new File(path+"/userphoto",fileName);  
 //							if(targetFile.exists()){
 //								targetFile.delete();
 //							}
-							//js.setMessage("上传头像，不符合公安部要求，请重新选择图片上传!"); 
-						// }
-					 }
-					 if (associatePerson.getIdcard() != null && !"".equals(associatePerson.getIdcard())) {
-						 	AssociatePerson p = new AssociatePerson();
-							p.setIdcard(associatePerson.getIdcard());
-							if(associatePerson.getAssociateid() != null){
-								p.setAssociateid(associatePerson.getAssociateid());
-							}
-							if(associatePerson.getId() > 0){
-								p.setId(associatePerson.getId());
-							}
-							List<AssociatePerson> lc = associateService.getExistAssociatePerson(p);
-							if (lc.size() > 0) {
-								js.setMessage("身份证号已存在!");
-								return js;
-							}
-						} 
-					 if(associatePerson.getBirth() != null && !"".equals(associatePerson.getBirth())){
-						 String birth = associatePerson.getBirth();
-						 String result = DateUtil.validate(birth);
-						 if(!"".equals(result)){
-							 js.setMessage("身份证号有误，请确认!");
-							 return js;
-						 }
-					 }
-					associateService.updateAssociatePerson(associatePerson);
-					js.setCode(0);
-					js.setObj(associatePerson.getId()); 
-					js.setMessage("保存成功!");
-				}else{
-					js.setMessage("人员名已存在!");
-				}
+						//js.setMessage("上传头像，不符合公安部要求，请重新选择图片上传!"); 
+					// }
+				 } 
+				associateService.updateAssociatePerson(associatePerson);
+				js.setCode(0);
+				js.setObj(associatePerson.getId()); 
+				js.setMessage("保存成功!"); 
 			}else{
 				js.setMessage("人员名不能为空!");
 			}

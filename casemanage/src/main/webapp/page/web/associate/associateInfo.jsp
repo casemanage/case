@@ -255,6 +255,7 @@ function chooseFile(){
 		    	<div style="margin-top:15px;width:100%;">
 		    		<span class="from-style">机构名称:</span>
 		    		<input type="hidden" id="hid_assoId" name="id" value="${Associate.id}" />
+		    		<input type="hidden" id="hid_serialno" name="serialno" value="${Associate.serialno}" />
 		    		<input type="text" required="true"  validType="Length[1,150]" class="easyui-validatebox"  style="width:354px;height:32px;" placeholder="请输入机构名称" value="${Associate.name}" name="name"/>
 		    	</div>
 		        <div style="margin-top:15px;">
