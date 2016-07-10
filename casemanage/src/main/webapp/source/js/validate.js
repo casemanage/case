@@ -454,13 +454,13 @@ function validatationBirth(obj){
 	if(idCardNo.length>0){
 		if(idCardNo.length != 15 && idCardNo.length != 18){
 			$.messager.alert("错误提示","请输入正确的身份证号码","error",function(){
-				$("input[name='radio']").removeAttr("disabled");
-				$("#dtb_birth").datebox("enable");
-				$("#dtb_birth").datebox("setValue","");
+//				$("input[name='radio']").removeAttr("disabled");
+//				$("#dtb_birth").datebox("enable");
+//				$("#dtb_birth").datebox("setValue","");
 			});
 		}else if(idCardNo.length == 15){ 
-			$("input[name='radio']").attr("disabled","disabled");
-			$("#dtb_birth").datebox("disable");
+//			$("input[name='radio']").attr("disabled","disabled");
+//			$("#dtb_birth").datebox("disable");
 			tmpStr = idCardNo.substring(6, 12);
 		    tmpStr = "19" + tmpStr;
 		    tmpStr = tmpStr.substring(0, 4) + "-" + tmpStr.substring(4, 6) + "-" + tmpStr.substring(6);
@@ -471,8 +471,8 @@ function validatationBirth(obj){
 				$("#radio2").attr("checked",'checked');
 		    } 
 		}else if(idCardNo.length == 18){
-			$("input[name='radio']").attr("disabled","disabled");
-			$("#dtb_birth").datebox("disable");
+//			$("input[name='radio']").attr("disabled","disabled");
+//			$("#dtb_birth").datebox("disable");
 			tmpStr = idCardNo.substring(6, 14);
 	        tmpStr = tmpStr.substring(0, 4) + "-" + tmpStr.substring(4, 6) + "-" + tmpStr.substring(6);
 	        sexStr = parseInt(idCardNo.substring(17, 1),10) % 2 ? "男" : "女";
@@ -483,9 +483,9 @@ function validatationBirth(obj){
 		    }  
 		}
 	}else{
-		$("input[name='radio']").removeAttr("disabled");
-		$("#dtb_birth").datebox("enable");
-		$("#dtb_birth").datebox("setValue","");
+//		$("input[name='radio']").removeAttr("disabled");
+//		$("#dtb_birth").datebox("enable");
+//		$("#dtb_birth").datebox("setValue","");
 	}
 }
 

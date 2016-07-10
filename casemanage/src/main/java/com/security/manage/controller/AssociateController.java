@@ -482,6 +482,7 @@ public class AssociateController extends BaseController{
 					 }
 					associateService.updateAssociatePerson(associatePerson);
 					js.setCode(0);
+					js.setObj(associatePerson.getId()); 
 					js.setMessage("保存成功!");
 				}else{
 					js.setMessage("人员名已存在!");

@@ -80,7 +80,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										if (data.code == 0) {
 											$.messager.alert('保存信息',data.message,'info',
 															function() {
-																window.location.href = "<%=basePath%>associate/associateInfo.do?typeKey=1&associateId="+associateId;
+																//window.location.href = "<%=basePath%>associate/associateInfo.do?typeKey=1&associateId="+associateId;
+																window.location.href = "<%=basePath%>associate/associateMember.do?associateId="+associateId+"&id="+data.obj;
 															});
 										} else {
 											$.messager.alert('错误信息',
