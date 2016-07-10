@@ -406,12 +406,17 @@ public class AssociateController extends BaseController{
 				js.setMessage("Session已过期，请重新登录!");
 				return js;
 			}
-			associatePerson.setId(0);
+			if(associatePerson.getId() == null || "".equals(associatePerson.getId())){
+				associatePerson.setId(0);
+			}
 			if(associatePerson.getName() != null){
 				AssociatePerson a = new AssociatePerson();
 				a.setName(associatePerson.getName());
 				if(associatePerson.getAssociateid() != null){
 					a.setAssociateid(associatePerson.getAssociateid());
+				}
+				if(associatePerson.getId() > 0){
+					a.setId(associatePerson.getId());
 				}
 				List<AssociatePerson> la = new ArrayList<AssociatePerson>();
 				la = associateService.getExistAssociatePerson(a);
@@ -460,8 +465,11 @@ public class AssociateController extends BaseController{
 					 if (associatePerson.getIdcard() != null && !"".equals(associatePerson.getIdcard())) {
 						 	AssociatePerson p = new AssociatePerson();
 							p.setIdcard(associatePerson.getIdcard());
-							if (associatePerson.getAssociateid() > 0) {
-								p.setId(associatePerson.getAssociateid());
+							if(associatePerson.getAssociateid() != null){
+								p.setAssociateid(associatePerson.getAssociateid());
+							}
+							if(associatePerson.getId() > 0){
+								p.setId(associatePerson.getId());
 							}
 							List<AssociatePerson> lc = associateService.getExistAssociatePerson(p);
 							if (lc.size() > 0) {

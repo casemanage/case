@@ -463,7 +463,7 @@ public class PersonController extends BaseController{
 				if(targetFile.exists()){
 					targetFile.delete();
 				}
-				String filePath ="uploadsource/userphoto/"+fileName;
+				String filePath ="http://189.49.32.50:6800/case/uploadsource/userphoto/"+fileName;
 				/*BufferedInputStream in = new BufferedInputStream(file.getInputStream());
 				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(path+"/userphoto/"+fileName));
 				int i;
