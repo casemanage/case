@@ -46,7 +46,7 @@ public class AssociateController extends BaseController{
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	@RequestMapping(value = "/associateList.do",method=RequestMethod.GET)
+	@RequestMapping(value = "/associateList.do",method=RequestMethod.GET, produces = { "text/html;charset=UTF-8" })
 	public String associateList(
 			Associate associate,
 			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{ 
@@ -56,6 +56,7 @@ public class AssociateController extends BaseController{
 					"iso8859-1"), "utf-8");
 			associate.setSearchName(searchName);
 		}
+//		associate.setSearchName(associate.getSearchName());
 		//通过request绑定对象传到前台
 		associate.setPageSize(Constants.DEFAULT_PAGE_SIZE);
 		if (associate.getPageNo() == null)

@@ -314,7 +314,7 @@ public class PersonController extends BaseController{
 		return js;
 	}
 	
-	@RequestMapping(value = "/personList.do")
+	@RequestMapping(value = "/personList.do",method=RequestMethod.GET, produces = { "text/html;charset=UTF-8" })
 	public String personList(
 			Person person,
 			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException{
