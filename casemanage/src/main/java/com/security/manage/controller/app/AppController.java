@@ -551,11 +551,8 @@ public class AppController extends BaseController {
 		js.setCode(201);
 		js.setMessage(Constants.SAVE_FAIL_MESSAGE);
 		try {
-			if(associate.getId() == null ||associate.getId() == 0){
-//				User u = this.getLoginUser();
-//				associate.setCreator(u.getId());
-				associate.setCreatorname(associate.getGuid());
-//				associate.setOrganname(u.getOrganName()); 
+			if(associate.getId() == null ||associate.getId() == 0){ 
+				associate.setCreatorname(associate.getGuid()); 
 				associate.setCreatetime(new Date());
 				String serialNo = getAssoSerialNo(associate.getTypeid()); 
 				associate.setSerialno(serialNo); 
