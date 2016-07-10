@@ -391,7 +391,7 @@ public class PersonController extends BaseController{
 				js.setMessage("请选择人员级别!");
 				return js;
 			}
-			if(person.getTelephone() != null && !"".equals(person.getTelephone())){
+			/*if(person.getTelephone() != null && !"".equals(person.getTelephone())){
 				String telephone = person.getTelephone().trim();
 				Boolean  b = StringUtil.isMobileNumber(telephone);
 				if(!b){
@@ -400,8 +400,8 @@ public class PersonController extends BaseController{
 				}else{
 					person.setTelephone(telephone);
 				}
-			}
-			if(person.getPolicephone() != null && !"".equals(person.getPolicephone())){
+			}*/
+			/*if(person.getPolicephone() != null && !"".equals(person.getPolicephone())){
 				String telephone = person.getPolicephone().trim();
 				Boolean  b = StringUtil.isMobileNumber(telephone);
 				if(!b){
@@ -410,7 +410,7 @@ public class PersonController extends BaseController{
 				}else{
 					person.setTelephone(telephone);
 				}
-			}
+			}*/
 			if (person.getId() == null || person.getId() == 0) { 
 				User u = this.getLoginUser();
 				if(u!= null){

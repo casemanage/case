@@ -157,7 +157,7 @@
   	select <include refid="Base_Column_List" />,
   	(select x.name from MC_AREA as x where x.id = a.parentId) as PARENT_NAME
   	from 
-  	(select *, ROW_NUMBER() OVER(Order by b.ID) AS RowNumber from MC_AREA as b where 1=1
+  	(select *, ROW_NUMBER() OVER(Order by b.ID) AS RowNumber from MC_AREA as b where 1=1 and b.FLAG = 0
 		  <if test="searchName != null and searchName !=''" >
 	  	   	and b.NAME like '%${searchName}%'
 	      </if>
@@ -188,6 +188,9 @@
   	where flag = 0 
   	<if test="searchName != null and searchName !=''" >
 	   	and NAME like '%${searchName}%'
+    </if>
+     <if test="parentid != 0">
+    	and parentId = #{parentid,jdbcType=INTEGER}
     </if>
   </select>
   <select id="getTotalCountByParentId" parameterType="com.security.manage.model.Area" resultType="java.lang.Integer">

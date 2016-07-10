@@ -108,6 +108,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$("#filename").val(obj.value); 
 			}
 		}
+		function back(){
+			window.location.href = "<%=basePath%>associate/associateInfo.do?associateId=${Associate.id}";
+		} 
 	</script>
   </head>
   
@@ -119,7 +122,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  <div class="Panel-content" style="float:left;">机构名称：${Associate.name}</div>
                  
 						<div style="float;right; margin-top:5px;">  
-					        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="javascript:history.back();"> 
+					        <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="back();"/> 
 					         <input type="button" class="btn-sm" value="保存" style="float:right;margin-left:25px;" onclick="savePerson(this);">  
 						</div>
         	</div>
@@ -155,17 +158,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    		<input type="text"  class="easyui-validatebox" placeholder="请输入地址"  style="width:354px;height:32px;" value="${Person.address}" name="address"/>
 				    	</div> 
 				    	<div style="margin-top:15px;">
+				        	<span class="from-style">手机号码:</span>
+				    		<input type="text"  class="easyui-validatebox" validType="number" placeholder="请输入手机号码"  style="width:354px;height:32px;" value="${Person.telephonePerson}" name="telephonePerson"/>
+				    	</div>
+				    	<div style="margin-top:15px;">
 				        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述:</span>
 				    		<input type="text"  class="easyui-validatebox" placeholder="请输入描述" style="width:354px;height:32px;"  value="${Person.description}" name="description"/>
 				    	</div>
 				    	<div style="margin-top:15px;">
-				        	<span class="from-style">是否负责人:</span>
+				        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;负责人:</span>
 				        	<input id="isleader" type="hidden"  name="isleader" id="isleader" value="1"/>
 				    		<input type="radio" name="leader" id="radio3" value="1" checked="checked" onchange='setLeader();'>是
 							<input type="radio" name="leader" id="radio4" value="0" onchange='setLeader();'>否 
 				    	</div>
 				        <div style="margin-top:15px;">
-				        	<span class="from-style">上传头像:</span>
+				        	<span class="from-style">&nbsp;&nbsp;上传头像:</span>
 				        	<c:if test="${Person.id >0}">
 				        		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;" readonly="readonly" id="filename" value="${Person.photourl}" />
 				        	</c:if>

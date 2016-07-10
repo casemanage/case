@@ -170,7 +170,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    	</div>
 			    	 <div style="margin-top:15px;">
 			        	<span class="from-style">联系方式:</span>
-			    		<input type="text" validType="phone" class="easyui-validatebox" style="width:354px;height:32px;" placeholder="请输入联系方式" value="${person.telephone}" name="telephone"/>
+			    		<input type="text" validType="number" class="easyui-validatebox" style="width:354px;height:32px;" placeholder="请输入联系方式" value="${person.telephone}" name="telephone"/>
 			    	</div> 
 				    	<div style="margin-top:15px;width:100%;">
 			        	<span class="from-style">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址:</span>
@@ -197,7 +197,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    	</div>
 			    	<div style="margin-top:15px;">
 			        	<span class="from-style">警官电话:</span>
-			    		<input type="text"  class="easyui-validatebox" style="width:354px;height:32px;"  placeholder="请输入警官电话" value="${person.policephone}" name="policephone"/>
+			    		<input type="text" validType="number" class="easyui-validatebox" style="width:354px;height:32px;"  placeholder="请输入警官电话" value="${person.policephone}" name="policephone"/>
 			    	</div>
 			        <div style="margin-top:15px;">
 			        	<span class="from-style">上传头像:</span>

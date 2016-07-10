@@ -17,13 +17,14 @@
     <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
     <result column="ISLEADER" property="isleader" jdbcType="INTEGER" />
     <result column="GUID" property="guid" jdbcType="VARCHAR"/>
+    <result column="TELEPHONE" property="telephonePerson" jdbcType="VARCHAR"/>
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.security.manage.model.AssociatePerson" extends="BaseResultMap" >
     <result column="TIMESPAN" property="timespan" jdbcType="BINARY" />
   </resultMap>
   <sql id="Base_Column_List" >
     ID, NAME, SEX, BIRTH, PHOTOURL, IDCARD, ADDRESS, ASSOCIATEID, CREATOR, CREATORNAME, 
-    ORGANNAME, CHARACTER, DESCRIPTION, ISLEADER,GUID
+    ORGANNAME, CHARACTER, DESCRIPTION, ISLEADER,GUID,TELEPHONE
   </sql>
   <sql id="Blob_Column_List" >
     TIMESPAN
@@ -45,13 +46,14 @@
       BIRTH, PHOTOURL, IDCARD, 
       ADDRESS, ASSOCIATEID, CREATOR, 
       CREATORNAME, ORGANNAME, CHARACTER, 
-      DESCRIPTION, ISLEADER,GUID
+      DESCRIPTION, ISLEADER,GUID,TELEPHONE
       )
     values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
       #{birth,jdbcType=VARCHAR}, #{photourl,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{associateid,jdbcType=INTEGER}, #{creator,jdbcType=INTEGER}, 
       #{creatorname,jdbcType=VARCHAR}, #{organname,jdbcType=VARCHAR}, #{character,jdbcType=VARCHAR}, 
       #{description,jdbcType=VARCHAR}, #{isleader,jdbcType=INTEGER},#{guid,jdbcType=VARCHAR}
+      ,#{telephonePerson,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.security.manage.model.AssociatePerson" >
@@ -205,6 +207,9 @@
       <if test="guid != null" >
         GUID = #{guid,jdbcType=VARCHAR},
       </if>
+      <if test="telephonePerson != null" >
+        TELEPHONE = #{telephonePerson,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
@@ -240,7 +245,8 @@
       ORGANNAME = #{organname,jdbcType=VARCHAR},
       CHARACTER = #{character,jdbcType=VARCHAR},
       DESCRIPTION = #{description,jdbcType=VARCHAR},
-      ISLEADER = #{isleader,jdbcType=INTEGER}
+      ISLEADER = #{isleader,jdbcType=INTEGER},
+      TELEPHONE = #{telephonePerson,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
   <select id="getAssociateListById" parameterType="com.security.manage.model.AssociatePerson" resultMap="BaseResultMap">

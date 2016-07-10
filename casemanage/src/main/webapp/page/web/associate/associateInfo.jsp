@@ -104,18 +104,11 @@ function getAssociatePersonList(){
 	});
 }
 function saveAssociste(obj){
-
 	var typeId = $("#typeid").val();
 	if(typeId.length == 0 || typeId == 0 || typeId =="" || typeId =="0"){
 		$.messager.alert("操作提示","请选择机构类型","error");
 		return;
 	}
-	var areaId = $("#areaId").val();
-	if(areaId.length == 0 ||areaId == 0 || areaId =="" || areaId =="0"){
-		$.messager.alert("操作提示","请选择所属区域","error");
-		return;
-	}
-
 	if ($('#associsteForm').form('validate')) {
 		$('#associsteForm').form('submit',{
 		success : function(data) {
@@ -176,9 +169,9 @@ function fillMemberList(lst){
 	var html = "";
 	for(var i = 0; i<lst.length;i++){
 		html += "<tr>";
-		html += "<td align='center' style='display:none'>"+lst[i].id+"</td><td	align='center'><img alt='头像' src='<%=basePath %>"+(lst[i].photourl == null ? "":lst[i].photourl)+"style='width:35px;height:35px'></td><td align='center'>"+(lst[i].name == null ? "":lst[i].name)+"<td align='center'>"+(lst[i].sex == 0 ? "女":"男")+"</td>";
-		html += "<td align='center'>"+(lst[i].birth == null ? "":lst[i].birth)+"</td><td align='center'>"+(lst[i].idcard == null ? "":lst[i].idcard)+"</td><td align='center'>"+(lst[i].address == null ? "" : lst[i].address)+"</td><td align='center'>"+(lst[i].description == null ? "" : lst[i].description)+"</td>"+"<td align='center'>"+(lst[i].isleader == 0 ?"普通人员":"负责人")+"</td>";
-		html += "<td align='center'>"+(lst[i].creatorname == null ? "":lst[i].creatorname)+"</td><td align='center'>"+(lst[i].organname == null ? "":lst[i].organname)+"</td>"+"<td><a href='javascript:void(0);' onclick='deleteByAssociateId("+lst[i].associateid+","+lst[i].id+");'>"+"删除"+"</a>";
+		html += "<td align='center' style='display:none'>"+lst[i].id+"</td><td align='center'><img alt='头像' style='width:35px;height:35px' src='<%=basePath %>"+(lst[i].photourl == null ? "":lst[i].photourl)+"'></td><td align='center'>"+(lst[i].name == null ? "":lst[i].name)+"</td><td align='center'>"+(lst[i].sex == 0 ? "女":"男")+"</td>";
+		html += "<td align='center'>"+(lst[i].birth == null ? "":lst[i].birth)+"</td><td align='center'>"+(lst[i].idcard == null ? "":lst[i].idcard)+"</td><td align='center'>"+(lst[i].address == null ? "" : lst[i].address)+ "</td><td align='center'>"+(lst[i].telephonePerson == null ? "" : lst[i].telephonePerson)+ "</td><td align='center'>"+(lst[i].description == null ? "" : lst[i].description)+"</td>"+"<td align='center'>"+(lst[i].isleader == 0 ?"普通人员":"负责人")+"</td>";
+		html += "<td align='center'>"+(lst[i].creatorname == null ? "":lst[i].creatorname)+"</td><td align='center'>"+(lst[i].organname == null ? "":lst[i].organname)+"</td>"+"<td><a href='javascript:void(0);' onclick=window.location.href='<%=basePath%>associate/associateMember.do?associateId="+ lst[i].associateid + "&&id="+ lst[i].id + "'>"+"详情"+"</a>"+"<a href='javascript:void(0);' style='margin-left:15px;' onclick='deleteByAssociateId("+lst[i].associateid+","+lst[i].id+");'>"+"删除"+"</a>";
 		html += "</tr>";
 	}
 	$("#MemberList").html(html);
@@ -287,7 +280,7 @@ function chooseFile(){
 		    	</div>
 		    	<div style="margin-top:15px;">
 		        	<span class="from-style">手机号码:</span>
-		    		<input type="text"  style="width:354px;height:32px;"  placeholder="请输入联系方式" class="easyui-validatebox" value="${Associate.telephone}" name="telephone"/>
+		    		<input type="text"  style="width:354px;height:32px;" placeholder="请输入联系方式" class="easyui-validatebox" validType="number" value="${Associate.telephone}" name="telephone"/>
 	    		</div>
 		        <div style="margin-top:15px;">
 		        	<span class="from-style">坐标经度:</span>
@@ -368,6 +361,7 @@ function chooseFile(){
 					<!-- <th>照片</th> -->
 					<th align="center">身份证号</th> 
 					<th align="center">地址</th>
+					<th align="center">手机号码</th>
 					<th align="center">备注</th>
 					<th align="center">人员职位</th>
 					<th align="center">采集人</th>
@@ -393,6 +387,7 @@ function chooseFile(){
 					<%-- <td>${item.photourl}</td> --%>
 					<td>${item.idcard}</td>
 					<td>${item.address}</td>
+					<td>${item.telephonePerson}</td>
 					<td>${item.description}</td>
 					<c:if test="${item.isleader == 0}">
 						<td>普通人员</td>

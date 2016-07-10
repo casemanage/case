@@ -43,6 +43,8 @@ public class AssociatePerson extends Page  {
     
     private String guid;
     
+    private String telephonePerson;
+    
     public String getGuid() {
 		return guid;
 	}
@@ -193,6 +195,14 @@ public class AssociatePerson extends Page  {
 
 	public void setCreatetimes(String createtimes) {
 		this.createtimes = createtimes;
+	}
+
+	public String getTelephonePerson() {
+		return telephonePerson;
+	}
+
+	public void setTelephonePerson(String telephonePerson) {
+		this.telephonePerson = telephonePerson;
 	}
 
 }
