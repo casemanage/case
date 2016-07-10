@@ -238,8 +238,8 @@ function chooseFile(){
 			       <input type="button" class="btn-back" value="返回" style="float:right;margin-left:25px;margin-right:25px;"  onclick="back();"> 
 			       <c:if test="${Associate.id > 0}">
 			       		<input id="btn_newInfo"  type="button" class="btn-add" style="float:right;margin-left:25px; display:none;"  	onclick="window.location.href='<%=basePath%>associate/associateMember.do?associateId=${Associate.id}&id=0'" value="新增相关人员" />
-			       		<input id="btn_uploadload" type="button" class="btn-add"  style="float:right;margin-left:25px; display:none;" 	onclick="javascript:$('#btn_import').click();"	value="导入" />
-			       		<input id="btn_download" type="button" class="btn-add"  style="float:right;margin-left:25px; display:none;" 	onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/社会机构相关人员数据采集模板.xls'"	value="下载导入模板" />
+			       		<%-- <input id="btn_uploadload" type="button" class="btn-add"  style="float:right;margin-left:25px; display:none;" 	onclick="javascript:$('#btn_import').click();"	value="导入" />
+			       		<input id="btn_download" type="button" class="btn-add"  style="float:right;margin-left:25px; display:none;" 	onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/社会机构相关人员数据采集模板.xls'"	value="下载导入模板" /> --%>
 			       </c:if>
 		         
 		         <input id="btn_saveInfo" type="button" class="btn-sm" value="保存机构" style="float:right;margin-left:25px;" onclick="saveAssociste(this);"> 
@@ -310,7 +310,7 @@ function chooseFile(){
 				<c:if test="${Associate.id >0}">
 					<td rowspan="2" style="vertical-align: top;"> 
 					<c:forEach var="item" items="${associateplanList}">
-						<img alt="平面图" title="平面图" src="<%=basePath %>${item.planurl}" style="width:400px;height:250px">
+						<img alt="平面图" title="平面图" src="${item.planurl}" style="width:400px;height:250px">
 					</c:forEach>
 					</td> 
 				</c:if>
@@ -331,9 +331,9 @@ function chooseFile(){
     <c:if test="${Associate.id>0}">
 		<div title="从业人员" style="padding:3px;">
 			<div class="Panel-content">
-				<div style="width:100%;text-align:right;display:none ">
+			<!-- 	<div style="width:100%;text-align:right;display:none ">
 					<input id="btn_import" type="button" style="margin-bottom:10px;margin-right:30px;" class="btn-import" onclick="chooseFile();" value="导入机构人员" />
-				</div>
+				</div> -->
 				<div style="width:100%;text-align:right"> 
 				 
 					<div style="display: none">

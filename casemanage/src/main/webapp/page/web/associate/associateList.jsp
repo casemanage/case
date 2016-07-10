@@ -180,7 +180,7 @@ function chooseFile(){
 	<div class="containner-fluid">
 		<div class="pannel-header">
 			<span>社会机构管理</span>
-			<input type ="button" class="hey-btn-default" onclick="chooseFile();" value="导入社会机构">
+			<%-- <input type ="button" class="hey-btn-default" onclick="chooseFile();" value="导入社会机构">
 			</input>
 			<div style="display: none">
 				<form id="fileForms" name="fileForms"
@@ -190,7 +190,7 @@ function chooseFile(){
 			       	<input id="file" type="file" name="file" id="jfile"
 			       	 class="yw-upload-file" onChange="excelChange(this);">
 				</form>
-			</div>	
+			</div>	 --%>
 		</div>
 		<div class="Panel-content">
 			<form id="AssociateForm" name="AssociateForm" action="<%=basePath%>associate/associateList.do" method="get">
@@ -199,7 +199,7 @@ function chooseFile(){
 					<input type="button" class="btn-add" style="margin-left:10px;"  onclick="search();" value="搜索">  
 					<input type="hidden" id="pageNumber" name="pageNo" value="${associate.pageNo}" /> 
 					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>associate/associateInfo.do?associateId=0'" value="新建社会机构"> 
-					<input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/社会机构数据采集模板.xlsx'" value="下载导入模板"/>
+					<%-- <input type="button" class="btn-add" style="margin-left:25px;" onclick="window.location.href='<%=basePath%>fileUpload/downfile.do?filepath=source/excel/社会机构数据采集模板.xlsx'" value="下载导入模板"/> --%>
 				</div>
 			</form>
 		</div>

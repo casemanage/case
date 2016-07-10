@@ -212,7 +212,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</td>
 				<c:if test="${person.id >0}">
 					<td rowspan="2" style="vertical-align: top;"> 
-						<img alt="头像" src="<%=basePath %>${person.photourl}" style="width:150px;height:150px">
+						<img alt="头像" src="${person.photourl}" style="width:150px;height:150px">
 					</td> 
 				</c:if>
 			<!-- 	<td>

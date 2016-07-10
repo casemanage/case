@@ -391,26 +391,7 @@ public class PersonController extends BaseController{
 				js.setMessage("请选择人员级别!");
 				return js;
 			}
-			/*if(person.getTelephone() != null && !"".equals(person.getTelephone())){
-				String telephone = person.getTelephone().trim();
-				Boolean  b = StringUtil.isMobileNumber(telephone);
-				if(!b){
-					js.setMessage("手机格式不正确!");
-					return js;
-				}else{
-					person.setTelephone(telephone);
-				}
-			}*/
-			/*if(person.getPolicephone() != null && !"".equals(person.getPolicephone())){
-				String telephone = person.getPolicephone().trim();
-				Boolean  b = StringUtil.isMobileNumber(telephone);
-				if(!b){
-					js.setMessage("警官手机格式不正确!");
-					return js;
-				}else{
-					person.setTelephone(telephone);
-				}
-			}*/
+		 
 			if (person.getId() == null || person.getId() == 0) { 
 				User u = this.getLoginUser();
 				if(u!= null){
@@ -437,15 +418,7 @@ public class PersonController extends BaseController{
 					js.setMessage("身份证号已存在!");
 					return js;
 				}
-			} 
-			if(person.getBirth() != null && !"".equals(person.getBirth())){
-				 String birth = person.getBirth();
-				 String result = DateUtil.validate(birth);
-				 if(!"".equals(result)){
-					 js.setMessage("身份证号有误，请确认!");
-					 return js;
-				 }
-			 }
+			}  
 			 if(file.getSize()>0){
 				String path = request.getSession().getServletContext().getRealPath("uploadsource");
 				String tempName = file.getOriginalFilename();    //这里不用原文件名称 
@@ -463,7 +436,7 @@ public class PersonController extends BaseController{
 				if(targetFile.exists()){
 					targetFile.delete();
 				}
-				String filePath ="http://189.49.32.50:6800/case/uploadsource/userphoto/"+fileName;
+				String filePath ="uploadsource/userphoto/"+fileName;
 				/*BufferedInputStream in = new BufferedInputStream(file.getInputStream());
 				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(path+"/userphoto/"+fileName));
 				int i;
