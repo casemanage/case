@@ -414,7 +414,11 @@ public class AssociateController extends BaseController{
 				if(la.size() == 0){
 					 if(file.getSize()>0){
 						String path = request.getSession().getServletContext().getRealPath("uploadsource");
-						String fileName = file.getOriginalFilename();    //这里不用原文件名称 
+						//String fileName = file.getOriginalFilename();    //这里不用原文件名称 
+						String tempName = file.getOriginalFilename();    //这里不用原文件名称 
+						String fileType = tempName.split("\\.")[1];
+						String fileName = associatePerson.getIdcard()+"."+fileType;
+						//String fileName = file.getOriginalFilename();    //这里不用原文件名称 
 						//String fileType = tempName.split("\\.")[1];
 						//String fileName = associatePerson.getSerialno()+"."+fileType;
 						File targetFile = new File(path);
